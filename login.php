@@ -1,4 +1,12 @@
 <!DOCTYPE html>
+<?php
+session_start();
+  if(isset($_SESSION['idUsu'])){
+    session_destroy();
+    session_unset();
+  }
+  
+?>
 <html lang="en">
 <head>
   <title>Volar en Globo</title>
@@ -26,29 +34,33 @@
   <link rel="stylesheet" type="text/css" href="sources/css/util.css">
   <link rel="stylesheet" type="text/css" href="sources/css/main.css">
 <!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="sources/gritter/css/jquery.gritter.css">
+  <link rel="stylesheet" type="text/css" href="sources/gritter/css/clase.css">
+<!--===============================================================================================-->
+
 </head>
 <body>
   
   
   <div class="container-login100" style="background-image: url('sources/images/fondos/globos.png');">
     <div class="wrap-login100 p-l-55 p-r-55 p-t-80 p-b-30" style="opacity: .8">
-      <form class="login100-form validate-form">
+      <form class="login100-form validate-form"  onsubmit ="validarSesion(event)" id="loginForm">
         <span class="login100-form-title p-b-37">
           Sistema de Administración de Volar en Globo
         </span>
 
-        <div class="wrap-input100 validate-input m-b-20" data-validate="Ingresa tu Uusarios">
-          <input class="input100" type="text" name="user" placeholder="Ingresa tu Usuario">
+        <div class="wrap-input100 validate-input m-b-20" data-validate="Ingresa tu Usuario">
+          <input class="input100" type="text" id="user" name="user" placeholder="Usuario" autofocus="">
           <span class="focus-input100"></span>
         </div>
 
         <div class="wrap-input100 validate-input m-b-25" data-validate = "Ingresa la Contraseña">
-          <input class="input100" type="password" name="pass" placeholder="Contraseña">
+          <input class="input100" type="password" id="pass" name="pass" placeholder="Contraseña">
           <span class="focus-input100"></span>
         </div>
 
         <div class="container-login100-form-btn">
-          <button class="login100-form-btn">
+          <button class="login100-form-btn" type="submit">
             Iniciar Sesión
           </button>
         </div>
@@ -87,5 +99,9 @@
 <!--===============================================================================================-->
   <script src="sources/js/main.js"></script>
 
+<!--===============================================================================================-->
+  <script src="sources/gritter/js/jquery.gritter.js"></script>
+
+<script type="text/javascript" src="sources/js/login.js"></script>
 </body>
 </html>
