@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <?php
-session_start();
-  if(isset($_SESSION['idUsu'])){
+  session_start();
+  if(isset($_SESSION['usuario'])){
     session_destroy();
     session_unset();
   }
@@ -102,6 +102,6 @@ session_start();
 <!--===============================================================================================-->
   <script src="sources/gritter/js/jquery.gritter.js"></script>
 
-<script type="text/javascript" src="sources/js/login.js"></script>
+  <script type="text/javascript" src="sources/js/login.js"></script>
 </body>
 </html>
