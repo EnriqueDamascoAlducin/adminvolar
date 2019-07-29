@@ -33,7 +33,6 @@
 		}
 		function insertar($tabla, $campos, $valores){
 			$sql="INSERT INTO $tabla ($campos) VALUES ($valores)";
-			echo $sql;
 			$data= $this->con->query($sql);
 			if($data){
 				return "ok";
@@ -48,7 +47,7 @@
 				$where = " WHERE $filtro ";
 			}
 			$sql="UPDATE $tabla SET $set $where";
-			echo $sql;
+			
 			$data= $this->con->query($sql);
 			if($data){
 				return "ok";
