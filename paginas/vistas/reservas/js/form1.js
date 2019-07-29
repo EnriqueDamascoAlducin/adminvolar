@@ -1,6 +1,6 @@
 	$("input[id^='pasajeros']").attr("step",1);
 	var currentDate = new Date();
-
+	var wrong="";
 	var dia = currentDate.getDate();
 	var mes = currentDate.getMonth(); //Be careful! January is 0 not 1
 	var year = currentDate.getFullYear();
@@ -16,6 +16,7 @@
 	var fecha = year + "-" + (mes) + "-" + (dia);
 	$("#fechavuelo").attr("min",fecha);
 	$("input[id^='check']").attr("min",fecha);
+	
 	$("input[name='tdescuento']").on("click",function(){
 		if($(this).val()=="1"){
 			$("#cantdescuento1").attr("disabled","disabled");
@@ -27,7 +28,23 @@
 		}
 		save_Data($(this).attr("name"),$(this).val());
 	});
-	
+	$("#checkin").on("change",function(){
+		$("#checkout").val(this.defaultValue);
+		var checkIn=$(this).val();
+		checkIn = checkIn.split("-");
+
+		year=checkIn[0];
+		mes=checkIn[1];
+		dia=parseInt(checkIn[2])+1;
+		if(dia < 10){
+			dia = "0"+dia;
+		}
+
+		fecha= year + "-" + (mes) + "-" + (dia);
+		$("#checkout").attr("min",fecha);
+		$("#checkout").val(fecha);
+
+	});
 	$("input:not(:checkbox):not(#cantdescuento1)").on("blur",function(){
 		if($(this).attr("name")=="mail"){
 			if(!$(this).val().includes("@")){
@@ -81,7 +98,7 @@
 			value=0;
 		}
 		//2 es de cortesia ;1 es de paga
-		guardarServicio(id[1],tipo,defa);
+		guardarServicio(id[1],tipo,value);
 		
 	}
 	$("#tdescuento").on("change",function(){
@@ -170,7 +187,64 @@
 			}
 		}
 	}
+	function validarDatos(){
+		var errores = 0;
+		if($("#mail").val()==""){
+			abrir_gritter("Advertencia","Debe Cargar un correo","warning");
+			errores++;
+			wrong += "Error en el Correo. ";
+		}
+		if($("#telcelular").val()==""){
+			abrir_gritter("Advertencia","Debe Cargar un Telefono Celular","warning");
+			errores++;
+			wrong += "Error en el Telefono Celular. ";
+		}
+		if($("#tipo").val()==""){
+			abrir_gritter("Advertencia","Debe Seleccionar un tipo de Vuelo","warning");
+			errores++;
+			wrong += "Error en el Tipo de Vuelo. ";
+		}
+		if($("#fechavuelo").val()==""){
+			abrir_gritter("Advertencia","Debe Seleccionar una fecha de Vuelo","warning");
+			errores++;
+			wrong += "Error en la Fecha de Vuelo. ";
+		}
+		if($("#hotel").val()!=""){
+
+			if($("#habitacion").val()==""){
+				abrir_gritter("Advertencia","Debe Seleccionar una Habitación","warning");
+				errores++;
+				wrong += "Error en la Habitación. ";
+			}
+			if($("#checkin").val()==""){
+				abrir_gritter("Advertencia","Debe Seleccionar su Checkin","warning");
+				errores++;
+				wrong += "Error en el CheckIn. ";
+			}
+
+			if($("#checkout").val()==""){
+				abrir_gritter("Advertencia","Debe Seleccionar su Checkout","warning");
+				errores++;
+				wrong += "Error en el CheckOut. ";
+			}
+			
+		}
+		if($("#tdescuento").val()!="" || $("#tdescuento").val()!="0"){
+
+			if($("#cantdescuento").val()==""){
+				abrir_gritter("Advertencia","Debe Seleccionar la cantidad de Descuento","warning");
+				errores++;
+				wrong += "Error en el Descuento. ";
+			}
+		}
+		return errores;
+
+	}
 	function mostrarCotizacion(id,accion){
+		wrong="";
+		var errores = 0;
+		errores = validarDatos();
+
 		url="vistas/reservas//tablaCotizacion.php";
 		parametros={reserva:id, accion:accion};
 		$("#cuerpoCotizacion").html("");
@@ -181,11 +255,13 @@
 	  		beforeSend:function(){
 
 				$("#cuerpoCotizacion").html("<img src='../sources/images/icons/cargando.gif'>");
-				alert(2);
+
 	  		},
 	  		success:function(response){
-	  			
-				$("#cuerpoCotizacion").html(response);
+	  			if(errores>0)
+					$("#cuerpoCotizacion").html("Errores: "+ wrong);
+				else
+					$("#cuerpoCotizacion").html(response);
 	  		},
 	  		error:function(){
 	  		
@@ -198,6 +274,7 @@
 			    }
 			  }
 		});
+
 	}
 
 	$("input[type='number']").attr("onkeypress","return isNumber(event)")
@@ -207,4 +284,44 @@
             return false;
 
         return true;
+	}
+
+
+	$("#hotel").on("change",function(){
+		cargarHabitaciones();
+	});
+
+	function cargarHabitaciones(){
+		url="controladores/query_json.php";
+		hotel=$("#hotel").val();
+		if(hotel==""){
+			return false;
+		}
+		var1="id_habitacion as value, nombre_habitacion as text";
+		var2="habitaciones_volar";
+		var3="status<>0 AND idhotel_habitacion="+hotel;
+		//abrir_gritter("a","select " + var1 + " from "+ var2+ " where " + var3, "info");
+        parametros={var1:var1,var2:var2,var3:var3};
+      	$("#habitacion").empty().append("<option value=''>Selecciona una habitación </option>");
+	  	$.ajax({
+	      data: parametros,
+	      dataType:"json",
+	      url:'controladores/query_json.php',
+	      type:"POST",
+	      success: function(data){	
+	        $.each( data, function( key, value ) {
+			  text=value.text;
+			  val=value.value;
+			  attr="";
+			  if(val==habitacion){
+			  	attr="selected";
+			  }
+			  $("#habitacion").append("<option value='"+val+"' "+attr+">"+text+"</option>");
+			});
+	      },
+	      error:function(){
+	      	alert("Error al cargar habitación");
+	      }
+
+	    }); 
 	}

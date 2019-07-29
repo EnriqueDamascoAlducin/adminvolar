@@ -278,7 +278,7 @@
 		}
 		//precio es 2 y de cortesia es 1
 ?>
-	<div class="col-6 col-md-3 col-sm-3 col-md-3 col-xl-2" style="border-style: groove;height: 135px;max-height: 135px;" >
+	<div class="col-6 col-md-3 col-sm-3 col-md-3 col-xl-2" style="border-style: groove;height: 150px;max-height: 150px;" >
 		<div class="row" style="height: 100%;max-height: 100%;">
 			<div class="col-7 col-md-6 col-lg-6 col-sm-6 col-xl-6" style="border-style: groove;margin-left: -5px">
 
@@ -288,7 +288,8 @@
 					<figure class="figure">
 					  	<img src="../sources/images/servicios/<?php echo $servicio->img_servicio; ?>" class="figure-img img-fluid rounded" alt="<?php echo $servicio->nombre_servicio; ?>" style="max-height: 50px;height: 50px;width: 50%; max-width: 50%;">
 					  	<figcaption class="figure-caption" style="margin-top: -2px;width: 50%; max-width: 50%;text-align: center;">
-					  		<label  class="label"  style="color:black;z-index: -1;text-align: center;">
+					  		<label>
+					  			<small class="label"  style="color:black;z-index: -1;text-align: center;">
 					  			<?php 
 					  				$servis = explode(" ", $servicio->nombre_servicio); 
 					  				foreach ($servis as $servi) {
@@ -296,9 +297,11 @@
 						  					echo substr($servi, 0, 11).'<br>';
 						  				}
 					  				}
+						  			echo '('.number_format($servicio->precio_servicio, 2, '.', ',').')';
 					  			?>
 					  				
-					  		</label>
+					  		</small> 
+					  	</label>
 					  	</figcaption>
 					</figure>
 				</label>
@@ -420,5 +423,17 @@
 
 <script type="text/javascript">
 	var idAct = <?php echo $actId ?>; 
+	var habitacion = "<?php echo $reserva->getHabitacionTemp(); ?>";
+
+
 </script>
 <script type="text/javascript" src="vistas/reservas/js/form1.js"></script>
+<script type="text/javascript">
+	<?php
+		if($reserva->getHotelTemp()!=""){
+	?>
+		cargarHabitaciones();
+	<?php
+		}
+	?>
+</script>

@@ -2,7 +2,7 @@
 	date_default_timezone_set("America/Mexico_City");
 	require  $_SERVER['DOCUMENT_ROOT'].'/admin/paginas/modelos/login.php';
 	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin/paginas/controladores/conexion.php';
-	session_start();
+	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin/paginas/controladores/fin_session.php';
 	if(isset($_SESSION['usuario'])){
 		$usuario= unserialize((base64_decode($_SESSION['usuario'])));
 	}else{

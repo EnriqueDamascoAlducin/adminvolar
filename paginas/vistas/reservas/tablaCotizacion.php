@@ -1,13 +1,15 @@
 <?php 
 	$reserva = $_POST['reserva'];
 	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin/paginas/controladores/conexion.php';
+	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin/paginas/controladores/fin_session.php';
 //	$datosVuelo = $con->consulta("IFNULL(fechavuelo_temp,' No asignada' as fechavuelo, ")
 		//2 es de cortesia ;1 es de paga
 	//cantmax 0 = automatico
 	$totalReserva=0.0;
 	$totalPasajeros = $con->consulta("FORMAT(ifnull(pasajerosa_temp,0) + ifnull(pasajerosn_temp,0),2)  Total"," temp_volar "," id_temp = $reserva");
-	$datosReserva = $con->consulta("ifnull(pasajerosa_temp,0) as pasajerosA , ifnull(pasajerosn_temp,0) as pasajerosN , IFNULL(habitacion_temp,'') as habitacion, tipo_temp, checkin_temp,checkout_temp, IFNULL(precio1_temp,0) as otroscar, IFNULL(precio2_temp,0) as otroscar2, IFNULL(tdescuento_temp,'') as tdescuento, IFNULL(cantdescuento_temp,0) as cantdescuento"," temp_volar "," id_temp = $reserva");
-	
+	$datosReserva = $con->query("CALL getResumenREserva(".$reserva.");")->fetchALL (PDO::FETCH_OBJ);
+	$serviciosReserva = $con->consulta("tipo_sv as tipo , nombre_servicio as servicio ,cantmax_servicio as cantmax, precio_servicio as precio "," servicios_vuelo_temp svt INNER JOIN servicios_volar sv ON svt.idservi_sv=sv.id_servicio ","  svt.status<>0 and cantidad_sv>0 and idtemp_sv =".$reserva);
+
 		
 	
 	$tPasajeros = $datosReserva[0]->pasajerosN+ $datosReserva[0]->pasajerosA;
@@ -20,9 +22,9 @@
 		$totalVueloNinos = $datosReserva[0]->pasajerosN * $preciosTipoVuelo[0]->precion_vc;
 		$totalVuelo= $totalVueloAdultos+$totalVueloNinos;
 		$totalReserva+=$totalVuelo;
-		echo "<br>Vuelo = ".$totalVuelo."<br>";
+		//echo "<br>Vuelo = ".$totalVuelo."<br>";
 		if($datosReserva[0]->habitacion!=''){
-			$precioHabitacion = $con->consulta("precio_habitacion","habitaciones_volar","id_habitacion=".$datosReserva[0]->habitacion);
+			$precioHabitacion = $datosReserva[0]->precioHabitacion;
 			$checkin= $datosReserva[0]->checkin_temp;
 			$checkout = $datosReserva[0]->checkout_temp;
 			$date1 = strtotime($checkin);  
@@ -48,24 +50,18 @@
 			$days = floor(($diff - $years * 365*60*60*24 -  
 			             $months*30*60*60*24)/ (60*60*24)); 
 
-			$totalHabitacion= $days * $precioHabitacion[0]->precio_habitacion;
+			$totalHabitacion= $days * $precioHabitacion;
 			
-			echo "Habitacion->".  $totalHabitacion."<br>";
 			$totalReserva+=$totalHabitacion;
 		}
-		$totalReserva +=$datosReserva[0]->otroscar;
-		echo "otros->".$datosReserva[0]->otroscar."<br>";
-		$totalReserva +=$datosReserva[0]->otroscar2;
-		if($datosReserva[0]->tdescuento!=''){
-			if($datosReserva[0]->tdescuento==1){
-				$totalDescuento = ($totalReserva * $datosReserva[0]->cantdescuento )/100;
-			}else{
-				$totalDescuento = $datosReserva[0]->cantdescuento;
-			}
-			$totalReserva-=$totalDescuento;
-		}
+		$totalReserva +=$datosReserva[0]->precio1;
+		//echo "otros->".$datosReserva[0]->precio1."<br>";
+		$totalReserva +=$datosReserva[0]->precio2;
+		
+		
+
 	}
-	echo $totalReserva;
+	
 ?>
 <style type="text/css">
 	.tdtitulo{
@@ -89,69 +85,132 @@
 		max-height: 5px!important;
 		font-size: 15px;
 	}
-	table{
-		    max-width: 100%;
-		    width: 100%;
-		    border-color: #673ab7;
-		    max-height: 100%;
-		    height: 100%;
-		    overflow-y: scroll;
-	}
+	
 
 </style>
-<table class="table">
-	<thead>
-		<tr>
-			<th colspan="2" style="text-align: center;background: #2BBBAD;color: white;">
-				Reserva No. <?php echo $reserva; ?>
-			</th>
-		</tr>
-	</thead>
-	<tbody>
+<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+	<table class="table ">
+		<thead>
+			<tr>
+				<th colspan="2" style="text-align: center;background: #2BBBAD;color: white;">
+					Reserva No. <?php echo $reserva; ?>
+				</th>
+			</tr>
+		</thead>
 		<tbody>
-				<tr>
-					<td class="tdtitulo">Fecha de Vuelo</td>
-					<td>2019-07-15</td>
-				</tr>
-				<tr>
-					<td class="tdtitulo">Nombre</td>
-					<td>FRANCISCA GUAJARDO</td>
-				</tr>
-				<tr>
-					<td class="tdtitulo">Correo</td>
-					<td>alducin.asesori@outlook.com</td>
-				</tr>
-				<tr>
-					<td class="tdtitulo">Telefono Fijo - Telefono Celular</td>
-					<td>5529212556 - 015529212556</td>
-				</tr>
-				<tr>
-					<td class="tdtitulo">Tipo de Vuelo</td>
+			<tbody>
+					<tr>
+						<td class="tdtitulo">Fecha de Vuelo</td>
+						<td><?php echo $datosReserva[0]->fechavuelo ?></td>
+					</tr>
+					<tr>
+						<td class="tdtitulo">Nombre</td>
+						<td><?php echo $datosReserva[0]->nombre ?></td>
+					</tr>
+					<tr>
+						<td class="tdtitulo">Correo</td>
+						<td><?php echo $datosReserva[0]->correo ?></td>
+					</tr>
+					<tr>
+						<td class="tdtitulo">Telefono Fijo - Telefono Celular</td>
+						<td><?php echo $datosReserva[0]->telefonos ?></td>
+					</tr>
+					<tr>
+						<td class="tdtitulo">Tipo de Vuelo</td>
 
-					<td>Compartido Normal<br>Adultos($2,300.00), Niños ($1,700.00)</td>
-				</tr>
-				<tr>
-					<td class="tdtitulo">Pasajeros</td>
-					<td>Adultos 3 - Niños 1 <br>($8,600.00)</td>
-				</tr>
-								
-				
-				<tr>
-					<td class="tdseparador" colspan="2">Servicios Solicitados	</td>
-				</tr>
-				<tr>
-					<td colspan="2">
-					</td></tr><tr><td class="tdtitulo">Lona Personalizada</td><td>Cortesia * 1</td></tr><tr><td class="tdtitulo">Cuatrimotos</td><td>800.00*16</td></tr><tr><td class="tdtitulo">Desayuno</td><td>140.00*1</td></tr><tr><td class="tdtitulo">Rosas</td><td>200.00*1</td></tr>					
-				
-								<tr>
-					<td class="tdtotal">Sub Total</td>
-					<td> $21,740.00 </td>
-				</tr>
-								<tr>
-					<td class="tdtotal">Total</td>
-					<td> $21,740.00 </td>
-				</tr>
-			</tbody>
-	</tbody>	
+						<td><?php echo $datosReserva[0]->tipoVuelo ?></td>
+					</tr>
 
-</table>
+					<tr>
+						<td class="tdtitulo">Pasajeros</td>
+						<td><?php echo "Adultos:".$datosReserva[0]->pasajerosA ."(<b>". ($datosReserva[0]->pasajerosA*$datosReserva[0]->precioA ) ."</b>) <br> Niños:".$datosReserva[0]->pasajerosN ."(<b>". ($datosReserva[0]->pasajerosN*$datosReserva[0]->precioN ) ."</b>) " ?></td>
+					</tr>
+							
+					<?php if($datosReserva[0]->otroscar1!=''){ ?>
+						<tr>
+							<td class="tdtitulo"><?php echo $datosReserva[0]->otroscar1 ?></td>
+							<td><?php echo  $datosReserva[0]->precio1 ?></td>
+						</tr>
+					<?php } ?>
+					<?php if($datosReserva[0]->otroscar2!=''){ ?>
+						<tr>
+							<td class="tdtitulo"><?php echo $datosReserva[0]->otroscar2 ?></td>
+							<td><?php echo  $datosReserva[0]->precio2 ?></td>
+						</tr>
+					<?php } ?>		
+					<?php if(sizeof($serviciosReserva)>0){ ?>
+						<tr>
+							<td class="tdseparador" colspan="2">Servicios Solicitados	</td>
+						</tr>
+						<?php foreach ($serviciosReserva as $servicioReserva) { ?>
+							<tr>
+								<td class="tdtitulo"><?php echo $servicioReserva->servicio; ?></td>
+								<?php if($servicioReserva->tipo==1){ ?>
+									<td>
+										<?php 
+											if ($servicioReserva->cantmax == 0){
+												$totalReserva +=($totalPasajeros * $servicioReserva->precio );
+												echo number_format( ($totalPasajeros * $servicioReserva->precio ) , 2, '.', ',') ;
+											}else{
+												$totalReserva += $servicioReserva->precio ;
+												echo number_format($servicioReserva->precio, 2, '.', ',');
+											}
+										?>
+									</td>
+								<?php }else {?>
+									<td>
+										Cortesia
+									</td>
+								<?php } ?>			
+							</tr>
+						<?php } ?>
+					<?php } ?>
+
+					<tr>
+						<td class="tdtotal">Sub Total</td>
+						<td><?php echo  "$ ". number_format($totalReserva, 2, '.', ','); ?></td>
+					</tr>
+
+					<?php 
+						if($datosReserva[0]->tdescuento!='' && $datosReserva[0]->cantdescuento>0) {
+							$desc="";
+							if($datosReserva[0]->tdescuento==1){
+
+								$totalDescuento = ($totalReserva * $datosReserva[0]->cantdescuento )/100;
+							}else{
+								$totalDescuento = $datosReserva[0]->cantdescuento;
+							}
+					?>
+						<tr>
+							<td class="tdtitulo">
+								Descuento								
+							</td>
+							<td>
+								<?php 
+									if($datosReserva[0]->tdescuento==1) { 
+										echo $datosReserva[0]->cantdescuento."% ($" .number_format($totalDescuento, 2, '.', ',').")";
+									}else{
+										echo "$".$totalDescuento;
+									}
+								?>
+							</td>
+						</tr>
+					<?php
+							$totalReserva-=$totalDescuento;
+						}
+					?>
+					<tr>
+						<td class="tdtotal">Total</td>
+						<td> <?php echo "$ ". number_format($totalReserva, 2, '.', ','); ?></td>
+					</tr>
+				</tbody>
+		</tbody>	
+
+	</table>
+</div>
+<?php 
+	if($_POST['accion']!='ver'){
+		$accion = $con->actualizar("temp_volar","total_temp=".$totalReserva,"id_temp=".$reserva);
+
+	}
+?>
