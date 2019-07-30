@@ -52,7 +52,7 @@
 				display: none;
 			}
 			.btn{
-				/*display: none;*/
+				display: none;
 			}
 	<?php
 		}
@@ -76,13 +76,14 @@
 	input[type="checkbox"] {
 	    display: none;
 	}
-	input[name^="cortesia"]:checked + label  {
-	    background: #00C851;
-	    border-radius: 5px;
+	input[name^="cortesia"]:checked + label   #imgChecked {
+	     display:block;
 	}
-	input[name^="precio_"]:checked + label figure figcaption label  {
-	    background: #00C851;
-	    border-radius: 5px;
+	input[name^="precio_"]:checked + label #imgChecked  {
+	    display:block;
+	}
+	#imgChecked{
+		display: none;
 	}
 </style>
 <div class="row" style="text-align: center;">
@@ -284,9 +285,10 @@
 
 
 				<input type="checkbox" name="precio_<?php echo $servicio->id_servicio; ?>" onchange ="validar_servicio(this,<?php  echo $servicio->cantmax_servicio; ?>)" id="precio_<?php echo $servicio->id_servicio; ?>" <?php echo $precio ?>>
-				<label for="precio_<?php echo $servicio->id_servicio; ?>" style="margin-left: -5px">
+				<label for="precio_<?php echo $servicio->id_servicio; ?>" style="margin-left: -25px;position: absolute;float: left">
 					<figure class="figure">
 					  	<img src="../sources/images/servicios/<?php echo $servicio->img_servicio; ?>" class="figure-img img-fluid rounded" alt="<?php echo $servicio->nombre_servicio; ?>" style="max-height: 50px;height: 50px;width: 50%; max-width: 50%;">
+					  	<img src="../sources/images/icons/check2.png" class="figure-img img-fluid rounded" alt="<?php echo $servicio->nombre_servicio; ?>" id="imgChecked" style="max-height: 70px;height: 70px;width: 66%; max-width: 65%;position: absolute;margin-top: -15px">
 					  	<figcaption class="figure-caption" style="margin-top: -2px;width: 50%; max-width: 50%;text-align: center;">
 					  		<label>
 					  			<small class="label"  style="color:black;z-index: -1;text-align: center;">
@@ -308,7 +310,10 @@
 			</div>
 			<div class="col-5 col-md-6 col-lg-6 col-sm-6 col-xl-6" style="border-style: groove; vertical-align: middle;z-index: 2">
 				<input type="checkbox" onchange ="validar_servicio(this,<?php  echo $servicio->cantmax_servicio; ?>)"  name="cortesia_<?php echo $servicio->id_servicio; ?>" id="cortesia_<?php echo $servicio->id_servicio; ?>" <?php echo $cortesia; ?>>
-				<label for="cortesia_<?php echo $servicio->id_servicio; ?>" class="badge" style="color:black;margin-left: -5px"><b>Cortesia</b></label>
+				<label for="cortesia_<?php echo $servicio->id_servicio; ?>" class="badge" style="color:black;margin-left: -25px;position: absolute;float: left"><b>Cortesia</b>
+					<img src="../sources/images/icons/check2.png" class="figure-img img-fluid rounded" alt="<?php echo $servicio->nombre_servicio; ?>" id="imgChecked" style="max-height: 50px;height: 50px;width: 50%; max-width: 50%;position: absolute;">
+				</label>
+				
 				
 			</div>
 		</div>
@@ -393,7 +398,7 @@
 <div class="col-12 col-md-12 col-sm-12 col-md-12 col-xl-12" >
 	<div class="container" style="margin-top: 8px;">
 		<?php if($_POST['id']==""){ ?>	
-			<button class="btn btn-success" type="button"  data-toggle="modal" data-target="#cotizacion"  onclick="mostrarCotizacion(<?php echo $actId; ?>, 'enviar')">Cotizar</button>
+			<button class="btn btn-success" type="button"  data-toggle="modal" data-target="#cotizacion"  onclick="mostrarCotizacion(<?php echo $actId; ?>, 'enviar')">Enviar Cotización</button>
 		<?php }else{ ?>
 			<button class="btn btn-primary" type="button"   data-toggle="modal" data-target="#cotizacion" onclick="mostrarCotizacion(<?php echo $actId; ?>, 'reenviar')">Reenviar Cotización</button>
 		<?php } ?>
@@ -415,7 +420,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-        <button type="button" class="btn btn-primary">Confirmar</button>
+        <button type="button" class="btn btn-primary" id="ConfirmarCotizacion">Confirmar</button>
       </div>
     </div>
   </div>

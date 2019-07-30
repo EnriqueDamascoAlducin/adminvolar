@@ -99,7 +99,7 @@
 			<td class="tdcentral " style="background-color: #FF6633;" > </td>
 			<td class="tdcentral " style="background-color: #FF0000;" > </td>
 			<td class="tdcentral " style="background-color: #660000;" > </td>
-			<td class="tdPrimero" style="text-align: center;"onclick='window.location.replace("../");'><i class="fa fa-sign-out fa-lg" aria-hidden="true"></i>Salir</td>
+			<td class="tdPrimero" style="text-align: center;color:white">&copy; Volar en Globo</td>
 		</tr>
 	</table>
 </div>

@@ -104,6 +104,28 @@
 	$("#tdescuento").on("change",function(){
 		$("#cantdescuento").val(0);
 	});
+	function enviarCotizacion(id){
+		parametros={reserva:id};
+		url="vistas/reservas/correo/correoCotizacion.php";
+		$.ajax({
+			url: url,
+			method: "POST",
+	  		data: parametros,
+	  		success:function(response){
+	  		    //$("body").html(response);
+				abrir_gritter("Bien",response,"success");
+	  		},
+	  		error:function(){
+	  			alert("Error");
+	  		},
+	  		statusCode: {
+			    404: function() {
+			     
+					abrir_gritter("Error","URL no encontrada","danger");
+			    }
+			  }
+		});
+	}
 	function save_Data(campo,value){
 		url="controladores/reservaController.php";
 		parametros={campo:campo, valor:value,id:idAct};
@@ -190,29 +212,29 @@
 	function validarDatos(){
 		var errores = 0;
 		if($("#mail").val()==""){
-			abrir_gritter("Advertencia","Debe Cargar un correo","warning");
+			//abrir_gritter("Advertencia","Debe Cargar un correo","warning");
 			errores++;
 			wrong += "Error en el Correo. ";
 		}
 		if($("#telcelular").val()==""){
-			abrir_gritter("Advertencia","Debe Cargar un Telefono Celular","warning");
+			//abrir_gritter("Advertencia","Debe Cargar un Telefono Celular","warning");
 			errores++;
 			wrong += "Error en el Telefono Celular. ";
 		}
 		if($("#tipo").val()==""){
-			abrir_gritter("Advertencia","Debe Seleccionar un tipo de Vuelo","warning");
+			//abrir_gritter("Advertencia","Debe Seleccionar un tipo de Vuelo","warning");
 			errores++;
 			wrong += "Error en el Tipo de Vuelo. ";
 		}
 		if($("#fechavuelo").val()==""){
-			abrir_gritter("Advertencia","Debe Seleccionar una fecha de Vuelo","warning");
+			//abrir_gritter("Advertencia","Debe Seleccionar una fecha de Vuelo","warning");
 			errores++;
 			wrong += "Error en la Fecha de Vuelo. ";
 		}
 		if($("#hotel").val()!=""){
 
 			if($("#habitacion").val()==""){
-				abrir_gritter("Advertencia","Debe Seleccionar una Habitación","warning");
+				//abrir_gritter("Advertencia","Debe Seleccionar una Habitación","warning");
 				errores++;
 				wrong += "Error en la Habitación. ";
 			}
@@ -223,7 +245,7 @@
 			}
 
 			if($("#checkout").val()==""){
-				abrir_gritter("Advertencia","Debe Seleccionar su Checkout","warning");
+				//abrir_gritter("Advertencia","Debe Seleccionar su Checkout","warning");
 				errores++;
 				wrong += "Error en el CheckOut. ";
 			}
@@ -245,9 +267,10 @@
 		var errores = 0;
 		errores = validarDatos();
 
-		url="vistas/reservas//tablaCotizacion.php";
+		url="vistas/reservas/tablaCotizacion.php";
 		parametros={reserva:id, accion:accion};
 		$("#cuerpoCotizacion").html("");
+		$("#ConfirmarCotizacion").attr("onclick","enviarCotizacion("+id+")");
 	  	$.ajax({
 			url:url,
 			method: "POST",

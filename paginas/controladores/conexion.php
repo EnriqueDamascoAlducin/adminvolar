@@ -8,7 +8,7 @@
 
 		function Conexion(){
 			$this->servidor="localhost";
-			$this->bd = "volarenglobo";
+			$this->bd = "volar";
 			$this->usr="Siswebs";
 			$this->pass="Portero1";
 
