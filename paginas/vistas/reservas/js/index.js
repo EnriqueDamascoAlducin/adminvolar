@@ -121,6 +121,8 @@ function agregarReserva(id,accion){
 	});
 }
 function mostrarCotizacion(id,accion){
+
+	$("button[id^='btnElimiar']").remove();
 	$("#tituloModalReservas").html("Cotización "+ id);
 	url="vistas/reservas//tablaCotizacion.php";
 	parametros={reserva:id, accion:accion};

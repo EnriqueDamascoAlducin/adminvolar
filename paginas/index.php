@@ -44,7 +44,6 @@
 	<link rel="stylesheet" type="text/css" href="../sources/gritter/css/clase.css">
 	<link rel="stylesheet" type="text/css" href="../sources/css/datatables.min.css"/>
 
-
 </head>
 <body>
 <div id="divContenedor">

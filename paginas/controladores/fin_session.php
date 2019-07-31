@@ -6,14 +6,10 @@ if ( isset( $_SESSION[ 'ULTIMA_ACTIVIDAD' ] ) &&
 // Si ha pasado el tiempo sobre el limite destruye la session
 ?>
 	<script type="text/javascript">
-		
-		abrir_gritter("Error","Se ha terminado tu Sesión","danger");
-		setTimeout(function(){
-			window.location.replace("../");
-		},3000);
-		
+		abrir_gritter("Error","Se ha terminado tu Sesión","danger");	
 	</script>
-<?php
+<?php 
+	header("Location: ../");
 }
 $_SESSION[ 'ULTIMA_ACTIVIDAD' ] = time();
 

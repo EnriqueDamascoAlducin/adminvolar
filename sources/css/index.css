@@ -11,6 +11,18 @@ select{
 textarea{
 	background-color: transparent!important ;
 }
+input:focus{
+	border-color: #00C851!important;
+	border-width: 2px!important;
+}
+select:focus{
+	border-color: #00C851!important;
+	border-width: 2px!important;
+}
+textarea:focus{
+	border-color: #00C851!important;
+	border-width: 2px!important;
+}
 body{
 	background-image: url("../images/fondos/fondo.png");
 	background-repeat: all;

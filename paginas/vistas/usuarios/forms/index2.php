@@ -1,34 +1,35 @@
-<?php
+<?php 
+	
 	require  $_SERVER['DOCUMENT_ROOT'].'/admin/paginas/modelos/login.php';
 	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin/paginas/controladores/conexion.php';
 	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin/paginas/controladores/fin_session.php';	
-	$permisos=[];
-	$modulo=$_POST['id'];
+	
 	$usuario= unserialize((base64_decode($_SESSION['usuario'])));
-	$idUsu=$usuario->getIdUsu();
-	$subPermisos = $con->query("CALL permisosSubModulos($idUsu,$modulo)")->fetchALL (PDO::FETCH_OBJ);
-	foreach ($subPermisos as $subPermiso) {
-		$permisos[] = $subPermiso->nombre_sp;
-	}
-?>	
-<?php if(in_array("AGREGAR", $permisos)){ ?>
-	<div class="alert alert-info" onclick="accionusuarios('agregar', <?php echo $usuario->getIdUsu(); ?>)">
-	  <strong><i class="fa fa-plus fa-md"></i></strong> Agregar.
-	</div>
-<?php } ?>
-<?php
-	require_once "filtros.php";
-?>
+	$modulos = $con->consulta("id_per,nombre_per,img_per ","permisos_volar","status<>0 ORDER BY nombre_per ASC");
+	$idUsu=$_POST['id'];
 
-<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" id="tablaUsuarios">
+	
+?>
+<div class="container row" style="margin-top: 5%;">
+	<?php foreach ($modulos as $modulo) { ?>
+		<div class="card" style="width: 20rem;margin: 10px;">
+			<center>
+	  			<img class="card-img-top" src="../sources/images/modulos/<?php echo $modulo->img_per; ?>" alt="Card image cap " style ="width: 25%;max-width: 25%;margin-top: 3% " >
+	  		</center>
+	  		<div class="card-body">
+	    		<h5 class="card-title"><?php echo $modulo->nombre_per ?></h5>
+	    		<p class="card-text">Asignar Permisos para <?php echo $modulo->nombre_per ?> </p>
+	    		<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#modal"  onclick="verPermisos(<?php echo $idUsu .','.$modulo->id_per ?>)" 	>Asignar</a>
+	  		</div>
+		</div>
+	<?php } ?>
 </div>
-<input type="hidden" id="modulo" value="<?php echo $modulo; ?>">
 
 <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-md" role="dialog">
     <div class="modal-content ">
       <div class="modal-header">
-        <h5 class="modal-title" id="tituloModal"></h5>
+        <h5 class="modal-title" id="tituloModal">Asignar Permisos</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -45,4 +46,4 @@
     </div>
   </div>
 </div>
-<script type="text/javascript" src="vistas/usuarios/js/index.js"></script>
+<script type="text/javascript" src="vistas/usuarios/js/index2.js"></script>
