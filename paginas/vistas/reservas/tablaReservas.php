@@ -1,8 +1,18 @@
 <?php 
+	require  $_SERVER['DOCUMENT_ROOT'].'/admin/paginas/modelos/login.php';
 	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin/paginas/controladores/conexion.php';
+	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin/paginas/controladores/fin_session.php';	
 
+	
 	$modulo= $_POST['modulo'];
-	$campos= "id_temp,CONCAT(ifnull(nombre_temp,''),' ',ifnull(apellidos_temp,'')) as nombre, mail_temp,CONCAT(ifnull(telfijo_temp,''),' / ',ifnull(telcelular_temp,'')) as telefonos, tv.status,CONCAT(nombre_usu, ' ', IFNULL(apellidop_usu,''),' ',IFNULL(apellidom_usu,'')) as empleado ,fechavuelo_temp";
+	$usuario= unserialize((base64_decode($_SESSION['usuario'])));
+	$idUsu=$usuario->getIdUsu();
+	$subPermisos = $con->query("CALL permisosSubModulos($idUsu,$modulo)")->fetchALL (PDO::FETCH_OBJ);
+	$permisos=[];
+	foreach ($subPermisos as $subPermiso) {
+		$permisos[] = $subPermiso->nombre_sp;
+	}
+	$campos= "id_temp,CONCAT(ifnull(nombre_temp,''),' ',ifnull(apellidos_temp,'')) as nombre, mail_temp,CONCAT(ifnull(telfijo_temp,''),' / ',ifnull(telcelular_temp,'')) as telefonos, tv.status,CONCAT(nombre_usu, ' ', IFNULL(apellidop_usu,''),' ',IFNULL(apellidom_usu,'')) as empleado,idusu_temp as idusu ,fechavuelo_temp";
 	$tabla = "temp_volar tv INNER JOIN volar_usuarios ve on tv.idusu_temp = ve.id_usu";
 	$filtro = "tv.status<>0";
 	if(isset($_POST['fechaI']) && $_POST['fechaI']!='' ){
@@ -31,8 +41,11 @@
 	if(isset($_POST['reserva']) && $_POST['reserva']!='' ){
 		$filtro.= " and id_temp = ".$_POST['reserva'];
 	}
+	if(!in_array("GENERAL", $permisos)){
+		$filtro.= " and idusu_temp=".$idUsu;
+	}
 	//echo "SELECT $campos FROM $tabla WHERE $filtro";
-	$filtro .= " ORDER BY id_temp DESC limit 1000";	
+	$filtro .= " ORDER BY id_temp DESC limit 100";
 	$reservas=$con->consulta($campos,$tabla,$filtro);
 ?>
 <table class="DataTable table table-striped table-bordered table-hover">
@@ -41,8 +54,9 @@
 			<th style="text-align: center;vertical-align: middle;max-width: 1%;width: 1%;"># Reserva</th>
 			<th style="text-align: center;vertical-align: middle;max-width: 1%;width: 1%;">Nombre</th>
 			
-			<th style="text-align: center;vertical-align: middle;max-width: 1%;width: 1%;">Empleado</th>
-			
+			<?php if(in_array("GENERAL",$permisos)){ ?>
+				<th style="text-align: center;vertical-align: middle;max-width: 1%;width: 1%;">Empleado</th>
+			<?php } ?>
 			<th style="text-align: center;vertical-align: middle;max-width: 1%;width: 1%;">Correo</th>
 			<th style="text-align: center;vertical-align: middle;max-width: 1%;width: 1%;">Telefonos Fijo/Celular</th>
 			<th style="text-align: center;vertical-align: middle;max-width: 1%;width: 1%;">Fecha de Vuelo</th>
@@ -57,7 +71,9 @@
 			<tr>
 				<td><?php echo $reserva->id_temp; ?></td>
 				<td><?php echo $reserva->nombre; ?></td>
-				<td><?php echo $reserva->empleado; ?></td>
+				<?php if(in_array("GENERAL",$permisos)){ ?>
+					<td><?php echo $reserva->empleado; ?></td>
+				<?php } ?>
 				<td><?php echo $reserva->mail_temp; ?></td>
 				<td><?php echo $reserva->telefonos; ?></td>
 				<td><?php echo $reserva->fechavuelo_temp; ?></td>
@@ -93,16 +109,42 @@
 					?>
 				</td>
 				<td>
+
+					<!--========       EDITAR     ========= -->
+					<?php if(($idUsu==$reserva->idusu && in_array("EDITAR",$permisos)) || in_array("EDITAR GRAL",$permisos)) { ?>
 					<i class="fa fa-pencil-square fa-md" style="color:#33b5e5" title="Editar"  onclick="accionReserva('editar', <?php echo $reserva->id_temp; ?>)"></i>
+					<?php } ?>
+
+					<!--========       CONCILIAR     ========= -->
+					<?php if( in_array("CONCILIAR",$permisos)){ ?>
 					<i class="fa fa-check-square-o fa-md" style="color:#aa66cc" title="Conciliar"  onclick="accionReserva('conciliar', <?php echo $reserva->id_temp; ?>)"></i>
-					<i class="fa fa-money fa-md" style="color:#00C851" title="Agregar Pago" onclick="accionReserva('pagos', <?php echo $reserva->id_temp; ?>)"> </i>
+					<?php } ?>
+
+					<!--========       PAGOS     ========= -->
+					<?php if(in_array("AGREGAR PAGO",$permisos)){ ?>
+					<i class="fa fa-money fa-md" style="color:#00C851" title="Agregar Pago" data-toggle="modal" data-target="#modalReservas" onclick="agregarPago(<?php echo $reserva->id_temp; ?>,'<?php echo $reserva->nombre; ?>')"> </i>
+					<?php } ?>
+
+					<!--========       BITACORA     ========= -->
+					<?php if(($idUsu==$reserva->idusu && in_array("BITACORA",$permisos)) || in_array("BITACORA GRA", $permisos)){ ?>
 					<i class="fa fa-file-text-o fa-md" style="color:#2BBBAD" title="Bitacora de Pagos"  onclick="accionReserva('bitacora', <?php echo $reserva->id_temp; ?>)"></i>
+					<?php } ?>
+					<!--========       PILOTOS     ========= -->
+					<?php if(in_array("PILOTOS",$permisos)){ ?>
 					<i class="fa fa-user-o fa-md" style="color:rgba(0, 150, 136, 0.7) " title="Asignar Pilotos"  onclick="accionReserva('pilotos', <?php echo $reserva->id_temp; ?>)"></i>
+					<?php } ?>
+					<!--========       VER     ========= -->
+					<?php if(($idUsu==$reserva->idusu && in_array("VER",$permisos)) || in_array("VER GRAL",$permisos)) { ?>
 					<i class="fa fa-eye fa-md" style="color:#311b92 " title="Ver" onclick="accionReserva('ver', <?php echo $reserva->id_temp; ?>)" ></i>
+					<?php } ?>
 					<!--========       Cotización     ========= -->
+					<?php if(in_array("COTIZACION",$permisos)){ ?>
 					<i class="fa fa-expand fa-md" style="color:#311b92 " title="Cotización" data-toggle="modal" data-target="#modalReservas"  onclick="mostrarCotizacion(<?php echo $reserva->id_temp; ?>, 'ver')" ></i>
+					<?php } ?>
 					<!--========       Eliminar     ========= -->
+					<?php if(($idUsu==$reserva->idusu && in_array("ELIMINAR",$permisos)) || in_array("ELIMINAR GRL",$permisos)) { ?>
 					<i class="fa fa-trash-o fa-md" style="color:#ff4444" title="Eliminar" data-toggle="modal" data-target="#modalReservas"  onclick="eliminarReserva('vistas/reservas/', <?php echo $reserva->id_temp; ?>, <?php echo $modulo; ?>)" ></i>
+					<?php } ?>
 				</td>
 			</tr>
 

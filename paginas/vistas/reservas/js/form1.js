@@ -1,10 +1,19 @@
 	$("input[id^='pasajeros']").attr("step",1);
+	var date = new Date();
+	var primerDia = new Date(date.getFullYear(), date.getMonth(), 1);
+	var ultimoDia = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+ 
 	var currentDate = new Date();
 	var wrong="";
 	var dia = currentDate.getDate();
 	var mes = currentDate.getMonth(); //Be careful! January is 0 not 1
 	var year = currentDate.getFullYear();
 	dia++;
+	if(dia>ultimoDia.getDate()){
+		alert(dia);
+		dia=1;
+		mes++;
+	}
 	mes++;
 	if(dia < 10){
 		dia = "0"+dia;
@@ -36,6 +45,13 @@
 		year=checkIn[0];
 		mes=checkIn[1];
 		dia=parseInt(checkIn[2])+1;
+		if(dia>ultimoDia.getDate()){
+			dia=1;
+			mes++;
+			if(mes < 10){
+				mes = "0"+mes;
+			}
+		}
 		if(dia < 10){
 			dia = "0"+dia;
 		}

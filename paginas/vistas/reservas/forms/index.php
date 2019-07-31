@@ -21,7 +21,7 @@
 		if($id==""){
 			$registrarNuevo= $con->query("CALL registrarReserva(".$usuario->getIdUsu().",@LID);");
 		}else{
-			$remplazarReserva = $con->query("CALL remplazarReserva(".$id.", @LID);");
+			$remplazarReserva = $con->query("CALL remplazarReserva(".$id.",".$usuario->getIdUsu().", @LID);");
 		}
 		$oldId = $id;
 		$consultaNuevo = $con->query("Select @LID as id")->fetchALL (PDO::FETCH_OBJ);

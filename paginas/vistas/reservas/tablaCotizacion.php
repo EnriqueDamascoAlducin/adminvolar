@@ -11,7 +11,9 @@
 	$serviciosReserva = $con->consulta("tipo_sv as tipo , nombre_servicio as servicio ,cantmax_servicio as cantmax, precio_servicio as precio "," servicios_vuelo_temp svt INNER JOIN servicios_volar sv ON svt.idservi_sv=sv.id_servicio ","  svt.status<>0 and cantidad_sv>0 and idtemp_sv =".$reserva);
 
 		
-	
+	$hotel=$datosReserva[0]->hotel;
+	$habitacion=$datosReserva[0]->habitacion;
+	$habitacion=explode("|", $habitacion);
 	$tPasajeros = $datosReserva[0]->pasajerosN+ $datosReserva[0]->pasajerosA;
 	$tipoVuelo = $datosReserva[0]->tipo_temp;
 	$totalPasajeros = $totalPasajeros[0]->Total;
@@ -24,7 +26,10 @@
 		$totalReserva+=$totalVuelo;
 		//echo "<br>Vuelo = ".$totalVuelo."<br>";
 		if($datosReserva[0]->habitacion!=''){
-			$precioHabitacion = $datosReserva[0]->precioHabitacion;
+			$precioHabitacion=$habitacion[1];
+			$nombreHabitacion=$habitacion[0];
+			$capacidadHabitacion=$habitacion[2];
+			$descripHabitacion=$habitacion[3];
 			$checkin= $datosReserva[0]->checkin_temp;
 			$checkout = $datosReserva[0]->checkout_temp;
 			$date1 = strtotime($checkin);  

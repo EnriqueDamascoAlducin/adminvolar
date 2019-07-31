@@ -64,6 +64,7 @@
 			</select>
 		</div>
 	</div>
+	<?php if(in_array("GENERAL",$permisos)){ ?>
 	<div class="col-sm-3 col-lg-3 col-md-3 col-6 col-xl-2 ">
 		<div class="form-group">
 			<label for="empleado">Empleado</label>
@@ -78,6 +79,7 @@
 			</select>
 		</div>
 	</div>
+	<?php } ?>
 	<div class="col-sm-3 col-lg-3 col-md-3 col-6 col-xl-2 ">
 		<div class="form-group">
 			<label for="reserva"># de Reserva</label>

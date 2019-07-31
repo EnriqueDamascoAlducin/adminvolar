@@ -62,11 +62,38 @@ function imprimirReporte(){
 	$("#imprimirReporte").click();
 }
 function eliminarReserva(url,reserva,idModulo){
-	$("button[id^='btnElimiar']").remove();
+	$("button[id^='btn']").remove();
 	$("#cuerpoModalReservas").html("Desea Eliminar la Reserva "+ reserva);
 	$("#tituloModalReservas").html("Eliminar Reserva "+ reserva);
 	$("#divBtnModalReservas").append('<button autofocus  data-dismiss="modal" type="button" id="btnElimiar'+reserva+'" class="btn btn-danger" onclick=\'confirmarEliminar('+reserva+',"'+url+'", '+idModulo+');\' >Confirmar</button>');
 	$("#btnElimiar"+reserva).focus();
+}
+function agregarPago(reserva,cliente){
+	$("button[id^='btn']").remove();
+	$("#cuerpoModalReservas").html("Agregar Pago para "+ cliente);
+	$("#tituloModalReservas").html("Agregar Pago para "+ cliente);
+	$("#divBtnModalReservas").append('<button autofocus  data-dismiss="modal" type="button" id="btnAgregarPago'+reserva+'" class="btn btn-success" onclick=\'confirmarAgregarPago('+reserva+','+cliente+');\' >Confirmar</button>');
+	$("#btnPago"+reserva).focus();
+	url="vistas/reservas/forms/";
+	parametros={id:reserva};
+  	$.ajax({
+		url:url,
+		method: "POST",
+  		data: parametros,
+  		success:function(response){
+			$("#cuerpoModalReservas").html(response);	
+  		},
+  		error:function(){
+  		
+          abrir_gritter("Error","Error desconocido" ,"danger");
+  		},
+  		statusCode: {
+		    404: function() {
+		     
+          abrir_gritter("Error","URL NO encontrada" ,"danger");
+		    }
+		  }
+	});
 }
 function confirmarEliminar(reserva,url,idModulo){
 	$.ajax({

@@ -4,6 +4,7 @@
 	include_once 'fin_session.php';
 	if(isset($_POST['accion']) && $_POST['accion']=='cancelar'){
 		$eliminarReserva = $con->actualizar("temp_volar","status=0","id_temp=".$_POST['reserva']);
+		$eliminarReserva = $con->actualizar("servicios_vuelo_temp","status=0","idtemp_sv=".$_POST['reserva']);
 		echo $eliminarReserva;
 	}else{
 		$reserva = $_POST['id'];

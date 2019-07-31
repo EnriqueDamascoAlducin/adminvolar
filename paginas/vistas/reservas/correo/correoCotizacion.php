@@ -16,6 +16,9 @@
 	$datosReserva = $con->query("CALL getResumenREserva(".$reserva.");")->fetchALL (PDO::FETCH_OBJ);
 	$serviciosReserva = $con->consulta("tipo_sv as tipo , nombre_servicio as servicio ,cantmax_servicio as cantmax, precio_servicio as precio "," servicios_vuelo_temp svt INNER JOIN servicios_volar sv ON svt.idservi_sv=sv.id_servicio ","  svt.status<>0 and cantidad_sv>0 and idtemp_sv =".$reserva);
 
+	$habitacion=$datosReserva[0]->habitacion;
+	$habitacion=explode("|", $habitacion);
+	
 	$getVendedorInfo = $con->consulta("CONCAT(IFNULL(nombre_usu,''),' ',IFNULL(apellidop_usu,''),' ', IFNULL(apellidom_usu,'')) as nombre, correo_usu as correo,telefono_usu as telefono", " volar_usuarios vu INNER JOIN temp_volar tv ON tv.idusu_temp=vu.id_usu ","id_temp=".$reserva);
 	$tPasajeros = $datosReserva[0]->pasajerosN+ $datosReserva[0]->pasajerosA;
 	$tipoVuelo = $datosReserva[0]->tipo_temp;
@@ -29,7 +32,10 @@
 		$totalReserva+=$totalVuelo;
 		//echo "<br>Vuelo = ".$totalVuelo."<br>";
 		if($datosReserva[0]->habitacion!=''){
-			$precioHabitacion = $datosReserva[0]->precioHabitacion;
+			$precioHabitacion=$habitacion[1];
+			$nombreHabitacion=$habitacion[0];
+			$capacidadHabitacion=$habitacion[2];
+			$descripHabitacion=$habitacion[3];
 			$checkin= $datosReserva[0]->checkin_temp;
 			$checkout = $datosReserva[0]->checkout_temp;
 			$date1 = strtotime($checkin);  
