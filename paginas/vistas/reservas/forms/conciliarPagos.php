@@ -8,7 +8,7 @@
 	$pagos = $con->consulta("CONCAT(nombre_usu,' ',apellidop_usu) as usuario, referencia_bp as referencia, cantidad_bp as cantidad,fecha_bp as fecha, bp.status as stat,id_bp as id","bitpagos_volar bp INNER JOIN volar_usuarios vu  ON bp.idreg_bp=vu.id_usu","bp.status<>0 and idres_bp=".$reserva);
 ?>
 <?php if(sizeof($pagos)>0){ ?>
-	<table class="table dataTable" style="width: 100%;">
+	<table class="table "  id="DataTable" style="width: 100%;">
 		<thead>
 			<th>Usuario</th>
 			<th>Referencia</th>
@@ -58,7 +58,7 @@
 		</tbody>
 	</table>
 	<script type="text/javascript">
-		tables();
+		$("#DataTable").DataTable();
 
 		function accionesPagos(pago,accion,reserva){
 			$.ajax({

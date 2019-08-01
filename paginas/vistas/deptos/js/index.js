@@ -50,14 +50,50 @@ function eliminarDepto(depto, nombre){
 	$("#btnElimiar"+depto).focus();
 	//confirmarEliminar(usuario,nombre)
 }
+function confirmarAgregarPuesto(depto,nombre){
+	nombre=$("#puesto").val();
+	puesto=$("#idPuesto").val().trim();
+	depto=$("#depto").val().trim();
+	accion = "registrarPuesto";
+	url='controladores/deptosController.php';
+	parametros={
+		nombre:nombre,
+		puesto:puesto,
+		depto:depto,
+		accion:accion
+	};
+	$.ajax({
+		url:url,
+		method: "POST",
+  		data: parametros,
+  		success:function(response){
+  			if(response!="Error"){
+  				abrir_gritter("Exito",response,"info");
+  			}else{
+  				abrir_gritter("Error",response,"warning");
+  			}
+			
+  		},
+  		error:function(){
+  		
+          abrir_gritter("Error","Error desconocido" ,"danger");
+  		},
+  		statusCode: {
+		    404: function() {
+		     
+          abrir_gritter("Error","URL NO encontrada" ,"danger");
+		    }
+		  }
+	});
+	agregarPuestos(depto,nombre);
+}
 function agregarPuestos(depto,nombre){
 	$("button[id^='btn']").remove();
 	$("#tituloModal").html("Agregar Nuevo Puesto  a "+nombre);
-	$("#modalSize").addClass("modal-lg");
-	$("#DivBtnModal").append('<button autofocus  data-dismiss="modal" type="button" id="btnAgregar'+depto+'" class="btn btn-danger" onclick=\'confirmarEliminar('+depto+',"'+nombre+'")\' >Confirmar</button>');
+	$("#DivBtnModal").append('<button autofocus  data-dismiss="modal" type="button" id="btnAgregar'+depto+'" class="btn btn-info" onclick=\'confirmarAgregarPuesto('+depto+',"'+nombre+'")\' >Confirmar</button>');
 	$("#btnAgregar"+depto).focus();
 	url="vistas/deptos/forms/index2.php";
-	parametros={id:depto};
+	parametros={id:depto,nombre:nombre};
   	$.ajax({
 		url:url,
 		method: "POST",
@@ -104,6 +140,37 @@ function confirmarEliminar(depto,nombre){
 		  }
 	});
 	$("#cuerpoModal").html("");
+}
+
+function accionesPuesto(puesto,accion,nombre,depto){
+
+	parametros={puesto:puesto,accion:accion};
+	$.ajax({
+		url:'controladores/deptosController.php',
+		method: "POST",
+  		data: parametros,
+  		success:function(response){
+  			if(response.includes("|")){
+  				puesto = response.split("|");
+  				$("#idPuesto").val(puesto[1]);
+  				$("#puesto").val(puesto[0]);
+  				alert(puesto[0]);
+  			}else{
+  				abrir_gritter("Eliminado",  response ,"warning");
+				agregarPuestos(depto,nombre);
+  			}
+  		},
+  		error:function(){
+  		
+          abrir_gritter("Error","Error desconocido" ,"danger");
+  		},
+  		statusCode: {
+		    404: function() {
+		     
+          abrir_gritter("Error","URL NO encontrada" ,"danger");
+		    }
+		  }
+	});
 }
 function confirmarAgregar(depto,accion){
 	nombre=$("#nombre").val().trim();

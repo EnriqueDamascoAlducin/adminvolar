@@ -60,7 +60,7 @@
 	</div>
 </div>
 <?php if(sizeof($pagos)>0){ ?>
-	<table class="table dataTable" style="width: 100%;">
+	<table class="table " id="DataTable" style="width: 100%;">
 		<thead>
 			<th>Usuario</th>
 			<th>Referencia</th>
@@ -111,7 +111,7 @@
 		</tbody>
 	</table>
 	<script type="text/javascript">
-		tables();
+		$("#DataTable").DataTable();
 
 		function accionesPagos(pago,accion,reserva){
 			$.ajax({

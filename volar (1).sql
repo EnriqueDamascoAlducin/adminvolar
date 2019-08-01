@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.0.1
+-- version 4.8.5
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 127.0.0.1
--- Tiempo de generación: 01-08-2019 a las 03:34:38
--- Versión del servidor: 10.3.16-MariaDB
--- Versión de PHP: 7.3.7
+-- Servidor: localhost
+-- Tiempo de generación: 01-08-2019 a las 21:23:37
+-- Versión del servidor: 10.1.39-MariaDB
+-- Versión de PHP: 7.3.5
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -26,7 +26,7 @@ DELIMITER $$
 --
 -- Procedimientos
 --
-CREATE   PROCEDURE `agregarServiciosReservas` (IN `_reserva` BIGINT, IN `_servicio` INT, IN `_tipo` INT, IN `_cantidad` BIGINT, OUT `respuesta` VARCHAR(50))  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `agregarServiciosReservas` (IN `_reserva` BIGINT, IN `_servicio` INT, IN `_tipo` INT, IN `_cantidad` BIGINT, OUT `respuesta` VARCHAR(50))  BEGIN
      IF (SELECT count(*)  FROM servicios_vuelo_temp  WHERE idtemp_sv =  _reserva and idservi_sv =_servicio)>0 THEN
         BEGIN
        		UPDATE servicios_vuelo_temp set cantidad_sv = _cantidad, tipo_sv= _tipo  WHERE idtemp_sv = _reserva and idservi_sv = _servicio;
@@ -43,7 +43,7 @@ CREATE   PROCEDURE `agregarServiciosReservas` (IN `_reserva` BIGINT, IN `_servic
 
 END$$
 
-CREATE   PROCEDURE `asigarPermisosModulos` (IN `_usuario` INT, IN `_modulo` INT, IN `_status` INT, OUT `_respuesta` VARCHAR(20))  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `asigarPermisosModulos` (IN `_usuario` INT, IN `_modulo` INT, IN `_status` INT, OUT `_respuesta` VARCHAR(20))  BEGIN
      IF (SELECT count(*)  FROM permisosusuarios_volar  WHERE idusu_puv = _usuario  and idsp_puv =_modulo )>0 THEN
         BEGIN
        		UPDATE permisosusuarios_volar set status = _status  WHERE idusu_puv =_usuario   and idsp_puv = _modulo;
@@ -57,13 +57,27 @@ CREATE   PROCEDURE `asigarPermisosModulos` (IN `_usuario` INT, IN `_modulo` INT,
       END IF;	
 END$$
 
-CREATE   PROCEDURE `eliminarDepartamento` (IN `_depto` INT, OUT `respuesta` VARCHAR(25))  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `eliminarDepartamento` (IN `_depto` INT, OUT `respuesta` VARCHAR(25))  BEGIN
 	UPDATE departamentos_volar set status=0 where id_depto=_depto ;
     UPDATE puestos_volar set status=0 where depto_puesto = _depto ;
+    update volar_usuarios set depto_usu = null, puesto_usu=null where depto_usu= _depto;
     SET respuesta = 'Eliminado';
 END$$
 
-CREATE   PROCEDURE `getReservaData` (IN `_reserva` INT)  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `eliminarPuesto` (IN `_puesto` INT, OUT `respuesta` VARCHAR(10))  BEGIN 
+	UPDATE puestos_volar set status=0 where id_puesto = _puesto;
+    UPDATE volar_usuarios set puesto_usu=null where puesto_usu = _puesto;
+    SET respuesta='Eliminado';
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `eliminarServicio` (IN `_servicio` INT, OUT `respuesta` VARCHAR(20))  BEGIN
+	
+	UPDATE servicios_volar SET STATUS= 0 WHERE id_servicio=_servicio;
+    UPDATE servicios_vuelo_temp set status = 0 where idservi_temp = _servicio and status<>0;
+    SET respuesta = 'Eliminado';
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getReservaData` (IN `_reserva` INT)  BEGIN
 	Select id_temp, idusu_temp, IFNULL(clave_temp,"") as clave_temp, IFNULL(nombre_temp,"") as nombre_temp, IFNULL(apellidos_temp,"") as apellidos_temp, IFNULL(mail_temp,"") as mail_temp, IFNULL(telfijo_temp,"") as telfijo_temp, IFNULL(telcelular_temp,"") as telcelular_temp, IFNULL(procedencia_temp,"") as procedencia_temp, IFNULL(pasajerosa_temp,"") as pasajerosa_temp,IFNULL(pasajerosn_temp,"") as pasajerosn_temp, IFNULL(motivo_temp,"") as motivo_temp, IFNULL(tipo_temp,"") as tipo_temp,  IFNULL(fechavuelo_temp,"") as fechavuelo_temp,  IFNULL(tarifa_temp,"") as tarifa_temp, IFNULL(hotel_temp,"") as hotel_temp,  IFNULL(habitacion_temp,"") as habitacion_temp,  IFNULL(checkin_temp,"") as checkin_temp,IFNULL(checkout_temp,"") as checkout_temp,IFNULL(comentario_temp,"") as comentario_temp, IFNULL(otroscar1_temp,"") as otroscar1_temp, IFNULL(otroscar2_temp,"") as otroscar2_temp, IFNULL(precio1_temp,"") as precio1_temp, 
 IFNULL(precio2_temp,"") as precio2_temp, IFNULL(tdescuento_temp,"") as tdescuento_temp, IFNULL(cantdescuento_temp,"") as cantdescuento_temp, IFNULL(total_temp,"") as total_temp, IFNULL(piloto_temp,"") as piloto_temp, IFNULL(kg_temp,"") as kg_temp, IFNULL(globo_temp,"") AS globo_temp, IFNULL(hora_temp,"") as hora_temp, register,status
 from temp_volar
@@ -71,7 +85,7 @@ from temp_volar
 Where id_temp =_reserva ;
 END$$
 
-CREATE   PROCEDURE `getResumenREserva` (IN `_reserva` BIGINT)  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getResumenREserva` (IN `_reserva` BIGINT)  BEGIN
 SELECT IFNULL((SELECT nombre_extra from extras_volar where id_extra=tv.motivo_temp),'') as motivo,IFNULL(comentario_temp,'') as comentario,ifnull(pasajerosa_temp,0) as pasajerosA , ifnull(pasajerosn_temp,0) as pasajerosN , IFNULL(habitacion_temp,'') as habitacion, tipo_temp, checkin_temp,checkout_temp, IFNULL(precio1_temp,0) as precio1, IFNULL(precio2_temp,0) as precio2, IFNULL(tdescuento_temp,'') as tdescuento, IFNULL(cantdescuento_temp,0) as cantdescuento, IFNULL(otroscar1_temp,'') as otroscar1,IFNULL(otroscar2_temp,'') as otroscar2, 
 IFNULL((SELECT IFNULL( nombre_hotel,'') as hotel FROM hoteles_volar where id_hotel=tv.hotel_temp),'') as hotel,
 IFNULL((SELECT CONCAT(IFNULL(nombre_habitacion,''),'|', IFNULL(precio_habitacion,0) ,'|', IFNULL(capacidad_habitacion,0)  ,'|', IFNULL(descripcion_habitacion,'')  ) as Habitaciones FROM habitaciones_volar WHERE id_habitacion=tv.habitacion_temp),'') as habitacion,
@@ -81,11 +95,11 @@ FROM temp_volar tv  INNER JOIN vueloscat_volar vcv on vcv.id_vc = tv.tipo_temp
 Where id_temp=_reserva;
 END$$
 
-CREATE   PROCEDURE `getServiciosReservas` (IN `_reserva` BIGINT, IN `_tipo` INT, IN `_servicio` INT)  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getServiciosReservas` (IN `_reserva` BIGINT, IN `_tipo` INT, IN `_servicio` INT)  BEGIN
 	Select * from servicios_vuelo_temp where idtemp_sv = _reserva  and tipo_sv = _tipo and idservi_sv = _servicio and cantidad_sv>0 ;
 END$$
 
-CREATE   PROCEDURE `getUsuarioInfo` (IN `_usuario` INT)  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getUsuarioInfo` (IN `_usuario` INT)  BEGIN
 Select IFNULL(id_usu,"") as id_usu,
 IFNULL(nombre_usu,"") as nombre_usu,
 IFNULL(apellidop_usu,"") as apellidop_usu,
@@ -114,7 +128,7 @@ IFNULL(status,"") as status
 from volar_usuarios Where id_usu= _usuario;
 END$$
 
-CREATE   PROCEDURE `permisosModulos` (IN `_idusu` INT)  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `permisosModulos` (IN `_idusu` INT)  BEGIN
 Select DISTINCT(nombre_per) as nombre, img_per, ruta_per,id_per
 FROM permisos_volar pv
 	INNER JOIN subpermisos_volar spv on pv.id_per=spv.permiso_sp
@@ -122,13 +136,13 @@ FROM permisos_volar pv
 WHERE pv.status<>0 and spv.status<>0 and puv.status<>0 and  idusu_puv =_idusu  ORDER BY nombre ASC;
 END$$
 
-CREATE   PROCEDURE `permisosSubModulos` (IN `_idusu` INT, IN `_idmodulo` INT)  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `permisosSubModulos` (IN `_idusu` INT, IN `_idmodulo` INT)  BEGIN
 Select nombre_sp, nombre_per
 FROM subpermisos_volar sp INNER JOIN permisos_volar pv on pv.id_per=sp.permiso_sp INNER JOIN permisosusuarios_volar pus on pus.idsp_puv= sp.id_sp
 WHERE pv.status<>0 and sp.status<>0 and pus.status<>0 AND pus.idusu_puv=_idusu and pv.id_per=_idmodulo;
 END$$
 
-CREATE   PROCEDURE `registrarPago` (IN `_pago` BIGINT, IN `_reserva` BIGINT, IN `_usuario` INT, IN `_metodo` INT, IN `_banco` INT, IN `_referencia` VARCHAR(200), IN `_cantidad` DOUBLE(10,2), IN `_fechaPago` VARCHAR(30), IN `_usuarioCOncilia` INT, OUT `respuesta` VARCHAR(25))  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `registrarPago` (IN `_pago` BIGINT, IN `_reserva` BIGINT, IN `_usuario` INT, IN `_metodo` INT, IN `_banco` INT, IN `_referencia` VARCHAR(200), IN `_cantidad` DOUBLE(10,2), IN `_fechaPago` VARCHAR(30), IN `_usuarioCOncilia` INT, OUT `respuesta` VARCHAR(25))  BEGIN
   IF(SELECT COUNT(id_bp) as pagos from bitpagos_volar  where idres_bp=_reserva )>0 THEN
     IF (SELECT (sum(ifnull(cantidad_bp,0))+ _cantidad ) from bitpagos_volar where idres_bp=_reserva )>(Select total_temp FROM temp_volar where id_temp  = _reserva) THEN
         SET respuesta = 'ERROR EN PAGO';
@@ -136,7 +150,7 @@ CREATE   PROCEDURE `registrarPago` (IN `_pago` BIGINT, IN `_reserva` BIGINT, IN 
         INSERT INTO bitpagos_volar (idres_bp,idreg_bp,metodo_bp,banco_bp,referencia_bp,cantidad_bp,fecha_bp) VALUES (_reserva,_usuario,_metodo,_banco,_referencia,_cantidad,_fechaPago);
         SET respuesta = CONCAT('Registrado|',LAST_INSERT_ID());
     ELSE
-       	UPDATE bitpagos_volar SET idconc_bp=_usuarioCOncilia, fechaconc_bp= CURRENT_TIMESTAMP, status = 3 WHERE id_bp = _pago;
+        UPDATE bitpagos_volar SET idconc_bp=_usuarioCOncilia, fechaconc_bp= CURRENT_TIMESTAMP, status = 3 WHERE id_bp = _pago;
         SET respuesta = 'Conciliado';
     END IF;
     IF (SELECT (sum(cantidad_bp)+ _cantidad ) from bitpagos_volar where idres_bp in (SELECT idres_bp from bitpagos_volar where id_bp = _pago) )=(Select total_temp FROM temp_volar where id_temp  in (SELECT idres_bp from bitpagos_volar where id_bp = _pago)) THEN
@@ -149,12 +163,12 @@ CREATE   PROCEDURE `registrarPago` (IN `_pago` BIGINT, IN `_reserva` BIGINT, IN 
   END IF;
 END$$
 
-CREATE   PROCEDURE `registrarReserva` (IN `_idusu` INT, OUT `lid` BIGINT)  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `registrarReserva` (IN `_idusu` INT, OUT `lid` BIGINT)  BEGIN
 	Insert INTO temp_volar (idusu_temp) VALUES(_idusu);
    	SET lid =  LAST_INSERT_ID();
 END$$
 
-CREATE   PROCEDURE `registrarUsuario` (IN `idusu` INT, IN `nombre` VARCHAR(200), IN `apellidop` VARCHAR(200), IN `apellidom` VARCHAR(200), IN `depto` INT, IN `puesto` INT, IN `correo` VARCHAR(250), IN `telefono` VARCHAR(14), IN `contrasena` VARCHAR(200), IN `usuario` VARCHAR(200), OUT `respuesta` VARCHAR(20))  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `registrarUsuario` (IN `idusu` INT, IN `nombre` VARCHAR(200), IN `apellidop` VARCHAR(200), IN `apellidom` VARCHAR(200), IN `depto` INT, IN `puesto` INT, IN `correo` VARCHAR(250), IN `telefono` VARCHAR(14), IN `contrasena` VARCHAR(200), IN `usuario` VARCHAR(200), OUT `respuesta` VARCHAR(20))  BEGIN
 	IF(SELECT COUNT(id_usu) from volar_usuarios where usuario_usu=usuario and status<>0 and id_usu<> idusu)>0 THEN
     SET respuesta='Ya existe el usuario';
 	ELSEIF (idusu='') THEN
@@ -171,7 +185,7 @@ CREATE   PROCEDURE `registrarUsuario` (IN `idusu` INT, IN `nombre` VARCHAR(200),
     END IF;
 END$$
 
-CREATE   PROCEDURE `remplazarReserva` (IN `_reserva` INT, IN `_idusu` INT, OUT `lid` INT)  BEGIN 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `remplazarReserva` (IN `_reserva` INT, IN `_idusu` INT, OUT `lid` INT)  BEGIN 
 	INSERT INTO temp_volar(
         nombre_temp,
         apellidos_temp,
@@ -246,14 +260,14 @@ CREATE   PROCEDURE `remplazarReserva` (IN `_reserva` INT, IN `_idusu` INT, OUT `
     UPDATE temp_volar set status = 6 where id_temp=_reserva;
 END$$
 
-CREATE   PROCEDURE `remplazarServiciosReservas` (IN `_reserva` BIGINT, IN `_oldReserva` BIGINT)  BEGIN 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `remplazarServiciosReservas` (IN `_reserva` BIGINT, IN `_oldReserva` BIGINT)  BEGIN 
 	INSERT INTO servicios_vuelo_temp
 		(idservi_sv,tipo_sv,cantidad_sv,status)
 		SELECT idservi_sv,tipo_sv,cantidad_sv,status from servicios_vuelo_temp where idtemp_sv =_oldReserva;
         UPDATE servicios_vuelo_temp set idtemp_sv = _reserva where idtemp_sv is null;
 END$$
 
-CREATE   PROCEDURE `usuarioLoggeado` (IN `_usuario` VARCHAR(100), IN `_password` VARCHAR(150))  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `usuarioLoggeado` (IN `_usuario` VARCHAR(100), IN `_password` VARCHAR(150))  BEGIN
  SELECT * 
  FROM volar_usuarios
  WHERE usuario_usu=_usuario and contrasena_usu=_password;
@@ -276,8 +290,8 @@ CREATE TABLE `bitacora_actualizaciones_volar` (
   `valor_bit` varchar(150) COLLATE utf8_spanish_ci DEFAULT NULL COMMENT 'Valor',
   `tipo_bit` tinyint(4) DEFAULT NULL COMMENT 'Tipo de Movimiento',
   `confirmacion_bit` tinyint(4) DEFAULT NULL COMMENT 'Confirmación',
-  `register` datetime NOT NULL DEFAULT current_timestamp() COMMENT 'Reistro',
-  `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT 'Status'
+  `register` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Reistro',
+  `status` tinyint(4) NOT NULL DEFAULT '1' COMMENT 'Status'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
@@ -310,33 +324,9 @@ CREATE TABLE `bitpagos_volar` (
   `fecha_bp` date NOT NULL COMMENT 'Fecha de Pago',
   `idconc_bp` int(11) DEFAULT NULL COMMENT 'Usuario que Coincilia',
   `fechaconc_bp` datetime DEFAULT NULL COMMENT 'Fecha de Conciliación',
-  `register` datetime NOT NULL DEFAULT current_timestamp() COMMENT 'Register',
-  `status` tinyint(4) NOT NULL DEFAULT 4 COMMENT 'Status'
+  `register` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Register',
+  `status` tinyint(4) NOT NULL DEFAULT '4' COMMENT 'Status'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci COMMENT='Bitácora de Pagos';
-
---
--- Volcado de datos para la tabla `bitpagos_volar`
---
-
-INSERT INTO `bitpagos_volar` (`id_bp`, `idres_bp`, `idreg_bp`, `metodo_bp`, `banco_bp`, `referencia_bp`, `cantidad_bp`, `fecha_bp`, `idconc_bp`, `fechaconc_bp`, `register`, `status`) VALUES
-(14, 1203, 1, 56, 76, 'FAFAFAFA', '500.00', '2019-07-12', 1, '2019-07-31 18:05:16', '2019-07-31 17:03:56', 1),
-(15, 1203, 1, 57, 76, '500', '200.00', '2019-07-12', NULL, NULL, '2019-07-31 18:09:45', 0),
-(16, 1203, 1, 57, 75, 'PRUEBA', '15.00', '2019-07-12', NULL, NULL, '2019-07-31 18:28:05', 0),
-(17, 1203, 1, 59, 75, 'PRUEBA2', '500.00', '2019-07-31', NULL, NULL, '2019-07-31 18:46:58', 0),
-(18, 1203, 1, 57, 64, 'PRUEBA3', '500.00', '2019-07-31', NULL, NULL, '2019-07-31 18:48:35', 0),
-(19, 1203, 1, 55, 75, 'PRUEBA4', '200.00', '2019-07-31', NULL, NULL, '2019-07-31 18:49:11', 0),
-(20, 1203, 1, 56, 64, 'PRUEBA 5', '250.00', '2019-07-30', NULL, NULL, '2019-07-31 18:49:42', 0),
-(21, 1203, 1, 57, 76, 'PRUEBA6', '100.00', '2019-07-31', NULL, NULL, '2019-07-31 18:51:36', 0),
-(22, 1203, 1, 58, 76, 'PRUEBA 7', '150.00', '2019-07-31', NULL, NULL, '2019-07-31 18:52:22', 0),
-(23, 1203, 1, 57, 76, 'PRUEBA8', '500.00', '2019-07-31', NULL, NULL, '2019-07-31 18:53:50', 0),
-(24, 1203, 1, 56, 64, '12', '100.00', '1979-12-07', NULL, NULL, '2019-07-31 18:54:36', 0),
-(25, 1203, 1, 57, 76, '12', '12.00', '1997-12-12', NULL, NULL, '2019-07-31 18:55:59', 0),
-(26, 1203, 1, 57, 75, '500', '250.00', '1997-12-16', NULL, NULL, '2019-07-31 18:56:27', 0),
-(27, 1203, 1, 58, 75, '500', '500.00', '1997-12-12', NULL, NULL, '2019-07-31 18:57:31', 0),
-(28, 1203, 1, 59, 76, '500', '500.00', '1997-12-12', NULL, NULL, '2019-07-31 18:58:40', 0),
-(29, 1203, 1, 57, 76, '500', '12.00', '1997-12-12', 1, '2019-07-31 19:07:38', '2019-07-31 18:59:15', 3),
-(30, 1203, 1, 57, 64, '500', '500.00', '2020-05-05', 1, '2019-07-31 19:08:03', '2019-07-31 19:02:45', 3),
-(31, 1203, 1, 56, 75, 'Algo', '500.00', '1997-12-16', 1, '2019-07-31 19:08:13', '2019-07-31 19:05:08', 3);
 
 -- --------------------------------------------------------
 
@@ -347,8 +337,8 @@ INSERT INTO `bitpagos_volar` (`id_bp`, `idres_bp`, `idreg_bp`, `metodo_bp`, `ban
 CREATE TABLE `cat_servicios_volar` (
   `id_cat` int(11) NOT NULL COMMENT 'Llave Primaria',
   `nombre_cat` varchar(200) COLLATE utf8_spanish_ci NOT NULL COMMENT 'Nombre del Servicio',
-  `register` datetime NOT NULL DEFAULT current_timestamp() COMMENT 'Registro',
-  `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT 'Status'
+  `register` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Registro',
+  `status` tinyint(4) NOT NULL DEFAULT '1' COMMENT 'Status'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
@@ -382,8 +372,8 @@ INSERT INTO `cat_servicios_volar` (`id_cat`, `nombre_cat`, `register`, `status`)
 CREATE TABLE `departamentos_volar` (
   `id_depto` int(11) NOT NULL COMMENT 'Llave Primaria',
   `nombre_depto` varchar(150) COLLATE utf8_spanish_ci DEFAULT NULL COMMENT 'Nombre',
-  `register` datetime NOT NULL DEFAULT current_timestamp() COMMENT 'Registro',
-  `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT 'Status'
+  `register` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Registro',
+  `status` tinyint(4) NOT NULL DEFAULT '1' COMMENT 'Status'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
@@ -408,8 +398,8 @@ CREATE TABLE `extras_volar` (
   `abrev_extra` char(5) COLLATE utf8_spanish_ci DEFAULT NULL COMMENT 'Abreviación',
   `nombre_extra` varchar(50) COLLATE utf8_spanish_ci NOT NULL COMMENT 'Nombre',
   `clasificacion_extra` varchar(15) COLLATE utf8_spanish_ci NOT NULL DEFAULT 'estados' COMMENT 'Clasificación',
-  `register` datetime NOT NULL DEFAULT current_timestamp() COMMENT 'Registro',
-  `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT 'Status'
+  `register` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Registro',
+  `status` tinyint(4) NOT NULL DEFAULT '1' COMMENT 'Status'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
@@ -526,8 +516,8 @@ CREATE TABLE `globos_volar` (
   `nombre_globo` varchar(100) COLLATE utf8_spanish_ci DEFAULT NULL COMMENT 'Nombre',
   `peso_globo` decimal(10,2) DEFAULT NULL COMMENT 'Peso Maximo(Kg)',
   `maxpersonas_globo` tinyint(4) DEFAULT NULL COMMENT 'Personas Máximas',
-  `register` datetime NOT NULL DEFAULT current_timestamp() COMMENT 'Registro',
-  `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT 'Status'
+  `register` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Registro',
+  `status` tinyint(4) NOT NULL DEFAULT '1' COMMENT 'Status'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
@@ -535,8 +525,8 @@ CREATE TABLE `globos_volar` (
 --
 
 INSERT INTO `globos_volar` (`id_globo`, `placa_globo`, `nombre_globo`, `peso_globo`, `maxpersonas_globo`, `register`, `status`) VALUES
-(1, '9878-LKJH', 'Globo Amarillo', '840.20', 12, '2019-05-12 15:06:29', 0),
-(2, 'AMA2345', 'Globo Amarillo', '40.00', 10, '2019-06-06 22:16:13', 1);
+(1, '9878-LKJH', 'Globo Amarillo', '840.20', 12, '2019-05-12 15:06:29', 1),
+(2, 'AMA2345', 'Napolitano', '40.00', 10, '2019-06-06 22:16:13', 1);
 
 -- --------------------------------------------------------
 
@@ -551,8 +541,8 @@ CREATE TABLE `habitaciones_volar` (
   `precio_habitacion` decimal(8,2) NOT NULL COMMENT 'Precio/Noche',
   `capacidad_habitacion` mediumint(9) DEFAULT NULL COMMENT 'Personas',
   `descripcion_habitacion` varchar(250) COLLATE utf8_spanish_ci NOT NULL COMMENT 'Descripción',
-  `register` datetime NOT NULL DEFAULT current_timestamp() COMMENT 'Registro',
-  `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT 'Status'
+  `register` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Registro',
+  `status` tinyint(4) NOT NULL DEFAULT '1' COMMENT 'Status'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci COMMENT='Habitaciones por Hotel';
 
 --
@@ -597,8 +587,8 @@ CREATE TABLE `hoteles_volar` (
   `correo_hotel` varchar(150) COLLATE utf8_spanish_ci DEFAULT NULL COMMENT 'Correo',
   `img_hotel` varchar(50) COLLATE utf8_spanish_ci DEFAULT NULL COMMENT 'Imagen',
   `pagina_hotel` varchar(40) COLLATE utf8_spanish_ci DEFAULT NULL COMMENT 'Pagina Web',
-  `register` datetime NOT NULL DEFAULT current_timestamp() COMMENT 'Registro',
-  `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT 'Status'
+  `register` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Registro',
+  `status` tinyint(4) NOT NULL DEFAULT '1' COMMENT 'Status'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci COMMENT='Tabla de Hoteles';
 
 --
@@ -635,8 +625,8 @@ CREATE TABLE `permisosusuarios_volar` (
   `id_puv` int(11) NOT NULL COMMENT 'Llave Primaria',
   `idusu_puv` int(11) NOT NULL COMMENT 'Usuario',
   `idsp_puv` int(11) NOT NULL COMMENT 'Sub Permiso',
-  `register` datetime NOT NULL DEFAULT current_timestamp() COMMENT 'Registro',
-  `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT 'Status'
+  `register` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Registro',
+  `status` tinyint(4) NOT NULL DEFAULT '1' COMMENT 'Status'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
@@ -658,28 +648,28 @@ INSERT INTO `permisosusuarios_volar` (`id_puv`, `idusu_puv`, `idsp_puv`, `regist
 (46, 1, 13, '2019-04-11 11:41:39', 1),
 (47, 1, 26, '2019-04-11 14:37:28', 1),
 (48, 1, 10, '2019-04-14 10:32:03', 1),
-(49, 1, 28, '2019-04-14 15:06:41', 1),
+(49, 1, 28, '2019-04-14 15:06:41', 0),
 (50, 1, 27, '2019-04-15 11:34:03', 0),
-(51, 1, 18, '2019-04-16 11:19:09', 1),
+(51, 1, 18, '2019-04-16 11:19:09', 0),
 (52, 1, 23, '2019-04-16 16:53:29', 1),
-(57, 1, 30, '2019-04-18 12:44:54', 1),
-(58, 1, 32, '2019-04-18 12:44:58', 1),
+(57, 1, 30, '2019-04-18 12:44:54', 0),
+(58, 1, 32, '2019-04-18 12:44:58', 0),
 (59, 1, 16, '2019-04-18 12:45:08', 0),
 (60, 1, 17, '2019-04-18 12:45:09', 0),
 (61, 1, 15, '2019-04-18 12:45:11', 0),
-(62, 1, 14, '2019-04-18 12:45:13', 1),
-(63, 1, 31, '2019-04-18 12:45:18', 1),
-(64, 1, 33, '2019-05-12 14:37:42', 1),
-(65, 1, 34, '2019-05-12 15:07:31', 1),
-(66, 1, 35, '2019-05-12 15:07:32', 1),
+(62, 1, 14, '2019-04-18 12:45:13', 0),
+(63, 1, 31, '2019-04-18 12:45:18', 0),
+(64, 1, 33, '2019-05-12 14:37:42', 0),
+(65, 1, 34, '2019-05-12 15:07:31', 0),
+(66, 1, 35, '2019-05-12 15:07:32', 0),
 (67, 1, 36, '2019-05-12 15:26:05', 1),
-(68, 1, 37, '2019-05-12 18:13:26', 1),
-(69, 1, 38, '2019-05-12 18:14:24', 1),
-(70, 1, 39, '2019-05-12 18:14:25', 1),
-(71, 1, 40, '2019-05-16 20:47:45', 1),
-(72, 1, 41, '2019-05-16 20:47:47', 1),
-(73, 1, 42, '2019-05-16 20:47:48', 1),
-(74, 1, 43, '2019-05-18 20:48:41', 1),
+(68, 1, 37, '2019-05-12 18:13:26', 0),
+(69, 1, 38, '2019-05-12 18:14:24', 0),
+(70, 1, 39, '2019-05-12 18:14:25', 0),
+(71, 1, 40, '2019-05-16 20:47:45', 0),
+(72, 1, 41, '2019-05-16 20:47:47', 0),
+(73, 1, 42, '2019-05-16 20:47:48', 0),
+(74, 1, 43, '2019-05-18 20:48:41', 0),
 (75, 1, 44, '2019-05-19 22:03:23', 1),
 (76, 9, 7, '2019-05-21 16:36:24', 1),
 (77, 9, 11, '2019-05-21 16:36:31', 1),
@@ -700,11 +690,11 @@ INSERT INTO `permisosusuarios_volar` (`id_puv`, `idusu_puv`, `idsp_puv`, `regist
 (92, 8, 2, '2019-05-21 16:59:59', 0),
 (93, 8, 24, '2019-05-21 17:00:54', 0),
 (94, 8, 26, '2019-05-21 17:00:58', 0),
-(95, 9, 40, '2019-05-21 17:10:00', 1),
-(96, 9, 41, '2019-05-21 17:10:02', 1),
-(97, 9, 42, '2019-05-21 17:10:03', 1),
-(98, 1, 45, '2019-06-02 14:21:54', 1),
-(99, 1, 46, '2019-06-02 14:21:56', 1),
+(95, 9, 40, '2019-05-21 17:10:00', 0),
+(96, 9, 41, '2019-05-21 17:10:02', 0),
+(97, 9, 42, '2019-05-21 17:10:03', 0),
+(98, 1, 45, '2019-06-02 14:21:54', 0),
+(99, 1, 46, '2019-06-02 14:21:56', 0),
 (100, 1, 25, '2019-06-05 19:28:10', 0),
 (101, 1, 29, '2019-06-05 19:29:05', 1),
 (102, 9, 2, '2019-06-06 16:03:35', 0),
@@ -715,20 +705,20 @@ INSERT INTO `permisosusuarios_volar` (`id_puv`, `idusu_puv`, `idsp_puv`, `regist
 (107, 1, 47, '2019-06-06 22:10:43', 1),
 (108, 9, 23, '2019-06-25 07:22:01', 1),
 (109, 9, 47, '2019-06-25 07:22:28', 1),
-(110, 9, 32, '2019-06-25 07:22:56', 1),
-(111, 9, 46, '2019-06-25 07:22:57', 1),
-(112, 9, 45, '2019-06-25 07:22:58', 1),
-(113, 9, 14, '2019-06-25 07:23:05', 1),
-(114, 9, 15, '2019-06-25 07:23:06', 1),
-(115, 9, 16, '2019-06-25 07:23:06', 1),
-(116, 9, 17, '2019-06-25 07:23:08', 1),
-(117, 9, 28, '2019-06-25 07:23:12', 1),
-(118, 9, 37, '2019-06-25 07:23:13', 1),
-(119, 9, 39, '2019-06-25 07:23:15', 1),
-(120, 9, 38, '2019-06-25 07:23:16', 1),
-(121, 9, 33, '2019-06-25 07:23:21', 1),
-(122, 9, 34, '2019-06-25 07:24:39', 1),
-(123, 9, 35, '2019-06-25 07:24:40', 1),
+(110, 9, 32, '2019-06-25 07:22:56', 0),
+(111, 9, 46, '2019-06-25 07:22:57', 0),
+(112, 9, 45, '2019-06-25 07:22:58', 0),
+(113, 9, 14, '2019-06-25 07:23:05', 0),
+(114, 9, 15, '2019-06-25 07:23:06', 0),
+(115, 9, 16, '2019-06-25 07:23:06', 0),
+(116, 9, 17, '2019-06-25 07:23:08', 0),
+(117, 9, 28, '2019-06-25 07:23:12', 0),
+(118, 9, 37, '2019-06-25 07:23:13', 0),
+(119, 9, 39, '2019-06-25 07:23:15', 0),
+(120, 9, 38, '2019-06-25 07:23:16', 0),
+(121, 9, 33, '2019-06-25 07:23:21', 0),
+(122, 9, 34, '2019-06-25 07:24:39', 0),
+(123, 9, 35, '2019-06-25 07:24:40', 0),
 (124, 8, 13, '2019-06-25 07:51:14', 1),
 (125, 11, 2, '2019-06-25 07:53:08', 1),
 (126, 11, 7, '2019-06-25 07:53:10', 1),
@@ -741,29 +731,29 @@ INSERT INTO `permisosusuarios_volar` (`id_puv`, `idusu_puv`, `idsp_puv`, `regist
 (133, 11, 36, '2019-06-25 07:53:29', 1),
 (134, 11, 47, '2019-06-25 07:53:30', 1),
 (135, 11, 11, '2019-06-25 07:53:34', 1),
-(136, 11, 32, '2019-06-25 07:53:44', 1),
-(137, 11, 46, '2019-06-25 07:53:45', 1),
-(138, 11, 45, '2019-06-25 07:53:46', 1),
-(139, 11, 14, '2019-06-25 07:53:49', 1),
-(140, 11, 15, '2019-06-25 07:53:50', 1),
-(141, 11, 16, '2019-06-25 07:53:51', 1),
-(142, 11, 17, '2019-06-25 07:53:52', 1),
+(136, 11, 32, '2019-06-25 07:53:44', 0),
+(137, 11, 46, '2019-06-25 07:53:45', 0),
+(138, 11, 45, '2019-06-25 07:53:46', 0),
+(139, 11, 14, '2019-06-25 07:53:49', 0),
+(140, 11, 15, '2019-06-25 07:53:50', 0),
+(141, 11, 16, '2019-06-25 07:53:51', 0),
+(142, 11, 17, '2019-06-25 07:53:52', 0),
 (143, 11, 1, '2019-06-25 07:53:59', 1),
 (144, 11, 6, '2019-06-25 07:54:01', 1),
 (145, 11, 3, '2019-06-25 07:54:01', 1),
 (146, 11, 4, '2019-06-25 07:54:02', 1),
 (147, 11, 5, '2019-06-25 07:54:03', 1),
-(148, 11, 28, '2019-06-25 07:54:06', 1),
-(149, 11, 38, '2019-06-25 07:54:07', 1),
-(150, 11, 37, '2019-06-25 07:54:08', 1),
-(151, 11, 39, '2019-06-25 07:54:09', 1),
-(152, 11, 33, '2019-06-25 07:54:13', 1),
-(153, 11, 34, '2019-06-25 07:54:14', 1),
-(154, 11, 35, '2019-06-25 07:54:15', 1),
-(155, 11, 40, '2019-06-25 07:54:18', 1),
-(156, 11, 41, '2019-06-25 07:54:18', 1),
-(157, 11, 42, '2019-06-25 07:54:19', 1),
-(158, 11, 43, '2019-06-25 07:55:35', 1),
+(148, 11, 28, '2019-06-25 07:54:06', 0),
+(149, 11, 38, '2019-06-25 07:54:07', 0),
+(150, 11, 37, '2019-06-25 07:54:08', 0),
+(151, 11, 39, '2019-06-25 07:54:09', 0),
+(152, 11, 33, '2019-06-25 07:54:13', 0),
+(153, 11, 34, '2019-06-25 07:54:14', 0),
+(154, 11, 35, '2019-06-25 07:54:15', 0),
+(155, 11, 40, '2019-06-25 07:54:18', 0),
+(156, 11, 41, '2019-06-25 07:54:18', 0),
+(157, 11, 42, '2019-06-25 07:54:19', 0),
+(158, 11, 43, '2019-06-25 07:55:35', 0),
 (159, 11, 18, '2019-06-25 07:56:26', 0),
 (160, 3, 2, '2019-06-25 07:56:47', 1),
 (161, 3, 8, '2019-06-25 07:56:59', 1),
@@ -787,7 +777,10 @@ INSERT INTO `permisosusuarios_volar` (`id_puv`, `idusu_puv`, `idsp_puv`, `regist
 (179, 3, 7, '2019-07-30 20:26:24', 1),
 (180, 3, 10, '2019-07-30 20:26:25', 1),
 (181, 1, 51, '2019-07-30 21:47:35', 1),
-(182, 1, 52, '2019-07-31 16:21:29', 1);
+(182, 1, 52, '2019-07-31 16:21:29', 1),
+(183, 1, 53, '2019-08-01 13:43:05', 1),
+(184, 1, 54, '2019-08-01 13:43:06', 1),
+(185, 1, 55, '2019-08-01 13:43:06', 1);
 
 -- --------------------------------------------------------
 
@@ -800,8 +793,8 @@ CREATE TABLE `permisos_volar` (
   `nombre_per` varchar(100) COLLATE utf8_spanish_ci NOT NULL COMMENT 'Nombre del Permiso',
   `img_per` varchar(150) COLLATE utf8_spanish_ci NOT NULL COMMENT 'Imagen',
   `ruta_per` varchar(150) COLLATE utf8_spanish_ci DEFAULT NULL COMMENT 'Ruta delarchivo',
-  `register` datetime NOT NULL DEFAULT current_timestamp() COMMENT 'Registro',
-  `status` int(11) NOT NULL DEFAULT 1 COMMENT 'Status'
+  `register` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Registro',
+  `status` int(11) NOT NULL DEFAULT '1' COMMENT 'Status'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
@@ -813,15 +806,17 @@ INSERT INTO `permisos_volar` (`id_per`, `nombre_per`, `img_per`, `ruta_per`, `re
 (2, 'Reservas', 'newc.png', 'vistas/reservas/', '2019-03-31 10:29:44', 1),
 (3, 'Conciliar Pagos', 'conciliar.jpg', 'conciliar_pago/', '2019-03-31 14:19:37', 0),
 (4, 'Registrar Estados', 'registro.png', 'estados/', '2019-03-31 17:05:13', 0),
-(5, 'Servicios', 'servicio.png', 'agregar_servicio/', '2019-03-31 20:14:55', 1),
+(5, 'Servicios', 'servicio.png', 'agregar_servicio/', '2019-03-31 20:14:55', 0),
 (6, 'Vuelos', 'globo.png', 'registro_cat_vuelos/', '2019-04-05 13:37:32', 1),
-(7, 'Servicios', 'catalogo.png', 'catalogo_servicios/', '2019-04-08 22:42:53', 1),
+(7, 'Servicios', 'catalogo.png', 'catalogo_servicios/', '2019-04-08 22:42:53', 0),
 (8, 'Usuarios', 'users.png', 'vistas/usuarios/', '2019-04-09 12:59:39', 1),
 (9, 'Hoteles', 'hotel.png', 'registro_hoteles/', '2019-04-14 14:00:31', 1),
 (10, 'Globos', 'globo.png', 'globos/', '2019-05-12 14:37:06', 1),
 (11, 'Catalogos', 'catalogo.png', 'catalogos/', '2019-05-16 20:44:27', 1),
 (12, 'Sitio', 'sitio.png', 'sitio/', '2019-05-18 19:47:03', 1),
-(13, 'Departamentos', 'deptos.png', 'vistas/deptos/', '2019-07-30 18:20:58', 1);
+(13, 'Departamentos', 'deptos.png', 'vistas/deptos/', '2019-07-30 18:20:58', 1),
+(14, 'Globos', 'globo.png', 'vistas/globos/', '2019-08-01 12:47:12', 1),
+(15, 'Servicios', 'servicio.png', 'vistas/servicios/', '2019-08-01 13:34:30', 1);
 
 -- --------------------------------------------------------
 
@@ -833,8 +828,8 @@ CREATE TABLE `puestos_volar` (
   `id_puesto` int(11) NOT NULL COMMENT 'Llave Primaria',
   `nombre_puesto` varchar(150) COLLATE utf8_spanish_ci DEFAULT NULL COMMENT 'Puesto',
   `depto_puesto` int(11) DEFAULT NULL COMMENT 'Departamento',
-  `register` datetime DEFAULT current_timestamp() COMMENT 'Registro',
-  `status` tinyint(4) DEFAULT 1 COMMENT 'Status'
+  `register` datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'Registro',
+  `status` tinyint(4) DEFAULT '1' COMMENT 'Status'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
@@ -844,7 +839,9 @@ CREATE TABLE `puestos_volar` (
 INSERT INTO `puestos_volar` (`id_puesto`, `nombre_puesto`, `depto_puesto`, `register`, `status`) VALUES
 (1, 'DESARROLLADOR', 1, '2019-07-30 23:11:47', 1),
 (2, 'SOPORTE', 1, '2019-07-30 23:11:47', 1),
-(3, 'CONTADOR(A)', 3, '2019-07-31 18:35:16', 1);
+(3, 'CONTADOR(A)', 3, '2019-07-31 18:35:16', 1),
+(4, 'PILOTO', 4, '2019-08-01 00:33:55', 1),
+(5, 'REDES1', 1, '2019-08-01 12:17:51', 1);
 
 -- --------------------------------------------------------
 
@@ -856,8 +853,8 @@ CREATE TABLE `relacion_permisos` (
   `id_rel` int(11) NOT NULL COMMENT 'Llave Primaria',
   `idusu_rel` int(11) NOT NULL COMMENT 'Usuario',
   `idper_rel` int(11) NOT NULL COMMENT 'Permiso',
-  `register` datetime NOT NULL DEFAULT current_timestamp() COMMENT 'Registro',
-  `status` smallint(6) NOT NULL DEFAULT 1 COMMENT 'Status'
+  `register` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Registro',
+  `status` smallint(6) NOT NULL DEFAULT '1' COMMENT 'Status'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
@@ -885,8 +882,8 @@ CREATE TABLE `rel_catvuelos_volar` (
   `id_rel` int(11) NOT NULL COMMENT 'Llave Primaria',
   `idvc_rel` int(11) NOT NULL COMMENT 'Categoría de Vuelo',
   `idcat_rel` int(11) NOT NULL COMMENT 'Servicio',
-  `register` datetime NOT NULL DEFAULT current_timestamp() COMMENT 'Registro',
-  `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT 'Status'
+  `register` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Registro',
+  `status` tinyint(4) NOT NULL DEFAULT '1' COMMENT 'Status'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci COMMENT='Servicios por tipo de vuelo';
 
 --
@@ -971,10 +968,10 @@ CREATE TABLE `servicios_volar` (
   `nombre_servicio` varchar(100) COLLATE utf8_spanish_ci DEFAULT NULL COMMENT 'Nombre',
   `precio_servicio` decimal(10,2) DEFAULT NULL COMMENT 'Precio',
   `img_servicio` varchar(100) COLLATE utf8_spanish_ci NOT NULL DEFAULT '../../img/image-not-found.gif' COMMENT 'Imagen',
-  `cortesia_servicio` tinyint(4) DEFAULT 1 COMMENT 'Con Cortesia',
+  `cortesia_servicio` tinyint(4) DEFAULT '1' COMMENT 'Con Cortesia',
   `cantmax_servicio` tinyint(4) DEFAULT NULL COMMENT 'Cantidad',
-  `register` datetime NOT NULL DEFAULT current_timestamp() COMMENT 'Registro',
-  `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT 'Status'
+  `register` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Registro',
+  `status` tinyint(4) NOT NULL DEFAULT '1' COMMENT 'Status'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
@@ -986,26 +983,20 @@ INSERT INTO `servicios_volar` (`id_servicio`, `nombre_servicio`, `precio_servici
 (2, 'Champagne', '1350.00', 'vino.png', 1, 1, '2019-03-31 20:22:30', 1),
 (3, 'Lona Personalizada', '600.00', 'lona_personalizada.png', 1, 1, '2019-03-31 20:25:04', 1),
 (4, 'Trio', '2000.00', 'trio.jpg', 1, 1, '2019-03-31 20:29:58', 1),
-(5, 'Desayuno', '140.00', 'desayuno.png', 1, 1, '2019-03-31 20:31:16', 1),
-(6, 'Cena', '350.00', 'cena.png', 1, 1, '2019-03-31 20:32:08', 1),
+(5, 'Desayuno', '140.00', 'desayuno.png', 1, 0, '2019-03-31 20:31:16', 1),
+(6, 'Cena', '350.00', 'cena.png', 1, 0, '2019-03-31 20:32:08', 1),
 (7, 'Fotos', '500.00', 'foto.jpg', 1, 1, '2019-03-31 21:33:58', 1),
 (8, 'Video', '500.00', 'video.png', 1, 1, '2019-03-31 21:35:45', 1),
 (9, 'Teotihuacan en Bici', '500.00', 'bici.png', 1, 0, '2019-03-31 21:36:20', 1),
 (10, 'Spa', '1500.00', 'spa.png', 1, 0, '2019-03-31 21:37:07', 1),
 (11, 'Temazcal', '600.00', 'temazcal.jpg', 1, 0, '2019-03-31 21:37:26', 1),
 (12, 'Cuatrimotos', '800.00', 'cuatrimotos.png', 1, 0, '2019-03-31 21:37:42', 1),
-(13, 'Entremes', '400.00', 'entremes.jpeg', 1, 0, '2019-03-31 21:38:01', 1),
+(13, 'Entremes', '400.00', 'entremes.jpeg', 1, 1, '2019-03-31 21:38:01', 1),
 (14, 'Transporte Redondo', '500.00', 'vredondo.jpg', 1, 0, '2019-03-31 21:38:32', 1),
 (15, 'Transporte Sencillo', '300.00', 'vsencillo.png', 1, 0, '2019-03-31 21:39:28', 1),
 (16, 'Foto Impresa', '200.00', 'fimpresa.png', 1, 1, '2019-03-31 21:39:50', 1),
 (17, 'Guia de 1 a 4', '900.00', '3pers.png', 1, 1, '2019-03-31 21:40:15', 1),
-(18, 'Guia de 5 a 10', '1500.00', '5pers.jpg', 1, 1, '2019-03-31 21:40:35', 1),
-(19, 'Servcio', '200.00', 'newc.png', 1, NULL, '2019-04-01 08:26:22', 0),
-(20, 'prueba2', '100.00', 'newc.png', 1, NULL, '2019-04-01 10:47:38', 0),
-(21, 'Prueba', '500.00', 'newc.png', 0, NULL, '2019-04-02 20:44:23', 0),
-(22, 'otro', '1250.00', 'new.png', 1, NULL, '2019-04-08 22:38:29', 0),
-(23, 'sa', '32.00', 'newc.png', 1, NULL, '2019-04-08 22:40:12', 0),
-(24, 'Prueba', '502.00', 'globo.png', 1, 1, '2019-05-20 20:18:26', 0);
+(18, 'Guia de 5 a 10', '1500.00', '5pers.jpg', 1, 1, '2019-03-31 21:40:35', 1);
 
 -- --------------------------------------------------------
 
@@ -1017,10 +1008,10 @@ CREATE TABLE `servicios_vuelo_temp` (
   `id_sv` int(11) NOT NULL COMMENT 'Llave Primaria',
   `idtemp_sv` int(11) DEFAULT NULL COMMENT 'Reserva',
   `idservi_sv` int(11) NOT NULL COMMENT 'Servicio',
-  `tipo_sv` tinyint(4) DEFAULT 0 COMMENT 'Tipo',
-  `cantidad_sv` mediumint(9) NOT NULL DEFAULT 0 COMMENT 'Cantidad',
-  `register` datetime NOT NULL DEFAULT current_timestamp() COMMENT 'Registro',
-  `status` tinyint(4) NOT NULL DEFAULT 2 COMMENT 'Status'
+  `tipo_sv` tinyint(4) DEFAULT '0' COMMENT 'Tipo',
+  `cantidad_sv` mediumint(9) NOT NULL DEFAULT '0' COMMENT 'Cantidad',
+  `register` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Registro',
+  `status` tinyint(4) NOT NULL DEFAULT '2' COMMENT 'Status'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
@@ -1032,7 +1023,115 @@ INSERT INTO `servicios_vuelo_temp` (`id_sv`, `idtemp_sv`, `idservi_sv`, `tipo_sv
 (431, 1004, 3, 2, 1, '2019-07-09 17:18:48', 2),
 (432, 1004, 9, 1, 6, '2019-07-09 17:18:58', 2),
 (433, 1004, 7, 1, 1, '2019-07-09 17:19:06', 2),
-(441, 1006, 9, 1, 1, '2019-07-09 17:30:26', 2);
+(441, 1006, 9, 1, 1, '2019-07-09 17:30:26', 2),
+(2213, 1213, 13, 1, 5, '2019-07-31 22:49:44', 2),
+(2214, 1213, 14, 1, 5, '2019-07-31 22:49:45', 2),
+(2215, 1213, 15, 2, 7, '2019-07-31 22:49:46', 2),
+(2216, 1213, 1, 2, 1, '2019-07-31 22:51:48', 2),
+(2217, 1213, 17, 2, 1, '2019-07-31 22:52:11', 2),
+(2218, 1213, 5, 1, 1, '2019-07-31 22:54:16', 2),
+(2219, 1213, 6, 1, 1, '2019-07-31 23:01:01', 2),
+(2220, 1213, 2, 2, 1, '2019-07-31 23:06:17', 2),
+(2221, 1213, 3, 1, 1, '2019-07-31 23:07:16', 2),
+(2222, 1213, 4, 1, 1, '2019-07-31 23:09:30', 2),
+(2223, 1213, 9, 1, 7, '2019-07-31 23:09:52', 2),
+(2224, 1213, 7, 1, 1, '2019-07-31 23:10:20', 2),
+(2225, 1213, 8, 1, 1, '2019-07-31 23:10:53', 2),
+(2226, 1213, 10, 1, 7, '2019-07-31 23:11:26', 2),
+(2227, 1213, 11, 1, 7, '2019-07-31 23:11:29', 2),
+(2228, 1213, 12, 1, 7, '2019-07-31 23:12:06', 2),
+(2229, 1213, 16, 2, 1, '2019-07-31 23:12:19', 2),
+(2230, 1213, 18, 1, 1, '2019-07-31 23:12:47', 2),
+(2231, 1216, 13, 1, 5, '2019-07-31 23:24:23', 2),
+(2232, 1216, 14, 1, 5, '2019-07-31 23:24:23', 2),
+(2233, 1216, 15, 2, 7, '2019-07-31 23:24:23', 2),
+(2234, 1216, 1, 2, 1, '2019-07-31 23:24:23', 2),
+(2235, 1216, 17, 2, 1, '2019-07-31 23:24:23', 2),
+(2236, 1216, 5, 1, 1, '2019-07-31 23:24:23', 2),
+(2237, 1216, 6, 1, 1, '2019-07-31 23:24:23', 2),
+(2238, 1216, 2, 2, 1, '2019-07-31 23:24:23', 2),
+(2239, 1216, 3, 1, 1, '2019-07-31 23:24:23', 2),
+(2240, 1216, 4, 1, 1, '2019-07-31 23:24:23', 2),
+(2241, 1216, 9, 1, 7, '2019-07-31 23:24:23', 2),
+(2242, 1216, 7, 1, 1, '2019-07-31 23:24:23', 2),
+(2243, 1216, 8, 1, 1, '2019-07-31 23:24:23', 2),
+(2244, 1216, 10, 1, 7, '2019-07-31 23:24:23', 2),
+(2245, 1216, 11, 1, 7, '2019-07-31 23:24:23', 2),
+(2246, 1216, 12, 1, 7, '2019-07-31 23:24:23', 2),
+(2247, 1216, 16, 2, 1, '2019-07-31 23:24:23', 2),
+(2248, 1216, 18, 1, 1, '2019-07-31 23:24:23', 2),
+(2262, 1217, 13, 1, 5, '2019-07-31 23:28:33', 2),
+(2263, 1217, 14, 1, 5, '2019-07-31 23:28:33', 2),
+(2264, 1217, 15, 2, 7, '2019-07-31 23:28:33', 2),
+(2265, 1217, 1, 2, 1, '2019-07-31 23:28:33', 2),
+(2266, 1217, 17, 2, 1, '2019-07-31 23:28:33', 2),
+(2267, 1217, 5, 1, 1, '2019-07-31 23:28:33', 2),
+(2268, 1217, 6, 1, 1, '2019-07-31 23:28:33', 2),
+(2269, 1217, 2, 2, 1, '2019-07-31 23:28:33', 2),
+(2270, 1217, 3, 1, 1, '2019-07-31 23:28:33', 2),
+(2271, 1217, 4, 1, 1, '2019-07-31 23:28:33', 2),
+(2272, 1217, 9, 1, 7, '2019-07-31 23:28:33', 2),
+(2273, 1217, 7, 1, 1, '2019-07-31 23:28:33', 2),
+(2274, 1217, 8, 1, 1, '2019-07-31 23:28:33', 2),
+(2275, 1217, 10, 1, 7, '2019-07-31 23:28:33', 2),
+(2276, 1217, 11, 1, 7, '2019-07-31 23:28:33', 2),
+(2277, 1217, 12, 1, 7, '2019-07-31 23:28:33', 2),
+(2278, 1217, 16, 2, 1, '2019-07-31 23:28:33', 2),
+(2279, 1217, 18, 1, 1, '2019-07-31 23:28:33', 2),
+(2293, 1218, 13, 1, 5, '2019-07-31 23:30:42', 2),
+(2294, 1218, 14, 1, 5, '2019-07-31 23:30:42', 2),
+(2295, 1218, 15, 2, 7, '2019-07-31 23:30:42', 2),
+(2296, 1218, 1, 2, 1, '2019-07-31 23:30:42', 2),
+(2297, 1218, 17, 2, 1, '2019-07-31 23:30:42', 2),
+(2298, 1218, 5, 1, 1, '2019-07-31 23:30:42', 2),
+(2299, 1218, 6, 1, 1, '2019-07-31 23:30:42', 2),
+(2300, 1218, 2, 2, 1, '2019-07-31 23:30:42', 2),
+(2301, 1218, 3, 1, 1, '2019-07-31 23:30:42', 2),
+(2302, 1218, 4, 1, 1, '2019-07-31 23:30:42', 2),
+(2303, 1218, 9, 1, 7, '2019-07-31 23:30:42', 2),
+(2304, 1218, 7, 1, 1, '2019-07-31 23:30:42', 2),
+(2305, 1218, 8, 1, 1, '2019-07-31 23:30:42', 2),
+(2306, 1218, 10, 1, 7, '2019-07-31 23:30:42', 2),
+(2307, 1218, 11, 1, 7, '2019-07-31 23:30:42', 2),
+(2308, 1218, 12, 1, 7, '2019-07-31 23:30:42', 2),
+(2309, 1218, 16, 2, 1, '2019-07-31 23:30:42', 2),
+(2310, 1218, 18, 1, 1, '2019-07-31 23:30:42', 2),
+(2324, 1219, 13, 1, 5, '2019-08-01 00:30:44', 2),
+(2325, 1219, 14, 1, 5, '2019-08-01 00:30:44', 2),
+(2326, 1219, 15, 2, 7, '2019-08-01 00:30:44', 2),
+(2327, 1219, 1, 2, 1, '2019-08-01 00:30:44', 2),
+(2328, 1219, 17, 2, 1, '2019-08-01 00:30:44', 2),
+(2329, 1219, 5, 1, 1, '2019-08-01 00:30:44', 2),
+(2330, 1219, 6, 1, 1, '2019-08-01 00:30:44', 2),
+(2331, 1219, 2, 2, 1, '2019-08-01 00:30:44', 2),
+(2332, 1219, 3, 1, 1, '2019-08-01 00:30:44', 2),
+(2333, 1219, 4, 1, 1, '2019-08-01 00:30:44', 2),
+(2334, 1219, 9, 1, 7, '2019-08-01 00:30:44', 2),
+(2335, 1219, 7, 1, 1, '2019-08-01 00:30:44', 2),
+(2336, 1219, 8, 1, 1, '2019-08-01 00:30:44', 2),
+(2337, 1219, 10, 1, 7, '2019-08-01 00:30:44', 2),
+(2338, 1219, 11, 1, 7, '2019-08-01 00:30:44', 2),
+(2339, 1219, 12, 1, 7, '2019-08-01 00:30:44', 2),
+(2340, 1219, 16, 2, 1, '2019-08-01 00:30:44', 2),
+(2341, 1219, 18, 1, 1, '2019-08-01 00:30:44', 2),
+(2355, 1220, 13, 1, 5, '2019-08-01 00:31:06', 2),
+(2356, 1220, 14, 1, 5, '2019-08-01 00:31:06', 2),
+(2357, 1220, 15, 2, 7, '2019-08-01 00:31:06', 2),
+(2358, 1220, 1, 2, 1, '2019-08-01 00:31:06', 2),
+(2359, 1220, 17, 2, 1, '2019-08-01 00:31:06', 2),
+(2360, 1220, 5, 1, 1, '2019-08-01 00:31:06', 2),
+(2361, 1220, 6, 1, 1, '2019-08-01 00:31:06', 2),
+(2362, 1220, 2, 2, 1, '2019-08-01 00:31:06', 2),
+(2363, 1220, 3, 1, 1, '2019-08-01 00:31:06', 2),
+(2364, 1220, 4, 1, 1, '2019-08-01 00:31:06', 2),
+(2365, 1220, 9, 1, 7, '2019-08-01 00:31:06', 2),
+(2366, 1220, 7, 1, 1, '2019-08-01 00:31:06', 2),
+(2367, 1220, 8, 1, 1, '2019-08-01 00:31:06', 2),
+(2368, 1220, 10, 1, 7, '2019-08-01 00:31:06', 2),
+(2369, 1220, 11, 1, 7, '2019-08-01 00:31:06', 2),
+(2370, 1220, 12, 1, 7, '2019-08-01 00:31:06', 2),
+(2371, 1220, 16, 2, 1, '2019-08-01 00:31:06', 2),
+(2372, 1220, 18, 1, 1, '2019-08-01 00:31:06', 2);
 
 -- --------------------------------------------------------
 
@@ -1044,8 +1143,8 @@ CREATE TABLE `subpermisos_volar` (
   `id_sp` int(11) NOT NULL COMMENT 'Llave Primaria',
   `nombre_sp` varchar(12) COLLATE utf8_spanish_ci NOT NULL COMMENT 'Permiso',
   `permiso_sp` int(11) NOT NULL COMMENT 'Modulo',
-  `register` datetime NOT NULL DEFAULT current_timestamp() COMMENT 'Registro',
-  `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT 'Status'
+  `register` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Registro',
+  `status` tinyint(4) NOT NULL DEFAULT '1' COMMENT 'Status'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
@@ -1101,7 +1200,10 @@ INSERT INTO `subpermisos_volar` (`id_sp`, `nombre_sp`, `permiso_sp`, `register`,
 (49, 'EDITAR', 13, '2019-07-30 18:21:55', 1),
 (50, 'PUESTOS', 13, '2019-07-30 18:21:55', 1),
 (51, 'ELIMINAR', 13, '2019-07-30 21:47:28', 1),
-(52, 'ASISTENCIA', 2, '2019-07-31 16:21:16', 1);
+(52, 'ASISTENCIA', 2, '2019-07-31 16:21:16', 1),
+(53, 'AGREGAR', 15, '2019-08-01 13:36:31', 1),
+(54, 'EDITAR', 15, '2019-08-01 13:36:31', 1),
+(55, 'ELIMINAR', 15, '2019-08-01 13:36:31', 1);
 
 -- --------------------------------------------------------
 
@@ -1120,7 +1222,7 @@ CREATE TABLE `temp_volar` (
   `telcelular_temp` varchar(20) COLLATE utf8_spanish_ci DEFAULT NULL COMMENT 'Telefono Celular',
   `procedencia_temp` tinyint(4) DEFAULT NULL COMMENT 'Procedencia',
   `pasajerosa_temp` int(11) DEFAULT NULL COMMENT 'Pasajeros Adultos',
-  `pasajerosn_temp` int(11) DEFAULT 0 COMMENT 'Pasajeros Niños',
+  `pasajerosn_temp` int(11) DEFAULT '0' COMMENT 'Pasajeros Niños',
   `motivo_temp` tinyint(4) DEFAULT NULL COMMENT 'Motivo',
   `tipo_temp` tinyint(4) DEFAULT NULL COMMENT 'Tipo',
   `fechavuelo_temp` date DEFAULT NULL COMMENT 'Fecha de Vuelo',
@@ -1129,20 +1231,20 @@ CREATE TABLE `temp_volar` (
   `habitacion_temp` tinyint(4) DEFAULT NULL COMMENT 'Habitación',
   `checkin_temp` date DEFAULT NULL COMMENT 'Check In',
   `checkout_temp` date DEFAULT NULL COMMENT 'Check Out',
-  `comentario_temp` tinytext COLLATE utf8_spanish_ci DEFAULT NULL COMMENT 'Comentarios',
+  `comentario_temp` tinytext COLLATE utf8_spanish_ci COMMENT 'Comentarios',
   `otroscar1_temp` varchar(20) COLLATE utf8_spanish_ci DEFAULT NULL COMMENT 'Otros Cargos',
   `precio1_temp` decimal(11,2) DEFAULT NULL COMMENT 'Precio',
   `otroscar2_temp` varchar(20) COLLATE utf8_spanish_ci DEFAULT NULL COMMENT 'Otros CArgos',
   `precio2_temp` decimal(11,2) DEFAULT NULL COMMENT 'Precio',
   `tdescuento_temp` tinyint(4) DEFAULT NULL COMMENT 'Tipo de Descuento',
-  `cantdescuento_temp` decimal(8,2) NOT NULL DEFAULT 0.00 COMMENT 'Cantidad de Desuento',
-  `total_temp` double(10,2) DEFAULT 0.00 COMMENT 'Total',
-  `piloto_temp` int(11) DEFAULT 0 COMMENT 'Piloto',
-  `kg_temp` decimal(10,2) DEFAULT 0.00 COMMENT 'Peso',
-  `globo_temp` int(11) DEFAULT 0 COMMENT 'Globo',
+  `cantdescuento_temp` decimal(8,2) NOT NULL DEFAULT '0.00' COMMENT 'Cantidad de Desuento',
+  `total_temp` double(10,2) DEFAULT '0.00' COMMENT 'Total',
+  `piloto_temp` int(11) DEFAULT '0' COMMENT 'Piloto',
+  `kg_temp` decimal(10,2) DEFAULT '0.00' COMMENT 'Peso',
+  `globo_temp` int(11) DEFAULT '0' COMMENT 'Globo',
   `hora_temp` time DEFAULT NULL COMMENT 'Hora de Vuelo',
-  `register` datetime NOT NULL DEFAULT current_timestamp() COMMENT 'Registro',
-  `status` tinyint(4) NOT NULL DEFAULT 2 COMMENT 'Status'
+  `register` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Registro',
+  `status` tinyint(4) NOT NULL DEFAULT '2' COMMENT 'Status'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci COMMENT='Tabla Temporal';
 
 --
@@ -1154,28 +1256,21 @@ INSERT INTO `temp_volar` (`id_temp`, `idusu_temp`, `clave_temp`, `nombre_temp`, 
 (1006, 1, NULL, 'VICENTE', 'MENDOZA', 'alducin.asesori@hotmail.com', NULL, '5516567285', 17, 1, 0, 42, 16, '2019-07-15', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0.00', 3250.00, 0, '0.00', 0, NULL, '2019-07-09 17:28:46', 4),
 (1009, 1, NULL, 'FRANCISCA', 'GUAJARDO', 'alducin.asesori@outlook.com', '5529212556', '015529212556', 30, 1, 1, 38, 1, '2019-07-15', NULL, NULL, NULL, NULL, NULL, 'LLEGAN A SITIO', NULL, NULL, NULL, NULL, NULL, '0.00', 4140.00, 0, '0.00', 0, NULL, '2019-07-09 17:06:41', 4),
 (1010, 1, NULL, 'SONIA', 'GUAJARDO', 'ANGEL-SONY@HOTMAIL.COM', NULL, '5568577013', 18, NULL, 2, 43, 1, '2019-07-30', 48, 1, 5, '2019-07-29', '2019-07-30', NULL, NULL, '0.00', NULL, NULL, NULL, '0.00', 3400.00, 0, '0.00', 0, NULL, '2019-07-09 17:12:30', 0),
-(1013, 3, NULL, 'FRANCISCA', 'GUAJARDO', 'alducin.asesori@outlook.com', '5529212556', '015529212556', 30, 1, 1, 38, 1, '2019-07-15', NULL, 2, 6, NULL, NULL, 'LLEGAN A SITIO', NULL, NULL, NULL, NULL, NULL, '0.00', 4140.00, 0, '0.00', 0, NULL, '2019-07-28 14:55:57', 6),
 (1015, 1, NULL, 'FRANCISCA', 'GUAJARDO', 'alducin.asesori@outlook.com', '5529212556', '015529212556', 30, 1, 1, 38, 1, '2019-07-15', NULL, NULL, NULL, NULL, NULL, 'LLEGAN A SITIO', NULL, NULL, NULL, NULL, NULL, '0.00', 4140.00, 0, '0.00', 0, NULL, '2019-07-28 15:02:49', 0),
 (1016, 1, NULL, 'FRANCISCA', 'GUAJARDO', 'alducin.asesori@outlook.com', '5529212556', '015529212556', 30, 1, 1, 38, 1, '2019-07-15', NULL, NULL, NULL, NULL, NULL, 'LLEGAN A SITIO', NULL, NULL, NULL, NULL, NULL, '0.00', 4140.00, 0, '0.00', 0, NULL, '2019-07-28 15:54:27', 0),
 (1017, 3, NULL, 'FRANCISCA', 'GUAJARDO', 'alducin.asesori@outlook.com', '5529212556', '015529212556', 30, 1, 1, 38, 1, '2019-07-15', NULL, NULL, NULL, NULL, NULL, 'LLEGAN A SITIO', NULL, NULL, NULL, NULL, NULL, '0.00', 4140.00, 0, '0.00', 0, NULL, '2019-07-28 15:54:37', 0),
-(1186, 3, '1186', 'FRANCISCA', 'GUAJARDO', 'alducin.asesori@outlook.com', '5529212556', '015529212556', 30, 1, 1, 38, 1, '2019-07-15', NULL, NULL, NULL, NULL, NULL, 'LLEGAN A SITIO', NULL, NULL, NULL, NULL, NULL, '0.00', 4140.00, 0, '0.00', 0, NULL, '2019-07-31 10:57:06', 6),
 (1187, 1, '1186', 'FRANCISCA', 'GUAJARDO', 'alducin.asesori@outlook.com', '5529212556', '015529212556', 30, 1, 1, 38, 1, '2019-07-15', NULL, NULL, NULL, NULL, NULL, 'LLEGAN A SITIO', NULL, NULL, NULL, NULL, NULL, '0.00', 4140.00, 0, '0.00', 0, NULL, '2019-07-31 11:03:57', 0),
 (1188, 1, '1186', 'FRANCISCA', 'GUAJARDO', 'alducin.asesori@outlook.com', '5529212556', '015529212556', 30, 1, 1, 38, 1, '2019-07-15', NULL, NULL, NULL, NULL, NULL, 'LLEGAN A SITIO', NULL, NULL, NULL, NULL, NULL, '0.00', 4140.00, 0, '0.00', 0, NULL, '2019-07-31 11:04:10', 0),
-(1189, 1, '1013', 'FRANCISCA', 'GUAJARDO', 'alducin.asesori@outlook.com', '5529212556', '015529212556', 7, 1, 1, 38, 2, '2019-07-15', NULL, 1, 8, '2019-07-01', '2019-08-03', 'LLEGAN A SITIO', NULL, NULL, NULL, NULL, NULL, '0.00', 3700.00, 0, '0.00', 0, NULL, '2019-07-31 11:12:08', 2),
-(1190, 1, '1186', 'FRANCISCA', 'GUAJARDO', 'alducin.asesori@outlook.com', '5529212556', '015529212556', 30, 1, 1, 38, 1, '2019-07-15', NULL, 5, 16, '2019-07-31', '2019-08-02', 'LLEGAN A SITIO', NULL, NULL, NULL, NULL, NULL, '0.00', 7600.00, 0, '0.00', 0, NULL, '2019-07-31 11:17:35', 6),
-(1191, 1, '1190', 'FRANCISCA', 'GUAJARDO', 'alducin.asesori@outlook.com', '5529212556', '015529212556', 30, 1, 1, 38, 1, '2019-07-15', NULL, 5, 16, '2019-07-31', '2019-08-02', 'LLEGAN A SITIO', NULL, NULL, NULL, NULL, NULL, '0.00', 7600.00, 0, '0.00', 0, NULL, '2019-07-31 11:45:45', 6),
-(1192, 1, '1191', 'FRANCISCA', 'GUAJARDO', 'alducin.asesori@outlook.com', '5529212556', '015529212556', 30, 1, 1, 38, 1, '2019-07-15', NULL, 5, 16, '2019-07-31', NULL, 'LLEGAN A SITIO', NULL, NULL, NULL, NULL, NULL, '0.00', 7600.00, 0, '0.00', 0, NULL, '2019-07-31 11:47:40', 6),
-(1193, 1, '1192', 'FRANCISCA', 'GUAJARDO', 'alducin.asesori@outlook.com', '5529212556', '015529212556', 30, 1, 1, 38, 1, '2019-07-15', NULL, 5, 16, NULL, NULL, 'LLEGAN A SITIO', NULL, NULL, NULL, NULL, NULL, '0.00', 7600.00, 0, '0.00', 0, NULL, '2019-07-31 11:48:20', 6),
-(1194, 1, '1193', 'FRANCISCA', 'GUAJARDO', 'alducin.asesori@outlook.com', '5529212556', '015529212556', 30, 1, 1, 38, 1, '2019-07-15', NULL, 5, 16, NULL, NULL, 'LLEGAN A SITIO', NULL, NULL, NULL, NULL, NULL, '0.00', 7600.00, 0, '0.00', 0, NULL, '2019-07-31 11:49:16', 6),
-(1195, 1, '1194', 'FRANCISCA', 'GUAJARDO', 'alducin.asesori@outlook.com', '5529212556', '015529212556', 30, 1, 1, 38, 1, '2019-07-15', NULL, 5, 16, NULL, NULL, 'LLEGAN A SITIO', NULL, NULL, NULL, NULL, NULL, '0.00', 7600.00, 0, '0.00', 0, NULL, '2019-07-31 11:49:37', 6),
-(1196, 1, '1195', 'FRANCISCA', 'GUAJARDO', 'alducin.asesori@outlook.com', '5529212556', '015529212556', 30, 1, 1, 38, 1, '2019-07-15', NULL, 5, 16, NULL, NULL, 'LLEGAN A SITIO', NULL, NULL, NULL, NULL, NULL, '0.00', 7600.00, 0, '0.00', 0, NULL, '2019-07-31 11:50:18', 6),
-(1197, 1, '1196', 'FRANCISCA', 'GUAJARDO', 'alducin.asesori@outlook.com', '5529212556', '015529212556', 30, 1, 1, 38, 1, '2019-07-15', NULL, 5, 16, NULL, NULL, 'LLEGAN A SITIO', NULL, NULL, NULL, NULL, NULL, '0.00', 7600.00, 0, '0.00', 0, NULL, '2019-07-31 11:50:26', 6),
-(1198, 1, '1197', 'FRANCISCA', 'GUAJARDO', 'alducin.asesori@outlook.com', '5529212556', '015529212556', 30, 1, 1, 38, 1, '2019-07-15', NULL, 5, 16, NULL, NULL, 'LLEGAN A SITIO', NULL, NULL, NULL, NULL, NULL, '0.00', 7600.00, 0, '0.00', 0, NULL, '2019-07-31 11:50:40', 6),
-(1199, 1, '1198', 'FRANCISCA', 'GUAJARDO', 'alducin.asesori@outlook.com', '5529212556', '015529212556', 30, 1, 1, 38, 1, '2019-07-15', NULL, 5, 16, '2019-08-31', NULL, 'LLEGAN A SITIO', NULL, NULL, NULL, NULL, NULL, '0.00', 7600.00, 0, '0.00', 0, NULL, '2019-07-31 11:51:24', 6),
-(1200, 1, '1199', 'FRANCISCA', 'GUAJARDO', 'alducin.asesori@outlook.com', '5529212556', '015529212556', 30, 1, 1, 38, 1, '2019-07-15', NULL, 5, 16, '2019-08-31', NULL, 'LLEGAN A SITIO', NULL, NULL, NULL, NULL, NULL, '0.00', 7600.00, 0, '0.00', 0, NULL, '2019-07-31 11:51:57', 6),
-(1201, 1, '1200', 'FRANCISCA', 'GUAJARDO', 'alducin.asesori@outlook.com', '5529212556', '015529212556', 30, 1, 1, 38, 1, '2019-07-15', NULL, 5, 16, '2019-09-30', NULL, 'LLEGAN A SITIO', NULL, NULL, NULL, NULL, NULL, '0.00', 7600.00, 0, '0.00', 0, NULL, '2019-07-31 12:07:17', 6),
-(1202, 1, '1201', 'FRANCISCA', 'GUAJARDO', 'alducin.asesori@outlook.com', '5529212556', '015529212556', 30, 1, 1, 38, 1, '2019-07-15', NULL, 5, 16, '2019-09-30', NULL, 'LLEGAN A SITIO', NULL, NULL, NULL, NULL, NULL, '0.00', 7600.00, 0, '0.00', 0, NULL, '2019-07-31 14:52:43', 6),
-(1203, 1, '1202', 'FRANCISCA', 'GUAJARDO', 'alducin.asesori@outlook.com', '5529212556', '015529212556', 30, 1, 1, 38, 1, '2019-07-15', NULL, 5, 16, '2019-09-30', NULL, 'LLEGAN A SITIO', NULL, NULL, NULL, NULL, NULL, '0.00', 7600.00, 0, '0.00', 0, NULL, '2019-07-31 15:34:20', 4);
+(1211, 1, '1210', 'FRANCISCA', 'GUAJARDO', 'alducin.asesori@outlook.com', '5529212556', '015529212556', 30, 1, 1, 38, 1, '2019-07-15', NULL, 5, 16, '2019-09-30', NULL, 'LLEGAN A SITIO', NULL, NULL, NULL, NULL, NULL, '0.00', 7600.00, 0, '0.00', 0, NULL, '2019-07-31 22:30:25', 4),
+(1212, 1, '1209', 'FRANCISCA', 'GUAJARDO', 'alducin.asesori@outlook.com', '5529212556', '015529212556', 30, 1, 1, 38, 1, '2019-07-15', NULL, 5, 16, '2019-09-30', NULL, 'LLEGAN A SITIO', NULL, NULL, NULL, NULL, NULL, '0.00', 7600.00, 0, '0.00', 0, NULL, '2019-07-31 22:30:41', 6),
+(1213, 1, '1212', 'ENRIQUE', 'DAMASCO', 'enriquealducin@outlook.com', '5529212556', '5529227672', 17, 5, 2, 43, 5, '2019-08-01', NULL, NULL, NULL, '2019-09-30', NULL, 'LLEGAN A SITIO', 'CHAMPAGNE1', '500.00', 'CHAMPAGNE2', '100.00', NULL, '0.00', 55030.00, 0, '0.00', 0, NULL, '2019-07-31 22:32:45', 6),
+(1214, 1, '1213', 'ENRIQUE', 'DAMASCO', 'enriquealducin@outlook.com', '5529212556', '5529227672', 17, 1, 0, 43, 5, '2019-08-01', NULL, NULL, NULL, '2019-09-30', NULL, 'LLEGAN A SITIO', NULL, NULL, NULL, NULL, NULL, '0.00', 2300.00, 0, '0.00', 0, NULL, '2019-07-31 22:37:45', 6),
+(1215, 1, '1214', 'ENRIQUE', 'DAMASCO', 'enriquealducin@outlook.com', '5529212556', '5529227672', 17, 1, 0, 43, 5, '2019-08-01', NULL, NULL, NULL, '2019-09-30', NULL, 'LLEGAN A SITIO', NULL, NULL, NULL, NULL, NULL, '0.00', 2300.00, 0, '0.00', 0, NULL, '2019-07-31 23:24:14', 3),
+(1216, 1, '1213', 'ENRIQUE', 'DAMASCO', 'enriquealducin@outlook.com', '5529212556', '5529227672', 17, 5, 2, 43, 5, '2019-08-01', NULL, NULL, NULL, '2019-09-30', NULL, 'LLEGAN A SITIO', 'CHAMPAGNE1', '500.00', 'CHAMPAGNE2', '100.00', NULL, '0.00', 55030.00, 0, '0.00', 0, NULL, '2019-07-31 23:24:23', 6),
+(1217, 1, '1216', 'ENRIQUE', 'DAMASCO', 'enriquealducin@outlook.com', '5529212556', '5529227672', 17, 5, 2, 43, 5, '2019-08-01', NULL, NULL, NULL, '2019-09-30', NULL, 'LLEGAN A SITIO', 'CHAMPAGNE1', '500.00', 'CHAMPAGNE2', '100.00', NULL, '0.00', 55030.00, 0, '0.00', 0, NULL, '2019-07-31 23:28:33', 4),
+(1218, 1, '1216', 'ENRIQUE', 'DAMASCO', 'enriquealducin@outlook.com', '5529212556', '5529227672', 17, 5, 2, 43, 5, '2019-08-01', NULL, NULL, NULL, '2019-09-30', NULL, 'LLEGAN A SITIO', 'CHAMPAGNE1', '500.00', 'CHAMPAGNE2', '100.00', NULL, '0.00', 55030.00, 0, '0.00', 0, NULL, '2019-07-31 23:30:42', 6),
+(1219, 1, '1218', 'ENRIQUE', 'DAMASCO', 'enriquealducin@outlook.com', '5529212556', '5529227672', 17, 5, 2, 43, 5, '2019-08-01', NULL, 5, 16, '2019-09-30', '2019-08-02', 'LLEGAN A SITIO', 'CHAMPAGNE1', '500.00', 'CHAMPAGNE2', '100.00', NULL, '0.00', 55030.00, 0, '0.00', 0, NULL, '2019-08-01 00:30:44', 6),
+(1220, 1, '1219', 'ENRIQUE', 'DAMASCO', 'enriquealducin@outlook.com', '5529212556', '5529227672', 17, 5, 2, 43, 5, '2019-08-01', NULL, 6, NULL, '2019-09-30', '2019-08-02', 'LLEGAN A SITIO', 'CHAMPAGNE1', '500.00', 'CHAMPAGNE2', '100.00', NULL, '0.00', 55030.00, 0, '0.00', 0, NULL, '2019-08-01 00:31:06', 3);
 
 -- --------------------------------------------------------
 
@@ -1189,8 +1284,8 @@ CREATE TABLE `ventasserv_volar` (
   `idventa_vsv` int(11) DEFAULT NULL COMMENT 'Venta',
   `idusu_vsv` int(11) DEFAULT NULL COMMENT 'Usuario que Registra',
   `cantidad_vsv` int(11) DEFAULT NULL COMMENT 'Cantidad',
-  `register` datetime NOT NULL DEFAULT current_timestamp() COMMENT 'Registro',
-  `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT 'Status'
+  `register` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Registro',
+  `status` tinyint(4) NOT NULL DEFAULT '1' COMMENT 'Status'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- --------------------------------------------------------
@@ -1201,7 +1296,7 @@ CREATE TABLE `ventasserv_volar` (
 
 CREATE TABLE `ventas_volar` (
   `id_venta` int(11) NOT NULL COMMENT 'Llave Primaria',
-  `comentario_venta` text COLLATE utf8_spanish_ci DEFAULT NULL COMMENT 'Comentario',
+  `comentario_venta` text COLLATE utf8_spanish_ci COMMENT 'Comentario',
   `otroscar1_venta` varchar(150) COLLATE utf8_spanish_ci DEFAULT NULL COMMENT 'Otros Cargos',
   `precio1_venta` double(10,2) DEFAULT NULL COMMENT 'Precio',
   `otroscar2_venta` varchar(150) COLLATE utf8_spanish_ci DEFAULT NULL COMMENT 'Otros Cargos',
@@ -1210,8 +1305,8 @@ CREATE TABLE `ventas_volar` (
   `cantdesc_venta` double(10,2) DEFAULT NULL COMMENT 'Cantidad de Descuento',
   `pagoefectivo_venta` double(10,2) DEFAULT NULL COMMENT 'Efectivo',
   `pagotarjeta_venta` double(10,2) DEFAULT NULL COMMENT 'Tarjeta',
-  `register` datetime NOT NULL DEFAULT current_timestamp() COMMENT 'Registro',
-  `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT 'Status'
+  `register` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Registro',
+  `status` tinyint(4) NOT NULL DEFAULT '1' COMMENT 'Status'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci COMMENT='Ventas de CItio';
 
 -- --------------------------------------------------------
@@ -1244,8 +1339,8 @@ CREATE TABLE `volar_usuarios` (
   `falta_usu` decimal(10,2) DEFAULT NULL COMMENT 'Descuento por Falta',
   `banco_usu` int(11) DEFAULT NULL COMMENT 'Banco',
   `cuenta_usu` bigint(20) DEFAULT NULL COMMENT 'Num. Cuenta',
-  `register` datetime NOT NULL DEFAULT current_timestamp() COMMENT 'Registro',
-  `status` tinyint(1) NOT NULL DEFAULT 1 COMMENT 'status'
+  `register` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Registro',
+  `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT 'status'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
@@ -1253,13 +1348,13 @@ CREATE TABLE `volar_usuarios` (
 --
 
 INSERT INTO `volar_usuarios` (`id_usu`, `nombre_usu`, `apellidop_usu`, `apellidom_usu`, `depto_usu`, `puesto_usu`, `correo_usu`, `telefono_usu`, `contrasena_usu`, `usuario_usu`, `nss_usu`, `sd_usu`, `sdi_usu`, `fiscal_usu`, `isr_usu`, `imss_usu`, `infonavit_usu`, `subsidio_usu`, `quincenal_usu`, `complemento_usu`, `falta_usu`, `banco_usu`, `cuenta_usu`, `register`, `status`) VALUES
-(1, 'Enrique', 'Damasco', 'Alducin', 1, 1, 'enriquealducin@siswebs.com.mx', '55-2922-7672', 'c4ca4238a0b923820dcc509a6f75849b', 'Quique', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-03-29 23:20:06', 1),
+(1, 'Enrique', 'Damasco', 'Alducin', 1, 0, 'enriquealducin@siswebs.com.mx', '55-2922-7672', 'c4ca4238a0b923820dcc509a6f75849b', 'Quique', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-03-29 23:20:06', 1),
 (3, 'Sonia', 'Alducin', 'Guajardo', 3, 3, 'oficina@volarenglobo.com.mx', '55-2921-2556', '202cb962ac59075b964b07152d234b70', 'Sonia', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-04-10 09:27:49', 1),
 (8, 'Ricardo', 'Cruz', 'Rocha', 2, 2, 'ricardo@volarenglobo.com.mx', '55-5106-8115', '202cb962ac59075b964b07152d234b70', 'Ricardo', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-05-21 16:34:09', 1),
-(9, 'Alejandra', 'Ramirez', 'Serrano', 4, 4, 'turismo@volarenglobo.com.mx', '55-3070-4317', '202cb962ac59075b964b07152d234b70', 'Ale', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-05-21 16:35:26', 1),
+(9, 'Alejandra', 'Ramirez', 'Serrano', 0, 0, 'turismo@volarenglobo.com.mx', '55-3070-4317', '202cb962ac59075b964b07152d234b70', 'Ale', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-05-21 16:35:26', 1),
 (11, 'Sergio', 'Ramirez', NULL, 5, 5, 'sergio@volarenglobo.com.mx', '55-1234-5678', '202cb962ac59075b964b07152d234b70', 'Sergio', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-06-25 07:52:34', 1),
-(12, 'Enrique', 'Perez', 'Gomez', 1, 1, 'enriqueperezgomez@gmail.com.mx', '55-2145-6545', 'Enrique', '202cb962ac59075b964b07152d234b70', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-30 21:15:07', 0),
-(13, 'Enrique', 'Damasco', NULL, 3, 1, 'Enrique@algo.com', '55241214', '202cb962ac59075b964b07152d234b70', 'quique', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-30 21:15:58', 0);
+(12, 'Enrique', 'Perez', 'Gomez', 1, 0, 'enriqueperezgomez@gmail.com.mx', '55-2145-6545', 'Enrique', '202cb962ac59075b964b07152d234b70', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-30 21:15:07', 0),
+(13, 'Enrique', 'Damasco', NULL, 3, 0, 'Enrique@algo.com', '55241214', '202cb962ac59075b964b07152d234b70', 'quique', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-30 21:15:58', 0);
 
 -- --------------------------------------------------------
 
@@ -1273,8 +1368,8 @@ CREATE TABLE `vueloscat_volar` (
   `tipo_vc` tinyint(4) DEFAULT NULL COMMENT 'TIpo de Vuelo',
   `precioa_vc` decimal(10,2) NOT NULL COMMENT 'Precio de Adultos',
   `precion_vc` decimal(10,2) DEFAULT NULL COMMENT 'Precio de Niños',
-  `register` datetime NOT NULL DEFAULT current_timestamp() COMMENT 'Registro',
-  `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT 'Status'
+  `register` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Registro',
+  `status` tinyint(4) NOT NULL DEFAULT '1' COMMENT 'Status'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
@@ -1452,7 +1547,7 @@ ALTER TABLE `bitacora_actualizaciones_volar`
 -- AUTO_INCREMENT de la tabla `bitpagos_volar`
 --
 ALTER TABLE `bitpagos_volar`
-  MODIFY `id_bp` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave Primaria', AUTO_INCREMENT=32;
+  MODIFY `id_bp` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave Primaria';
 
 --
 -- AUTO_INCREMENT de la tabla `cat_servicios_volar`
@@ -1464,7 +1559,7 @@ ALTER TABLE `cat_servicios_volar`
 -- AUTO_INCREMENT de la tabla `departamentos_volar`
 --
 ALTER TABLE `departamentos_volar`
-  MODIFY `id_depto` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave Primaria', AUTO_INCREMENT=9;
+  MODIFY `id_depto` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave Primaria', AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `extras_volar`
@@ -1506,19 +1601,19 @@ ALTER TABLE `imghoteles_volar`
 -- AUTO_INCREMENT de la tabla `permisosusuarios_volar`
 --
 ALTER TABLE `permisosusuarios_volar`
-  MODIFY `id_puv` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave Primaria', AUTO_INCREMENT=183;
+  MODIFY `id_puv` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave Primaria', AUTO_INCREMENT=186;
 
 --
 -- AUTO_INCREMENT de la tabla `permisos_volar`
 --
 ALTER TABLE `permisos_volar`
-  MODIFY `id_per` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave Primaria', AUTO_INCREMENT=14;
+  MODIFY `id_per` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave Primaria', AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT de la tabla `puestos_volar`
 --
 ALTER TABLE `puestos_volar`
-  MODIFY `id_puesto` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave Primaria', AUTO_INCREMENT=4;
+  MODIFY `id_puesto` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave Primaria', AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `relacion_permisos`
@@ -1530,7 +1625,7 @@ ALTER TABLE `relacion_permisos`
 -- AUTO_INCREMENT de la tabla `rel_catvuelos_volar`
 --
 ALTER TABLE `rel_catvuelos_volar`
-  MODIFY `id_rel` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave Primaria', AUTO_INCREMENT=94;
+  MODIFY `id_rel` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave Primaria', AUTO_INCREMENT=79;
 
 --
 -- AUTO_INCREMENT de la tabla `servicios_volar`
@@ -1542,19 +1637,19 @@ ALTER TABLE `servicios_volar`
 -- AUTO_INCREMENT de la tabla `servicios_vuelo_temp`
 --
 ALTER TABLE `servicios_vuelo_temp`
-  MODIFY `id_sv` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave Primaria', AUTO_INCREMENT=2213;
+  MODIFY `id_sv` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave Primaria', AUTO_INCREMENT=2373;
 
 --
 -- AUTO_INCREMENT de la tabla `subpermisos_volar`
 --
 ALTER TABLE `subpermisos_volar`
-  MODIFY `id_sp` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave Primaria', AUTO_INCREMENT=53;
+  MODIFY `id_sp` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave Primaria', AUTO_INCREMENT=56;
 
 --
 -- AUTO_INCREMENT de la tabla `temp_volar`
 --
 ALTER TABLE `temp_volar`
-  MODIFY `id_temp` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave Primaria', AUTO_INCREMENT=1204;
+  MODIFY `id_temp` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave Primaria', AUTO_INCREMENT=1221;
 
 --
 -- AUTO_INCREMENT de la tabla `ventasserv_volar`
