@@ -139,10 +139,10 @@ CREATE   PROCEDURE `registrarPago` (IN `_pago` BIGINT, IN `_reserva` BIGINT, IN 
        	UPDATE bitpagos_volar SET idconc_bp=_usuarioCOncilia, fechaconc_bp= CURRENT_TIMESTAMP, status = 3 WHERE id_bp = _pago;
         SET respuesta = 'Conciliado';
     END IF;
-    IF (SELECT (sum(cantidad_bp)+ _cantidad ) from bitpagos_volar where idres_bp=_reserva )=(Select total_temp FROM temp_volar where id_temp  = _reserva) THEN
-        UPDATE temp_volar set status = 7 WHERE id_temp = _reserva;
+    IF (SELECT (sum(cantidad_bp)+ _cantidad ) from bitpagos_volar where idres_bp in (SELECT idres_bp from bitpagos_volar where id_bp = _pago) )=(Select total_temp FROM temp_volar where id_temp  in (SELECT idres_bp from bitpagos_volar where id_bp = _pago)) THEN
+        UPDATE temp_volar set status = 7 WHERE id_temp in (SELECT idres_bp from bitpagos_volar where id_bp = _pago);
     ELSE
-        UPDATE temp_volar set status = 4 WHERE id_temp = _reserva;
+        UPDATE temp_volar set status = 4 WHERE id_temp in (SELECT idres_bp from bitpagos_volar where id_bp = _pago);
     END IF;
   ELSEIF(SELECT total_temp from temp_volar where id_temp=_reserva) < _cantidad THEN
     SET respuesta = 'ERROR EN PAGO';

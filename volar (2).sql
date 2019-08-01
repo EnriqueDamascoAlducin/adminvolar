@@ -128,29 +128,26 @@ FROM subpermisos_volar sp INNER JOIN permisos_volar pv on pv.id_per=sp.permiso_s
 WHERE pv.status<>0 and sp.status<>0 and pus.status<>0 AND pus.idusu_puv=_idusu and pv.id_per=_idmodulo;
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `registrarPago` (IN `_pago` BIGINT, IN `_reserva` BIGINT, IN `_usuario` INT, IN `_metodo` INT, IN `_banco` INT, IN `_referencia` VARCHAR(200), IN `_cantidad` DOUBLE(10,2), IN `_fechaPago` VARCHAR(30), IN `_usuarioCOncilia` INT, OUT `respuesta` VARCHAR(25))  BEGIN
-IF(SELECT COUNT(id_bp) as pagos from bitpagos_volar  where idres_bp=_reserva )>0 THEN
+CREATE   PROCEDURE `registrarPago` (IN `_pago` BIGINT, IN `_reserva` BIGINT, IN `_usuario` INT, IN `_metodo` INT, IN `_banco` INT, IN `_referencia` VARCHAR(200), IN `_cantidad` DOUBLE(10,2), IN `_fechaPago` VARCHAR(30), IN `_usuarioCOncilia` INT, OUT `respuesta` VARCHAR(25))  BEGIN
+  IF(SELECT COUNT(id_bp) as pagos from bitpagos_volar  where idres_bp=_reserva )>0 THEN
     IF (SELECT (sum(ifnull(cantidad_bp,0))+ _cantidad ) from bitpagos_volar where idres_bp=_reserva )>(Select total_temp FROM temp_volar where id_temp  = _reserva) THEN
         SET respuesta = 'ERROR EN PAGO';
     ELSEIF (_usuarioConcilia=0) THEN
         INSERT INTO bitpagos_volar (idres_bp,idreg_bp,metodo_bp,banco_bp,referencia_bp,cantidad_bp,fecha_bp) VALUES (_reserva,_usuario,_metodo,_banco,_referencia,_cantidad,_fechaPago);
         SET respuesta = CONCAT('Registrado|',LAST_INSERT_ID());
     ELSE
-       	UPDATE bitpagos_volar SET idconc_bp=_usuarioCOncilia, fechaconc_bp= CURRENT_TIMESTAMP, status = 3 WHERE id_bp = _pago;
+        UPDATE bitpagos_volar SET idconc_bp=_usuarioCOncilia, fechaconc_bp= CURRENT_TIMESTAMP, status = 3 WHERE id_bp = _pago;
         SET respuesta = 'Conciliado';
-        IF (SELECT (sum(cantidad_bp) ) from bitpagos_volar where idres_bp=_reserva and status in(1,2) )=(Select total_temp FROM temp_volar where id_temp  = _reserva) THEN
-            UPDATE temp_volar set status = 7 WHERE id_temp = _reserva;
-        ELSE
-            UPDATE temp_volar set status = 4 WHERE id_temp = _reserva;
-        END IF;
     END IF;
-ELSEIF(SELECT total_temp from temp_volar where id_temp=_reserva) < _cantidad THEN
+    IF (SELECT (sum(cantidad_bp)+ _cantidad ) from bitpagos_volar where idres_bp in (SELECT idres_bp from bitpagos_volar where id_bp = _pago) )=(Select total_temp FROM temp_volar where id_temp  in (SELECT idres_bp from bitpagos_volar where id_bp = _pago)) THEN
+        UPDATE temp_volar set status = 7 WHERE id_temp in (SELECT idres_bp from bitpagos_volar where id_bp = _pago);
+    ELSE
+        UPDATE temp_volar set status = 4 WHERE id_temp in (SELECT idres_bp from bitpagos_volar where id_bp = _pago);
+    END IF;
+  ELSEIF(SELECT total_temp from temp_volar where id_temp=_reserva) < _cantidad THEN
     SET respuesta = 'ERROR EN PAGO';
-ELSE
-    INSERT INTO bitpagos_volar (idres_bp,idreg_bp,metodo_bp,banco_bp,referencia_bp,cantidad_bp,fecha_bp) VALUES (_reserva,_usuario,_metodo,_banco,_referencia,_cantidad,_fechaPago);
-    SET respuesta = CONCAT('Registrado|',LAST_INSERT_ID());
-END IF;
-
+  END IF;
+END$$
 
 END$$
 
