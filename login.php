@@ -5,8 +5,8 @@
     session_destroy();
     session_unset();
   }
-  
-?>
+ ?>
+
 <html lang="en">
 <head>
   <title>Volar en Globo</title>
@@ -103,5 +103,14 @@
   <script src="sources/gritter/js/jquery.gritter.js"></script>
 
   <script type="text/javascript" src="sources/js/login.js"></script>
+  <?php 
+  if(isset($_GET['s'])){
+?>
+<script type="text/javascript">
+    abrir_gritter("Error","Se ha terminado tu Sesión","danger");
+</script>
+<?php
+  }
+?>
 </body>
 </html>

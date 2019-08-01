@@ -18,8 +18,6 @@ try {
     //Recipients
     if(isset($_SESSION['usuario'])){
         $usuario= unserialize((base64_decode($_SESSION['usuario'])));
-    }else{
-        header("Location: ../");
     }
     $correoActual = $usuario->getCorreoUsu();
     $usuarioActual = $usuario->getNombreUsu(). " " .$usuario->getApellidopUsu(). " ". $usuario->getApellidomUsu();

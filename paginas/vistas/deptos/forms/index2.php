@@ -23,7 +23,8 @@
 					foreach ($puestos as $puesto) {
 						echo "<tr>";
 							echo '<td>'.$puesto->nombre.'</td>';
-							echo '<td><i class="fa fa-trash fa-lg" data-toggle="modal" data-target="#modal2"  style="color:red"></i></td>';
+							echo '<td><i class="fa fa-trash fa-lg" onclick= data-toggle="modal" data-target="#modal2"  style="color:red"></i>
+							<i class="fa fa-cog fa-lg" onclick= data-toggle="modal" data-target="#modal2"  style="color:red"></i></td>';
 						echo "</tr>";
 					}
 				?>

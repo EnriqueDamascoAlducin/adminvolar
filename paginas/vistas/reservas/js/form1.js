@@ -10,7 +10,6 @@
 	var year = currentDate.getFullYear();
 	dia++;
 	if(dia>ultimoDia.getDate()){
-		alert(dia);
 		dia=1;
 		mes++;
 	}

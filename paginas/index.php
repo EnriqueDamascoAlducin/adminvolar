@@ -5,8 +5,6 @@
 	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin/paginas/controladores/fin_session.php';
 	if(isset($_SESSION['usuario'])){
 		$usuario= unserialize((base64_decode($_SESSION['usuario'])));
-	}else{
-		header("Location: ../");
 	}
 	$date = date('d/m/Y ', time());
 	$permisos=$con->query("CALL permisosModulos(". $usuario->getIdUsu() .")")->fetchALL (PDO::FETCH_OBJ);

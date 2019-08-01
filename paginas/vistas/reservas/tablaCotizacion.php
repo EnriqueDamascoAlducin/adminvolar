@@ -130,7 +130,12 @@
 						<td class="tdtitulo">Pasajeros</td>
 						<td><?php echo "Adultos:".$datosReserva[0]->pasajerosA ."(<b>". ($datosReserva[0]->pasajerosA*$datosReserva[0]->precioA ) ."</b>) <br> Niños:".$datosReserva[0]->pasajerosN ."(<b>". ($datosReserva[0]->pasajerosN*$datosReserva[0]->precioN ) ."</b>) " ?></td>
 					</tr>
-							
+					<?php if($datosReserva[0]->comentario!=''){ ?>
+					<tr>
+						<td class="tdtitulo">Comentario</td>
+						<td><?php echo $datosReserva[0]->comentario; ?></td>
+					</tr>
+					<?php } ?>		
 					<?php if($datosReserva[0]->otroscar1!=''){ ?>
 						<tr>
 							<td class="tdtitulo"><?php echo $datosReserva[0]->otroscar1 ?></td>

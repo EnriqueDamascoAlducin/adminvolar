@@ -96,6 +96,9 @@
 					}else if($reserva->status==6){
 						$text="C. por Reemplazo ";
 						$class="warning";
+					}else if($reserva->status==7){
+						$text="Pagado Total";
+						$class="success";
 					}else{
 						$text="Error";
 						$class="danger";
@@ -111,13 +114,13 @@
 				<td>
 
 					<!--========       EDITAR     ========= -->
-					<?php if(($idUsu==$reserva->idusu && in_array("EDITAR",$permisos)) || in_array("EDITAR GRAL",$permisos)) { ?>
+					<?php if( (($idUsu==$reserva->idusu && in_array("EDITAR",$permisos)) || in_array("EDITAR GRAL",$permisos)) && ($reserva->status!=1 && $reserva->status!=7)  ) { ?>
 					<i class="fa fa-pencil-square fa-md" style="color:#33b5e5" title="Editar"  onclick="accionReserva('editar', <?php echo $reserva->id_temp; ?>)"></i>
 					<?php } ?>
 
 					<!--========       CONCILIAR     ========= -->
 					<?php if( in_array("CONCILIAR",$permisos)){ ?>
-					<i class="fa fa-check-square-o fa-md" style="color:#aa66cc" title="Conciliar"  onclick="accionReserva('conciliar', <?php echo $reserva->id_temp; ?>)"></i>
+					<i class="fa fa-check-square-o fa-md" style="color:#aa66cc" title="Conciliar" data-toggle="modal" data-target="#modalReservas"    onclick="conciliarPago(<?php echo $reserva->id_temp; ?>,'<?php echo $reserva->nombre; ?>')"></i>
 					<?php } ?>
 
 					<!--========       PAGOS     ========= -->
@@ -139,11 +142,15 @@
 					<?php } ?>
 					<!--========       Cotización     ========= -->
 					<?php if(in_array("COTIZACION",$permisos)){ ?>
-					<i class="fa fa-expand fa-md" style="color:#311b92 " title="Cotización" data-toggle="modal" data-target="#modalReservas"  onclick="mostrarCotizacion(<?php echo $reserva->id_temp; ?>, 'ver')" ></i>
+						<i class="fa fa-expand fa-md" style="color:#311b92 " title="Cotización" data-toggle="modal" data-target="#modalReservas"  onclick="mostrarCotizacion(<?php echo $reserva->id_temp; ?>, 'ver')" ></i>
 					<?php } ?>
 					<!--========       Eliminar     ========= -->
-					<?php if(($idUsu==$reserva->idusu && in_array("ELIMINAR",$permisos)) || in_array("ELIMINAR GRL",$permisos)) { ?>
+					<?php if( (($idUsu==$reserva->idusu && in_array("ELIMINAR",$permisos)) || in_array("ELIMINAR GRL",$permisos))  && ($reserva->status!=1 && $reserva->status!=7) ) { ?>
 					<i class="fa fa-trash-o fa-md" style="color:#ff4444" title="Eliminar" data-toggle="modal" data-target="#modalReservas"  onclick="eliminarReserva('vistas/reservas/', <?php echo $reserva->id_temp; ?>, <?php echo $modulo; ?>)" ></i>
+					<?php } ?>
+					<!--========       Cotización     ========= -->
+					<?php if(in_array("ASISTENCIA",$permisos)){ ?>
+						<i class="fa fa-street-view fa-md" style="color:#311b92 " title="Cotización" data-toggle="modal" data-target="#modalReservas"  onclick="checkAsistencia(<?php echo $reserva->id_temp; ?>,'<?php echo $reserva->nombre; ?>')"></i>
 					<?php } ?>
 				</td>
 			</tr>

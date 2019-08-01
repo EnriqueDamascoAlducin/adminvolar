@@ -53,6 +53,9 @@
 						}else if($reserva->status==6){
 							$text="C. por Reemplazo ";
 							$class="#ffbb33";
+						}else if($reserva->status==7){
+							$text="Pagado Total";
+							$class="#00C851";
 						}else{
 							$text="Otro";
 							$class="#ff4444";

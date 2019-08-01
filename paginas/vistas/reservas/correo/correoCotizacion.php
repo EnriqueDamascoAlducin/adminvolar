@@ -5,8 +5,6 @@
 	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin/paginas/controladores/fin_session.php';
 	if(isset($_SESSION['usuario'])){
         $usuario= unserialize((base64_decode($_SESSION['usuario'])));
-    }else{
-        header("Location: ../");
     }
 //	$datosVuelo = $con->consulta("IFNULL(fechavuelo_temp,' No asignada' as fechavuelo, ")
 		//2 es de cortesia ;1 es de paga
@@ -157,6 +155,12 @@
 	$cuerpo.=							'<td class="tdtitulo">Pasajeros</td>';
 	$cuerpo.=							'<td > Adultos:'.$datosReserva[0]->pasajerosA.'(<b>'.($datosReserva[0]->pasajerosA*$datosReserva[0]->precioA ) .'</b>) <br> '.utf8_decode('Niños:').$datosReserva[0]->pasajerosN .'(<b>'.($datosReserva[0]->pasajerosN*$datosReserva[0]->precioN ).'</b>)</td>';
 	$cuerpo.=						'</tr>';
+	if($datosReserva[0]->comentario!=''){ 
+		$cuerpo.=						'<tr>';
+		$cuerpo.=							'<td class="tdtitulo">Comentario</td>';
+		$cuerpo.=							'<td>'. $datosReserva[0]->comentario.'</td>';
+		$cuerpo.=						'</tr>';
+	} 
 	if($datosReserva[0]->otroscar1!=''){
 		$cuerpo.=					'<tr>';
 		$cuerpo.=						'<td class="tdtitulo">'. $datosReserva[0]->otroscar1. '</td>';
@@ -240,4 +244,6 @@
 	//	echo $cuerpo;
 	$ruta=$_SERVER['DOCUMENT_ROOT'].'/admin/sources/PHPMailer/mail.php';
 	require_once  $ruta;
+
+	$accion = $con->actualizar("temp_volar","status=3","id_temp=".$reserva);
 ?>
