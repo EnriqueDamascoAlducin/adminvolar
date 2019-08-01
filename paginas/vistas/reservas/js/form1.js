@@ -10,8 +10,13 @@
 	var year = currentDate.getFullYear();
 	dia++;
 	if(dia>ultimoDia.getDate()){
-		dia=1;
+		dia=2;
 		mes++;
+	}
+
+	dia2=dia;
+	if(dia2<10){
+		dia2="0"+dia2;
 	}
 	mes++;
 	if(dia < 10){
@@ -22,7 +27,8 @@
 		mes = "0"+mes;
 	}
 	var fecha = year + "-" + (mes) + "-" + (dia);
-	$("#fechavuelo").attr("min",fecha);
+	var fecha2 = year + "-" + (mes) + "-" + (dia2);
+	$("#fechavuelo").attr("min",fecha2);
 	$("input[id^='check']").attr("min",fecha);
 	
 	$("input[name='tdescuento']").on("click",function(){
@@ -151,7 +157,7 @@
 	  		data: parametros,
 	  		success:function(response){
 				if(response=="ok"){
-					abrir_gritter("Bien","Se registro Correctamente","success");
+					//abrir_gritter("Bien","Se registro Correctamente","success");
 				}else{
 					abrir_gritter("Error","No se pudo registrar" +response,"danger");
 				}
@@ -327,6 +333,7 @@
 
 	$("#hotel").on("change",function(){
 		cargarHabitaciones();
+		habitacion="";
 	});
 
 	function cargarHabitaciones(){

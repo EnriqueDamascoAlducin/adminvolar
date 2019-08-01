@@ -5,7 +5,7 @@
 	$usr = $_POST['user'];
 	$usuario=$con->query("CALL usuarioLoggeado('". $usr ."' , '". md5($pass) ."')");
 	$usuario = $usuario->fetchALL (PDO::FETCH_OBJ);
-	if(sizeof($usuario)>0){
+	if(sizeof($usuario)>0 && $usuario[0]->usuario_usu==$usr){
 		session_start();
 		$_SESSION['ruta']=$_SERVER['DOCUMENT_ROOT'].'/admin/';
 		require  $_SESSION['ruta'].'paginas/modelos/login.php';

@@ -139,6 +139,7 @@ function confirmarAgregarPago(reserva,cliente){
 	});
 }
 function agregarPago(reserva,cliente){
+	
 	$("button[id^='btn']").remove();
 	$("#cuerpoModalReservas").html("Agregar Pago para "+ cliente);
 	$("#tituloModalReservas").html("Agregar Pago para "+ cliente);
@@ -165,6 +166,7 @@ function agregarPago(reserva,cliente){
 		    }
 		  }
 	});
+
 }
 function conciliarPago(reserva,cliente){
 	$("button[id^='btn']").remove();
@@ -191,6 +193,8 @@ function conciliarPago(reserva,cliente){
 		    }
 		  }
 	});
+
+	cambiarTamanoModal("modalSize","lg",'resetear');
 }
 function confirmarEliminar(reserva,url,idModulo){
 	$.ajax({
@@ -244,9 +248,41 @@ function agregarReserva(id,accion){
 		  }
 	});
 }
+
+function checkAsistencia (reserva,nombre){
+	
+	$("button[id^='btn']").remove();
+	$("#cuerpoModalReservas").html("Confirmar Asistencia para "+ cliente);
+	cambiarTamanoModal("modalSize","lg",'agregar');
+	$("#divBtnModalReservas").append('<button autofocus   type="button" id="btnConfirmarAsistencia'+reserva+'" class="btn btn-success" onclick="ConfirmarAsistencia('+reserva+',\''+cliente+'\');" >Confirmar</button>');
+	$("#divBtnModalReservas").append('<button autofocus   type="button" id="btnConfirmarAsistencia'+reserva+'" class="btn btn-success" onclick="ConfirmarAsistencia('+reserva+',\''+cliente+'\');" >Solo Asignar Vuelo</button>');
+	$("#btnPago"+reserva).focus();
+	url="vistas/reservas/forms/confirmarAsistencia.php";
+	parametros={reserva:reserva};
+  	$.ajax({
+		url:url,
+		method: "POST",
+  		data: parametros,
+  		success:function(response){
+			$("#cuerpoModalReservas").html(response);	
+  		},
+  		error:function(){
+  		
+          abrir_gritter("Error","Error desconocido" ,"danger");
+  		},
+  		statusCode: {
+		    404: function() {
+		     
+          abrir_gritter("Error","URL NO encontrada" ,"danger");
+		    }
+		  }
+	});
+
+	cambiarTamanoModal("modalSize","lg",'resetear');
+}
 function mostrarCotizacion(id,accion){
 
-	$("button[id^='btnElimiar']").remove();
+	$("button[id^='btn']").remove();
 	$("#tituloModalReservas").html("Cotización "+ id);
 	url="vistas/reservas/tablaCotizacion.php";
 	parametros={reserva:id, accion:accion};

@@ -1,6 +1,6 @@
 <?php
 @session_start();
-if ( isset( $_SESSION[ 'ULTIMA_ACTIVIDAD' ] ) && 
+if ( (isset( $_SESSION[ 'ULTIMA_ACTIVIDAD' ] ) && isset( $_SESSION['max-tiempo'] )) &&
 ( time() - $_SESSION[ 'ULTIMA_ACTIVIDAD' ] > $_SESSION['max-tiempo'] ) || !isset($_SESSION['usuario'])) {
 
 // Si ha pasado el tiempo sobre el limite destruye la session

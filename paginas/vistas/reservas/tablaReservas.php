@@ -133,7 +133,7 @@
 					<i class="fa fa-file-text-o fa-md" style="color:#2BBBAD" title="Bitacora de Pagos"  onclick="accionReserva('bitacora', <?php echo $reserva->id_temp; ?>)"></i>
 					<?php } ?>
 					<!--========       PILOTOS     ========= -->
-					<?php if(in_array("PILOTOS",$permisos)){ ?>
+					<?php if(in_array("PILOTOSS",$permisos)){ ?>
 					<i class="fa fa-user-o fa-md" style="color:rgba(0, 150, 136, 0.7) " title="Asignar Pilotos"  onclick="accionReserva('pilotos', <?php echo $reserva->id_temp; ?>)"></i>
 					<?php } ?>
 					<!--========       VER     ========= -->
@@ -149,7 +149,7 @@
 					<i class="fa fa-trash-o fa-md" style="color:#ff4444" title="Eliminar" data-toggle="modal" data-target="#modalReservas"  onclick="eliminarReserva('vistas/reservas/', <?php echo $reserva->id_temp; ?>, <?php echo $modulo; ?>)" ></i>
 					<?php } ?>
 					<!--========       Cotización     ========= -->
-					<?php if(in_array("ASISTENCIA",$permisos)){ ?>
+					<?php if(in_array("ASISTENCIA",$permisos) && $reserva->status==7){ ?>
 						<i class="fa fa-street-view fa-md" style="color:#311b92 " title="Cotización" data-toggle="modal" data-target="#modalReservas"  onclick="checkAsistencia(<?php echo $reserva->id_temp; ?>,'<?php echo $reserva->nombre; ?>')"></i>
 					<?php } ?>
 				</td>

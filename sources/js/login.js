@@ -34,7 +34,7 @@ function validarSesion(e){
 		  				window.location.replace("paginas/");
   				},2500);
   			}else{
-  				abrir_gritter("Error","Usuario y/o Contraseña Incorrecto " + response ,"danger");
+  				abrir_gritter("Error","Usuario y/o Contraseña Incorrecto "  ,"danger");
   				$("#user").focus();
   			}
   			

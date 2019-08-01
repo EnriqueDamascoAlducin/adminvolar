@@ -184,7 +184,7 @@
 				$cuerpo.=				'<td>';
 				if ($servicioReserva->cantmax == 0){
 					$totalReserva +=($totalPasajeros * $servicioReserva->precio );
-					$cuerpo.=				number_format( ($totalPasajeros * $servicioReserva->precio ) , 2, '.', ',') ;
+					$cuerpo.=				number_format( ($totalPasajeros * $servicioReserva->precio ) , 2, '.', ',')."x".$tPasajeros."=".$totalPasajeros * $servicioReserva->precio ;
 				}else{
 					$totalReserva += $servicioReserva->precio ;
 					$cuerpo.=				number_format($servicioReserva->precio, 2, '.', ',');
