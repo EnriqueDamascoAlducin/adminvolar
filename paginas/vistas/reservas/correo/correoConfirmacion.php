@@ -81,7 +81,7 @@
 
 	$correos=[array($datosReserva[0]->correo,$datosReserva[0]->nombre)];
 	$vendedor =[$getVendedorInfo[0]->nombre,$getVendedorInfo[0]->correo, $getVendedorInfo[0]->telefono];
-	$asunto = "Cotización de la Reserva ". $reserva;
+	$asunto = "confirmación de Vuelo: ". $reserva;
 	$cuerpo='<!DOCTYPE html>
 				<html>
 					<head>
@@ -263,8 +263,8 @@
 	$cuerpo.=							'<td class="tdseparador" colspan="2">PUNTO DE REUNION:	</td>';
 	$cuerpo.=						'</tr>';
 	$cuerpo.=						'<tr>';
-	$cuerpo.=							'<a href="https://www.google.com/maps/place//data=!4m2!3m1!1s0x85d1c03008c08e6d:0x2cd1a4cc8c3f3d5c?utm_source=mstt_1&utm_medium=mstt_2"><td  colspan="2">
-Recepción Volar en Globo, Aventura y Publicidad SA de CV. Esquina Francisco Villa con Carretera Libre Mexico- Tulancingo (132) C.P. 55850 (Puedes dar clic aqui para abrir la ubicación en maps).</td></a>';
+	$cuerpo.=							'<td  colspan="2"><a href="https://www.google.com/maps/place//data=!4m2!3m1!1s0x85d1c03008c08e6d:0x2cd1a4cc8c3f3d5c?utm_source=mstt_1&utm_medium=mstt_2">
+Recepción Volar en Globo, Aventura y Publicidad SA de CV. Esquina Francisco Villa con Carretera Libre Mexico- Tulancingo (132) C.P. 55850 (Puedes dar clic aqui para abrir la ubicación en maps).</a></td>';
 	$cuerpo.=						'</tr>';
 	$cuerpo.=						'<tr>';
 	$cuerpo.=							'<td colspan="2">';
@@ -319,7 +319,7 @@ Recepción Volar en Globo, Aventura y Publicidad SA de CV. Esquina Francisco Vil
 		$cuerpo.=						'<td colspan="2">';
 			$cuerpo.=						'Tomar insurgentes hacia Pachuca numero de autopistá 132-D en cuanto llegues a las casetas tomar las del lado derecho mas con dirección a pirámides - Tulancingo, ( extremo derecho ), ahí pagaras una caseta de $75.00, INMEDIATAMENTE PEGARTE A LADO DERECHO Y SEGUIR LOS SEÑALAMIENTOS HACIA PIRAMIDES seguir sobre la autopista en el Km. 17 y pasandoÂ  la gasolinera tomar la desviación hacia pirámidesÂ y continuar hasta la desviación a Tulancingo continuas sobre esta carretera donde a tu mano izquierda vas a encontrar una Estación de Policía Federal, un poco más adelante encontraras una salida a mano izquierda antes del puente, debes girar a la izquierda nuevamente y allí encontraras nuestra recepción.
 				<hr>
-				<a href="https://www.google.com.mx/maps/place/VOLAR+EN+GLOBO/@19.694916,-98.823688,19z/data=!3m1!4b1!4m2!3m1!1s0x0000000000000000:0xff4f4587c24e2324">
+				<a href="https://www.google.com/maps/place//data=!4m2!3m1!1s0x85d1c03008c08e6d:0x2cd1a4cc8c3f3d5c?utm_source=mstt_1&utm_medium=mstt_2">
 				<button type="button" class="btn btn-info btn-lg" id="direccionvga">Ver Dirección</button></a>
 				<hr>
 				Sin más por el momento quedo a sus órdenes para cualquier duda o aclaración respecto al servicio contratado.';
