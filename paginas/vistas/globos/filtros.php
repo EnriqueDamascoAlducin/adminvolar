@@ -52,7 +52,7 @@
 	</div>
 
 	<div class="col-sm-3 col-lg-3 col-md-3 col-6 col-xl-2 " >
-		<button type="button" class="btn btn-info" onclick="cargarTabla()"><i class="fa fa-search" ></i></button>
+		<button type="button" class="btn btn-info" onclick="cargarTablaReservas()"><i class="fa fa-search" ></i></button>
 		<?php 
 			if(in_array("!REPORTES", $permisos)){
 		?>

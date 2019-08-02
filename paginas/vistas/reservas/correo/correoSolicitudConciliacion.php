@@ -8,7 +8,6 @@
 	}
 
 
-	print_r($correos);
 	$getVendedorInfo = $con->consulta("correo_usu as correo , CONCAT(IFNULL(nombre_usu,''),' ',IFNULL(apellidop_usu,''),' ',IFNULL(apellidom_usu,'')) as nombre, telefono_usu as telefono"," volar_usuarios vu INNER JOIN temp_volar tv ON tv.idusu_temp=vu.id_usu ","id_temp=".$pagoData[0]->reserva);
 	$vendedor =[$getVendedorInfo[0]->nombre,$getVendedorInfo[0]->correo, $getVendedorInfo[0]->telefono];
 	$asunto = "Solicitud de Cotización de la Reserva ". $pagoData[0]->reserva;
@@ -79,14 +78,13 @@
 	$cuerpo.=							'<td >'. $pagoData[0]->fecha.'</td>';
 	$cuerpo.=						'</tr>';
 	$cuerpo.=						'<tr>';
-	$cuerpo.=							'<a href="https://www.siswebs.com.mx/admin/"><td class="tdtitulo" colspan="2x">Da click Aqui para conciliar</td></a>';
+	$cuerpo.=							'<td class="tdtitulo" colspan="2x"><a href="https://www.siswebs.com.mx/admin/">Da click Aqui para conciliar</a></td>';
 	$cuerpo.=						'</tr>';
 	$cuerpo.=					'</tbody>';
 	$cuerpo.=				'</table>';
 	$cuerpo.=			'</div>';
 	$cuerpo.=		'</body>';
 	$cuerpo.=	'</html>';
-		//echo $cuerpo;
 	$ruta=$_SERVER['DOCUMENT_ROOT'].'/admin/sources/PHPMailer/mail.php';
 	require_once  $ruta;
 ?>

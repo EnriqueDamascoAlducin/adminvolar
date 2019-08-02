@@ -52,11 +52,13 @@ try {
     $mail->CharSet = 'UTF-8';
     
     if(!$mail->send()) {
-        $error = 'Mail error: '.$mail->ErrorInfo; 
+        echo $error = 'Mail error: '.$mail->ErrorInfo; 
+        echo $cuerpo;
     } else {
-        $error = 'Correo Enviado';
+        echo 'Correo Enviado';
     } 
-    echo $error;
+
+    
 } catch (Exception $e) {
     echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
 }

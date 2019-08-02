@@ -52,12 +52,11 @@
 		$sql="CALL registrarPago(". $parametros .",@respuesta)";
 		
 		$registrarPago = $con->query($sql);
-		echo $sql;
+		//echo $sql;
 		$registrarPago = $con->query("Select @respuesta as respuesta")->fetchALL (PDO::FETCH_OBJ);
 		if($registrarPago[0]->respuesta=="ERROR EN PAGO"){
 			echo $registrarPago[0]->respuesta;
 		}else{
-
 			$respuesta=explode("|", $registrarPago[0]->respuesta);
 			echo $respuesta[0];
 			$pago = $respuesta[1];

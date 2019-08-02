@@ -248,14 +248,52 @@ function agregarReserva(id,accion){
 		  }
 	});
 }
+function ConfirmarAsistencia(reserva,cliente,accion){
 
+	hora = $("#hora").val();
+	piloto = $("#piloto").val();
+	globo = $("#globo").val();
+	peso = $("#peso").val();
+	
+	$.ajax({
+		url:'controladores/reservaController.php',
+		method: "POST",
+  		data: {
+  			hora:hora,
+  			piloto:piloto,
+			globo:globo,
+			reserva:reserva,
+			peso:peso,
+  			accion:accion
+  		},
+  		success:function(response){
+  			if(response=="")
+  				abrir_gritter(response, "No puedes agregar mas pagos" ,"warning");
+  			else
+  				abrir_gritter("Correcto", response ,"info");
+
+  			agregarPago(reserva,cliente);
+				
+  		},
+  		error:function(){
+  		
+          abrir_gritter("Error","Error desconocido" ,"danger");
+  		},
+  		statusCode: {
+		    404: function() {
+		     
+          abrir_gritter("Error","URL NO encontrada" ,"danger");
+		    }
+		  }
+	});
+}
 function checkAsistencia (reserva,nombre){
 	
 	$("button[id^='btn']").remove();
-	$("#cuerpoModalReservas").html("Confirmar Asistencia para "+ cliente);
+	$("#tituloModalReservas").html("Confirmar Asistencia para "+ nombre);
 	cambiarTamanoModal("modalSize","lg",'agregar');
-	$("#divBtnModalReservas").append('<button autofocus   type="button" id="btnConfirmarAsistencia'+reserva+'" class="btn btn-success" onclick="ConfirmarAsistencia('+reserva+',\''+cliente+'\');" >Confirmar</button>');
-	$("#divBtnModalReservas").append('<button autofocus   type="button" id="btnConfirmarAsistencia'+reserva+'" class="btn btn-success" onclick="ConfirmarAsistencia('+reserva+',\''+cliente+'\');" >Solo Asignar Vuelo</button>');
+	$("#divBtnModalReservas").append('<button data-dismiss="modal"  type="button" id="btnConfirmarAsistencia'+reserva+'" class="btn btn-success" onclick="ConfirmarAsistencia('+reserva+',\''+nombre+'\',\'asistencia\' );" >Confirmar</button>');
+	$("#divBtnModalReservas").append('<button data-dismiss="modal"  type="button" id="btnConfirmarAsistencia'+reserva+'" class="btn btn-info" onclick="ConfirmarAsistencia('+reserva+',\''+nombre+'\',\'asignarGlobo\' );" >Solo Asignar Vuelo</button>');
 	$("#btnPago"+reserva).focus();
 	url="vistas/reservas/forms/confirmarAsistencia.php";
 	parametros={reserva:reserva};

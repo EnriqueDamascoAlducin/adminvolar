@@ -260,7 +260,7 @@
 				wrong += "Error en la Habitación. ";
 			}
 			if($("#checkin").val()==""){
-				abrir_gritter("Advertencia","Debe Seleccionar su Checkin","warning");
+				//abrir_gritter("Advertencia","Debe Seleccionar su Checkin","warning");
 				errores++;
 				wrong += "Error en el CheckIn. ";
 			}
@@ -272,10 +272,24 @@
 			}
 			
 		}
+		pasajerosa=$("#pasajerosa").val();
+		pasajerosn=$("#pasajerosn").val();
+		if(pasajerosa==""){
+			pasajerosa=0;
+		}
+		if(pasajerosn==""){
+			pasajerosn=0;
+		}
+		if(parseInt(pasajerosn)+parseInt(pasajerosa)<1){
+				//abrir_gritter("Advertencia","Debe Seleccionar la Canitdad de pasajeros","warning");
+				errores++;
+				wrong += "Debe de tener almenos un pasajero. ";
+		}
+
 		if($("#tdescuento").val()!="" || $("#tdescuento").val()!="0"){
 
 			if($("#cantdescuento").val()==""){
-				abrir_gritter("Advertencia","Debe Seleccionar la cantidad de Descuento","warning");
+				//abrir_gritter("Advertencia","Debe Seleccionar la cantidad de Descuento","warning");
 				errores++;
 				wrong += "Error en el Descuento. ";
 			}

@@ -7,12 +7,12 @@ function cargarPuestos(){
 	if(hotel==""){
 		return false;
 	}
-	var1="id_habitacion as value, nombre_habitacion as text";
-	var2="habitaciones_volar";
-	var3="status<>0 AND idhotel_habitacion="+hotel;
+	var1="id_puesto as value, nombre_puesto as text";
+	var2="puestos_volar";
+	var3="status<>0 AND depto_puesto="+hotel;
 	//abrir_gritter("a","select " + var1 + " from "+ var2+ " where " + var3, "info");
     parametros={var1:var1,var2:var2,var3:var3};
-  	$("#habitacion").empty().append("<option value=''>Selecciona una habitación </option>");
+  	$("#puesto").empty().append("<option value=''>Selecciona un puesto </option>");
   	$.ajax({
       data: parametros,
       dataType:"json",
@@ -26,7 +26,7 @@ function cargarPuestos(){
 		  if(val==puesto){
 		  	attr="selected";
 		  }
-		  $("#habitacion").append("<option value='"+val+"' "+attr+">"+text+"</option>");
+		  $("#puesto").append("<option value='"+val+"' "+attr+">"+text+"</option>");
 		});
       },
       error:function(){
@@ -50,7 +50,6 @@ function guardarUsuario(id){
 	telefono = $("#telefono").val();
 	usuario = $("#usuario").val();
 	contrasena = $("#contrasena").val();
-	puesto = 1;
 	if(nombre==""){
 		abrir_gritter("Advertencia","Ingresa un nombre","warning");
 		error++;

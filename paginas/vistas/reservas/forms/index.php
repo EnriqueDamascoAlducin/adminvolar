@@ -88,7 +88,7 @@
 </style>
 <div class="row" style="text-align: center;">
 	<div class="col-12 col-md-12 col-sm-12 col-md-12 col-xl-12">
-		<label style="text-align: center;"><B>Captura una Nueva Cotización</B></label>
+		<label style="text-align: center;"><B>Captura una Nueva Cotización <i><?php echo $actId; ?></i></B></label>
 	</div>
 </div>
 <div class="col-12 col-md-12 col-sm-12 col-md-12 col-xl-12" style="background-color:#3674B2 ">

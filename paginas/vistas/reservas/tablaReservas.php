@@ -114,22 +114,22 @@
 				<td>
 
 					<!--========       EDITAR     ========= -->
-					<?php if( (($idUsu==$reserva->idusu && in_array("EDITAR",$permisos)) || in_array("EDITAR GRAL",$permisos)) && ($reserva->status!=1 && $reserva->status!=7)  ) { ?>
+					<?php if( (($idUsu==$reserva->idusu && in_array("EDITAR",$permisos)) || in_array("EDITAR GRAL",$permisos)) && ($reserva->status!=1 && $reserva->status!=7 && $reserva->status!=6 )  ) { ?>
 					<i class="fa fa-pencil-square fa-md" style="color:#33b5e5" title="Editar"  onclick="accionReserva('editar', <?php echo $reserva->id_temp; ?>)"></i>
 					<?php } ?>
 
 					<!--========       CONCILIAR     ========= -->
-					<?php if( in_array("CONCILIAR",$permisos)){ ?>
+					<?php if( in_array("CONCILIAR",$permisos) && $reserva->status!=6 && $reserva->status!=2){ ?>
 					<i class="fa fa-check-square-o fa-md" style="color:#aa66cc" title="Conciliar" data-toggle="modal" data-target="#modalReservas"    onclick="conciliarPago(<?php echo $reserva->id_temp; ?>,'<?php echo $reserva->nombre; ?>')"></i>
 					<?php } ?>
 
 					<!--========       PAGOS     ========= -->
-					<?php if(in_array("AGREGAR PAGO",$permisos)){ ?>
+					<?php if(in_array("AGREGAR PAGO",$permisos) && $reserva->status!=6 && $reserva->status!=2){ ?>
 					<i class="fa fa-money fa-md" style="color:#00C851" title="Agregar Pago" data-toggle="modal" data-target="#modalReservas" onclick="agregarPago(<?php echo $reserva->id_temp; ?>,'<?php echo $reserva->nombre; ?>')"> </i>
 					<?php } ?>
 
 					<!--========       BITACORA     ========= -->
-					<?php if(($idUsu==$reserva->idusu && in_array("BITACORA",$permisos)) || in_array("BITACORA GRA", $permisos)){ ?>
+					<?php if((($idUsu==$reserva->idusu && in_array("BITACORA",$permisos)) || in_array("BITACORA GRA", $permisos)) && $reserva->status!=2){ ?>
 					<i class="fa fa-file-text-o fa-md" style="color:#2BBBAD" title="Bitacora de Pagos"  onclick="accionReserva('bitacora', <?php echo $reserva->id_temp; ?>)"></i>
 					<?php } ?>
 					<!--========       PILOTOS     ========= -->
@@ -141,7 +141,7 @@
 					<i class="fa fa-eye fa-md" style="color:#311b92 " title="Ver" onclick="accionReserva('ver', <?php echo $reserva->id_temp; ?>)" ></i>
 					<?php } ?>
 					<!--========       Cotización     ========= -->
-					<?php if(in_array("COTIZACION",$permisos)){ ?>
+					<?php if(in_array("COTIZACION",$permisos) && $reserva->status!=2){ ?>
 						<i class="fa fa-expand fa-md" style="color:#311b92 " title="Cotización" data-toggle="modal" data-target="#modalReservas"  onclick="mostrarCotizacion(<?php echo $reserva->id_temp; ?>, 'ver')" ></i>
 					<?php } ?>
 					<!--========       Eliminar     ========= -->
@@ -150,7 +150,7 @@
 					<?php } ?>
 					<!--========       Cotización     ========= -->
 					<?php if(in_array("ASISTENCIA",$permisos) && $reserva->status==7){ ?>
-						<i class="fa fa-street-view fa-md" style="color:#311b92 " title="Cotización" data-toggle="modal" data-target="#modalReservas"  onclick="checkAsistencia(<?php echo $reserva->id_temp; ?>,'<?php echo $reserva->nombre; ?>')"></i>
+						<i class="fa fa-street-view fa-md" style="color:#311b92 " title="Confirmar Asistencia" data-toggle="modal" data-target="#modalReservas"  onclick="checkAsistencia(<?php echo $reserva->id_temp; ?>,'<?php echo $reserva->nombre; ?>')"></i>
 					<?php } ?>
 				</td>
 			</tr>

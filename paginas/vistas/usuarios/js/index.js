@@ -13,10 +13,11 @@ function cargarTabla(){
 	fechaF = $("#fechaF").val();
 	empleado = $("#empleado").val();
 	nombre = $("#nombre").val();
+	depto = $("#depto").val();
 	modulo = $("#modulo").val();
 
 	url="vistas/usuarios/tablaUsuarios.php";
-	parametros={fechaI:fechaI,fechaF:fechaF,empleado:empleado,nombre:nombre,modulo:modulo};
+	parametros={fechaI:fechaI,fechaF:fechaF,empleado:empleado,nombre:nombre,modulo:modulo,depto:depto};
   	$.ajax({
 		url:url,
 		method: "POST",

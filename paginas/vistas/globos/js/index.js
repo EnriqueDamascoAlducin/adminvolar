@@ -154,6 +154,7 @@ function accionesPuesto(puesto,accion,nombre,depto){
   				puesto = response.split("|");
   				$("#idPuesto").val(puesto[1]);
   				$("#puesto").val(puesto[0]);
+  				alert(puesto[0]);
   			}else{
   				abrir_gritter("Eliminado",  response ,"warning");
 				agregarPuestos(depto,nombre);

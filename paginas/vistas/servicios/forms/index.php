@@ -25,6 +25,10 @@
 		}
 	}
 ?>
+	<form id="formulario" name="formulario" enctype="multipart/form-data" method="post"  onsubmit="guardarServicio(event);" accept="image/*">
+<?php if($_POST['id']!=''){ ?>
+<input type="hidden" name="id" id="id" value="<?php echo $_POST['id']; ?>">
+<?php  } ?>
 <div class="row"> 
 	<div class="col-sm-3 col-lg-3 col-md-3 col-6 col-xl-3 ">
 		<div class="form-group">
@@ -67,7 +71,7 @@
 		<div class="col-sm-3 col-lg-3 col-md-3 col-6 col-xl-2 ">
 			<div class="form-group">
 				<label for="imagen">
-					<img src="../sources/images/servicios/<?php if(isset($servicio)){echo $servicio[0]->img_servicio;}else{ echo 'noimage.png'; } ?>" style="max-width: 100%">
+					<img src="../sources/images/servicios/<?php if(isset($servicio)){echo $servicio[0]->img_servicio;}else{ echo 'noimage.png'; } ?>" style="max-width: 100%"  class="rounded-circle">
 				</label>
 				<input type="file" class="form-control" id="imagen" name="imagen"  style="display: none" >
 			</div>
@@ -77,10 +81,11 @@
 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
 <?php if($_POST['id']!=''){ ?>
 
-	<button class="btn btn-info" onclick="agregarServicio();">Actualizar</button>
+	<button class="btn btn-info">Actualizar</button>
 <?php }else{ ?>
 
-	<button class="btn btn-success" onclick="agregarServicio();">Agregar</button>
+	<button class="btn btn-success" >Agregar</button>
 <?php } ?>
 </div>
-<script type="text/javascript" src="vistas/usuarios/js/form1.js"></script>
+</form>
+<script type="text/javascript" src="vistas/servicios/js/form1.js"></script>

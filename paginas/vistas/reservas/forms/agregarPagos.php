@@ -153,14 +153,9 @@
 		var currentDate = new Date();
 		var wrong="";
 		var dia = currentDate.getDate();
-		var mes = currentDate.getMonth(); //Be careful! January is 0 not 1
+		var mes = currentDate.getMonth()+1; //Be careful! January is 0 not 1
 		var year = currentDate.getFullYear();
-		dia++;
-		if(dia>ultimoDia.getDate()){
-			dia=1;
-			mes++;
-		}
-		mes++;
+		
 		if(dia < 10){
 			dia = "0"+dia;
 		}
