@@ -60,7 +60,7 @@
 	</div>
 </div>
 <?php if(sizeof($pagos)>0){ ?>
-	<table class="table " id="DataTable" style="width: 100%;">
+	<table class="table " id="DataTable" >
 		<thead>
 			<th>Usuario</th>
 			<th>Referencia</th>

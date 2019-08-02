@@ -183,7 +183,7 @@
 	  		data: parametros,
 	  		success:function(response){
 				if(response=="Actualizado" || response == "Agregado"){
-					abrir_gritter("Bien","Se registro Correctamente","success");
+					//abrir_gritter("Bien","Se registro Correctamente","success");
 				}else{
 					abrir_gritter("Error","No se pudo registrar" + response,"danger");
 				}
@@ -192,6 +192,10 @@
 	  		
 	          abrir_gritter("Error","Error desconocido" ,"danger");
 	  		},
+	  		/**
+be343816
+17
+	  		/
 	  		statusCode: {
 			    404: function() {
 			     
@@ -300,8 +304,11 @@
 	function mostrarCotizacion(id,accion){
 		wrong="";
 		var errores = 0;
+		$("#ConfirmarCotizacion").show();
 		errores = validarDatos();
-
+		if(errores>0){
+			$("#ConfirmarCotizacion").hide();
+		}
 		url="vistas/reservas/tablaCotizacion.php";
 		parametros={reserva:id, accion:accion};
 		$("#cuerpoCotizacion").html("");

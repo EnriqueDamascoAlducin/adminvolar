@@ -8,7 +8,7 @@
 	$totalReserva=0.0;
 	$totalPasajeros = $con->consulta("FORMAT(ifnull(pasajerosa_temp,0) + ifnull(pasajerosn_temp,0),2)  Total"," temp_volar "," id_temp = $reserva");
 	$datosReserva = $con->query("CALL getResumenREserva(".$reserva.");")->fetchALL (PDO::FETCH_OBJ);
-	$serviciosReserva = $con->consulta("tipo_sv as tipo , nombre_servicio as servicio ,cantmax_servicio as cantmax, precio_servicio as precio "," servicios_vuelo_temp svt INNER JOIN servicios_volar sv ON svt.idservi_sv=sv.id_servicio ","  svt.status<>0 and cantidad_sv>0 and idtemp_sv =".$reserva);
+	$serviciosReserva = $con->consulta("tipo_sv as tipo , nombre_servicio as servicio ,cantmax_servicio as cantmax, precio_servicio as precio "," servicios_vuelo_temp svt INNER JOIN servicios_volar sv ON svt.idservi_sv=sv.id_servicio ","  svt.status<>0 and svt.cantidad_sv>0 and idtemp_sv =".$reserva);
 
 		
 	$hotel=$datosReserva[0]->hotel;
@@ -30,8 +30,8 @@
 			$nombreHabitacion=$habitacion[0];
 			$capacidadHabitacion=$habitacion[2];
 			$descripHabitacion=$habitacion[3];
-			$checkin= $datosReserva[0]->checkin_temp;
-			$checkout = $datosReserva[0]->checkout_temp;
+			$checkin= $datosReserva[0]->checkin;
+			$checkout = $datosReserva[0]->checkout;
 			$date1 = strtotime($checkin);  
 			$date2 = strtotime($checkout);  
 			  
@@ -56,7 +56,7 @@
 			             $months*30*60*60*24)/ (60*60*24)); 
 
 			$totalHabitacion= $days * $precioHabitacion;
-			
+			$descripcionHospedaje = " De ".$checkin. " a ". $checkout. "(<b>".$days." dias</b> )";
 			$totalReserva+=$totalHabitacion;
 		}
 		$totalReserva +=$datosReserva[0]->precio1;
@@ -135,6 +135,26 @@
 						<td class="tdtitulo">Comentario</td>
 						<td><?php echo $datosReserva[0]->comentario; ?></td>
 					</tr>
+					<?php } ?>	
+					<?php if($datosReserva[0]->hotel!=''){ ?>
+						<tr>
+							<td class="tdseparador" colspan="2">Hotel</td>
+						</tr>
+						<tr>
+							<td class="tdtitulo" colspan="2"><?php echo $hotel.'<br>'.$descripcionHospedaje; ?></td>
+						</tr>
+						<tr>
+							<td class="tdtitulo" >Habitación</td>
+							<td  ><?php echo $nombreHabitacion; ?></td>
+						</tr>
+						<tr>
+							<td class="tdtitulo" >Precio/Noche</td>
+							<td  ><?php echo $precioHabitacion; ?></td>
+						</tr>
+						<tr>
+							<td class="tdtitulo" >Descripción</td>
+							<td  ><?php echo $descripHabitacion; ?></td>
+						</tr>
 					<?php } ?>		
 					<?php if($datosReserva[0]->otroscar1!=''){ ?>
 						<tr>
@@ -159,11 +179,11 @@
 									<td>
 										<?php 
 											if ($servicioReserva->cantmax == 0){
-												$totalReserva +=($totalPasajeros * $servicioReserva->precio );
-												echo number_format( ($totalPasajeros * $servicioReserva->precio ) , 2, '.', ',')."x".$tPasajeros ."=".$totalPasajeros * $servicioReserva->precio;
+												$totalReserva +=($totalPasajeros * $servicioReserva->precio);
+												echo number_format( ( $servicioReserva->precio ) , 2, '.', ',')."x".$tPasajeros ."=".($totalPasajeros * $servicioReserva->precio)."->".$totalReserva ;
 											}else{
 												$totalReserva += $servicioReserva->precio ;
-												echo number_format($servicioReserva->precio, 2, '.', ',');
+												echo number_format($servicioReserva->precio, 2, '.', ',') ."->".$totalReserva;
 											}
 										?>
 									</td>

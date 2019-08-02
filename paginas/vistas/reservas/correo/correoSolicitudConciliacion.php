@@ -10,7 +10,7 @@
 
 	$getVendedorInfo = $con->consulta("correo_usu as correo , CONCAT(IFNULL(nombre_usu,''),' ',IFNULL(apellidop_usu,''),' ',IFNULL(apellidom_usu,'')) as nombre, telefono_usu as telefono"," volar_usuarios vu INNER JOIN temp_volar tv ON tv.idusu_temp=vu.id_usu ","id_temp=".$pagoData[0]->reserva);
 	$vendedor =[$getVendedorInfo[0]->nombre,$getVendedorInfo[0]->correo, $getVendedorInfo[0]->telefono];
-	$asunto = "Solicitud de Cotización de la Reserva ". $pagoData[0]->reserva;
+	$asunto = "Solicitud de Conciliación de la Reserva ". $pagoData[0]->reserva;
 	$cuerpo='<!DOCTYPE html>
 				<html>
 					<head>

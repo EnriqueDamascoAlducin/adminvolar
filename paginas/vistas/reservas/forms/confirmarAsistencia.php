@@ -6,18 +6,21 @@
 
 	$globos = $con->consulta("nombre_globo as text, id_globo as value","globos_volar","status<>0");
 	$pilotos = $con->consulta("CONCAT(nombre_usu, ' ', IFNULL(apellidop_usu,''),' ',IFNULL(apellidom_usu,'')) as text, id_usu as value","volar_usuarios","status<>0 and puesto_usu = 4");
+
+	$datoReserva = $con->consulta("CONCAT(IFNULL(nombre_temp,''),' ',IFNULL(apellidos_temp,'')) as nombre, IFNULL(hora_temp,'') as hora,IFNULL(globo_temp,'') as globo,IFNULL(piloto_temp,'') as piloto ,status,IFNULL(kg_temp,'') as kg","temp_volar","id_temp=".$_POST['reserva']);
+	print_r($datoReserva);
 ?>
 <div class="row">
 	<div class="col-sm-6 col-lg-6 col-md-6 col-6 col-xl-6 ">
 		<div class="form-group">
 			<label for="hora">Hora de Vuelo</label>
-			<input type="time" class="form-control" id="hora" placeholder="Hora de Vuelo">
+			<input type="time" class="form-control" id="hora" placeholder="Hora de Vuelo" value = "<?php echo $datoReserva[0]->hora; ?>">
 		</div>
 	</div>
 	<div class="col-sm-6 col-lg-6 col-md-6 col-6 col-xl-6 ">
 		<div class="form-group">
 			<label for="peso">Peso kg</label>
-			<input type="number" class="form-control" id="peso" placeholder="Peso">
+			<input type="number" class="form-control" id="peso" placeholder="Peso" value = "<?php echo $datoReserva[0]->kg; ?>">
 		</div>
 	</div>
 
@@ -28,7 +31,11 @@
 				<option value='0'>Todos...</option>
 				<?php
 					foreach ($pilotos as $piloto) {
-						echo "<option value='".$piloto->value."'>".$piloto->text."</option>";
+						$sel="";
+						if($piloto->value==$datoReserva[0]->piloto){
+							$sel="selected";
+						}
+						echo "<option ". $sel ." value='".$piloto->value."'>".$piloto->text."</option>";
 					}
 				?>
 				
@@ -42,7 +49,11 @@
 				<option value='0'>Todos...</option>
 				<?php
 					foreach ($globos as $globo) {
-						echo "<option value='".$globo->value."'>".$globo->text."</option>";
+						$sel="";
+						if($globo->value==$datoReserva[0]->globo){
+							$sel="selected";
+						}
+						echo "<option ". $sel ." value='".$globo->value."'>".$globo->text."</option>";
 					}
 				?>
 				
@@ -50,3 +61,11 @@
 		</div>
 	</div>
 </div>
+	<button data-dismiss="modal"  type="button" id="btnConfirmarAsistencia<?php  echo $_POST['reserva']; ?>" class="btn btn-info" onclick="ConfirmarAsistencia(<?php  echo $_POST['reserva']; ?>,'<?php echo $datoReserva[0]->nombre; ?>','asignarGlobo' );" >Asignar Vuelo</button>
+<?php if($datoReserva[0]->status==7){ ?>
+	<button data-dismiss="modal"  type="button" id="btnConfirmarAsistencia<?php  echo $_POST['reserva']; ?>" class="btn btn-success" onclick="ConfirmarAsistencia(<?php  echo $_POST['reserva']; ?>,'<?php echo $datoReserva[0]->nombre; ?>','asistencia' );" >Confirmar</button>
+<?php } ?>
+
+
+
+

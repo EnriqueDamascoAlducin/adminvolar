@@ -149,7 +149,7 @@
 					<i class="fa fa-trash-o fa-md" style="color:#ff4444" title="Eliminar" data-toggle="modal" data-target="#modalReservas"  onclick="eliminarReserva('vistas/reservas/', <?php echo $reserva->id_temp; ?>, <?php echo $modulo; ?>)" ></i>
 					<?php } ?>
 					<!--========       Cotización     ========= -->
-					<?php if(in_array("ASISTENCIA",$permisos) && $reserva->status==7){ ?>
+					<?php if(in_array("ASISTENCIA",$permisos) ){ ?>
 						<i class="fa fa-street-view fa-md" style="color:#311b92 " title="Confirmar Asistencia" data-toggle="modal" data-target="#modalReservas"  onclick="checkAsistencia(<?php echo $reserva->id_temp; ?>,'<?php echo $reserva->nombre; ?>')"></i>
 					<?php } ?>
 				</td>

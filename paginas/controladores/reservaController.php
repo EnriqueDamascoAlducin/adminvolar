@@ -3,11 +3,17 @@
 	include_once 'conexion.php';
 	include_once 'fin_session.php';
 	if(isset($_POST['accion']) && $_POST['accion']=='cancelar'){
-		$eliminarReserva = $con->actualizar("temp_volar","status=0","id_temp=".$_POST['reserva']);
-		$eliminarReserva = $con->actualizar("servicios_vuelo_temp","status=0","idtemp_sv=".$_POST['reserva']);
-		echo $eliminarReserva;
+		$validacion=$con->consulta("sum(cantidad_bp) as total ","bitpagos_volar","where status<>0 AND idres_bp=".$_POST['reserva']);
+		if($validacion[0]->total>0){
+			echo "No puedes eliminar una reserva con pagos";
+		}else{
+			$eliminarReserva = $con->actualizar("temp_volar","status=0","id_temp=".$_POST['reserva']);
+			$eliminarReserva = $con->actualizar("servicios_vuelo_temp","status=0","idtemp_sv=".$_POST['reserva']);
+			echo $eliminarReserva;
+		}
+		
 	}elseif(isset($_POST['accion']) && $_POST['accion']=='asistencia'){
-		$eliminarReserva = $con->actualizar("temp_volar","status=0","id_temp=".$_POST['reserva']);
+		$eliminarReserva = $con->actualizar("temp_volar","status=1","id_temp=".$_POST['reserva']);
 		$eliminarReserva = $con->actualizar("servicios_vuelo_temp","status=0","idtemp_sv=".$_POST['reserva']);
 		echo $eliminarReserva;
 	}elseif(isset($_POST['accion']) && $_POST['accion']=='asignarGlobo'){

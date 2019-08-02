@@ -38,8 +38,8 @@
 			$nombreHabitacion=$habitacion[0];
 			$capacidadHabitacion=$habitacion[2];
 			$descripHabitacion=$habitacion[3];
-			$checkin= $datosReserva[0]->checkin_temp;
-			$checkout = $datosReserva[0]->checkout_temp;
+			$checkin= $datosReserva[0]->checkin;
+			$checkout = $datosReserva[0]->checkout;
 			$date1 = strtotime($checkin);  
 			$date2 = strtotime($checkout);  
 			  
@@ -65,6 +65,7 @@
 
 			$totalHabitacion= $days * $precioHabitacion;
 			
+			$descripcionHospedaje = " De ".$checkin. " a ". $checkout. "(<b>".$days." dias</b> )";
 			$totalReserva+=$totalHabitacion;
 		}
 		$totalReserva +=$datosReserva[0]->precio1;
@@ -204,7 +205,7 @@
 				$cuerpo.=				'<td>';
 				if ($servicioReserva->cantmax == 0){
 					$totalReserva +=($totalPasajeros * $servicioReserva->precio );
-					$cuerpo.=				number_format( ($totalPasajeros * $servicioReserva->precio ) , 2, '.', ',') ;
+					$cuerpo.=				number_format( ($servicioReserva->precio ) , 2, '.', ',')."x".$tPasajeros."=".($totalPasajeros * $servicioReserva->precio );
 				}else{
 					$totalReserva += $servicioReserva->precio ;
 					$cuerpo.=				number_format($servicioReserva->precio, 2, '.', ',');
@@ -243,11 +244,11 @@
 
 	$cuerpo.=						'<tr>';
 	$cuerpo.=							'<td class="tdtitulo">Anticipo</td>';
-	$cuerpo.=							'<td >'.utf8_decode($pagoInfo[0]->cantidad).'</td>';
+	$cuerpo.=							'<td >'.number_format($pagoInfo[0]->cantidad, 2, '.', ',').'</td>';
 	$cuerpo.=						'</tr>';
 	$cuerpo.=						'<tr>';
 	$cuerpo.=							'<td class="tdtitulo">Anticipo Total</td>';
-	$cuerpo.=							'<td >'.utf8_decode($totalPagos[0]->totalPagos).'</td>';
+	$cuerpo.=							'<td >'.number_format($totalPagos[0]->totalPagos, 2, '.', ',').'</td>';
 	$cuerpo.=						'</tr>';
 									$totalReserva-=$totalPagos[0]->totalPagos;
 	$cuerpo.=						'<tr>';

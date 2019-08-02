@@ -34,8 +34,8 @@
 			$nombreHabitacion=$habitacion[0];
 			$capacidadHabitacion=$habitacion[2];
 			$descripHabitacion=$habitacion[3];
-			$checkin= $datosReserva[0]->checkin_temp;
-			$checkout = $datosReserva[0]->checkout_temp;
+			$checkin= $datosReserva[0]->checkin;
+			$checkout = $datosReserva[0]->checkout;
 			$date1 = strtotime($checkin);  
 			$date2 = strtotime($checkout);  
 			  
@@ -61,6 +61,7 @@
 
 			$totalHabitacion= $days * $precioHabitacion;
 			
+			$descripcionHospedaje = " De ".$checkin. " a ". $checkout. "(<b>".$days." dias</b> )";
 			$totalReserva+=$totalHabitacion;
 		}
 		$totalReserva +=$datosReserva[0]->precio1;
@@ -184,7 +185,7 @@
 				$cuerpo.=				'<td>';
 				if ($servicioReserva->cantmax == 0){
 					$totalReserva +=($totalPasajeros * $servicioReserva->precio );
-					$cuerpo.=				number_format( ($totalPasajeros * $servicioReserva->precio ) , 2, '.', ',')."x".$tPasajeros."=".$totalPasajeros * $servicioReserva->precio ;
+					$cuerpo.=				number_format( ($servicioReserva->precio ) , 2, '.', ',')."x".$tPasajeros."=".($totalPasajeros * $servicioReserva->precio );
 				}else{
 					$totalReserva += $servicioReserva->precio ;
 					$cuerpo.=				number_format($servicioReserva->precio, 2, '.', ',');

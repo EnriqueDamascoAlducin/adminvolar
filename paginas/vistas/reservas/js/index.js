@@ -292,8 +292,6 @@ function checkAsistencia (reserva,nombre){
 	$("button[id^='btn']").remove();
 	$("#tituloModalReservas").html("Confirmar Asistencia para "+ nombre);
 	cambiarTamanoModal("modalSize","lg",'agregar');
-	$("#divBtnModalReservas").append('<button data-dismiss="modal"  type="button" id="btnConfirmarAsistencia'+reserva+'" class="btn btn-success" onclick="ConfirmarAsistencia('+reserva+',\''+nombre+'\',\'asistencia\' );" >Confirmar</button>');
-	$("#divBtnModalReservas").append('<button data-dismiss="modal"  type="button" id="btnConfirmarAsistencia'+reserva+'" class="btn btn-info" onclick="ConfirmarAsistencia('+reserva+',\''+nombre+'\',\'asignarGlobo\' );" >Solo Asignar Vuelo</button>');
 	$("#btnPago"+reserva).focus();
 	url="vistas/reservas/forms/confirmarAsistencia.php";
 	parametros={reserva:reserva};
