@@ -57,4 +57,3 @@
 	</div>
 </form>
 
-<script type="text/javascript" src="vistas/usuarios/js/form1.js"></script>

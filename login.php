@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <?php
-  session_start();
+  @session_start();
   if(isset($_SESSION['usuario'])){
     session_destroy();
     session_unset();

@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.5
+-- version 4.9.0.1
 -- https://www.phpmyadmin.net/
 --
--- Servidor: localhost
--- Tiempo de generación: 05-08-2019 a las 21:10:58
--- Versión del servidor: 10.1.39-MariaDB
--- Versión de PHP: 7.3.5
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 05-08-2019 a las 14:25:25
+-- Versión del servidor: 10.3.16-MariaDB
+-- Versión de PHP: 7.3.7
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -72,7 +72,8 @@ END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `eliminarServicio` (IN `_servicio` INT, OUT `respuesta` VARCHAR(20))  BEGIN
 	
-	UPDATE servicios_volar SET status= 0 WHERE id_servicio=_servicio;
+	UPDATE servicios_volar SET STATUS= 0 WHERE id_servicio=_servicio;
+    UPDATE servicios_vuelo_temp set status = 0 where idservi_temp = _servicio and status<>0;
     SET respuesta = 'Eliminado';
 END$$
 
@@ -85,7 +86,7 @@ Where id_temp =_reserva ;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `getResumenREserva` (IN `_reserva` BIGINT)  BEGIN
-SELECT IFNULL((SELECT nombre_extra from extras_volar where id_extra=tv.motivo_temp),'') as motivo,IFNULL(comentario_temp,'') as comentario,ifnull(pasajerosa_temp,0) as pasajerosA , ifnull(pasajerosn_temp,0) as pasajerosN , IFNULL(habitacion_temp,'') as habitacion, tipo_temp, IFNULL(checkin_temp,'') as checkin,IFNULL(checkout_temp,'') as checkout, IFNULL(precio1_temp,0) as precio1, IFNULL(precio2_temp,0) as precio2, IFNULL(tdescuento_temp,'') as tdescuento, IFNULL(cantdescuento_temp,0) as cantdescuento, IFNULL(otroscar1_temp,'') as otroscar1,IFNULL(otroscar2_temp,'') as otroscar2, 
+SELECT IFNULL((SELECT nombre_extra from extras_volar where id_extra=tv.motivo_temp),'') as motivo,IFNULL(comentario_temp,'') as comentario,ifnull(pasajerosa_temp,0) as pasajerosA , ifnull(pasajerosn_temp,0) as pasajerosN , IFNULL(habitacion_temp,'') as habitacion, tipo_temp, checkin_temp,checkout_temp, IFNULL(precio1_temp,0) as precio1, IFNULL(precio2_temp,0) as precio2, IFNULL(tdescuento_temp,'') as tdescuento, IFNULL(cantdescuento_temp,0) as cantdescuento, IFNULL(otroscar1_temp,'') as otroscar1,IFNULL(otroscar2_temp,'') as otroscar2, 
 IFNULL((SELECT IFNULL( nombre_hotel,'') as hotel FROM hoteles_volar where id_hotel=tv.hotel_temp),'') as hotel,
 IFNULL((SELECT CONCAT(IFNULL(nombre_habitacion,''),'|', IFNULL(precio_habitacion,0) ,'|', IFNULL(capacidad_habitacion,0)  ,'|', IFNULL(descripcion_habitacion,'')  ) as Habitaciones FROM habitaciones_volar WHERE id_habitacion=tv.habitacion_temp),'') as habitacion,
 IFNULL(fechavuelo_temp,'Fecha No Asignada') as fechavuelo, CONCAT(IFNULL(nombre_temp,''),' ', IFNULL(apellidos_temp,'')) as nombre, IFNULL(mail_temp,'') as correo, CONCAT(IFNULL(telfijo_temp,''),' - ', IFNULL(telcelular_temp,'')) as telefonos, CONCAT(nombre_vc,' Niños:',precion_vc,', Adultos:',precioa_vc ) as tipoVuelo, precion_vc as precioN, precioa_vc as precioA
@@ -295,8 +296,8 @@ CREATE TABLE `bitacora_actualizaciones_volar` (
   `valor_bit` varchar(150) COLLATE utf8_spanish_ci DEFAULT NULL COMMENT 'Valor',
   `tipo_bit` tinyint(4) DEFAULT NULL COMMENT 'Tipo de Movimiento',
   `confirmacion_bit` tinyint(4) DEFAULT NULL COMMENT 'Confirmación',
-  `register` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Reistro',
-  `status` tinyint(4) NOT NULL DEFAULT '1' COMMENT 'Status'
+  `register` datetime NOT NULL DEFAULT current_timestamp() COMMENT 'Reistro',
+  `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT 'Status'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
@@ -329,8 +330,8 @@ CREATE TABLE `bitpagos_volar` (
   `fecha_bp` date NOT NULL COMMENT 'Fecha de Pago',
   `idconc_bp` int(11) DEFAULT NULL COMMENT 'Usuario que Coincilia',
   `fechaconc_bp` datetime DEFAULT NULL COMMENT 'Fecha de Conciliación',
-  `register` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Register',
-  `status` tinyint(4) NOT NULL DEFAULT '4' COMMENT 'Status'
+  `register` datetime NOT NULL DEFAULT current_timestamp() COMMENT 'Register',
+  `status` tinyint(4) NOT NULL DEFAULT 4 COMMENT 'Status'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci COMMENT='Bitácora de Pagos';
 
 --
@@ -355,8 +356,8 @@ INSERT INTO `bitpagos_volar` (`id_bp`, `idres_bp`, `idreg_bp`, `metodo_bp`, `ban
 CREATE TABLE `cat_servicios_volar` (
   `id_cat` int(11) NOT NULL COMMENT 'Llave Primaria',
   `nombre_cat` varchar(200) COLLATE utf8_spanish_ci NOT NULL COMMENT 'Nombre del Servicio',
-  `register` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Registro',
-  `status` tinyint(4) NOT NULL DEFAULT '1' COMMENT 'Status'
+  `register` datetime NOT NULL DEFAULT current_timestamp() COMMENT 'Registro',
+  `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT 'Status'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
@@ -390,8 +391,8 @@ INSERT INTO `cat_servicios_volar` (`id_cat`, `nombre_cat`, `register`, `status`)
 CREATE TABLE `departamentos_volar` (
   `id_depto` int(11) NOT NULL COMMENT 'Llave Primaria',
   `nombre_depto` varchar(150) COLLATE utf8_spanish_ci DEFAULT NULL COMMENT 'Nombre',
-  `register` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Registro',
-  `status` tinyint(4) NOT NULL DEFAULT '1' COMMENT 'Status'
+  `register` datetime NOT NULL DEFAULT current_timestamp() COMMENT 'Registro',
+  `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT 'Status'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
@@ -416,8 +417,8 @@ CREATE TABLE `extras_volar` (
   `abrev_extra` char(5) COLLATE utf8_spanish_ci DEFAULT NULL COMMENT 'Abreviación',
   `nombre_extra` varchar(50) COLLATE utf8_spanish_ci NOT NULL COMMENT 'Nombre',
   `clasificacion_extra` varchar(15) COLLATE utf8_spanish_ci NOT NULL DEFAULT 'estados' COMMENT 'Clasificación',
-  `register` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Registro',
-  `status` tinyint(4) NOT NULL DEFAULT '1' COMMENT 'Status'
+  `register` datetime NOT NULL DEFAULT current_timestamp() COMMENT 'Registro',
+  `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT 'Status'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
@@ -534,9 +535,9 @@ CREATE TABLE `globos_volar` (
   `nombre_globo` varchar(100) COLLATE utf8_spanish_ci DEFAULT NULL COMMENT 'Nombre',
   `peso_globo` decimal(10,2) DEFAULT NULL COMMENT 'Peso Maximo(Kg)',
   `maxpersonas_globo` tinyint(4) DEFAULT NULL COMMENT 'Personas Máximas',
-  `imagen_globo` varchar(250) COLLATE utf8_spanish_ci DEFAULT 'noimage.png' COMMENT 'Imagen',
-  `register` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Registro',
-  `status` tinyint(4) NOT NULL DEFAULT '1' COMMENT 'Status'
+  `imagen_globo` varchar(150) COLLATE utf8_spanish_ci DEFAULT 'noimage.png' COMMENT 'Imagen',
+  `register` datetime NOT NULL DEFAULT current_timestamp() COMMENT 'Registro',
+  `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT 'Status'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
@@ -545,7 +546,11 @@ CREATE TABLE `globos_volar` (
 
 INSERT INTO `globos_volar` (`id_globo`, `placa_globo`, `nombre_globo`, `peso_globo`, `maxpersonas_globo`, `imagen_globo`, `register`, `status`) VALUES
 (1, '9878-LKJH', 'Globo Amarillo', '840.20', 12, 'noimage.png', '2019-05-12 15:06:29', 1),
-(2, 'AMA2345', 'Napolitano', '40.00', 10, 'noimage.png', '2019-06-06 22:16:13', 1);
+(2, 'NAP2345', 'Napolitano', '40.00', 10, '20190805004402_globo.png', '2019-06-06 22:16:13', 1),
+(3, 'oru4512', 'Prueba', '150.00', 15, '20190805051735_sitio.png', '2019-08-04 22:17:25', 0),
+(4, '150', 'prueba3', '150.00', 15, 'noimage.png', '2019-08-04 22:22:53', 0),
+(5, '', 'Enrique', '0.00', NULL, 'noimage.png', '2019-08-04 22:23:06', 0),
+(6, '150', 'pruebass', '150.00', 127, '20190805052420_newc.png', '2019-08-04 22:24:12', 0);
 
 -- --------------------------------------------------------
 
@@ -560,8 +565,8 @@ CREATE TABLE `habitaciones_volar` (
   `precio_habitacion` decimal(8,2) NOT NULL COMMENT 'Precio/Noche',
   `capacidad_habitacion` mediumint(9) DEFAULT NULL COMMENT 'Personas',
   `descripcion_habitacion` varchar(250) COLLATE utf8_spanish_ci NOT NULL COMMENT 'Descripción',
-  `register` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Registro',
-  `status` tinyint(4) NOT NULL DEFAULT '1' COMMENT 'Status'
+  `register` datetime NOT NULL DEFAULT current_timestamp() COMMENT 'Registro',
+  `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT 'Status'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci COMMENT='Habitaciones por Hotel';
 
 --
@@ -576,7 +581,7 @@ INSERT INTO `habitaciones_volar` (`id_habitacion`, `nombre_habitacion`, `idhotel
 (9, 'Suite', 1, '1850.00', 5, 'Habitación Suite', '2019-06-05 23:15:16', 1),
 (10, 'Doble', 6, '650.00', 2, 'Habitación Doble', '2019-06-05 23:20:14', 1),
 (11, 'Sencilla', 6, '250.00', 1, 'Habitación Sencilla', '2019-06-06 22:37:25', 1),
-(12, 'hh', 6, '567.00', 567, 'bn', '2019-06-09 16:54:03', 0),
+(12, 'hh', 6, '567.00', 567, 'bn', '2019-06-09 16:54:03', 1),
 (13, 'jghjgh', 5, '546789.00', 656, 'gvbnnb', '2019-06-09 16:54:49', 0),
 (14, 'Sencilla', 5, '1150.00', 2, 'Habitaci', '2019-06-09 16:58:29', 1),
 (15, 'Doble', 5, '1350.00', 3, 'Habitaci', '2019-06-09 16:59:04', 1),
@@ -606,8 +611,8 @@ CREATE TABLE `hoteles_volar` (
   `correo_hotel` varchar(150) COLLATE utf8_spanish_ci DEFAULT NULL COMMENT 'Correo',
   `img_hotel` varchar(50) COLLATE utf8_spanish_ci DEFAULT NULL COMMENT 'Imagen',
   `pagina_hotel` varchar(40) COLLATE utf8_spanish_ci DEFAULT NULL COMMENT 'Pagina Web',
-  `register` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Registro',
-  `status` tinyint(4) NOT NULL DEFAULT '1' COMMENT 'Status'
+  `register` datetime NOT NULL DEFAULT current_timestamp() COMMENT 'Registro',
+  `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT 'Status'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci COMMENT='Tabla de Hoteles';
 
 --
@@ -622,6 +627,21 @@ INSERT INTO `hoteles_volar` (`id_hotel`, `nombre_hotel`, `calle_hotel`, `noint_h
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `imghoteles_volar`
+--
+
+CREATE TABLE `imghoteles_volar` (
+  `id_img` int(11) NOT NULL COMMENT 'Llave Primaria',
+  `idref_img` int(11) NOT NULL COMMENT 'Referencia',
+  `tipo_img` tinyint(4) NOT NULL COMMENT 'Hotel/Habitación',
+  `ruta_img` varchar(100) COLLATE utf8_spanish_ci NOT NULL COMMENT 'Imagen',
+  `register` datetime NOT NULL COMMENT 'Registro',
+  `status` tinyint(4) NOT NULL COMMENT 'Status'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci COMMENT='Imagenes';
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `permisosusuarios_volar`
 --
 
@@ -629,8 +649,8 @@ CREATE TABLE `permisosusuarios_volar` (
   `id_puv` int(11) NOT NULL COMMENT 'Llave Primaria',
   `idusu_puv` int(11) NOT NULL COMMENT 'Usuario',
   `idsp_puv` int(11) NOT NULL COMMENT 'Sub Permiso',
-  `register` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Registro',
-  `status` tinyint(4) NOT NULL DEFAULT '1' COMMENT 'Status'
+  `register` datetime NOT NULL DEFAULT current_timestamp() COMMENT 'Registro',
+  `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT 'Status'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
@@ -679,10 +699,8 @@ INSERT INTO `permisosusuarios_volar` (`id_puv`, `idusu_puv`, `idsp_puv`, `regist
 (224, 1, 56, '2019-08-01 23:00:06', 1),
 (225, 1, 57, '2019-08-01 23:00:07', 1),
 (226, 1, 58, '2019-08-01 23:00:07', 1),
-(227, 1, 59, '2019-08-05 08:52:52', 1),
-(228, 1, 60, '2019-08-05 08:52:53', 1),
-(229, 1, 61, '2019-08-05 09:45:36', 1),
-(230, 1, 62, '2019-08-05 09:47:49', 1);
+(227, 1, 60, '2019-08-05 07:22:08', 1),
+(228, 1, 59, '2019-08-05 07:22:09', 1);
 
 -- --------------------------------------------------------
 
@@ -695,8 +713,8 @@ CREATE TABLE `permisos_volar` (
   `nombre_per` varchar(100) COLLATE utf8_spanish_ci NOT NULL COMMENT 'Nombre del Permiso',
   `img_per` varchar(150) COLLATE utf8_spanish_ci NOT NULL COMMENT 'Imagen',
   `ruta_per` varchar(150) COLLATE utf8_spanish_ci DEFAULT NULL COMMENT 'Ruta delarchivo',
-  `register` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Registro',
-  `status` int(11) NOT NULL DEFAULT '1' COMMENT 'Status'
+  `register` datetime NOT NULL DEFAULT current_timestamp() COMMENT 'Registro',
+  `status` int(11) NOT NULL DEFAULT 1 COMMENT 'Status'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
@@ -722,8 +740,8 @@ CREATE TABLE `puestos_volar` (
   `id_puesto` int(11) NOT NULL COMMENT 'Llave Primaria',
   `nombre_puesto` varchar(150) COLLATE utf8_spanish_ci DEFAULT NULL COMMENT 'Puesto',
   `depto_puesto` int(11) DEFAULT NULL COMMENT 'Departamento',
-  `register` datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'Registro',
-  `status` tinyint(4) DEFAULT '1' COMMENT 'Status'
+  `register` datetime DEFAULT current_timestamp() COMMENT 'Registro',
+  `status` tinyint(4) DEFAULT 1 COMMENT 'Status'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
@@ -754,8 +772,8 @@ CREATE TABLE `relacion_permisos` (
   `id_rel` int(11) NOT NULL COMMENT 'Llave Primaria',
   `idusu_rel` int(11) NOT NULL COMMENT 'Usuario',
   `idper_rel` int(11) NOT NULL COMMENT 'Permiso',
-  `register` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Registro',
-  `status` smallint(6) NOT NULL DEFAULT '1' COMMENT 'Status'
+  `register` datetime NOT NULL DEFAULT current_timestamp() COMMENT 'Registro',
+  `status` smallint(6) NOT NULL DEFAULT 1 COMMENT 'Status'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
@@ -783,8 +801,8 @@ CREATE TABLE `rel_catvuelos_volar` (
   `id_rel` int(11) NOT NULL COMMENT 'Llave Primaria',
   `idvc_rel` int(11) NOT NULL COMMENT 'Categoría de Vuelo',
   `idcat_rel` int(11) NOT NULL COMMENT 'Servicio',
-  `register` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Registro',
-  `status` tinyint(4) NOT NULL DEFAULT '1' COMMENT 'Status'
+  `register` datetime NOT NULL DEFAULT current_timestamp() COMMENT 'Registro',
+  `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT 'Status'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci COMMENT='Servicios por tipo de vuelo';
 
 --
@@ -869,10 +887,10 @@ CREATE TABLE `servicios_volar` (
   `nombre_servicio` varchar(100) COLLATE utf8_spanish_ci DEFAULT NULL COMMENT 'Nombre',
   `precio_servicio` decimal(10,2) DEFAULT NULL COMMENT 'Precio',
   `img_servicio` varchar(100) COLLATE utf8_spanish_ci NOT NULL DEFAULT '../../img/image-not-found.gif' COMMENT 'Imagen',
-  `cortesia_servicio` tinyint(4) DEFAULT '1' COMMENT 'Con Cortesia',
+  `cortesia_servicio` tinyint(4) DEFAULT 1 COMMENT 'Con Cortesia',
   `cantmax_servicio` tinyint(4) DEFAULT NULL COMMENT 'Cantidad',
-  `register` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Registro',
-  `status` tinyint(4) NOT NULL DEFAULT '1' COMMENT 'Status'
+  `register` datetime NOT NULL DEFAULT current_timestamp() COMMENT 'Registro',
+  `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT 'Status'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
@@ -910,10 +928,10 @@ CREATE TABLE `servicios_vuelo_temp` (
   `id_sv` int(11) NOT NULL COMMENT 'Llave Primaria',
   `idtemp_sv` int(11) DEFAULT NULL COMMENT 'Reserva',
   `idservi_sv` int(11) NOT NULL COMMENT 'Servicio',
-  `tipo_sv` tinyint(4) DEFAULT '0' COMMENT 'Tipo',
-  `cantidad_sv` mediumint(9) NOT NULL DEFAULT '0' COMMENT 'Cantidad',
-  `register` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Registro',
-  `status` tinyint(4) NOT NULL DEFAULT '2' COMMENT 'Status'
+  `tipo_sv` tinyint(4) DEFAULT 0 COMMENT 'Tipo',
+  `cantidad_sv` mediumint(9) NOT NULL DEFAULT 0 COMMENT 'Cantidad',
+  `register` datetime NOT NULL DEFAULT current_timestamp() COMMENT 'Registro',
+  `status` tinyint(4) NOT NULL DEFAULT 2 COMMENT 'Status'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
@@ -1033,24 +1051,7 @@ INSERT INTO `servicios_vuelo_temp` (`id_sv`, `idtemp_sv`, `idservi_sv`, `tipo_sv
 (2369, 1220, 11, 1, 7, '2019-08-01 00:31:06', 0),
 (2370, 1220, 12, 1, 7, '2019-08-01 00:31:06', 0),
 (2371, 1220, 16, 2, 1, '2019-08-01 00:31:06', 0),
-(2372, 1220, 18, 1, 1, '2019-08-01 00:31:06', 0),
-(2373, 1230, 1, 1, 1, '2019-08-02 10:43:30', 2),
-(2374, 1230, 2, 1, 1, '2019-08-02 10:43:30', 2),
-(2375, 1230, 8, 1, 1, '2019-08-02 10:43:31', 2),
-(2376, 1230, 9, 1, 5, '2019-08-02 10:43:32', 2),
-(2377, 1230, 5, 1, 7, '2019-08-02 10:44:52', 2),
-(2378, 1231, 1, 1, 1, '2019-08-02 10:58:04', 0),
-(2379, 1231, 2, 1, 1, '2019-08-02 10:58:04', 0),
-(2380, 1231, 8, 1, 1, '2019-08-02 10:58:04', 0),
-(2381, 1231, 9, 1, 5, '2019-08-02 10:58:04', 0),
-(2382, 1231, 5, 1, 7, '2019-08-02 10:58:04', 0),
-(2385, 1232, 1, 1, 1, '2019-08-02 12:41:57', 0),
-(2386, 1232, 2, 1, 1, '2019-08-02 12:41:57', 0),
-(2387, 1232, 8, 1, 1, '2019-08-02 12:41:57', 0),
-(2388, 1232, 9, 1, 5, '2019-08-02 12:41:57', 0),
-(2389, 1232, 5, 1, 7, '2019-08-02 12:41:57', 0),
-(2392, 1233, 1, 1, 0, '2019-08-02 12:49:18', 2),
-(2393, 1233, 2, 1, 1, '2019-08-02 12:49:19', 2);
+(2372, 1220, 18, 1, 1, '2019-08-01 00:31:06', 0);
 
 -- --------------------------------------------------------
 
@@ -1062,8 +1063,8 @@ CREATE TABLE `subpermisos_volar` (
   `id_sp` int(11) NOT NULL COMMENT 'Llave Primaria',
   `nombre_sp` varchar(12) COLLATE utf8_spanish_ci NOT NULL COMMENT 'Permiso',
   `permiso_sp` int(11) NOT NULL COMMENT 'Modulo',
-  `register` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Registro',
-  `status` tinyint(4) NOT NULL DEFAULT '1' COMMENT 'Status'
+  `register` datetime NOT NULL DEFAULT current_timestamp() COMMENT 'Registro',
+  `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT 'Status'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
@@ -1105,9 +1106,7 @@ INSERT INTO `subpermisos_volar` (`id_sp`, `nombre_sp`, `permiso_sp`, `register`,
 (57, 'EDITAR', 14, '2019-08-01 22:59:17', 1),
 (58, 'ELIMINAR', 14, '2019-08-01 22:59:17', 1),
 (59, 'AGREGAR', 16, '2019-08-05 07:21:26', 1),
-(60, 'REPORTES', 16, '2019-08-05 07:21:26', 1),
-(61, 'VER', 16, '2019-08-05 09:45:27', 1),
-(62, 'ELIMINAR', 16, '2019-08-05 09:47:44', 1);
+(60, 'REPORTES', 16, '2019-08-05 07:21:26', 1);
 
 -- --------------------------------------------------------
 
@@ -1126,7 +1125,7 @@ CREATE TABLE `temp_volar` (
   `telcelular_temp` varchar(20) COLLATE utf8_spanish_ci DEFAULT NULL COMMENT 'Telefono Celular',
   `procedencia_temp` tinyint(4) DEFAULT NULL COMMENT 'Procedencia',
   `pasajerosa_temp` int(11) DEFAULT NULL COMMENT 'Pasajeros Adultos',
-  `pasajerosn_temp` int(11) DEFAULT '0' COMMENT 'Pasajeros Niños',
+  `pasajerosn_temp` int(11) DEFAULT 0 COMMENT 'Pasajeros Niños',
   `motivo_temp` tinyint(4) DEFAULT NULL COMMENT 'Motivo',
   `tipo_temp` tinyint(4) DEFAULT NULL COMMENT 'Tipo',
   `fechavuelo_temp` date DEFAULT NULL COMMENT 'Fecha de Vuelo',
@@ -1135,20 +1134,20 @@ CREATE TABLE `temp_volar` (
   `habitacion_temp` tinyint(4) DEFAULT NULL COMMENT 'Habitación',
   `checkin_temp` date DEFAULT NULL COMMENT 'Check In',
   `checkout_temp` date DEFAULT NULL COMMENT 'Check Out',
-  `comentario_temp` tinytext COLLATE utf8_spanish_ci COMMENT 'Comentarios',
+  `comentario_temp` tinytext COLLATE utf8_spanish_ci DEFAULT NULL COMMENT 'Comentarios',
   `otroscar1_temp` varchar(20) COLLATE utf8_spanish_ci DEFAULT NULL COMMENT 'Otros Cargos',
   `precio1_temp` decimal(11,2) DEFAULT NULL COMMENT 'Precio',
   `otroscar2_temp` varchar(20) COLLATE utf8_spanish_ci DEFAULT NULL COMMENT 'Otros CArgos',
   `precio2_temp` decimal(11,2) DEFAULT NULL COMMENT 'Precio',
   `tdescuento_temp` tinyint(4) DEFAULT NULL COMMENT 'Tipo de Descuento',
-  `cantdescuento_temp` decimal(8,2) NOT NULL DEFAULT '0.00' COMMENT 'Cantidad de Desuento',
-  `total_temp` double(10,2) DEFAULT '0.00' COMMENT 'Total',
-  `piloto_temp` int(11) DEFAULT '0' COMMENT 'Piloto',
-  `kg_temp` decimal(10,2) DEFAULT '0.00' COMMENT 'Peso',
-  `globo_temp` int(11) DEFAULT '0' COMMENT 'Globo',
+  `cantdescuento_temp` decimal(8,2) NOT NULL DEFAULT 0.00 COMMENT 'Cantidad de Desuento',
+  `total_temp` double(10,2) DEFAULT 0.00 COMMENT 'Total',
+  `piloto_temp` int(11) DEFAULT 0 COMMENT 'Piloto',
+  `kg_temp` decimal(10,2) DEFAULT 0.00 COMMENT 'Peso',
+  `globo_temp` int(11) DEFAULT 0 COMMENT 'Globo',
   `hora_temp` time DEFAULT NULL COMMENT 'Hora de Vuelo',
-  `register` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Registro',
-  `status` tinyint(4) NOT NULL DEFAULT '2' COMMENT 'Status'
+  `register` datetime NOT NULL DEFAULT current_timestamp() COMMENT 'Registro',
+  `status` tinyint(4) NOT NULL DEFAULT 2 COMMENT 'Status'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci COMMENT='Tabla Temporal';
 
 --
@@ -1164,11 +1163,7 @@ INSERT INTO `temp_volar` (`id_temp`, `idusu_temp`, `clave_temp`, `nombre_temp`, 
 (1226, 1, NULL, 'ENRIQUE', 'DAMASCO', 'enriquealducin@outlook.com', NULL, '5529227672', 17, 2, 0, 44, 1, '2019-08-07', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0.00', 4600.00, 0, '0.00', 0, NULL, '2019-08-01 18:29:26', 6),
 (1227, 1, '1226', 'ENRIQUE', 'DAMASCO', 'enriquealducin@outlook.com', NULL, '5529227672', 17, 2, 0, 44, 1, '2019-08-07', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0.00', 4600.00, 0, '0.00', 0, NULL, '2019-08-01 18:42:27', 4),
 (1228, 1, '1225', 'ENRIQUE', 'DAMASCO', 'enriquealducin@outlook.com', NULL, '5529227672', 13, 5, 0, 40, 3, '2019-08-02', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0.00', 9750.00, 0, '0.00', 0, NULL, '2019-08-01 18:55:45', 6),
-(1229, 1, '1228', 'ENRIQUE', 'DAMASCO', 'enriquealducin@outlook.com', NULL, '5529227672', 13, 5, 0, 40, 3, '2019-08-02', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0.00', 9750.00, 0, '0.00', 0, NULL, '2019-08-01 18:56:34', 6),
-(1230, 1, '1229', 'ENRIQUE', 'DAMASCO', 'enriquealducin@outlook.com', NULL, '5529227672', 13, 5, 2, 40, 3, '2019-08-02', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0.00', 19280.00, 0, '0.00', 0, NULL, '2019-08-02 10:43:27', 6),
-(1231, 1, '1230', 'ENRIQUE', 'DAMASCO', 'enriquealducin@outlook.com', NULL, '5529227672', 13, 5, 2, 40, 3, '2019-08-02', NULL, 6, 11, '2019-08-03', NULL, 'algo', NULL, NULL, NULL, NULL, NULL, '0.00', 23030.00, 8, '150.00', 1, '20:30:00', '2019-08-02 10:58:04', 6),
-(1232, 1, '1231', 'ENRIQUE', 'DAMASCO', 'enriquealducin@outlook.com', NULL, '5529227672', 13, 5, 2, 40, 3, '2019-08-02', NULL, 6, 11, '2019-08-03', '2019-08-07', 'algo', NULL, NULL, NULL, NULL, NULL, '0.00', 13750.00, 8, '150.00', 1, '20:30:00', '2019-08-02 12:41:57', 3),
-(1233, 1, NULL, 'ENRIQUE', 'DAMASCO', 'enriquealducin@outlook.com', NULL, '5229277672', 17, 1, 3, 40, 2, '2019-08-22', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0.00', 15050.00, 8, '4.00', 2, '05:30:00', '2019-08-02 12:49:16', 2);
+(1229, 1, '1228', 'ENRIQUE', 'DAMASCO', 'enriquealducin@outlook.com', NULL, '5529227672', 13, 5, 0, 40, 3, '2019-08-02', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0.00', 9750.00, 0, '0.00', 0, NULL, '2019-08-01 18:56:34', 3);
 
 -- --------------------------------------------------------
 
@@ -1182,8 +1177,8 @@ CREATE TABLE `ventasserv_volar` (
   `idventa_vsv` int(11) DEFAULT NULL COMMENT 'Venta',
   `idusu_vsv` int(11) DEFAULT NULL COMMENT 'Usuario que Registra',
   `cantidad_vsv` int(11) DEFAULT NULL COMMENT 'Cantidad',
-  `register` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Registro',
-  `status` tinyint(4) NOT NULL DEFAULT '1' COMMENT 'Status'
+  `register` datetime NOT NULL DEFAULT current_timestamp() COMMENT 'Registro',
+  `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT 'Status'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- --------------------------------------------------------
@@ -1194,7 +1189,7 @@ CREATE TABLE `ventasserv_volar` (
 
 CREATE TABLE `ventas_volar` (
   `id_venta` int(11) NOT NULL COMMENT 'Llave Primaria',
-  `comentario_venta` text COLLATE utf8_spanish_ci COMMENT 'Comentario',
+  `comentario_venta` text COLLATE utf8_spanish_ci DEFAULT NULL COMMENT 'Comentario',
   `otroscar1_venta` varchar(150) COLLATE utf8_spanish_ci DEFAULT NULL COMMENT 'Otros Cargos',
   `precio1_venta` double(10,2) DEFAULT NULL COMMENT 'Precio',
   `otroscar2_venta` varchar(150) COLLATE utf8_spanish_ci DEFAULT NULL COMMENT 'Otros Cargos',
@@ -1203,8 +1198,8 @@ CREATE TABLE `ventas_volar` (
   `cantdesc_venta` double(10,2) DEFAULT NULL COMMENT 'Cantidad de Descuento',
   `pagoefectivo_venta` double(10,2) DEFAULT NULL COMMENT 'Efectivo',
   `pagotarjeta_venta` double(10,2) DEFAULT NULL COMMENT 'Tarjeta',
-  `register` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Registro',
-  `status` tinyint(4) NOT NULL DEFAULT '1' COMMENT 'Status'
+  `register` datetime NOT NULL DEFAULT current_timestamp() COMMENT 'Registro',
+  `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT 'Status'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci COMMENT='Ventas de CItio';
 
 -- --------------------------------------------------------
@@ -1237,8 +1232,8 @@ CREATE TABLE `volar_usuarios` (
   `falta_usu` decimal(10,2) DEFAULT NULL COMMENT 'Descuento por Falta',
   `banco_usu` int(11) DEFAULT NULL COMMENT 'Banco',
   `cuenta_usu` bigint(20) DEFAULT NULL COMMENT 'Num. Cuenta',
-  `register` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Registro',
-  `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT 'status'
+  `register` datetime NOT NULL DEFAULT current_timestamp() COMMENT 'Registro',
+  `status` tinyint(1) NOT NULL DEFAULT 1 COMMENT 'status'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
@@ -1248,7 +1243,7 @@ CREATE TABLE `volar_usuarios` (
 INSERT INTO `volar_usuarios` (`id_usu`, `nombre_usu`, `apellidop_usu`, `apellidom_usu`, `depto_usu`, `puesto_usu`, `correo_usu`, `telefono_usu`, `contrasena_usu`, `usuario_usu`, `nss_usu`, `sd_usu`, `sdi_usu`, `fiscal_usu`, `isr_usu`, `imss_usu`, `infonavit_usu`, `subsidio_usu`, `quincenal_usu`, `complemento_usu`, `falta_usu`, `banco_usu`, `cuenta_usu`, `register`, `status`) VALUES
 (1, 'Enrique', 'Damasco', 'Alducin', 1, 1, 'enriquealducin@siswebs.com.mx', '55-2922-7672', 'c4ca4238a0b923820dcc509a6f75849b', 'Quique', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-03-29 23:20:06', 1),
 (3, 'Sonia', 'Alducin', 'Guajardo', 3, 3, 'oficina@volarenglobo.com.mx', '55-2921-2556', '202cb962ac59075b964b07152d234b70', 'sony', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-04-10 09:27:49', 1),
-(8, 'Ricardo', 'Cruz', 'Rocha', 4, 4, 'ricardo@volarenglobo.com.mx', '55-5106-8115', '202cb962ac59075b964b07152d234b70', 'Ricardo', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-05-21 16:34:09', 1),
+(8, 'Ricardo', 'Cruz', 'Rocha', 0, 0, 'ricardo@volarenglobo.com.mx', '55-5106-8115', '202cb962ac59075b964b07152d234b70', 'Ricardo', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-05-21 16:34:09', 1),
 (9, 'Alejandra', 'Ramirez', 'Serrano', 2, 6, 'turismo@volarenglobo.com.mx', '55-3070-4317', '202cb962ac59075b964b07152d234b70', 'Ale', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-05-21 16:35:26', 1),
 (11, 'Sergio', 'Ramirez', NULL, 2, 6, 'sergio@volarenglobo.com.mx', '55-1234-5678', '202cb962ac59075b964b07152d234b70', 'Sergio', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-06-25 07:52:34', 1),
 (12, 'Enrique', 'Perez', 'Gomez', 1, 0, 'enriqueperezgomez@gmail.com.mx', '55-2145-6545', 'Enrique', '202cb962ac59075b964b07152d234b70', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-07-30 21:15:07', 0),
@@ -1266,8 +1261,8 @@ CREATE TABLE `vueloscat_volar` (
   `tipo_vc` tinyint(4) DEFAULT NULL COMMENT 'TIpo de Vuelo',
   `precioa_vc` decimal(10,2) NOT NULL COMMENT 'Precio de Adultos',
   `precion_vc` decimal(10,2) DEFAULT NULL COMMENT 'Precio de Niños',
-  `register` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Registro',
-  `status` tinyint(4) NOT NULL DEFAULT '1' COMMENT 'Status'
+  `register` datetime NOT NULL DEFAULT current_timestamp() COMMENT 'Registro',
+  `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT 'Status'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
@@ -1341,6 +1336,12 @@ ALTER TABLE `habitaciones_volar`
 --
 ALTER TABLE `hoteles_volar`
   ADD PRIMARY KEY (`id_hotel`);
+
+--
+-- Indices de la tabla `imghoteles_volar`
+--
+ALTER TABLE `imghoteles_volar`
+  ADD PRIMARY KEY (`id_img`);
 
 --
 -- Indices de la tabla `permisosusuarios_volar`
@@ -1469,7 +1470,7 @@ ALTER TABLE `gastos_volar`
 -- AUTO_INCREMENT de la tabla `globos_volar`
 --
 ALTER TABLE `globos_volar`
-  MODIFY `id_globo` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave Primaria', AUTO_INCREMENT=3;
+  MODIFY `id_globo` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave Primaria', AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `habitaciones_volar`
@@ -1484,10 +1485,16 @@ ALTER TABLE `hoteles_volar`
   MODIFY `id_hotel` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave Primaria', AUTO_INCREMENT=7;
 
 --
+-- AUTO_INCREMENT de la tabla `imghoteles_volar`
+--
+ALTER TABLE `imghoteles_volar`
+  MODIFY `id_img` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave Primaria';
+
+--
 -- AUTO_INCREMENT de la tabla `permisosusuarios_volar`
 --
 ALTER TABLE `permisosusuarios_volar`
-  MODIFY `id_puv` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave Primaria', AUTO_INCREMENT=231;
+  MODIFY `id_puv` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave Primaria', AUTO_INCREMENT=229;
 
 --
 -- AUTO_INCREMENT de la tabla `permisos_volar`
@@ -1523,19 +1530,19 @@ ALTER TABLE `servicios_volar`
 -- AUTO_INCREMENT de la tabla `servicios_vuelo_temp`
 --
 ALTER TABLE `servicios_vuelo_temp`
-  MODIFY `id_sv` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave Primaria', AUTO_INCREMENT=2394;
+  MODIFY `id_sv` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave Primaria', AUTO_INCREMENT=2373;
 
 --
 -- AUTO_INCREMENT de la tabla `subpermisos_volar`
 --
 ALTER TABLE `subpermisos_volar`
-  MODIFY `id_sp` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave Primaria', AUTO_INCREMENT=63;
+  MODIFY `id_sp` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave Primaria', AUTO_INCREMENT=61;
 
 --
 -- AUTO_INCREMENT de la tabla `temp_volar`
 --
 ALTER TABLE `temp_volar`
-  MODIFY `id_temp` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave Primaria', AUTO_INCREMENT=1234;
+  MODIFY `id_temp` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave Primaria', AUTO_INCREMENT=1230;
 
 --
 -- AUTO_INCREMENT de la tabla `ventasserv_volar`
@@ -1560,6 +1567,30 @@ ALTER TABLE `volar_usuarios`
 --
 ALTER TABLE `vueloscat_volar`
   MODIFY `id_vc` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave Primaria', AUTO_INCREMENT=17;
+
+--
+-- Restricciones para tablas volcadas
+--
+
+--
+-- Filtros para la tabla `permisosusuarios_volar`
+--
+ALTER TABLE `permisosusuarios_volar`
+  ADD CONSTRAINT `permisosusuarios_volar_ibfk_1` FOREIGN KEY (`idusu_puv`) REFERENCES `volar_usuarios` (`id_usu`),
+  ADD CONSTRAINT `permisosusuarios_volar_ibfk_2` FOREIGN KEY (`idsp_puv`) REFERENCES `subpermisos_volar` (`id_sp`);
+
+--
+-- Filtros para la tabla `relacion_permisos`
+--
+ALTER TABLE `relacion_permisos`
+  ADD CONSTRAINT `relacion_permisos_ibfk_1` FOREIGN KEY (`idusu_rel`) REFERENCES `volar_usuarios` (`id_usu`),
+  ADD CONSTRAINT `relacion_permisos_ibfk_2` FOREIGN KEY (`idper_rel`) REFERENCES `permisos_volar` (`id_per`);
+
+--
+-- Filtros para la tabla `subpermisos_volar`
+--
+ALTER TABLE `subpermisos_volar`
+  ADD CONSTRAINT `subpermisos_volar_ibfk_1` FOREIGN KEY (`permiso_sp`) REFERENCES `permisos_volar` (`id_per`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
