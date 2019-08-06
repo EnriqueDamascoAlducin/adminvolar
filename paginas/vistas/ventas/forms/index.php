@@ -38,7 +38,7 @@
 		<div class="col-sm-3 col-lg-3 col-md-3 col-6 col-xl-3 ">
 			<div class="form-group">
 				<label for="precio1">Precio</label>
-				<input type="number" min="0" class="form-control" id="precio1" name="precio1" placeholder="Precio"  value="<?php if(isset($ventas)){ echo $ventas[0]->precio1_venta; } ?>">
+				<input type="number"  onkeypress="return isNumber(event);" min="0" class="form-control" id="precio1" name="precio1" placeholder="Precio"  value="<?php if(isset($ventas)){ echo $ventas[0]->precio1_venta; } ?>">
 			</div>
 		</div>
 		<div class="col-sm-3 col-lg-3 col-md-3 col-6 col-xl-3 ">
@@ -50,7 +50,7 @@
 		<div class="col-sm-3 col-lg-3 col-md-3 col-6 col-xl-3 ">
 			<div class="form-group">
 				<label for="precio2">Precio</label>
-				<input type="number" min="0" class="form-control" id="precio2" name="precio2" placeholder="Precio"  value="<?php if(isset($ventas)){ echo $ventas[0]->precio2_venta; } ?>">
+				<input type="number"  onkeypress="return isNumber(event);" min="0" class="form-control" id="precio2" name="precio2" placeholder="Precio"  value="<?php if(isset($ventas)){ echo $ventas[0]->precio2_venta; } ?>">
 			</div>
 		</div>
 		
@@ -67,26 +67,27 @@
 		<div class="col-sm-3 col-lg-3 col-md-3 col-6 col-xl-3 ">
 			<div class="form-group">
 				<label for="cantdesc">Cantidad de descuento</label>
-				<input type="number" min="0" class="form-control" id="cantdesc" name="cantdesc" placeholder="Precio"  value="<?php if(isset($ventas)){ echo $ventas[0]->cantdesc_venta; } ?>">
+				<input type="number"  onkeypress="return isNumber(event);" min="0" class="form-control" id="cantdesc" name="cantdesc" placeholder="Precio"  value="<?php if(isset($ventas)){ echo $ventas[0]->cantdesc_venta; } ?>">
 			</div>
 		</div>
 		<div class="col-sm-3 col-lg-3 col-md-3 col-6 col-xl-3 ">
 			<div class="form-group">
 				<label for="pagoefectivo">Efectivo</label>
-				<input type="number" min="0" class="form-control" id="pagoefectivo" name="pagoefectivo" placeholder="Efectivo"  value="<?php if(isset($ventas)){ echo $ventas[0]->pagoefectivo_venta; } ?>">
+				<input type="number"  onkeypress="return isNumber(event);" min="0" class="form-control" id="pagoefectivo" name="pagoefectivo" placeholder="Efectivo"  value="<?php if(isset($ventas)){ echo $ventas[0]->pagoefectivo_venta; } ?>">
 			</div>
 		</div>
 		<div class="col-sm-3 col-lg-3 col-md-3 col-6 col-xl-3 ">
 			<div class="form-group">
 				<label for="pagoetarjeta">Tarjeta</label>
-				<input type="number" min="0" class="form-control" id="pagotarjeta" name="pagotarjeta" placeholder="Tarjeta"  value="<?php if(isset($ventas)){ echo $ventas[0]->pagotarjeta_venta; } ?>">
+				<input type="number"  onkeypress="return isNumber(event);" min="0" class="form-control" id="pagotarjeta" name="pagotarjeta" placeholder="Tarjeta"  value="<?php if(isset($ventas)){ echo $ventas[0]->pagotarjeta_venta; } ?>">
 			</div>
 		</div>
 	</div>
 </form>
 
 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" id="divBtn" >
-	<button class="btn btn-info" >Cotizar</button><button class="btn btn-success" >Guardar</button>
+	<button class="btn btn-info" onclick="cotizar('cotizar')">Cotizar</button>
+	<button class="btn btn-success" onclick="cotizar('guardar')">Guardar</button>
 </div>
 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" id="total" style="color: white;background-color: #0099CC">Total</div>
 <script type="text/javascript" src="vistas/ventas/js/form1.js"></script>

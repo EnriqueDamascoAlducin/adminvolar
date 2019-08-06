@@ -13,7 +13,7 @@
 					<p class="card-text" style="margin-top: -20px;"><?php echo $servicio->precio; ?> </p>
 					<div class="row" style="position: absolute; bottom: 0;max-width: 90%">
 						<button class="btn-info btn-sm" style="max-width: 20%;" onclick="disminuir(<?php echo $servicio->id ?>)"><i class="fa fa-minus fa-sm" ></i></button>
-						<input type="number" onblur="validarValor(this.id)" onkeypress="return isNumber(event,this);" name="cantidad_<?php echo $servicio->id; ?>" id="cantidad_<?php echo $servicio->id; ?>" style="max-width: 60%;border-color: black!important;border-width: 1px!important;border-style: ridge!important;" value="0">
+						<input type="number" min="0" onblur="validarValor(this.id)" onkeypress="return isNumber(event);" name="cantidad_<?php echo $servicio->id; ?>" id="cantidad_<?php echo $servicio->id; ?>" style="max-width: 60%;border-color: black!important;border-width: 1px!important;border-style: ridge!important;" value="0">
 						<button style="max-width: 20%;" class="btn-info btn-sm" onclick="aumentar(<?php echo $servicio->id ?>)"><i class="fa fa-plus"></i></button>
 					</div>
 				</div>
@@ -21,39 +21,4 @@
 		</div>
 		<?php } ?>
 	</div>
-<script type="text/javascript">
-	function validarValor(id){
-		if($("#"+id).val().trim()==''){
-			$("#"+id).val(0);
-		}
-	}
-	function aumentar(id){
-		var valActual = ($("#cantidad_"+id).val());
-		if(valActual==''){
-			valActual=0;
-		}
-		var nuevoValor = parseInt(valActual)+1;
-		$("#cantidad_"+id).val(nuevoValor);
-	}
-	function disminuir(id){
-		var valActual = $("#cantidad_"+id).val();
-		if(valActual==''){
-			valActual=0;
-		}
-		var nuevoValor = parseInt(valActual)-1;
-		if(nuevoValor<0){
-			$("#cantidad_"+id).val(0);
-			abrir_gritter("Advertencia","No puedes poner un valor menor a 0","warning");
-		}else{
-			$("#cantidad_"+id).val(nuevoValor);
-		}
-	}
-	function isNumber(event,este){
-		var iKeyCode = (event.which) ? event.which : event.keyCode
-
-        if (iKeyCode != 46 && iKeyCode > 31 && (iKeyCode < 48 || iKeyCode > 57))
-            return false;
-
-        return true;
-	}
-</script>
+	

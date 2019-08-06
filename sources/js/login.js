@@ -24,8 +24,8 @@ function validarSesion(e){
 
 	parametros=$("#loginForm").serialize();
   	$.ajax({
-		url:"paginas/controladores/loginController.php",
-		method: "POST",
+  		url:"paginas/controladores/loginController.php",
+  		method: "POST",
   		data: parametros,
   		success:function(response){
   			if(response.includes("Bienvenido")){
@@ -48,6 +48,6 @@ function validarSesion(e){
           abrir_gritter("Error","URL NO encontrada" ,"danger");
 		    }
 		  }
-	});
+	  });
   	e.preventDefault();
 } 

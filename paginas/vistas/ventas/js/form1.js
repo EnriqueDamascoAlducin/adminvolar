@@ -1,37 +1,49 @@
-$("#depto").on("change",function(){
-	cargarPuestos();
-});
-function cargarPuestos(){
-	url="controladores/query_json.php";
-	hotel=$("#depto").val();
-	if(hotel==""){
-		return false;
-	}
-	var1="id_habitacion as value, nombre_habitacion as text";
-	var2="habitaciones_volar";
-	var3="status<>0 AND idhotel_habitacion="+hotel;
-	//abrir_gritter("a","select " + var1 + " from "+ var2+ " where " + var3, "info");
-    parametros={var1:var1,var2:var2,var3:var3};
-  	$("#habitacion").empty().append("<option value=''>Selecciona una habitación </option>");
-  	$.ajax({
-      data: parametros,
-      dataType:"json",
-      url:'controladores/query_json.php',
-      type:"POST",
-      success: function(data){	
-        $.each( data, function( key, value ) {
-		  text=value.text;
-		  val=value.value;
-		  attr="";
-		  if(val==puesto){
-		  	attr="selected";
-		  }
-		  $("#habitacion").append("<option value='"+val+"' "+attr+">"+text+"</option>");
-		});
-      },
-      error:function(){
-      	alert("Error al cargar habitación");
-      }
+function isNumber(event){
+	var iKeyCode = (event.which) ? event.which : event.keyCode
 
-    }); 
+    if (iKeyCode != 46 && iKeyCode > 31 && (iKeyCode < 48 || iKeyCode > 57))
+        return false;
+
+    return true;
+}
+
+function validarValor(id){
+	if($("#"+id).val().trim()==''){
+		$("#"+id).val(0);
+	}
+}
+function aumentar(id){
+	var valActual = ($("#cantidad_"+id).val());
+	if(valActual==''){
+		valActual=0;
+	}
+	var nuevoValor = parseInt(valActual)+1;
+	$("#cantidad_"+id).val(nuevoValor);
+}
+function disminuir(id){
+	var valActual = $("#cantidad_"+id).val();
+	if(valActual==''){
+		valActual=0;
+	}
+	var nuevoValor = parseInt(valActual)-1;
+	if(nuevoValor<0){
+		$("#cantidad_"+id).val(0);
+		abrir_gritter("Advertencia","No puedes poner un valor menor a 0","warning");
+	}else{
+		$("#cantidad_"+id).val(nuevoValor);
+	}
+}
+
+function cotizar(accion){
+	serviciosValor=[];
+	serviciosId=[];
+	servicios = $("input[name^='cantidad_']");
+	servicios.each( function () {
+		if($(this).val()>0){
+			serviciosValor.push($(this).val());
+			serviciosId.push($(this).attr("id"));
+		}
+		
+  	});
+  	alert(serviciosValor);
 }
