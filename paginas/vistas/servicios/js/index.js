@@ -40,15 +40,41 @@ function cargarTabla(){
 
 }
 
-function eliminarDepto(depto, nombre){
+function eliminarServicio(servicio, nombre){
 	$("button[id^='btn']").remove();
 	$("#tituloModal").html("Eliminar  "+ nombre);
 	$("#cuerpoModal").html("Seguro que desea Eliminar  "+ nombre + "?");
-	$("#DivBtnModal").append('<button autofocus  data-dismiss="modal" type="button" id="btnElimiar'+depto+'" class="btn btn-danger" onclick=\'confirmarEliminar('+depto+',"'+nombre+'")\' >Confirmar</button>');
-	$("#btnElimiar"+depto).focus();
+	$("#DivBtnModal").append('<button autofocus  data-dismiss="modal" type="button" id="btnElimiar'+servicio+'" class="btn btn-danger" onclick=\'confirmarEliminar('+servicio+',"'+nombre+'")\' >Confirmar</button>');
+	$("#btnElimiar"+servicio).focus();
 	//confirmarEliminar(usuario,nombre)
 }
 
+function confirmarEliminar(servicio,nombre){
+	$.ajax({
+		url:'controladores/serviciosController.php',
+		method: "POST",
+  		data: {servicio:servicio,accion:'cancelar'},
+  		success:function(response){
+  			if(response!=''){
+  				abrir_gritter("Eliminado",  response,"warning");
+				cargarTabla();
+  			}else{
+  				abrir_gritter("Error","Error al eliminar " + nombre,"danger");
+  			}
+  		},
+  		error:function(){
+  		
+          abrir_gritter("Error","Error desconocido" ,"danger");
+  		},
+  		statusCode: {
+		    404: function() {
+		     
+          abrir_gritter("Error","URL NO encontrada" ,"danger");
+		    }
+		  }
+	});
+	$("#cuerpoModal").html("");
+}
 function agregar(id,accion){
 	url="vistas/servicios/forms/";
 	parametros={id:id};

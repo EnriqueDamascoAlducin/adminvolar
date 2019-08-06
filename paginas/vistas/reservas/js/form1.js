@@ -192,10 +192,6 @@
 	  		
 	          abrir_gritter("Error","Error desconocido" ,"danger");
 	  		},
-	  		/**
-be343816
-17
-	  		/
 	  		statusCode: {
 			    404: function() {
 			     

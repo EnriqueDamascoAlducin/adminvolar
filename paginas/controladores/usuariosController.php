@@ -10,7 +10,7 @@
 		$permiso = $_POST['permiso'];
 		$status = $_POST['status'];
 		$actualizarPermiso = $con->query("CALL asigarPermisosModulos(". $usuario .",". $permiso .",". $status .",@respuesta)") ;
-		$respuesta= $con->query("SELECT @respuesta as respuesta")->fetchALL (PDO::FETCH_OBJ);;
+		$respuesta= $con->query("SELECT @respuesta as respuesta")->fetchALL (PDO::FETCH_OBJ);
 		echo $respuesta[0]->respuesta;
 	}else{	
 		$idusu = $_POST['idusu'];

@@ -40,7 +40,7 @@
 					<?php  } ?>
 					<!--========       Eliminar     ========= -->
 					<?php if( in_array("ELIMINAR", $permisos)){ ?>
-						<i class="fa fa-trash-o fa-md" style="color:#ff4444" title="Eliminar"   onclick="eliminarServicio( <?php echo $depto->id; ?>,'<?php echo $depto->nombre;  ?>')" ></i>
+						<i class="fa fa-trash-o fa-md" style="color:#ff4444" title="Eliminar"  data-toggle="modal" data-target="#modal"   onclick="eliminarServicio( <?php echo $depto->id; ?>,'<?php echo $depto->nombre;  ?>')" ></i>
 					<?php } ?>
 				</td>
 			</tr>

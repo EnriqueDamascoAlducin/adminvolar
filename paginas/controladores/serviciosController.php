@@ -3,8 +3,8 @@
 	require  $_SERVER['DOCUMENT_ROOT'].'/admin/paginas/modelos/login.php';
 	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin/paginas/controladores/conexion.php';
 	if(isset($_POST['accion']) && $_POST['accion']=='cancelar'){
-		$eliminarServicio=$con->query("CALL eliminarServicio(". $_POST['reserva'] .",@respuesta)");
-		$respuesta = $con->query("Select @respuesta as respuesta");
+		$eliminarServicio=$con->query("CALL eliminarServicio(". $_POST['servicio'] .",@respuesta)");
+		$respuesta = $con->query("Select @respuesta as respuesta")->fetchALL (PDO::FETCH_OBJ);
 		echo $respuesta[0]->respuesta;
 	}else{
 		$imagen = $_FILES['imagen'];

@@ -70,7 +70,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `eliminarPuesto` (IN `_puesto` INT, 
     SET respuesta='Eliminado';
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `eliminarServicio` (IN `_servicio` INT, OUT `respuesta` VARCHAR(20))  BEGIN
+CREATE PROCEDURE `eliminarServicio` (IN `_servicio` INT, OUT `respuesta` VARCHAR(20))  BEGIN
 	
 	UPDATE servicios_volar SET status= 0 WHERE id_servicio=_servicio;
     SET respuesta = 'Eliminado';
