@@ -3,8 +3,15 @@
 	require  $_SERVER['DOCUMENT_ROOT'].'/admin/paginas/modelos/login.php';
 	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin/paginas/controladores/conexion.php';
 	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin/paginas/controladores/fin_session.php';	
+	$opc1 ="";
+	$opc2="";
 	if($_POST['id']!=''){
-		$ventas= $con->consulta("nombre_globo as nombre, id_globo as id,placa_globo as placa,peso_globo as peso, maxpersonas_globo as maxpersonas,imagen_globo as imagen","ventas_volar","status<>0 and id_venta=". $_POST['id']);
+		$ventas= $con->consulta("comentario_venta, otroscar1_venta, precio1_venta,otroscar2_venta,precio2_venta,tipodesc_venta,cantdesc_venta,pagotarjeta_venta,pagoefectivo_venta,total_venta","ventas_volar","status<>0 and id_venta=". $_POST['id']);
+		if($ventas[0]->tipodesc_venta==1){
+			$opc1="selected";
+		}else if($ventas[0]->tipodesc_venta==2){
+			$opc2="selected";
+		}
 	}
 	$usuario= unserialize((base64_decode($_SESSION['usuario'])));
 	$idAct = $usuario->getIdUsu();
@@ -13,7 +20,17 @@
 <?php
 	include 'index2.php';
 ?>
+<style type="text/css">
+	form hr{
+		color: black;
+		border-color: black;
+		border-width: 1px;
+	}
+
+</style>
 <form id="formulario" name="formulario" enctype="multipart/form-data" method="post"  accept="image/*">
+
+<hr>
 	<?php 
 	if(isset($_POST['id']) &&  $_POST['id'] !=''){
 		echo "<input type='hidden' name='id' id='id' value='".$_POST['id']."'>";
@@ -59,8 +76,8 @@
 				<label for="tipodesc">Tipo de Descuento</label>
 				<select class="selectpicker form-control" id="tipodesc" name="tipodesc" data-live-search="true">
 					<option value=''>Ninguno</option>
-					<option value="1">Pesos</option>
-					<option value="2">Porciento</option>				
+					<option value="1" <?php echo $opc1; ?>>Pesos</option>
+					<option value="2" <?php echo $opc2; ?>>Porciento</option>				
 				</select>
 			</div>
 		</div>
@@ -83,11 +100,43 @@
 			</div>
 		</div>
 	</div>
+<hr>
+<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" id="divBtn" >
+	<button class="btn btn-info" type="button" onclick="cotizar('cotizar')"  data-toggle="modal" data-target="#modal" >Ver detalle</button>
+	<?php if(!isset($ventas) ){ ?>
+		<button class="btn btn-success" type="button" onclick="cotizar('calcular')"   >Calcular</button>
+	<?php } ?>
+</div>
+<hr>
+
 </form>
 
-<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" id="divBtn" >
-	<button class="btn btn-info" onclick="cotizar('cotizar')">Cotizar</button>
-	<button class="btn btn-success" onclick="cotizar('guardar')">Guardar</button>
+	
+<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" id="totalVta" style="color: white;background-color: #0099CC"><?php if(!isset($ventas) ){  echo "Total"; }else{ echo 'Total $'.$ventas[0]->total_venta; } ?></div>
+<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-md" id="modalSize" role="dialog">
+    <div class="modal-content ">
+      <div class="modal-header">
+        <h5 class="modal-title" id="tituloModal">Detalle de Venta</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="cuerpoModal">
+      	
+      </div>
+      <div class="modal-footer">
+      	<div id="DivBtnModal">
+      		<?php if(isset($_POST['id']) && $_POST['id'] == ''  ){ ?>
+				<button class="btn btn-success" onclick="cotizar('confirmar')" id="btnConfirmar" data-dismiss="modal" >Confirmar</button>
+			<?php } ?>
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+	        
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" id="total" style="color: white;background-color: #0099CC">Total</div>
+
+
 <script type="text/javascript" src="vistas/ventas/js/form1.js"></script>

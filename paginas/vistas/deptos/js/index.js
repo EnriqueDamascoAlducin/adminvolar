@@ -183,7 +183,7 @@ function confirmarAgregar(depto,accion){
   		data: {depto:depto,nombre:nombre,accion:accion},
   		success:function(response){
   			if(response=='Agregado' || response=='Actualizado' ){
-  				abrir_gritter("Eliminado",  " Departamento "  ,"success");
+  				abrir_gritter("Eliminado",  " Departamento " + response  ,"success");
 				cargarTabla();
   			}else{
   				abrir_gritter("Error","Error al eliminar el Departamento"  ,"danger");

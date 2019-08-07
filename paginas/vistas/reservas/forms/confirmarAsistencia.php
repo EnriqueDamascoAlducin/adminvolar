@@ -8,7 +8,6 @@
 	$pilotos = $con->consulta("CONCAT(nombre_usu, ' ', IFNULL(apellidop_usu,''),' ',IFNULL(apellidom_usu,'')) as text, id_usu as value","volar_usuarios","status<>0 and puesto_usu = 4");
 
 	$datoReserva = $con->consulta("CONCAT(IFNULL(nombre_temp,''),' ',IFNULL(apellidos_temp,'')) as nombre, IFNULL(hora_temp,'') as hora,IFNULL(globo_temp,'') as globo,IFNULL(piloto_temp,'') as piloto ,status,IFNULL(kg_temp,'') as kg","temp_volar","id_temp=".$_POST['reserva']);
-	print_r($datoReserva);
 ?>
 <div class="row">
 	<div class="col-sm-6 col-lg-6 col-md-6 col-6 col-xl-6 ">

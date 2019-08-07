@@ -3,7 +3,7 @@
 	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin/paginas/controladores/conexion.php';
 	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin/paginas/controladores/fin_session.php';
 	$modulo= $_POST['modulo'];
-	$campos= "id_venta as id, comentario_venta comentario,register as fecha ";
+	$campos= "id_venta as id, comentario_venta comentario,register as fecha,total_venta as total ";
 	$tabla = "ventas_volar  ";
 	$filtro = "status<>0";
 	$usuario= unserialize((base64_decode($_SESSION['usuario'])));
@@ -18,6 +18,7 @@
 	<thead>
 		<tr>
 			<th style="text-align: center;vertical-align: middle;max-width: 1%;width: 1%;">Comentario</th>
+			<th style="text-align: center;vertical-align: middle;max-width: 1%;width: 1%;">Total</th>
 			<th style="text-align: center;vertical-align: middle;max-width: 1%;width: 1%;">Fecha</th>
 			
 			<th style="text-align: center;vertical-align: middle;max-width: 1%;width: 1% !important;">Acciones</th>
@@ -29,10 +30,11 @@
 		?>
 			<tr>
 				<td><?php echo $venta->comentario; ?></td>
-				<td><?php echo $venta->fecha; ?></td>
+				<td><?php echo $venta->total; ?></td>
+				<td><?php echo explode(" ", $venta->fecha)[0]; ?></td>
 				<td>
-					<?php if( in_array("EDITAR", $permisos)){ ?>
-						<i class="fa fa-pencil-square fa-md" style="color:#33b5e5" title="Editar" data-toggle="modal" data-target="#modal"  onclick="accionDeptos('editar', <?php echo $venta->id; ?>)"></i>
+					<?php if( in_array("VER", $permisos)){ ?>
+						<i class="fa fa-eye fa-md" style="color:#33b5e5" title="Editar"   onclick="accionVtas('editar', <?php echo $venta->id?>)"></i>
 					<?php  } ?>
 					<!--========       Eliminar     ========= -->
 					<?php if( in_array("ELIMINAR", $permisos)){ ?>

@@ -1,5 +1,5 @@
 cargarTabla();
-function accionDeptos(accion, id) {
+function accionVtas(accion, id) {
 	if(accion=="agregar"){
 		agregar("",accion);
 	}else if(accion=="editar"){
