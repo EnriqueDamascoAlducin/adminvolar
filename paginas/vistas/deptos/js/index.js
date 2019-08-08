@@ -241,4 +241,4 @@ function agregar(id,accion){
 		  }
 	});
 }
-tables();
+tables(1,"asc");

@@ -3,7 +3,7 @@
 	include_once 'conexion.php';
 	include_once 'fin_session.php';
 	if(isset($_POST['accion']) && $_POST['accion']=='cancelar'){
-		$validacion=$con->consulta("sum(cantidad_bp) as total ","bitpagos_volar","where status<>0 AND idres_bp=".$_POST['reserva']);
+		$validacion=$con->consulta("sum(cantidad_bp) as total ","bitpagos_volar","status<>0 AND idres_bp=".$_POST['reserva']);
 		if($validacion[0]->total>0){
 			echo "No puedes eliminar una reserva con pagos";
 		}else{

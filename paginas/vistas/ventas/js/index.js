@@ -101,4 +101,3 @@ function agregar(id,accion){
 		  }
 	});
 }
-tables();

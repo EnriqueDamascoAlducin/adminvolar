@@ -50,5 +50,5 @@
 
 
 <script type="text/javascript">
-	tables();
+	tables(0,"asc");
 </script>

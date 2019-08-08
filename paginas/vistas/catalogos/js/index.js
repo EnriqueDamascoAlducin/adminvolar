@@ -1,9 +1,9 @@
 cargarTabla();
-function accionDeptos(accion, id) {
+function accionExtras(accion, id, tipo) {
 	if(accion=="agregar"){
-		agregar("",accion);
+		agregar("",accion,tipo);
 	}else if(accion=="editar"){
-		agregar(id,accion);
+		agregar(id,accion,tipo);
 	}
 }
 function cargarTabla(){
@@ -14,7 +14,7 @@ function cargarTabla(){
 	*/	
 	modulo = $("#modulo").val();
 	
-	url="vistas/globos/tabla.php";/*fechaI:fechaI,fechaF:fechaF,empleado:empleado,nombre:nombre,*/
+	url="vistas/catalogos/tabla.php";/*fechaI:fechaI,fechaF:fechaF,empleado:empleado,nombre:nombre,*/
 	parametros={modulo:modulo};
   	$.ajax({
 		url:url,
@@ -38,26 +38,25 @@ function cargarTabla(){
 		    }
 		  }
 	});
-
 }
 
-function eliminarGlobo(globo, nombre){
+function eliminarExtra(extra, nombre){
 	$("button[id^='btn']").remove();
 	$("#tituloModal").html("Eliminar  "+ nombre);
 	$("#cuerpoModal").html("Seguro que desea Eliminar  el globo "+ nombre + "?");
-	$("#DivBtnModal").append('<button autofocus  data-dismiss="modal" type="button" id="btnElimiar'+globo+'" class="btn btn-danger" onclick=\'confirmarEliminar('+globo+',"'+nombre+'")\' >Confirmar</button>');
-	$("#btnElimiar"+globo).focus();
+	$("#DivBtnModal").append('<button autofocus  data-dismiss="modal" type="button" id="btnElimiar'+extra+'" class="btn btn-danger" onclick=\'confirmarEliminar('+extra+',"'+nombre+'")\' >Confirmar</button>');
+	$("#btnElimiar"+extra).focus();
 	//confirmarEliminar(usuario,nombre)
 }
 
-function confirmarEliminar(globo,nombre){
+function confirmarEliminar(elemento,nombre){
 	$.ajax({
-		url:'controladores/globosController.php',
+		url:'controladores/catalogosController.php',
 		method: "POST",
-  		data: {globo:globo,accion:'cancelar'},
+  		data: {elemento:elemento,accion:'cancelar'},
   		success:function(response){
   			if(response!=''){
-  				abrir_gritter("Eliminado",  response,"warning");
+  				abrir_gritter("Eliminado", response,"warning");
 				cargarTabla();
   			}else{
   				abrir_gritter("Error","Error al eliminar " + nombre,"danger");
@@ -74,34 +73,26 @@ function confirmarEliminar(globo,nombre){
 		    }
 		  }
 	});
+	cargarTabla();
 	$("#cuerpoModal").html("");
 }
-function confirmarAgregar(globo,accion){
+function confirmarAgregar(elemento,accion){
 	nombre=$("#nombre").val().trim();
-	placa=$("#placa").val().trim();
-	peso=$("#peso").val().trim();
+	tipo = $("#clasificacion").val();
 	if(nombre==""){
 		abrir_gritter("Error","Ingresa un nombre","warning");
 		return false;
 	}
-	if(placa==""){
-		abrir_gritter("Error","Ingresa una placa","warning");
-		return false;
-	}
-	if(peso==""){
-		abrir_gritter("Error","Ingresa un peso","warning");
-		return false;
-	}
 	var parametros = new FormData($("#formulario")[0]);
 	$.ajax({
-		url:'controladores/globosController.php',
+		url:'controladores/catalogosController.php',
 		method: "POST",
 		contentType:false,
 		processData:false,
   		data: parametros,
   		success:function(response){
   			if(response=='Agregado' || response=='Actualizado' ){
-  				abrir_gritter("Correcto",  " Globo "+response  ,"success");
+  				abrir_gritter("Correcto",  " Catalogo "+response  ,"success");
   			}else{
   				abrir_gritter("Error",response  ,"danger");
   			}
@@ -118,9 +109,9 @@ function confirmarAgregar(globo,accion){
 		    }
 		  }
 	});
-	$("#cuerpoModal").html("");
+	agregar('',accion,tipo);
 }
-function agregar(id,accion){
+function agregar(id,accion,tipo){
 	if(id==''){
 		idA=0;
 	}else{
@@ -128,22 +119,22 @@ function agregar(id,accion){
 	}
 	if("editar"==accion){
 
-		$("#tituloModal").html("Agregar Globo");
+		$("#tituloModal").html("Editar ");
 	}else{
 
-		$("#tituloModal").html("Editar Globo");
+		$("#tituloModal").html("Agregar ");
 	}
 
 	$("button[id^='btn']").remove();
 	$("#cuerpoModal").html("");
 	if(idA==0)
-		$("#DivBtnModal").append('<button autofocus  data-dismiss="modal" type="button" id="btnAgregar" class="btn btn-success" onclick=\'confirmarAgregar('+idA+',"'+accion+'")\' >Agregar</button>');
+		$("#DivBtnModal").append('<button autofocus type="button" id="btnAgregar" class="btn btn-success" onclick=\'confirmarAgregar('+idA+',"'+accion+'")\' >Agregar</button>');
 	else	
-		$("#DivBtnModal").append('<button autofocus  data-dismiss="modal" type="button" id="btnAgregar" class="btn btn-info" onclick=\'confirmarAgregar('+idA+',"'+accion+'")\' >Actualizar</button>');
+		$("#DivBtnModal").append('<button autofocus type="button" id="btnAgregar" class="btn btn-info" onclick=\'confirmarAgregar('+idA+',"'+accion+'")\' >Actualizar</button>');
 	
 	$("#btnAgregar"+idA).focus();
-	url="vistas/globos/forms/";
-	parametros={id:id};
+	url="vistas/catalogos/forms/";
+	parametros={id:id,tipo:tipo};
   	$.ajax({
 		url:url,
 		method: "POST",
@@ -163,4 +154,3 @@ function agregar(id,accion){
 		  }
 	});
 }
-tables();

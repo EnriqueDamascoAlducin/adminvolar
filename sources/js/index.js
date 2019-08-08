@@ -44,16 +44,31 @@ function ocultar(id,tipo){
 		$("#menuDer").css("max-width","80%").css("width","80%").css("left","20%");
 
 	}
-	tables();
+	tables(0,"asc");
 }
-function tables(){
+/*function tables(){
 	$(".DataTable").DataTable().destroy();
 	$(".DataTable").DataTable({
 		"autoWidth": true,
 		"scrollX": true,
 		"searching": true,
 		"lengthChange":true, 
-        "order": [[ 0, "desc" ]]
+        "order": [[ 0, "asc" ]]
+		
+	});
+}*/
+function tables(filas,forma){
+	$(".DataTable").DataTable().destroy();
+	$(".DataTable").DataTable({
+		"autoWidth": true,
+		"scrollX": true,
+		"searching": true,
+		"lengthChange":true, 
+        "order": [[ filas, forma ]]
 		
 	});
 }
+
+$('.modal').on('hidden.bs.modal', function () {
+  $(".modal-body").html('');
+})

@@ -138,4 +138,3 @@ function asignarPermisos(id){
 		  }
 	});
 }
-tables();

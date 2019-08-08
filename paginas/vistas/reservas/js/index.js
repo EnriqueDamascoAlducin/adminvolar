@@ -68,6 +68,34 @@ function eliminarReserva(url,reserva,idModulo){
 	$("#divBtnModalReservas").append('<button autofocus  data-dismiss="modal" type="button" id="btnElimiar'+reserva+'" class="btn btn-danger" onclick=\'confirmarEliminar('+reserva+',"'+url+'", '+idModulo+');\' >Confirmar</button>');
 	$("#btnElimiar"+reserva).focus();
 }
+
+function confirmarEliminar(reserva,url,idModulo){
+	$.ajax({
+		url:'controladores/reservaController.php',
+		method: "POST",
+  		data: {reserva:reserva,accion:'cancelar'},
+  		success:function(response){
+  			if(response=='ok'){
+  				abrir_gritter("Eliminada","Reserva Eliminada " + reserva,"warning");
+				cargarTablaReservas();
+  			}else{
+
+  				abrir_gritter("Error","Error al eliminar a reserva " + response,"danger");
+  			}
+				
+  		},
+  		error:function(){
+  		
+          abrir_gritter("Error","Error desconocido" ,"danger");
+  		},
+  		statusCode: {
+		    404: function() {
+		     
+          abrir_gritter("Error","URL NO encontrada" ,"danger");
+		    }
+		  }
+	});
+}
 function cambiarTamanoModal(modal,tamano,accion){
 	if(accion=='agregar'){
 		$("#"+modal).addClass("modal-"+tamano);
@@ -167,6 +195,37 @@ function agregarPago(reserva,cliente){
 		  }
 	});
 
+	cambiarTamanoModal("modalSize","lg",'resetear');
+}
+
+function agregarPagoSitio(reserva,cliente){
+	
+	$("button[id^='btn']").remove();
+	$("#cuerpoModalReservas").html("Agregar Pago para "+ cliente);
+	$("#tituloModalReservas").html("Agregar Pago para "+ cliente);
+	$("#divBtnModalReservas").append('<button autofocus   type="button" id="btnAgregarPago'+reserva+'" class="btn btn-success" onclick="confirmarAgregarPago('+reserva+',\''+cliente+'\');" >Confirmar</button>');
+	$("#btnPago"+reserva).focus();
+	url="vistas/reservas/forms/agregarPagosSitio.php";
+	parametros={reserva:reserva};
+  	$.ajax({
+		url:url,
+		method: "POST",
+  		data: parametros,
+  		success:function(response){
+			$("#cuerpoModalReservas").html(response);	
+  		},
+  		error:function(){
+  		
+          abrir_gritter("Error","Error desconocido" ,"danger");
+  		},
+  		statusCode: {
+		    404: function() {
+		     
+          abrir_gritter("Error","URL NO encontrada" ,"danger");
+		    }
+		  }
+	});
+
 }
 function conciliarPago(reserva,cliente){
 	$("button[id^='btn']").remove();
@@ -195,33 +254,6 @@ function conciliarPago(reserva,cliente){
 	});
 
 	cambiarTamanoModal("modalSize","lg",'resetear');
-}
-function confirmarEliminar(reserva,url,idModulo){
-	$.ajax({
-		url:'controladores/reservaController.php',
-		method: "POST",
-  		data: {reserva:reserva,accion:'cancelar'},
-  		success:function(response){
-  			if(response=='ok'){
-  				abrir_gritter("Eliminada","Reserva Eliminada " + reserva,"warning");
-				cargarTablaReservas();
-  			}else{
-
-  				abrir_gritter("Error","Error al eliminar a reserva","danger");
-  			}
-				
-  		},
-  		error:function(){
-  		
-          abrir_gritter("Error","Error desconocido" ,"danger");
-  		},
-  		statusCode: {
-		    404: function() {
-		     
-          abrir_gritter("Error","URL NO encontrada" ,"danger");
-		    }
-		  }
-	});
 }
 function agregarReserva(id,accion){
 	url="vistas/reservas/forms/";
@@ -348,4 +380,3 @@ function mostrarCotizacion(id,accion){
 	});
 
 }
-tables();

@@ -130,7 +130,7 @@
 
 					<!--========       BITACORA     ========= -->
 					<?php if((($idUsu==$reserva->idusu && in_array("BITACORA",$permisos)) || in_array("BITACORA GRA", $permisos)) && $reserva->status!=2){ ?>
-					<i class="fa fa-file-text-o fa-md" style="color:#2BBBAD" title="Bitacora de Pagos"  onclick="accionReserva('bitacora', <?php echo $reserva->id_temp; ?>)"></i>
+					<!--<i class="fa fa-file-text-o fa-md" style="color:#2BBBAD" title="Bitacora de Pagos"  onclick="accionReserva('bitacora', <?php echo $reserva->id_temp; ?>)"></i> -->
 					<?php } ?>
 					<!--========       PILOTOS     ========= -->
 					<?php if(in_array("PILOTOSS",$permisos)){ ?>
@@ -152,6 +152,10 @@
 					<?php if(in_array("ASISTENCIA",$permisos) ){ ?>
 						<i class="fa fa-street-view fa-md" style="color:#311b92 " title="Confirmar Asistencia" data-toggle="modal" data-target="#modalReservas"  onclick="checkAsistencia(<?php echo $reserva->id_temp; ?>,'<?php echo $reserva->nombre; ?>')"></i>
 					<?php } ?>
+					<!--========       Pago en SItio     ========= -->
+					<?php if(in_array("PAGO SITIO",$permisos) ){ ?>
+						<i class="fa fa-dollar fa-md" style="color:#00C851" title="Confirmar Asistencia" data-toggle="modal" data-target="#modalReservas"  onclick="agregarPagoSitio(<?php echo $reserva->id_temp; ?>,'<?php echo $reserva->nombre; ?>')"></i>
+					<?php } ?>
 				</td>
 			</tr>
 
@@ -162,5 +166,5 @@
 
 </table>
 <script type="text/javascript">
-	tables();
+	tables(5,"asc");
 </script>
