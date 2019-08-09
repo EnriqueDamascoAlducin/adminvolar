@@ -180,10 +180,10 @@
 										<?php 
 											if ($servicioReserva->cantmax == 0){
 												$totalReserva +=($totalPasajeros * $servicioReserva->precio);
-												echo number_format( ( $servicioReserva->precio ) , 2, '.', ',')."x".$tPasajeros ."=".($totalPasajeros * $servicioReserva->precio)."->".$totalReserva ;
+												echo number_format( ( $servicioReserva->precio ) , 2, '.', ',')."x".$tPasajeros ."=".($totalPasajeros * $servicioReserva->precio) ;
 											}else{
 												$totalReserva += $servicioReserva->precio ;
-												echo number_format($servicioReserva->precio, 2, '.', ',') ."->".$totalReserva;
+												echo number_format($servicioReserva->precio, 2, '.', ',') ;
 											}
 										?>
 									</td>

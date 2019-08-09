@@ -10,7 +10,6 @@
 <?php if(sizeof($pagos)>0){ ?>
 	<table class="table "  id="DataTable" >
 		<thead>
-			<th>Usuario</th>
 			<th>Referencia</th>
 			<th>Cantidad</th>
 			<th>Fecha</th>
@@ -21,9 +20,6 @@
 				foreach ($pagos as $pago) {
 			?>
 				<tr>
-					<td>
-						<?php echo $pago->usuario; ?>
-					</td>
 					<td>
 						<?php echo $pago->referencia; ?>
 					</td>

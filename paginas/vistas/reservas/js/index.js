@@ -150,9 +150,11 @@ function confirmarAgregarPago(reserva,cliente){
   				abrir_gritter(response, "No puedes agregar mas pagos" ,"warning");
   			else
   				abrir_gritter("Correcto", response ,"info");
+  			if(banco!=83)
+  				agregarPago(reserva,cliente);
+			else
+  				agregarPagoSitioo(reserva,cliente);
 
-  			agregarPago(reserva,cliente);
-				
   		},
   		error:function(){
   		
@@ -165,6 +167,7 @@ function confirmarAgregarPago(reserva,cliente){
 		    }
 		  }
 	});
+	cambiarTamanoModal("modalSize","lg",'resetear');
 }
 function agregarPago(reserva,cliente){
 	
@@ -195,11 +198,11 @@ function agregarPago(reserva,cliente){
 		  }
 	});
 
-	cambiarTamanoModal("modalSize","lg",'resetear');
 }
 
 function agregarPagoSitio(reserva,cliente){
 	
+	cambiarTamanoModal("modalSize","lg",'resetear');
 	$("button[id^='btn']").remove();
 	$("#cuerpoModalReservas").html("Agregar Pago para "+ cliente);
 	$("#tituloModalReservas").html("Agregar Pago para "+ cliente);
@@ -253,7 +256,6 @@ function conciliarPago(reserva,cliente){
 		  }
 	});
 
-	cambiarTamanoModal("modalSize","lg",'resetear');
 }
 function agregarReserva(id,accion){
 	url="vistas/reservas/forms/";

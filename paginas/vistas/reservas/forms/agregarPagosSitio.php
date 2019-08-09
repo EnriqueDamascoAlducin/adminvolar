@@ -39,10 +39,10 @@
 		</div>
 	</div>
 
-	<div class="col-sm-3 col-lg-3 col-md-3 col-6 col-xl-3 " style="display: none">
+	<div class="col-sm-6 col-lg-6 col-md-6 col-6 col-xl-6 ">
 		<div class="form-group">
 			<label for="referencia">Referencia</label>
-			<input type="hidden" value="SITIO" class="form-control" id="referencia" placeholder="Referencia">
+			<input type="text" value="" class="form-control" id="referencia" placeholder="Referencia">
 		</div>
 	</div>
 	<div class="col-sm-6 col-lg-6 col-md-6 col-6 col-xl-6 ">

@@ -20,9 +20,15 @@
 		$sql="CALL registrarPago(". $parametros .",@respuesta)";
 		$registrarPago = $con->query($sql);
 		$registrarPago = $con->query("Select @respuesta as respuesta")->fetchALL (PDO::FETCH_OBJ);
-		echo $registrarPago[0]->respuesta;
+		if($registrarPago[0]->respuesta=="ERROR EN PAGO"){
+			echo $registrarPago[0]->respuesta;
+		}else{
+			$respuesta=explode("|", $registrarPago[0]->respuesta);
+			echo $respuesta[0];
+			$pago = $respuesta[1];
+			require  $_SERVER['DOCUMENT_ROOT'].'/admin/paginas/vistas/reservas/correo/correoRespuestaConciliacion.php';
+		}
 
-		require  $_SERVER['DOCUMENT_ROOT'].'/admin/paginas/vistas/reservas/correo/correoRespuestaConciliacion.php';
 	}elseif (isset($_POST['accion']) && $_POST['accion']=='simple'  ) {
 		$validar = $con->actualizar("bitpagos_volar","status=2","id_bp=".$_POST['pago']);
 		echo $validar;
@@ -60,7 +66,9 @@
 			$respuesta=explode("|", $registrarPago[0]->respuesta);
 			echo $respuesta[0];
 			$pago = $respuesta[1];
-			require  $_SERVER['DOCUMENT_ROOT'].'/admin/paginas/vistas/reservas/correo/correoSolicitudConciliacion.php';
+			if($banco!=83){
+				require  $_SERVER['DOCUMENT_ROOT'].'/admin/paginas/vistas/reservas/correo/correoSolicitudConciliacion.php';
+			}
 		}
 	}
 	
