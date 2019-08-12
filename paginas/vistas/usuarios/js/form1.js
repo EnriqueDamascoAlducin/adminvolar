@@ -94,7 +94,7 @@ function guardarUsuario(id){
   		success:function(response){
   			if(response==""){
 
-         		abrir_gritter("Error","Error al Asignar Permisos" ,"danger");
+         		abrir_gritter("Error","Error al registrar Usuario" ,"danger");
   			}else if(response=="Ya existe el usuario"){
 		         abrir_gritter("Exito", response ,"warning");
 		         $("#usuario").focus();

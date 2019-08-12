@@ -4,7 +4,7 @@
 	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/controladores/fin_session.php';	
 
 	$modulo= $_POST['modulo'];
-	$campos= "CONCAT(IFNULL(nombre_usu,''),' ', IFNULL(apellidop_usu,''),' ',IFNULL(apellidom_usu,'')) as nombre, id_usu as id,IFNULL((SELECT nombre_depto from departamentos_volar where id_depto = vu.depto_usu),'No asignado') as depto,IFNULL((SELECT nombre_puesto from puestos_volar where id_puesto = vu.puesto_usu),'No asignado') as puesto";
+	$campos= "CONCAT(IFNULL(nombre_usu,''),' ', IFNULL(apellidop_usu,''),' ',IFNULL(apellidom_usu,'')) as nombre, id_usu as id,IFNULL((SELECT nombre_depto from departamentos_volar where id_depto = vu.depto_usu),'No asignado') as depto,IFNULL((SELECT nombre_puesto from puestos_volar where id_puesto = vu.puesto_usu),'No asignado') as puesto, IFNULL(correo_usu,'') as correo";
 	$tabla = "volar_usuarios vu ";
 	$filtro = "vu.status<>0";
 	if(isset($_POST['fechaI']) && $_POST['fechaI']!='' ){
@@ -37,6 +37,7 @@
 		<tr>
 			<th style="text-align: center;vertical-align: middle;max-width: 1%;width: 1%;">Nombre</th>
 			
+			<th style="text-align: center;vertical-align: middle;max-width: 1%;width: 1%;">Correo</th>
 			<th style="text-align: center;vertical-align: middle;max-width: 1%;width: 1%;">Departamento</th>
 			<th style="text-align: center;vertical-align: middle;max-width: 1%;width: 1%;">Puesto</th>
 			<th style="text-align: center;vertical-align: middle;max-width: 1%;width: 1% !important;">Acciones</th>
@@ -48,6 +49,7 @@
 		?>
 			<tr>
 				<td><?php echo $usuarios->nombre; ?></td>
+				<td><?php echo $usuarios->correo; ?></td>
 				<td><?php echo $usuarios->depto; ?></td>
 				<td><?php echo $usuarios->puesto; ?></td>
 				<td>

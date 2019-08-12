@@ -78,6 +78,7 @@
 				<td><?php echo $reserva->telefonos; ?></td>
 				<td><?php echo $reserva->fechavuelo_temp; ?></td>
 				<?php 
+					$color="";
 					if( $reserva->status ==4){
 						$text="Confirmada";
 						$class="info";
@@ -95,7 +96,8 @@
 						$class="success";
 					}else if($reserva->status==6){
 						$text="C. por Reemplazo ";
-						$class="warning";
+						$class="";
+						$color = "background-color:#9933CC;";
 					}else if($reserva->status==7){
 						$text="Pagado Total";
 						$class="success";
@@ -107,7 +109,7 @@
 				<td>
 					<?php 
 						echo '<div class="progress">
-								  <div class="progress-bar bg-'.$class.'" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">'. $text .'</div>
+						<div class="progress-bar bg-'.$class.'" role="progressbar" style="width: 100%;'.$color.'" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">'. $text .'</div>
 								</div>';
 					?>
 				</td>

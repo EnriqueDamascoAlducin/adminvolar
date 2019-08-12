@@ -7,36 +7,37 @@
 	$reserva=$_POST['reserva'];
 	$pagos = $con->consulta("CONCAT(nombre_usu,' ',apellidop_usu) as usuario, referencia_bp as referencia, cantidad_bp as cantidad,fecha_bp as fecha, bp.status as stat,id_bp as id","bitpagos_volar bp INNER JOIN volar_usuarios vu  ON bp.idreg_bp=vu.id_usu","bp.status<>0 and idres_bp=".$reserva);
 ?>
+<div class="col-12 col-md-12 col-sm-12 col-md-12 col-xl-12">
 <?php if(sizeof($pagos)>0){ ?>
-	<table class="table "  id="DataTable" >
+	<table class="table "  id="DataTable" style="max-width: 100%;width: 100%;" >
 		<thead>
-			<th>Referencia</th>
-			<th>Cantidad</th>
-			<th>Fecha</th>
-			<th>Acciones</th>
+			<th style="max-width: 20%; font-size: 50%">Referencia</th>
+			<th style="max-width: 20%; font-size: 50%">Cantidad</th>
+			<th style="max-width: 20%; font-size: 50%">Fecha</th>
+			<th style="max-width: 20%; font-size: 50%">Acciones</th>
 		</thead>
 		<tbody>
 			<?php
 				foreach ($pagos as $pago) {
 			?>
 				<tr>
-					<td>
-						<?php echo $pago->referencia; ?>
+					<td style="max-width: 20%; font-size: 60%">
+						<?php echo trim($pago->referencia); ?>
 					</td>
-					<td>
-						<?php echo $pago->cantidad; ?>
+					<td style="max-width: 20%; font-size: 60%">
+						<?php echo trim($pago->cantidad); ?>
 					</td>
-					<td>
-						<?php echo $pago->fecha; ?>
+					<td style="max-width: 20%; font-size: 60%">
+						<?php echo trim($pago->fecha); ?>
 					</td>
-					<td>
+					<td style="max-width: 20%;">
 						<!-- 4 es cuando solo se ha agregado el pago y no ha sido conciliado -->
 						<!-- 3 ya ha sido conciliado -->
 						<!-- 2 enviado al cliente sin cupon -->
 						<!-- 1 enviado al cliente con cupon -->
 
 						<?php if($pago->stat == 4){ ?>
-							<i class="fa fa-check-circle-o fa-lg" data-toggle="modal" style="color:#00C851" onclick="accionesPagos(<?php echo $pago->id ?>,'conciliar',<?php echo $reserva; ?>);" >
+							<i class="fa fa-check-circle-o fa-lg" data-toggle="modal" style="color:#00C851" onclick="accionesPagos(<?php echo $pago->id ?>,'conciliar',<?php echo $reserva; ?>);" ></i>
 						<?php }else if($pago->stat == 3){  ?>
 							<i class="fa fa-spinner" style="color: #33b5e5"></i>
 						<?php }else if($pago->stat == 2){  ?>
@@ -54,8 +55,12 @@
 		</tbody>
 	</table>
 	<script type="text/javascript">
-		$("#DataTable").DataTable();
-
+		$("#DataTable").DataTable({
+			"columnDefs": [
+			    { "width": "5%", "targets": 0 }
+			],
+			"paging": false
+		});
 		function accionesPagos(pago,accion,reserva){
 			$.ajax({
 			url:'controladores/pagosController.php',
@@ -88,3 +93,4 @@
 		}
 	</script>
 <?php } ?>
+</div>

@@ -113,7 +113,7 @@
 						<script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 					</head>';
 	$cuerpo.=		'<body>';
-	$cuerpo.=			'<img src="https://www.volarenglobo.com.mx/admin1/imgs/banner_cotiza.png" style="width:100%; max-width=100%;" alt="Cotización">';
+	$cuerpo.=			'<img src="https://www.volarenglobo.com.mx/admin1/sources/images/correos/banner_cotiza.png" style="width:100%; max-width=100%;" alt="Cotización">';
 	$cuerpo.=			'<b>Estimado(a) '.$datosReserva[0]->nombre.'</b>';
 	$cuerpo.=			'<p>';
 	$cuerpo.=				'Es un gusto poder atender tu solicitud de vuelo en globo. Nuestra operación se encuentra en el';
@@ -210,7 +210,7 @@
 			$totalDescuento = $datosReserva[0]->cantdescuento;
 		}
 		$cuerpo.=					'<tr>';
-		$cuerpo´.=						'<td>Descuento</td>';
+		$cuerpo.=						'<td>Descuento</td>';
 		$cuerpo.=						'<td>';
 		if($datosReserva[0]->tdescuento==1) {
 			$cuerpo.=						 $datosReserva[0]->cantdescuento."% ($" .number_format($totalDescuento, 2, '.', ',').")";

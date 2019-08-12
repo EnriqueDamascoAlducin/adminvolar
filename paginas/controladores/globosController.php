@@ -81,8 +81,6 @@
 				$errores++;
 			}
 		
-		}else{
-	   		$campos.= ", imagen_globo='noimage.png'";			
 		}
 		if($errores<=0){
 			$actualizarGlobo = $con->actualizar("globos_volar",$campos,"id_globo=".$_POST['id']);

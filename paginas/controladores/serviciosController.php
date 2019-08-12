@@ -29,8 +29,6 @@
 				}else{
 					echo "Error. Debe de ser un archivo tipo jpg o png";
 				}
-			}else{
-		   		$campos.= ", img_servicio='noimage.png'";
 			}
 			$actualizaServicio = $con->actualizar("servicios_volar",$campos,"id_servicio=".$_POST['id']);
 			if ($actualizaServicio=="ok"){

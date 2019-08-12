@@ -59,40 +59,42 @@
 		</div>
 	</div>
 </div>
+
+<div class="col-12 col-md-12 col-sm-12 col-md-12 col-xl-12">
 <?php if(sizeof($pagos)>0){ ?>
-	<table class="table " id="DataTable" >
+	<table class="table "  id="DataTable" style="max-width: 100%;width: 100%;" >
 		<thead>
-			<th>Usuario</th>
-			<th>Referencia</th>
-			<th>Cantidad</th>
-			<th>Fecha</th>
-			<th>Acciones</th>
+			<!--<th>Usuario</th>-->
+			<th  style="max-width: 20%;font-size: 60%;">Referencia</th>
+			<th style="max-width: 20%;font-size: 60%;">Cantidad</th>
+			<th style="max-width: 20%;font-size: 60%;">Fecha</th>
+			<th style="max-width: 20%;font-size: 60%;">Acciones</th>
 		</thead>
 		<tbody>
 			<?php
 				foreach ($pagos as $pago) {
 			?>
 				<tr>
-					<td>
+					<!--<td>
 						<?php echo $pago->usuario; ?>
-					</td>
-					<td>
+					</td>-->
+					<td  style="max-width: 20%;font-size: 60%;">
 						<?php echo $pago->referencia; ?>
 					</td>
-					<td>
+					<td  style="max-width: 20%;font-size: 60%;">
 						<?php echo $pago->cantidad; ?>
 					</td>
-					<td>
+					<td  style="max-width: 20%;font-size: 60%;">
 						<?php echo $pago->fecha; ?>
 					</td>
-					<td>
+					<td  style="max-width: 20%;font-size: 60%;">
 						<!-- 4 es cuando solo se ha agregado el pago y no ha sido conciliado -->
 						<!-- 3 ya ha sido conciliado -->
 						<!-- 2 enviado al cliente sin cupon -->
 						<!-- 1 enviado al cliente con cupon -->
 
 						<?php if($pago->stat == 4){ ?>
-							<i class="fa fa-trash fa-lg"  style="color:red" onclick="accionesPagos(<?php echo $pago->id ?>,'cancelar',<?php echo $reserva; ?>);" title="Enviar con Regalo"  >
+							<i class="fa fa-trash fa-lg"  style="color:red" onclick="accionesPagos(<?php echo $pago->id ?>,'cancelar',<?php echo $reserva; ?>);" title="Enviar con Regalo"  ></i>
 						<?php }else if($pago->stat == 3){  ?>
 							<i class="fa fa-envelope-o fa-lg" data-toggle="modal" onclick="accionesPagos(<?php echo $pago->id ?>,'simple',<?php echo $reserva; ?>);" data-target="#modalReservas1" ></i>
 							<i class="fa fa-gift fa-lg" title="Enviar con Regalo" data-toggle="modal" style="color:#33b5e5" onclick="accionesPagos(<?php echo $pago->id ?>,'regalo',<?php echo $reserva; ?>);" data-target="#modalReservas1" ></i>
@@ -111,7 +113,12 @@
 		</tbody>
 	</table>
 	<script type="text/javascript">
-		$("#DataTable").DataTable();
+		$("#DataTable").DataTable({
+			"columnDefs": [
+			    { "width": "5%", "targets": 0 }
+			],
+			"paging": false
+		});
 
 		function accionesPagos(pago,accion,reserva){
 			$.ajax({
@@ -145,6 +152,7 @@
 		}
 	</script>
 <?php } ?>
+</div>
 <script type="text/javascript">
 		date = new Date();
 		var primerDia = new Date(date.getFullYear(), date.getMonth(), 1);

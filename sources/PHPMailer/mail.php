@@ -17,6 +17,7 @@ try {
     $mail->Password = 'Portero1';
     */
     
+    $mail->SMTPDebug  = 1;
     $mail->Host = 'mail.volarenglobo.com.mx';
     $mail->Port = 465; 
     $mail->Username = 'enriquealducin@volarenglobo.com.mx';  

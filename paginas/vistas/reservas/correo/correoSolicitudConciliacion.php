@@ -78,7 +78,7 @@
 	$cuerpo.=							'<td >'. $pagoData[0]->fecha.'</td>';
 	$cuerpo.=						'</tr>';
 	$cuerpo.=						'<tr>';
-	$cuerpo.=							'<td class="tdtitulo" colspan="2x"><a href="https://www.siswebs.com.mx/admin1/">Da click Aqui para conciliar</a></td>';
+	$cuerpo.=							'<td class="tdtitulo" colspan="2x"><a href="https://volarenglobo.com.mx/admin1/">Da click Aqui para conciliar</a></td>';
 	$cuerpo.=						'</tr>';
 	$cuerpo.=					'</tbody>';
 	$cuerpo.=				'</table>';
