@@ -24,7 +24,6 @@
 			echo $registrarPago[0]->respuesta;
 		}else{
 			$respuesta=explode("|", $registrarPago[0]->respuesta);
-			echo $respuesta[0];
 			$pago = $respuesta[1];
 			require  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/vistas/reservas/correo/correoRespuestaConciliacion.php';
 		}
@@ -64,7 +63,6 @@
 			echo $registrarPago[0]->respuesta;
 		}else{
 			$respuesta=explode("|", $registrarPago[0]->respuesta);
-			echo $respuesta[0];
 			$pago = $respuesta[1];
 			if($banco!=83){
 				require  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/vistas/reservas/correo/correoSolicitudConciliacion.php';

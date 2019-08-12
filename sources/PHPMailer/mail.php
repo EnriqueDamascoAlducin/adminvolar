@@ -10,11 +10,17 @@ require 'PHPMailer/SMTP.php';
 $mail = new PHPMailer(true);
 try {
     $mail = new PHPMailer();  // create a new object
+    /*
     $mail->Host = 'a2plcpnl0253.prod.iad2.secureserver.net';
     $mail->Port = 465; 
     $mail->Username = 'enriquealducin@siswebs.com.mx';  
     $mail->Password = 'Portero1';
+    */
     
+    $mail->Host = 'mail.volarenglobo.com.mx';
+    $mail->Port = 465; 
+    $mail->Username = 'enriquealducin@volarenglobo.com.mx';  
+    $mail->Password = 'VolarenGlobo1.';
     //Recipients
     if(isset($_SESSION['usuario'])){
         $usuario= unserialize((base64_decode($_SESSION['usuario'])));

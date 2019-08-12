@@ -69,7 +69,6 @@
 		}
 		$upd="status=1,globo_temp=".$globo.",kg_temp=".$peso.",hora_temp=".$hora .",piloto_temp=".$piloto;
 		$asignarVuelo = $con->actualizar("temp_volar",	$upd ," id_temp=".$reserva);
-		echo "algo";
 		echo $asignarVuelo;
 	}else{
 		$reserva = $_POST['id'];
