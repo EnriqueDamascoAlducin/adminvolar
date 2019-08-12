@@ -78,13 +78,13 @@
 	$cuerpo.=							'<td >'. $pagoData[0]->fecha.'</td>';
 	$cuerpo.=						'</tr>';
 	$cuerpo.=						'<tr>';
-	$cuerpo.=							'<td class="tdtitulo" colspan="2x"><a href="https://www.siswebs.com.mx/admin/">Da click Aqui para conciliar</a></td>';
+	$cuerpo.=							'<td class="tdtitulo" colspan="2x"><a href="https://www.siswebs.com.mx/admin1/">Da click Aqui para conciliar</a></td>';
 	$cuerpo.=						'</tr>';
 	$cuerpo.=					'</tbody>';
 	$cuerpo.=				'</table>';
 	$cuerpo.=			'</div>';
 	$cuerpo.=		'</body>';
 	$cuerpo.=	'</html>';
-	$ruta=$_SERVER['DOCUMENT_ROOT'].'/admin/sources/PHPMailer/mail.php';
+	$ruta=$_SERVER['DOCUMENT_ROOT'].'/admin1/sources/PHPMailer/mail.php';
 	require_once  $ruta;
 ?>

@@ -1,8 +1,8 @@
 <?php 
 	/*	Requeridos	*/
-	require  $_SERVER['DOCUMENT_ROOT'].'/admin/paginas/modelos/login.php';
-	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin/paginas/controladores/conexion.php';
-	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin/paginas/controladores/fin_session.php';
+	require  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/modelos/login.php';
+	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/controladores/conexion.php';
+	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/controladores/fin_session.php';
 	/*	Requeridos	*/
 	$reserva=$_POST['reserva'];
 	$metodos = $con->consulta("nombre_extra as text, id_extra as value","extras_volar","status<>0 and clasificacion_extra='metodopago'");

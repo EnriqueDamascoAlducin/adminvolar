@@ -1,8 +1,8 @@
 <?php 
 	
-	require  $_SERVER['DOCUMENT_ROOT'].'/admin/paginas/modelos/login.php';
-	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin/paginas/controladores/conexion.php';
-	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin/paginas/controladores/fin_session.php';	
+	require  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/modelos/login.php';
+	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/controladores/conexion.php';
+	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/controladores/fin_session.php';	
 	if($_POST['id']!=''){
 		$departamentos= $con->consulta("nombre_depto as nombre, id_depto as id","departamentos_volar","status=1 and id_depto=". $_POST['id']);
 	}

@@ -1,8 +1,8 @@
 <?php
-	require  $_SERVER['DOCUMENT_ROOT'].'/admin/paginas/modelos/login.php';
-	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin/paginas/controladores/conexion.php';
-	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin/paginas/controladores/fin_session.php';
-	include_once $_SERVER['DOCUMENT_ROOT'].'/admin/paginas/modelos/reserva.php';	
+	require  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/modelos/login.php';
+	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/controladores/conexion.php';
+	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/controladores/fin_session.php';
+	include_once $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/modelos/reserva.php';	
 	$usuario= unserialize((base64_decode($_SESSION['usuario'])));
 	$bloqueado="";
 	if(isset($_POST['accion'])){

@@ -13,7 +13,7 @@
 		
 	}elseif (isset($_POST['accion']) && $_POST['accion']=='conciliar') {
 
-		require  $_SERVER['DOCUMENT_ROOT'].'/admin/paginas/modelos/login.php';
+		require  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/modelos/login.php';
 		$usuario= unserialize((base64_decode($_SESSION['usuario'])));
 		$idUsu=$usuario->getIdUsu();
 		$parametros = $_POST['pago'].',0,0,0,0,"",0,"0",'.$idUsu;
@@ -26,24 +26,24 @@
 			$respuesta=explode("|", $registrarPago[0]->respuesta);
 			echo $respuesta[0];
 			$pago = $respuesta[1];
-			require  $_SERVER['DOCUMENT_ROOT'].'/admin/paginas/vistas/reservas/correo/correoRespuestaConciliacion.php';
+			require  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/vistas/reservas/correo/correoRespuestaConciliacion.php';
 		}
 
 	}elseif (isset($_POST['accion']) && $_POST['accion']=='simple'  ) {
 		$validar = $con->actualizar("bitpagos_volar","status=2","id_bp=".$_POST['pago']);
 		echo $validar;
-		require  $_SERVER['DOCUMENT_ROOT'].'/admin/paginas/vistas/reservas/correo/correoConfirmacion.php';
+		require  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/vistas/reservas/correo/correoConfirmacion.php';
 		$accion = $con->actualizar("temp_volar","status=4","id_temp=".$reserva);
 
 	}elseif (isset($_POST['accion']) && $_POST['accion']=='regalo'  ) {
 		$validar = $con->actualizar("bitpagos_volar","status=1","id_bp=".$_POST['pago']);
 		echo $validar;
-		require  $_SERVER['DOCUMENT_ROOT'].'/admin/paginas/vistas/reservas/correo/correoConfirmacion.php';
+		require  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/vistas/reservas/correo/correoConfirmacion.php';
 		$accion = $con->actualizar("temp_volar","status=4","id_temp=".$reserva);
 
 
 	}elseif (isset($_POST['accion']) && $_POST['accion']=='registrarPago'  ) {
-		require  $_SERVER['DOCUMENT_ROOT'].'/admin/paginas/modelos/login.php';
+		require  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/modelos/login.php';
 		$usuario= unserialize((base64_decode($_SESSION['usuario'])));
 		$idUsu=$usuario->getIdUsu();
 		
@@ -67,7 +67,7 @@
 			echo $respuesta[0];
 			$pago = $respuesta[1];
 			if($banco!=83){
-				require  $_SERVER['DOCUMENT_ROOT'].'/admin/paginas/vistas/reservas/correo/correoSolicitudConciliacion.php';
+				require  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/vistas/reservas/correo/correoSolicitudConciliacion.php';
 			}
 		}
 	}

@@ -1,7 +1,7 @@
 <?php
 	date_default_timezone_set("America/Mexico_City");
-	require  $_SERVER['DOCUMENT_ROOT'].'/admin/paginas/modelos/login.php';
-	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin/paginas/controladores/conexion.php';
+	require  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/modelos/login.php';
+	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/controladores/conexion.php';
 	if(isset($_POST['accion']) && $_POST['accion']=='cancelar'){
 		$eliminarServicio=$con->query("CALL eliminarServicio(". $_POST['servicio'] .",@respuesta)");
 		$respuesta = $con->query("Select @respuesta as respuesta")->fetchALL (PDO::FETCH_OBJ);
@@ -23,12 +23,14 @@
 				if ($tipo=='image/png' || $tipo=='image/jpg' || $tipo=='image/jpeg'){
 					$fechaHora = date('YmdHis');
 					$nuevoNombre=$fechaHora.'_'.$nombre;
-		   			$guardarEn= $_SERVER['DOCUMENT_ROOT'].'/admin/sources/images/servicios/'.$nuevoNombre;	
+		   			$guardarEn= $_SERVER['DOCUMENT_ROOT'].'/admin1/sources/images/servicios/'.$nuevoNombre;	
 		   			move_uploaded_file($provieneDe, $guardarEn );
 		   			$campos.= ", img_servicio='".$nuevoNombre."'";
 				}else{
 					echo "Error. Debe de ser un archivo tipo jpg o png";
 				}
+			}else{
+		   		$campos.= ", img_servicio='noimage.png'";
 			}
 			$actualizaServicio = $con->actualizar("servicios_volar",$campos,"id_servicio=".$_POST['id']);
 			if ($actualizaServicio=="ok"){
@@ -43,7 +45,7 @@
 				if ($tipo=='image/png' || $tipo=='image/jpg' || $tipo=='image/jpeg'){
 					$fechaHora = date('YmdHis');
 					$nuevoNombre=$fechaHora.'_'.$nombre;
-		   			$guardarEn= $_SERVER['DOCUMENT_ROOT'].'/admin/sources/images/servicios/'.$nuevoNombre;	
+		   			$guardarEn= $_SERVER['DOCUMENT_ROOT'].'/admin1/sources/images/servicios/'.$nuevoNombre;	
 		   			move_uploaded_file($provieneDe, $guardarEn );
 		   			$campos.= ", img_servicio='".$nuevoNombre."'";
 				}else{

@@ -30,7 +30,7 @@
 			if ($tipo=='image/png' || $tipo=='image/jpg' || $tipo=='image/jpeg'){
 				$fechaHora = date('YmdHis');
 				$nuevoNombre=$fechaHora.'_'.$nombreImagen;
-	   			$guardarEn= $_SERVER['DOCUMENT_ROOT'].'/admin/sources/images/globos/'.$nuevoNombre;	
+	   			$guardarEn= $_SERVER['DOCUMENT_ROOT'].'/admin1/sources/images/globos/'.$nuevoNombre;	
 	   			$nuevoNombre="'".$nuevoNombre."'";
 
 	   			move_uploaded_file($provieneDe, $guardarEn );
@@ -38,6 +38,7 @@
 				$errores++;
 				echo "Error. Debe de ser un archivo tipo jpg o png";
 			}
+		
 		}
 		$valores=$placa.','.$nombre.','.$peso.','.$maxpersonas.','.$nuevoNombre;
 		if($errores<=0){
@@ -64,13 +65,14 @@
 		if($maxpersonas==''){
 			$maxpersonas="null";
 		}
+
 		$campos="nombre_globo=".$nombre.", placa_globo=".$placa.",peso_globo=".$peso.",maxpersonas_globo=".$maxpersonas;
 		if($tamano>0){
 			$tipo= $imagen['type'];
 			if ($tipo=='image/png' || $tipo=='image/jpg' || $tipo=='image/jpeg'){
 				$fechaHora = date('YmdHis');
 				$nuevoNombre=$fechaHora.'_'.$nombreImagen;
-	   			$guardarEn= $_SERVER['DOCUMENT_ROOT'].'/admin/sources/images/globos/'.$nuevoNombre;	
+	   			$guardarEn= $_SERVER['DOCUMENT_ROOT'].'/admin1/sources/images/globos/'.$nuevoNombre;	
 
 	   			move_uploaded_file($provieneDe, $guardarEn );
 	   			$campos.= ", imagen_globo='".$nuevoNombre."'";
@@ -78,6 +80,9 @@
 				echo "Error. Debe de ser un archivo tipo jpg o png";
 				$errores++;
 			}
+		
+		}else{
+	   		$campos.= ", imagen_globo='noimage.png'";			
 		}
 		if($errores<=0){
 			$actualizarGlobo = $con->actualizar("globos_volar",$campos,"id_globo=".$_POST['id']);

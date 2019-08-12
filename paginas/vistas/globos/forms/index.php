@@ -1,8 +1,8 @@
 <?php 
 	
-	require  $_SERVER['DOCUMENT_ROOT'].'/admin/paginas/modelos/login.php';
-	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin/paginas/controladores/conexion.php';
-	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin/paginas/controladores/fin_session.php';	
+	require  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/modelos/login.php';
+	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/controladores/conexion.php';
+	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/controladores/fin_session.php';	
 	if($_POST['id']!=''){
 		$globos= $con->consulta("nombre_globo as nombre, id_globo as id,placa_globo as placa,peso_globo as peso, maxpersonas_globo as maxpersonas,imagen_globo as imagen","globos_volar","status<>0 and id_globo=". $_POST['id']);
 	}
@@ -48,7 +48,7 @@
 			<div class="col-sm-6 col-lg-6 col-md-6 col-6 col-xl-4 ">
 				<div class="form-group">
 					<label for="imagen">
-						<img src="../sources/images/globos/<?php if(isset($globos)){echo $globos[0]->imagen;}else{ echo 'noimage.png'; } ?>" style="max-width: 100%"  class="rounded-circle">
+						<img id="imgImagen" src="../sources/images/globos/<?php if(isset($globos)){echo $globos[0]->imagen;}else{ echo 'noimage.png'; } ?>" style="max-width: 100%"  class="rounded-circle">
 					</label>
 					<input type="file" class="form-control" id="imagen" name="imagen"  style="display: none" >
 				</div>
@@ -57,3 +57,28 @@
 	</div>
 </form>
 
+<script type="text/javascript">
+	$("#imagen").on("change",function(e){
+	
+	var data = e.originalEvent.target.files[0];
+    if(data.size<1258291){
+		validarImagen(this);
+	}else{
+		abrir_gritter("Alerta","No puedes cargar un archivo mayor a un mega","warning");
+		$(this).val('');
+      	$('#imgImagen').attr('src', "../sources/images/globos/noimage.png");
+		return false;
+	}
+});
+function validarImagen(input) {
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+    
+    reader.onload = function(e) {
+      $('#imgImagen').attr('src', e.target.result);
+    }
+    
+    reader.readAsDataURL(input.files[0]);
+  }
+}
+</script>

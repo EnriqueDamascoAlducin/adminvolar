@@ -1,5 +1,5 @@
 <?php
-	include_once $_SERVER['DOCUMENT_ROOT'].'/admin/paginas/beans/usuarioLoggeado.php';
+	include_once $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/beans/usuarioLoggeado.php';
 	$usuarioAct = new usuarioLoggeado();
 	function crearUsuarioBean($usuario){
 		global $usuarioAct;

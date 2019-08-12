@@ -1,6 +1,6 @@
 <?php 
 
-	require  $_SERVER['DOCUMENT_ROOT'].'/admin/paginas/modelos/login.php';
+	require  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/modelos/login.php';
 	if(isset($_SESSION['usuario'])){
         $usuario= unserialize((base64_decode($_SESSION['usuario'])));
     }
@@ -129,7 +129,7 @@
 						<script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 					</head>';
 	$cuerpo.=		'<body>';
-	$cuerpo.=			'<img src="http://volarenglobo.com.mx/admin/imgs/bannersito.png" style="width:100%; max-width=100%;" alt="Confiramcion">';
+	$cuerpo.=			'<img src="http://volarenglobo.com.mx/admin1/imgs/bannersito.png" style="width:100%; max-width=100%;" alt="Confiramcion">';
 	$cuerpo.=			'<p>';
 	$cuerpo.=				'Hola!!! <b>'.$datosReserva[0]->nombre.'</b>.Envío confirmación de vuelo, no olvides llevarla contigo el día de tu vuelo (No es necesario Imprimirla). </p>';
 	$cuerpo.=				'<p><b>Registro y Pago:</b> El día de tu vuelo deberás presentarte con nuestro anfitrión en la recepción para que registre tu asistencia y te reciba el pago del restante. Recuerda estar a tiempo en el lugar de la cita para no retrasar tu vuelo ni el de los demás. Te aconsejamos traer ropa cómoda, tal como si fueras a un día de campo: gorra, bufanda, guantes, bloqueador solar, cámara fotográfica o de video.</p>';
@@ -330,7 +330,7 @@ Recepción Volar en Globo, Aventura y Publicidad SA de CV. Esquina Francisco Vil
 	$cuerpo.=				'</table>';
 	$cuerpo.=			'</div>';
 	if($_POST['accion']=='regalo'){
-		$cuerpo.=		'<img src="https://www.volarenglobo.com.mx/admin/imgs/cupon-descuento-volar-en-globo.jpg" style="width:100%;max-width:100%">';
+		$cuerpo.=		'<img src="https://www.volarenglobo.com.mx/admin1/imgs/cupon-descuento-volar-en-globo.jpg" style="width:100%;max-width:100%">';
 	}
 	$cuerpo.=			'<p style="font-size:14px">Para mas información por favor contactate con tu vendedor</p>';
 	$cuerpo.=			'<b>'.$vendedor[0].'</b><br>';
@@ -338,7 +338,7 @@ Recepción Volar en Globo, Aventura y Publicidad SA de CV. Esquina Francisco Vil
 	$cuerpo.=		'</body>';
 	$cuerpo.=	'</html>';
 	//echo $cuerpo;
-	$ruta=$_SERVER['DOCUMENT_ROOT'].'/admin/sources/PHPMailer/mail.php';
+	$ruta=$_SERVER['DOCUMENT_ROOT'].'/admin1/sources/PHPMailer/mail.php';
 	require_once  $ruta;
 
 ?>

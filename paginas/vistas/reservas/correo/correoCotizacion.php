@@ -1,8 +1,8 @@
 <?php 
 	$reserva = $_POST['reserva'];
-	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin/paginas/controladores/conexion.php';
-	require  $_SERVER['DOCUMENT_ROOT'].'/admin/paginas/modelos/login.php';
-	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin/paginas/controladores/fin_session.php';
+	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/controladores/conexion.php';
+	require  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/modelos/login.php';
+	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/controladores/fin_session.php';
 	if(isset($_SESSION['usuario'])){
         $usuario= unserialize((base64_decode($_SESSION['usuario'])));
     }
@@ -113,7 +113,7 @@
 						<script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 					</head>';
 	$cuerpo.=		'<body>';
-	$cuerpo.=			'<img src="https://www.volarenglobo.com.mx/admin/imgs/banner_cotiza.png" style="width:100%; max-width=100%;" alt="Cotización">';
+	$cuerpo.=			'<img src="https://www.volarenglobo.com.mx/admin1/imgs/banner_cotiza.png" style="width:100%; max-width=100%;" alt="Cotización">';
 	$cuerpo.=			'<b>Estimado(a) '.$datosReserva[0]->nombre.'</b>';
 	$cuerpo.=			'<p>';
 	$cuerpo.=				'Es un gusto poder atender tu solicitud de vuelo en globo. Nuestra operación se encuentra en el';
@@ -243,7 +243,7 @@
 	$cuerpo.=		'</body>';
 	$cuerpo.=	'</html>';
 	//	echo $cuerpo;
-	$ruta=$_SERVER['DOCUMENT_ROOT'].'/admin/sources/PHPMailer/mail.php';
+	$ruta=$_SERVER['DOCUMENT_ROOT'].'/admin1/sources/PHPMailer/mail.php';
 	require_once  $ruta;
 
 	$accion = $con->actualizar("temp_volar","status=3","id_temp=".$reserva);

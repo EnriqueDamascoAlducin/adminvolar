@@ -81,6 +81,6 @@
 	$cuerpo.=			'</div>';
 	$cuerpo.=		'</body>';
 	$cuerpo.=	'</html>';
-	$ruta=$_SERVER['DOCUMENT_ROOT'].'/admin/sources/PHPMailer/mail.php';
+	$ruta=$_SERVER['DOCUMENT_ROOT'].'/admin1/sources/PHPMailer/mail.php';
 	require_once  $ruta;
 ?>

@@ -1,7 +1,7 @@
 <?php 
-	require  $_SERVER['DOCUMENT_ROOT'].'/admin/paginas/modelos/login.php';
-	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin/paginas/controladores/conexion.php';
-	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin/paginas/controladores/fin_session.php';	
+	require  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/modelos/login.php';
+	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/controladores/conexion.php';
+	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/controladores/fin_session.php';	
 
 	$modulo= $_POST['modulo'];
 	$campos= "CONCAT(IFNULL(nombre_usu,''),' ', IFNULL(apellidop_usu,''),' ',IFNULL(apellidom_usu,'')) as nombre, id_usu as id,IFNULL((SELECT nombre_depto from departamentos_volar where id_depto = vu.depto_usu),'No asignado') as depto,IFNULL((SELECT nombre_puesto from puestos_volar where id_puesto = vu.puesto_usu),'No asignado') as puesto";

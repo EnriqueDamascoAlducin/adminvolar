@@ -8,9 +8,9 @@
 
 		function Conexion(){
 			$this->servidor="localhost";
-			$this->bd = "volar";
-			$this->usr="Siswebs";
-			$this->pass="Portero1";
+			$this->bd = "afraqujt_volar";
+			$this->usr="afraqujt_Siswebs";
+			$this->pass="VolarenGlobo1.";
 
 		}
 

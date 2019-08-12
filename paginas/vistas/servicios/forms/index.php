@@ -1,8 +1,8 @@
 <?php 
 	
-	require  $_SERVER['DOCUMENT_ROOT'].'/admin/paginas/modelos/login.php';
-	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin/paginas/controladores/conexion.php';
-	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin/paginas/controladores/fin_session.php';	
+	require  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/modelos/login.php';
+	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/controladores/conexion.php';
+	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/controladores/fin_session.php';	
 	if($_POST['id']!=''){
 		$servicio= $con->consulta("nombre_servicio as nombre, cortesia_servicio,cantmax_servicio,id_servicio as id,img_servicio,precio_servicio","servicios_volar","id_servicio=". $_POST['id']);
 	}

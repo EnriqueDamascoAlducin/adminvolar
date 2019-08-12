@@ -1,8 +1,8 @@
 <?php 
 	
-	require  $_SERVER['DOCUMENT_ROOT'].'/admin/paginas/modelos/login.php';
-	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin/paginas/controladores/conexion.php';
-	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin/paginas/controladores/fin_session.php';	
+	require  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/modelos/login.php';
+	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/controladores/conexion.php';
+	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/controladores/fin_session.php';	
 	if($_POST['id']!=''){
 		$gasto= $con->consulta("fecha_gasto,tipo_gasto,cantidad_gasto,metodo_gasto,referencia_gasto,comentario_gasto","gastos_volar"," id_gasto=". $_POST['id']);
 	}

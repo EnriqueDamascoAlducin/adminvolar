@@ -1,5 +1,5 @@
 <?php
-	include_once $_SERVER['DOCUMENT_ROOT'].'/admin/paginas/beans/reserva.php';
+	include_once $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/beans/reserva.php';
 	function crearReserva($reservas){
 		global $reserva;
 		$reserva->setIdTemp($reservas[0]->id_temp);
