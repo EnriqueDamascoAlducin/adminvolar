@@ -18,49 +18,49 @@
 ?>	
 <div class="row">
 <?php if(in_array("ESTADOS", $permisos)){ ?>
-  <div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
+  <div class="col-6 col-sm-3 col-md-3 col-lg-3 col-xl-3">
   	<div class="alert alert-info" data-toggle="modal" data-target="#modal" data-info="estados"  onclick="accionExtras('agregar', <?php echo $usuario->getIdUsu(); ?>,'estados')">
   	  <strong><i class="fa fa-plus fa-md"></i></strong> Agregar Estados.
   	</div>
   </div>
 <?php } ?>
 <?php if(in_array("MOTIVOS", $permisos)){ ?>
-  <div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
+  <div class="col-6 col-sm-3 col-md-3 col-lg-3 col-xl-3">
     <div class="alert alert-info" data-toggle="modal" data-target="#modal" data-info="motivos"  onclick="accionExtras('agregar', <?php echo $usuario->getIdUsu(); ?>,'motivos')">
       <strong><i class="fa fa-plus fa-md"></i></strong> Agregar Motivos.
     </div>
   </div>
 <?php } ?>
 <?php if(in_array("TIPOS VUELO", $permisos)){ ?>
-  <div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
+  <div class="col-6 col-sm-3 col-md-3 col-lg-3 col-xl-3">
     <div class="alert alert-info" data-toggle="modal" data-target="#modal" data-info="tiposv" onclick="accionExtras('agregar', <?php echo $usuario->getIdUsu(); ?>,'tiposv')">
       <strong><i class="fa fa-plus fa-md"></i></strong> Agregar Tipos de Vuelos.
     </div>
   </div>
 <?php } ?>
 <?php if(in_array("TARIFAS", $permisos)){ ?>
-  <div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
+  <div class="col-6 col-sm-3 col-md-3 col-lg-3 col-xl-3">
     <div class="alert alert-info" data-toggle="modal" data-target="#modal" data-info="tarifas" onclick="accionExtras('agregar', <?php echo $usuario->getIdUsu(); ?>,'tarifas')">
       <strong><i class="fa fa-plus fa-md"></i></strong> Agregar Tarifas.
     </div>
   </div>
 <?php } ?>
 <?php if(in_array("METODOS PAGO", $permisos)){ ?>
-  <div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
+  <div class="col-6 col-sm-3 col-md-3 col-lg-3 col-xl-3">
     <div class="alert alert-info" data-toggle="modal" data-target="#modal" data-info="metodopago" onclick="accionExtras('agregar', <?php echo $usuario->getIdUsu(); ?>,'metodopago')">
       <strong><i class="fa fa-plus fa-md"></i></strong> Agregar Metodos de Pago.
     </div>
   </div>
 <?php } ?>
 <?php if(in_array("CUENTAS VOLAR", $permisos)){ ?>
-  <div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
+  <div class="col-6 col-sm-3 col-md-3 col-lg-3 col-xl-3">
     <div class="alert alert-info" data-toggle="modal" data-target="#modal" data-info="cuentasvolar" onclick="accionExtras('agregar', <?php echo $usuario->getIdUsu(); ?>,'cuentasvolar')">
       <strong><i class="fa fa-plus fa-md"></i></strong> Agregar Cuentas de Banco
     </div>
   </div>
 <?php } ?>
 <?php if(in_array("TIPOS GASTOS", $permisos)){ ?>
-  <div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
+  <div class="col-6 col-sm-3 col-md-3 col-lg-3 col-xl-3">
     <div class="alert alert-info" data-toggle="modal" data-target="#modal" data-info="tipogastos" onclick="accionExtras('agregar', <?php echo $usuario->getIdUsu(); ?>,'tipogastos')">
       <strong><i class="fa fa-plus fa-md"></i></strong> Agregar Tipos de Gastos
     </div>
