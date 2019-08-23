@@ -17,8 +17,8 @@
 <table class="DataTable table table-striped table-bordered table-hover">
 	<thead>
 		<tr>
-			<th style="text-align: center;vertical-align: middle;max-width: 1%;width: 1%;">Nombre</th>
-			<th style="text-align: center;vertical-align: middle;max-width: 1%;width: 1%;">Placa</th>
+			<th style="text-align: center;vertical-align: middle;max-width: 1%;width: 1%;">Alias</th>
+			<th style="text-align: center;vertical-align: middle;max-width: 1%;width: 1%;">Matricula</th>
 			
 			<th style="text-align: center;vertical-align: middle;max-width: 1%;width: 1% !important;">Acciones</th>
 		</tr>

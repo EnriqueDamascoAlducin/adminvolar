@@ -9,7 +9,7 @@ function guardarServicio(e) {
 		success:function(response){
 			if(response=="Actualizado" || response == 'Registrado'){
 
-         		abrir_gritter("Correcot",response ,"info");
+         		abrir_gritter("Correcto",response ,"info");
 			}else{
 
          		abrir_gritter("Error","Error al registrar su servicio" ,"danger");

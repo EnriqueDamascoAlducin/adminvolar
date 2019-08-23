@@ -22,14 +22,14 @@
 	<div class="row"> 
 		<div class="col-sm-6 col-lg-6 col-md-6 col-6 col-xl-6 ">
 			<div class="form-group">
-				<label for="nombre">Nombre</label>
-				<input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre"  value="<?php if(isset($globos)){ echo $globos[0]->nombre; } ?>">
+				<label for="nombre">Alias</label>
+				<input type="text" class="form-control" id="nombre" name="nombre" placeholder="Alias"  value="<?php if(isset($globos)){ echo $globos[0]->nombre; } ?>">
 			</div>
 		</div>
 		<div class="col-sm-6 col-lg-6 col-md-6 col-6 col-xl-6 ">
 			<div class="form-group">
-				<label for="placa">Placa</label>
-				<input type="text" class="form-control" id="placa" name="placa" placeholder="Placa"  value="<?php if(isset($globos)){ echo $globos[0]->placa; } ?>">
+				<label for="placa">Matricula</label>
+				<input type="text" class="form-control" id="placa" name="placa" placeholder="Matricula"  value="<?php if(isset($globos)){ echo $globos[0]->placa; } ?>">
 			</div>
 		</div>
 		<div class="col-sm-6 col-lg-6 col-md-6 col-6 col-xl-6 ">
@@ -40,8 +40,8 @@
 		</div>
 		<div class="col-sm-6 col-lg-6 col-md-6 col-6 col-xl-6 ">
 			<div class="form-group">
-				<label for="maxpersonas">Max. de Personas</label>
-				<input type="number" class="form-control" id="maxpersonas" name="maxpersonas" placeholder="Mas. de Personas"  value="<?php if(isset($globos)){ echo $globos[0]->maxpersonas; } ?>">
+				<label for="maxpersonas">Max. de Pasajeros</label>
+				<input type="number" class="form-control" id="maxpersonas" name="maxpersonas" placeholder="Max. de Pasajeros"  value="<?php if(isset($globos)){ echo $globos[0]->maxpersonas; } ?>">
 			</div>
 		</div>
 		<center>

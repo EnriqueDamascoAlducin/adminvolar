@@ -7,7 +7,7 @@
 	$reserva=$_POST['reserva'];
 	$pagos = $con->consulta("CONCAT(nombre_usu,' ',apellidop_usu) as usuario, referencia_bp as referencia, cantidad_bp as cantidad,fecha_bp as fecha, bp.status as stat,id_bp as id","bitpagos_volar bp INNER JOIN volar_usuarios vu  ON bp.idreg_bp=vu.id_usu","bp.status<>0 and idres_bp=".$reserva);
 ?>
-<div class="col-12 col-md-12 col-sm-12 col-md-12 col-xl-12">
+<div class="col-6 col-md-12 col-sm-12 col-md-12 col-xl-12">
 <?php if(sizeof($pagos)>0){ ?>
 	<table class="table "  id="DataTable" style="max-width: 100%;width: 100%;" >
 		<thead>
