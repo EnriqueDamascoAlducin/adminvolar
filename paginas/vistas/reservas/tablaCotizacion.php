@@ -123,12 +123,12 @@
 					<tr>
 						<td class="tdtitulo">Tipo de Vuelo</td>
 
-						<td><?php echo $datosReserva[0]->tipoVuelo ?></td>
+						<td><?php echo utf8_encode($datosReserva[0]->tipoVuelo); ?></td>
 					</tr>
 
 					<tr>
 						<td class="tdtitulo">Pasajeros</td>
-						<td><?php echo "Adultos:".$datosReserva[0]->pasajerosA ."(<b>". ($datosReserva[0]->pasajerosA*$datosReserva[0]->precioA ) ."</b>) <br> Niños:".$datosReserva[0]->pasajerosN ."(<b>". ($datosReserva[0]->pasajerosN*$datosReserva[0]->precioN ) ."</b>) " ?></td>
+						<td><?php echo "Adultos:".$datosReserva[0]->pasajerosA ."(<b>". ($datosReserva[0]->pasajerosA*$datosReserva[0]->precioA ) ."</b>) <br> Ni&ntilde;os:".$datosReserva[0]->pasajerosN ."(<b>". ($datosReserva[0]->pasajerosN*$datosReserva[0]->precioN ) ."</b>) " ?></td>
 					</tr>
 					<?php if($datosReserva[0]->comentario!=''){ ?>
 					<tr>

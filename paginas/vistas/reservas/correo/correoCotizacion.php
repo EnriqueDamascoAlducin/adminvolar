@@ -82,7 +82,7 @@
 	$cuerpo='<!DOCTYPE html>
 				<html>
 					<head>
-
+						<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 						<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 						<style type="text/css">
 							.tdtitulo{
@@ -150,11 +150,11 @@
 	$cuerpo.=						'</tr>';
 	$cuerpo.=						'<tr>';
 	$cuerpo.=							'<td class="tdtitulo">Tipo de Vuelo</td>';
-	$cuerpo.=							'<td >'.utf8_decode($datosReserva[0]->tipoVuelo).'</td>';
+	$cuerpo.=							'<td >'.utf8_encode($datosReserva[0]->tipoVuelo).'</td>';
 	$cuerpo.=						'</tr>';
 	$cuerpo.=						'<tr>';
 	$cuerpo.=							'<td class="tdtitulo">Pasajeros</td>';
-	$cuerpo.=							'<td > Adultos:'.$datosReserva[0]->pasajerosA.'(<b>'.($datosReserva[0]->pasajerosA*$datosReserva[0]->precioA ) .'</b>) <br> '.utf8_decode('Niños:').$datosReserva[0]->pasajerosN .'(<b>'.($datosReserva[0]->pasajerosN*$datosReserva[0]->precioN ).'</b>)</td>';
+	$cuerpo.=							'<td > Adultos:'.$datosReserva[0]->pasajerosA.'(<b>'.($datosReserva[0]->pasajerosA*$datosReserva[0]->precioA ) .'</b>) <br> '.('Ni&ntilde;os:').$datosReserva[0]->pasajerosN .'(<b>'.($datosReserva[0]->pasajerosN*$datosReserva[0]->precioN ).'</b>)</td>';
 	$cuerpo.=						'</tr>';
 	if($datosReserva[0]->comentario!=''){ 
 		$cuerpo.=						'<tr>';

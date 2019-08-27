@@ -86,7 +86,7 @@
 	$cuerpo='<!DOCTYPE html>
 				<html>
 					<head>
-
+						<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 						<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 						<style type="text/css">
 
@@ -159,11 +159,11 @@
 	$cuerpo.=						'</tr>';
 	$cuerpo.=						'<tr>';
 	$cuerpo.=							'<td class="tdtitulo">Tipo de Vuelo</td>';
-	$cuerpo.=							'<td >'.utf8_decode($datosReserva[0]->tipoVuelo).'</td>';
+	$cuerpo.=							'<td >'.utf8_encode($datosReserva[0]->tipoVuelo).'</td>';
 	$cuerpo.=						'</tr>';
 	$cuerpo.=						'<tr>';
 	$cuerpo.=							'<td class="tdtitulo">Pasajeros</td>';
-	$cuerpo.=							'<td > Adultos:'.$datosReserva[0]->pasajerosA.'(<b>'.($datosReserva[0]->pasajerosA*$datosReserva[0]->precioA ) .'</b>) <br> '.utf8_decode('Niños:').$datosReserva[0]->pasajerosN .'(<b>'.($datosReserva[0]->pasajerosN*$datosReserva[0]->precioN ).'</b>)</td>';
+	$cuerpo.=							'<td > Adultos:'.$datosReserva[0]->pasajerosA.'(<b>'.($datosReserva[0]->pasajerosA*$datosReserva[0]->precioA ) .'</b>) <br> '.('Ni&ntilde;os:').$datosReserva[0]->pasajerosN .'(<b>'.($datosReserva[0]->pasajerosN*$datosReserva[0]->precioN ).'</b>)</td>';
 	$cuerpo.=						'</tr>';
 	if($datosReserva[0]->comentario!=''){ 
 		$cuerpo.=						'<tr>';
@@ -281,7 +281,7 @@ Recepción Volar en Globo, Aventura y Publicidad SA de CV. Esquina Francisco Vil
 												</ul>
 												<li>Restricciones:</li>
 												<ul>
-													<li>Niños menores a 4 años.</li>
+													<li>Ni&ntilde;os menores a 4 a&ntilde;os.</li>
 													<li>Si ha padecido del corazón.</li>
 													<li>Si tiene una cirugia reciente.</li>
 													<li>Lastimada de la columna.</li>
@@ -318,7 +318,7 @@ Recepción Volar en Globo, Aventura y Publicidad SA de CV. Esquina Francisco Vil
 									</tr>';
 	$cuerpo.=						'<tr>';
 		$cuerpo.=						'<td colspan="2">';
-			$cuerpo.=						'Tomar insurgentes hacia Pachuca numero de autopistá 132-D en cuanto llegues a las casetas tomar las del lado derecho mas con dirección a pirámides - Tulancingo, ( extremo derecho ), ahí pagaras una caseta de $75.00, INMEDIATAMENTE PEGARTE A LADO DERECHO Y SEGUIR LOS SEÑALAMIENTOS HACIA PIRAMIDES seguir sobre la autopista en el Km. 17 y pasandoÂ  la gasolinera tomar la desviación hacia pirámidesÂ y continuar hasta la desviación a Tulancingo continuas sobre esta carretera donde a tu mano izquierda vas a encontrar una Estación de Policía Federal, un poco más adelante encontraras una salida a mano izquierda antes del puente, debes girar a la izquierda nuevamente y allí encontraras nuestra recepción.
+			$cuerpo.=						'Tomar insurgentes hacia Pachuca numero de autopistá 132-D en cuanto llegues a las casetas tomar las del lado derecho mas con dirección a pirámides - Tulancingo, ( extremo derecho ), ahí pagaras una caseta de $75.00, INMEDIATAMENTE PEGARTE A LADO DERECHO Y SEGUIR LOS SE&ntilde;ALAMIENTOS HACIA PIRAMIDES seguir sobre la autopista en el Km. 17 y pasandoÂ  la gasolinera tomar la desviación hacia pirámidesÂ y continuar hasta la desviación a Tulancingo continuas sobre esta carretera donde a tu mano izquierda vas a encontrar una Estación de Policía Federal, un poco más adelante encontraras una salida a mano izquierda antes del puente, debes girar a la izquierda nuevamente y allí encontraras nuestra recepción.
 				<hr>
 				<a href="https://www.google.com/maps/place//data=!4m2!3m1!1s0x85d1c03008c08e6d:0x2cd1a4cc8c3f3d5c?utm_source=mstt_1&utm_medium=mstt_2">
 				<button type="button" class="btn btn-info btn-lg" id="direccionvga">Ver Dirección</button></a>

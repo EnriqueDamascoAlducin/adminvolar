@@ -1,15 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.5
+-- version 4.6.6deb5
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 23-08-2019 a las 00:02:28
--- Versión del servidor: 10.1.41-MariaDB-cll-lve
--- Versión de PHP: 7.2.7
+-- Tiempo de generación: 26-08-2019 a las 23:37:57
+-- Versión del servidor: 5.7.27-0ubuntu0.18.04.1
+-- Versión de PHP: 7.2.19-0ubuntu0.18.04.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -26,65 +24,65 @@ DELIMITER $$
 --
 -- Procedimientos
 --
-CREATE  PROCEDURE `agregarServiciosReservas` (IN `_reserva` BIGINT, IN `_servicio` INT, IN `_tipo` INT, IN `_cantidad` BIGINT, OUT `respuesta` VARCHAR(50))  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `agregarServiciosReservas` (IN `_reserva` BIGINT, IN `_servicio` INT, IN `_tipo` INT, IN `_cantidad` BIGINT, OUT `respuesta` VARCHAR(50))  BEGIN
      IF (SELECT count(*)  FROM servicios_vuelo_temp  WHERE idtemp_sv =  _reserva and idservi_sv =_servicio)>0 THEN
         BEGIN
-       		UPDATE servicios_vuelo_temp set cantidad_sv = _cantidad, tipo_sv= _tipo  WHERE idtemp_sv = _reserva and idservi_sv = _servicio;
+          UPDATE servicios_vuelo_temp set cantidad_sv = _cantidad, tipo_sv= _tipo  WHERE idtemp_sv = _reserva and idservi_sv = _servicio;
             SET respuesta ="Actualizado";
         END;
         ELSE 
         BEGIN
-        	INSERT INTO servicios_vuelo_temp (idtemp_sv,idservi_sv,tipo_sv,cantidad_sv) VALUES(_reserva,_servicio ,_tipo ,_cantidad);
-			SET respuesta ="Agregado" ;
+          INSERT INTO servicios_vuelo_temp (idtemp_sv,idservi_sv,tipo_sv,cantidad_sv) VALUES(_reserva,_servicio ,_tipo ,_cantidad);
+      SET respuesta ="Agregado" ;
         END;
-        END IF;	
+        END IF; 
 
 
 
 END$$
 
-CREATE  PROCEDURE `asigarPermisosModulos` (IN `_usuario` INT, IN `_modulo` INT, IN `_status` INT, OUT `_respuesta` VARCHAR(20))  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `asigarPermisosModulos` (IN `_usuario` INT, IN `_modulo` INT, IN `_status` INT, OUT `_respuesta` VARCHAR(20))  BEGIN
      IF (SELECT count(*)  FROM permisosusuarios_volar  WHERE idusu_puv = _usuario  and idsp_puv =_modulo )>0 THEN
         BEGIN
-       		UPDATE permisosusuarios_volar set status = _status  WHERE idusu_puv =_usuario   and idsp_puv = _modulo;
+          UPDATE permisosusuarios_volar set status = _status  WHERE idusu_puv =_usuario   and idsp_puv = _modulo;
             SET _respuesta ="Actualizado";
         END;
       ELSE 
         BEGIN
-        	INSERT INTO permisosusuarios_volar (idusu_puv,idsp_puv,status) VALUES(_usuario,_modulo,_status);
-			SET _respuesta ="Agregado" ;
+          INSERT INTO permisosusuarios_volar (idusu_puv,idsp_puv,status) VALUES(_usuario,_modulo,_status);
+      SET _respuesta ="Agregado" ;
         END;
-      END IF;	
+      END IF; 
 END$$
 
-CREATE  PROCEDURE `eliminarDepartamento` (IN `_depto` INT, OUT `respuesta` VARCHAR(25))  BEGIN
-	UPDATE departamentos_volar set status=0 where id_depto=_depto ;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `eliminarDepartamento` (IN `_depto` INT, OUT `respuesta` VARCHAR(25))  BEGIN
+  UPDATE departamentos_volar set status=0 where id_depto=_depto ;
     UPDATE puestos_volar set status=0 where depto_puesto = _depto ;
     update volar_usuarios set depto_usu = null, puesto_usu=null where depto_usu= _depto;
     SET respuesta = 'Eliminado';
 END$$
 
-CREATE  PROCEDURE `eliminarPuesto` (IN `_puesto` INT, OUT `respuesta` VARCHAR(10))  BEGIN 
-	UPDATE puestos_volar set status=0 where id_puesto = _puesto;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `eliminarPuesto` (IN `_puesto` INT, OUT `respuesta` VARCHAR(10))  BEGIN 
+  UPDATE puestos_volar set status=0 where id_puesto = _puesto;
     UPDATE volar_usuarios set puesto_usu=null where puesto_usu = _puesto;
     SET respuesta='Eliminado';
 END$$
 
-CREATE  PROCEDURE `eliminarServicio` (IN `_servicio` INT, OUT `respuesta` VARCHAR(20))  BEGIN
-	
-	UPDATE servicios_volar SET STATUS= 0 WHERE id_servicio=_servicio;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `eliminarServicio` (IN `_servicio` INT, OUT `respuesta` VARCHAR(20))  BEGIN
+  
+  UPDATE servicios_volar SET STATUS= 0 WHERE id_servicio=_servicio;
     SET respuesta = 'Eliminado';
 END$$
 
-CREATE  PROCEDURE `getReservaData` (IN `_reserva` INT)  BEGIN
-	Select id_temp, idusu_temp, IFNULL(clave_temp,"") as clave_temp, IFNULL(nombre_temp,"") as nombre_temp, IFNULL(apellidos_temp,"") as apellidos_temp, IFNULL(mail_temp,"") as mail_temp, IFNULL(telfijo_temp,"") as telfijo_temp, IFNULL(telcelular_temp,"") as telcelular_temp, IFNULL(procedencia_temp,"") as procedencia_temp, IFNULL(pasajerosa_temp,"") as pasajerosa_temp,IFNULL(pasajerosn_temp,"") as pasajerosn_temp, IFNULL(motivo_temp,"") as motivo_temp, IFNULL(tipo_temp,"") as tipo_temp,  IFNULL(fechavuelo_temp,"") as fechavuelo_temp,  IFNULL(tarifa_temp,"") as tarifa_temp, IFNULL(hotel_temp,"") as hotel_temp,  IFNULL(habitacion_temp,"") as habitacion_temp,  IFNULL(checkin_temp,"") as checkin_temp,IFNULL(checkout_temp,"") as checkout_temp,IFNULL(comentario_temp,"") as comentario_temp, IFNULL(otroscar1_temp,"") as otroscar1_temp, IFNULL(otroscar2_temp,"") as otroscar2_temp, IFNULL(precio1_temp,"") as precio1_temp, 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getReservaData` (IN `_reserva` INT)  BEGIN
+  Select id_temp, idusu_temp, IFNULL(clave_temp,"") as clave_temp, IFNULL(nombre_temp,"") as nombre_temp, IFNULL(apellidos_temp,"") as apellidos_temp, IFNULL(mail_temp,"") as mail_temp, IFNULL(telfijo_temp,"") as telfijo_temp, IFNULL(telcelular_temp,"") as telcelular_temp, IFNULL(procedencia_temp,"") as procedencia_temp, IFNULL(pasajerosa_temp,"") as pasajerosa_temp,IFNULL(pasajerosn_temp,"") as pasajerosn_temp, IFNULL(motivo_temp,"") as motivo_temp, IFNULL(tipo_temp,"") as tipo_temp,  IFNULL(fechavuelo_temp,"") as fechavuelo_temp,  IFNULL(tarifa_temp,"") as tarifa_temp, IFNULL(hotel_temp,"") as hotel_temp,  IFNULL(habitacion_temp,"") as habitacion_temp,  IFNULL(checkin_temp,"") as checkin_temp,IFNULL(checkout_temp,"") as checkout_temp,IFNULL(comentario_temp,"") as comentario_temp, IFNULL(otroscar1_temp,"") as otroscar1_temp, IFNULL(otroscar2_temp,"") as otroscar2_temp, IFNULL(precio1_temp,"") as precio1_temp, 
 IFNULL(precio2_temp,"") as precio2_temp, IFNULL(tdescuento_temp,"") as tdescuento_temp, IFNULL(cantdescuento_temp,"") as cantdescuento_temp, IFNULL(total_temp,"") as total_temp, IFNULL(piloto_temp,"") as piloto_temp, IFNULL(kg_temp,"") as kg_temp, IFNULL(globo_temp,"") AS globo_temp, IFNULL(hora_temp,"") as hora_temp, register,status
 from temp_volar
 
 Where id_temp =_reserva ;
 END$$
 
-CREATE  PROCEDURE `getResumenREserva` (IN `_reserva` BIGINT)  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getResumenREserva` (IN `_reserva` BIGINT)  BEGIN
 SELECT IFNULL((SELECT nombre_extra from extras_volar where id_extra=tv.motivo_temp),'') as motivo,IFNULL(comentario_temp,'') as comentario,ifnull(pasajerosa_temp,0) as pasajerosA , ifnull(pasajerosn_temp,0) as pasajerosN , IFNULL(habitacion_temp,'') as habitacion, tipo_temp, checkin_temp,checkout_temp, IFNULL(precio1_temp,0) as precio1, IFNULL(precio2_temp,0) as precio2, IFNULL(tdescuento_temp,'') as tdescuento, IFNULL(cantdescuento_temp,0) as cantdescuento, IFNULL(otroscar1_temp,'') as otroscar1,IFNULL(otroscar2_temp,'') as otroscar2, 
 IFNULL((SELECT IFNULL( nombre_hotel,'') as hotel FROM hoteles_volar where id_hotel=tv.hotel_temp),'') as hotel,
 IFNULL((SELECT CONCAT(IFNULL(nombre_habitacion,''),'|', IFNULL(precio_habitacion,0) ,'|', IFNULL(capacidad_habitacion,0)  ,'|', IFNULL(descripcion_habitacion,'')  ) as Habitaciones FROM habitaciones_volar WHERE id_habitacion=tv.habitacion_temp),'') as habitacion,
@@ -94,23 +92,23 @@ FROM temp_volar tv  INNER JOIN vueloscat_volar vcv on vcv.id_vc = tv.tipo_temp
 Where id_temp=_reserva;
 END$$
 
-CREATE  PROCEDURE `getServicioInfo` (IN `_servicio` INT)  BEGIN
-	Select id_servicio as id, nombre_servicio as nombre, precio_servicio as precio from servicios_volar where id_servicio=_servicio ;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getServicioInfo` (IN `_servicio` INT)  BEGIN
+  Select id_servicio as id, nombre_servicio as nombre, precio_servicio as precio from servicios_volar where id_servicio=_servicio ;
 END$$
 
-CREATE  PROCEDURE `getServiciosReservas` (IN `_reserva` BIGINT, IN `_tipo` INT, IN `_servicio` INT)  BEGIN
-	Select * from servicios_vuelo_temp where idtemp_sv = _reserva  and tipo_sv = _tipo and idservi_sv = _servicio and cantidad_sv>0 ;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getServiciosReservas` (IN `_reserva` BIGINT, IN `_tipo` INT, IN `_servicio` INT)  BEGIN
+  Select * from servicios_vuelo_temp where idtemp_sv = _reserva  and tipo_sv = _tipo and idservi_sv = _servicio and cantidad_sv>0 ;
 END$$
 
-CREATE  PROCEDURE `getServiciosXVta` (IN `venta` BIGINT, IN `servicio` INT, OUT `respuesta` INT)  BEGIN 
-	IF(Select count(id_vsv) as cantidad from ventasserv_volar where idserv_vsv=servicio and idventa_vsv=venta and status<>0 and cantidad_vsv>0)>0 THEN
-    	SET respuesta = (Select cantidad_vsv as cantidad from ventasserv_volar where idserv_vsv=servicio and idventa_vsv=venta and status<>0 and cantidad_vsv>0);
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getServiciosXVta` (IN `venta` BIGINT, IN `servicio` INT, OUT `respuesta` INT)  BEGIN 
+  IF(Select count(id_vsv) as cantidad from ventasserv_volar where idserv_vsv=servicio and idventa_vsv=venta and status<>0 and cantidad_vsv>0)>0 THEN
+      SET respuesta = (Select cantidad_vsv as cantidad from ventasserv_volar where idserv_vsv=servicio and idventa_vsv=venta and status<>0 and cantidad_vsv>0);
     ELSE
      SET respuesta = 0;
     END IF;
 END$$
 
-CREATE  PROCEDURE `getUsuarioInfo` (IN `_usuario` INT)  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getUsuarioInfo` (IN `_usuario` INT)  BEGIN
 Select IFNULL(id_usu,"") as id_usu,
 IFNULL(nombre_usu,"") as nombre_usu,
 IFNULL(apellidop_usu,"") as apellidop_usu,
@@ -139,21 +137,21 @@ IFNULL(status,"") as status
 from volar_usuarios Where id_usu= _usuario;
 END$$
 
-CREATE  PROCEDURE `permisosModulos` (IN `_idusu` INT)  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `permisosModulos` (IN `_idusu` INT)  BEGIN
 Select DISTINCT(nombre_per) as nombre, img_per, ruta_per,id_per
 FROM permisos_volar pv
-	INNER JOIN subpermisos_volar spv on pv.id_per=spv.permiso_sp
+  INNER JOIN subpermisos_volar spv on pv.id_per=spv.permiso_sp
     INNER JOIN permisosusuarios_volar puv on spv.id_sp=puv.idsp_puv
 WHERE pv.status<>0 and spv.status<>0 and puv.status<>0 and  idusu_puv =_idusu  ORDER BY nombre ASC;
 END$$
 
-CREATE  PROCEDURE `permisosSubModulos` (IN `_idusu` INT, IN `_idmodulo` INT)  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `permisosSubModulos` (IN `_idusu` INT, IN `_idmodulo` INT)  BEGIN
 Select nombre_sp, nombre_per
 FROM subpermisos_volar sp INNER JOIN permisos_volar pv on pv.id_per=sp.permiso_sp INNER JOIN permisosusuarios_volar pus on pus.idsp_puv= sp.id_sp
 WHERE pv.status<>0 and sp.status<>0 and pus.status<>0 AND pus.idusu_puv=_idusu and pv.id_per=_idmodulo;
 END$$
 
-CREATE  PROCEDURE `registrarPago` (IN `_pago` BIGINT, IN `_reserva` BIGINT, IN `_usuario` INT, IN `_metodo` INT, IN `_banco` INT, IN `_referencia` VARCHAR(200), IN `_cantidad` DOUBLE(10,2), IN `_fechaPago` VARCHAR(30), IN `_usuarioCOncilia` INT, OUT `respuesta` VARCHAR(25))  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `registrarPago` (IN `_pago` BIGINT, IN `_reserva` BIGINT, IN `_usuario` INT, IN `_metodo` INT, IN `_banco` INT, IN `_referencia` VARCHAR(200), IN `_cantidad` DOUBLE(10,2), IN `_fechaPago` VARCHAR(30), IN `_usuarioCOncilia` INT, OUT `respuesta` VARCHAR(25))  BEGIN
 IF(SELECT COUNT(id_bp) as pagos from bitpagos_volar  where idres_bp=_reserva )>0 THEN
     IF (SELECT (ifnull(sum(cantidad_bp),0)+ _cantidad ) from bitpagos_volar where idres_bp=_reserva )>(Select total_temp FROM temp_volar where id_temp  = _reserva) THEN
         SET respuesta = 'ERROR EN PAGO';
@@ -183,40 +181,40 @@ IF(SELECT COUNT(id_bp) as pagos from bitpagos_volar  where idres_bp=_reserva )>0
     
 END$$
 
-CREATE  PROCEDURE `registrarReserva` (IN `_idusu` INT, OUT `lid` BIGINT)  BEGIN
-	Insert INTO temp_volar (idusu_temp) VALUES(_idusu);
-   	SET lid =  LAST_INSERT_ID();
+CREATE DEFINER=`root`@`localhost` PROCEDURE `registrarReserva` (IN `_idusu` INT, OUT `lid` BIGINT)  BEGIN
+  Insert INTO temp_volar (idusu_temp) VALUES(_idusu);
+    SET lid =  LAST_INSERT_ID();
 END$$
 
-CREATE  PROCEDURE `registrarServicioVta` (IN `servicio` INT, IN `venta` BIGINT, IN `cantidad` INT, OUT `respuesta` VARCHAR(20))  BEGIN 
-	INSERT INTO ventasserv_volar (idserv_vsv,idventa_vsv,cantidad_vsv) VALUES (servicio,venta,cantidad);
+CREATE DEFINER=`root`@`localhost` PROCEDURE `registrarServicioVta` (IN `servicio` INT, IN `venta` BIGINT, IN `cantidad` INT, OUT `respuesta` VARCHAR(20))  BEGIN 
+  INSERT INTO ventasserv_volar (idserv_vsv,idventa_vsv,cantidad_vsv) VALUES (servicio,venta,cantidad);
     SET respuesta = 'Venta Registrada';
 END$$
 
-CREATE  PROCEDURE `registrarUsuario` (IN `idusu` INT, IN `nombre` VARCHAR(200), IN `apellidop` VARCHAR(200), IN `apellidom` VARCHAR(200), IN `depto` INT, IN `puesto` INT, IN `correo` VARCHAR(250), IN `telefono` VARCHAR(14), IN `contrasena` VARCHAR(200), IN `usuario` VARCHAR(200), OUT `respuesta` VARCHAR(20))  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `registrarUsuario` (IN `idusu` INT, IN `nombre` VARCHAR(200), IN `apellidop` VARCHAR(200), IN `apellidom` VARCHAR(200), IN `depto` INT, IN `puesto` INT, IN `correo` VARCHAR(250), IN `telefono` VARCHAR(14), IN `contrasena` VARCHAR(200), IN `usuario` VARCHAR(200), OUT `respuesta` VARCHAR(20))  BEGIN
 IF(SELECT COUNT(id_usu) from volar_usuarios vu where vu.usuario_usu=usuario and vu.status<>0 and id_usu<> idusu)>0 THEN
     SET respuesta='Ya existe el usuario';
-	ELSEIF (idusu='') THEN
-    	INSERT INTO volar_usuarios (nombre_usu,apellidop_usu,apellidom_usu,depto_usu,puesto_usu,correo_usu,telefono_usu,contrasena_usu,usuario_usu)
+  ELSEIF (idusu='') THEN
+      INSERT INTO volar_usuarios (nombre_usu,apellidop_usu,apellidom_usu,depto_usu,puesto_usu,correo_usu,telefono_usu,contrasena_usu,usuario_usu)
         VALUES (nombre,apellidop,apellidom,depto,puesto,correo,telefono,contrasena,usuario);
         SET respuesta ='Agregado';
     ELSEIF(contrasena='') THEN
-    	UPDATE volar_usuarios set nombre_usu=nombre, apellidop_usu=apellidop, apellidom_usu = apellidom, depto_usu=depto, puesto_usu = puesto, correo_usu=correo, telefono_usu=telefono,usuario_usu=usuario 		WHERE id_usu = idusu;
+      UPDATE volar_usuarios set nombre_usu=nombre, apellidop_usu=apellidop, apellidom_usu = apellidom, depto_usu=depto, puesto_usu = puesto, correo_usu=correo, telefono_usu=telefono,usuario_usu=usuario     WHERE id_usu = idusu;
    
         SET respuesta ='Actualizado';
    ELSE
-    	UPDATE volar_usuarios set nombre_usu=nombre, apellidop_usu=apellidop, apellidom_usu = apellidom, depto_usu=depto, puesto_usu = puesto, correo_usu=correo, 					telefono_usu=telefono,contrasena_usu=contrasena,usuario_usu=usuario WHERE id_usu = idusu;
+      UPDATE volar_usuarios set nombre_usu=nombre, apellidop_usu=apellidop, apellidom_usu = apellidom, depto_usu=depto, puesto_usu = puesto, correo_usu=correo,           telefono_usu=telefono,contrasena_usu=contrasena,usuario_usu=usuario WHERE id_usu = idusu;
         SET respuesta ='Actualizado';
     END IF;
 END$$
 
-CREATE  PROCEDURE `registroVenta` (IN `usuario` INT, IN `comentario` TEXT, IN `otroscar1` VARCHAR(250), IN `precio1` DOUBLE(10,2), IN `otroscar2` VARCHAR(250), IN `precio2` DOUBLE(10,2), IN `tipodesc` INT, IN `cantdesc` DOUBLE(10,2), IN `pagoefectivo` DOUBLE(10,2), IN `pagotarjeta` DOUBLE(10,2), IN `total` DOUBLE(10,2), OUT `LID` INT)  BEGIN
-	INSERT INTO ventas_volar (idusu_venta,comentario_venta,otroscar1_venta,precio1_venta,otroscar2_venta,precio2_venta,tipodesc_venta,cantdesc_venta,pagoefectivo_venta,pagotarjeta_venta,total_venta) VALUES (usuario,comentario,otroscar1,precio1,otroscar2,precio2,tipodesc,cantdesc,pagoefectivo,pagotarjeta,total);
-	SET lid = LAST_INSERT_ID();
+CREATE DEFINER=`root`@`localhost` PROCEDURE `registroVenta` (IN `usuario` INT, IN `comentario` TEXT, IN `otroscar1` VARCHAR(250), IN `precio1` DOUBLE(10,2), IN `otroscar2` VARCHAR(250), IN `precio2` DOUBLE(10,2), IN `tipodesc` INT, IN `cantdesc` DOUBLE(10,2), IN `pagoefectivo` DOUBLE(10,2), IN `pagotarjeta` DOUBLE(10,2), IN `total` DOUBLE(10,2), OUT `LID` INT)  BEGIN
+  INSERT INTO ventas_volar (idusu_venta,comentario_venta,otroscar1_venta,precio1_venta,otroscar2_venta,precio2_venta,tipodesc_venta,cantdesc_venta,pagoefectivo_venta,pagotarjeta_venta,total_venta) VALUES (usuario,comentario,otroscar1,precio1,otroscar2,precio2,tipodesc,cantdesc,pagoefectivo,pagotarjeta,total);
+  SET lid = LAST_INSERT_ID();
 END$$
 
-CREATE  PROCEDURE `remplazarReserva` (IN `_reserva` INT, IN `_idusu` INT, OUT `lid` INT)  BEGIN 
-	INSERT INTO temp_volar(
+CREATE DEFINER=`root`@`localhost` PROCEDURE `remplazarReserva` (IN `_reserva` INT, IN `_idusu` INT, OUT `lid` INT)  BEGIN 
+  INSERT INTO temp_volar(
         nombre_temp,
         apellidos_temp,
         mail_temp,
@@ -277,7 +275,7 @@ CREATE  PROCEDURE `remplazarReserva` (IN `_reserva` INT, IN `_idusu` INT, OUT `l
         hora_temp
        FROM temp_volar
        where id_temp =  _reserva ;
-	     SET lid = LAST_INSERT_ID();
+       SET lid = LAST_INSERT_ID();
       IF(SELECT COUNT(id_bp) from bitpagos_volar where idres_bp = _reserva and status <>0 )>0 THEN
         UPDATE temp_volar set status=4 where id_temp = lid;
         UPDATE bitpagos_volar set idres_bp = lid where idres_bp=_reserva and status <>0;
@@ -290,14 +288,14 @@ CREATE  PROCEDURE `remplazarReserva` (IN `_reserva` INT, IN `_idusu` INT, OUT `l
     UPDATE temp_volar set status = 6 where id_temp=_reserva;
 END$$
 
-CREATE  PROCEDURE `remplazarServiciosReservas` (IN `_reserva` BIGINT, IN `_oldReserva` BIGINT)  BEGIN 
-	INSERT INTO servicios_vuelo_temp
-		(idservi_sv,tipo_sv,cantidad_sv,status)
-		SELECT idservi_sv,tipo_sv,cantidad_sv,status from servicios_vuelo_temp where idtemp_sv =_oldReserva;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `remplazarServiciosReservas` (IN `_reserva` BIGINT, IN `_oldReserva` BIGINT)  BEGIN 
+  INSERT INTO servicios_vuelo_temp
+    (idservi_sv,tipo_sv,cantidad_sv,status)
+    SELECT idservi_sv,tipo_sv,cantidad_sv,status from servicios_vuelo_temp where idtemp_sv =_oldReserva;
         UPDATE servicios_vuelo_temp set idtemp_sv = _reserva where idtemp_sv is null;
 END$$
 
-CREATE  PROCEDURE `usuarioLoggeado` (IN `_usuario` VARCHAR(100), IN `_password` VARCHAR(150))  BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `usuarioLoggeado` (IN `_usuario` VARCHAR(100), IN `_password` VARCHAR(150))  BEGIN
  SELECT * 
  FROM volar_usuarios vu
  WHERE vu.usuario_usu=_usuario and vu.contrasena_usu=_password;
@@ -463,8 +461,8 @@ CREATE TABLE `extras_volar` (
 INSERT INTO `extras_volar` (`id_extra`, `abrev_extra`, `nombre_extra`, `clasificacion_extra`, `register`, `status`) VALUES
 (1, 'Ags', 'Aguascalientes', 'estados', '2019-03-31 17:30:30', 0),
 (2, 'Ags', 'Aguascalientes', 'estados', '2019-03-31 17:30:30', 1),
-(3, 'BCN', 'Baja California	', 'estados', '2019-03-31 17:30:30', 1),
-(4, 'BCS.', 'Baja California Sur	', 'estados', '2019-03-31 17:30:30', 1),
+(3, 'BCN', 'Baja California ', 'estados', '2019-03-31 17:30:30', 1),
+(4, 'BCS.', 'Baja California Sur  ', 'estados', '2019-03-31 17:30:30', 1),
 (5, 'Camp.', 'Campeche', 'estados', '2019-03-31 17:30:30', 1),
 (6, 'Chis', 'Chiapas', 'estados', '2019-03-31 17:30:30', 1),
 (7, 'Chih.', 'Chihuahua', 'estados', '2019-03-31 17:30:30', 1),
@@ -472,29 +470,29 @@ INSERT INTO `extras_volar` (`id_extra`, `abrev_extra`, `nombre_extra`, `clasific
 (9, 'Coah', 'Coahuila', 'estados', '2019-03-31 17:30:30', 1),
 (10, 'Col', 'Colima', 'estados', '2019-03-31 17:30:25', 1),
 (11, 'CDMX', 'Ciudad de Mexico', 'estados', '2019-03-31 17:30:33', 1),
-(12, 'Dgo', 'Durango	', 'estados', '2019-03-31 17:30:55', 1),
-(13, 'Gto.', 'Guanajuato	', 'estados', '2019-03-31 17:31:24', 1),
-(14, 'Gro.', 'Guerrero	', 'estados', '2019-03-31 17:32:26', 1),
-(15, 'Hgo.', 'Hidalgo	', 'estados', '2019-03-31 17:33:09', 1),
-(16, 'Jal.', 'Jalisco	', 'estados', '2019-03-31 17:33:33', 1),
-(17, 'EdoMe', 'Mexico	', 'estados', '2019-03-31 17:34:04', 1),
+(12, 'Dgo', 'Durango  ', 'estados', '2019-03-31 17:30:55', 1),
+(13, 'Gto.', 'Guanajuato  ', 'estados', '2019-03-31 17:31:24', 1),
+(14, 'Gro.', 'Guerrero  ', 'estados', '2019-03-31 17:32:26', 1),
+(15, 'Hgo.', 'Hidalgo ', 'estados', '2019-03-31 17:33:09', 1),
+(16, 'Jal.', 'Jalisco ', 'estados', '2019-03-31 17:33:33', 1),
+(17, 'EdoMe', 'Mexico ', 'estados', '2019-03-31 17:34:04', 1),
 (18, 'Mich.', 'Michoacan', 'estados', '2019-03-31 17:34:28', 1),
-(19, 'Mor.', 'Morelos	', 'estados', '2019-03-31 17:34:52', 1),
-(20, 'Nay.', 'Nayarit	', 'estados', '2019-03-31 17:39:19', 1),
-(21, 'NLL.', 'Nuevo León	', 'estados', '2019-03-31 17:40:02', 1),
-(22, 'Oax.', 'Oaxaca	', 'estados', '2019-03-31 17:41:08', 1),
-(23, 'Pue.', 'Puebla	', 'estados', '2019-03-31 17:41:29', 1),
-(24, 'Roo.', 'Quintana Roo	', 'estados', '2019-03-31 17:42:09', 0),
-(25, 'Roo.', 'Quintana Roo	', 'estados', '2019-03-31 17:43:26', 1),
+(19, 'Mor.', 'Morelos ', 'estados', '2019-03-31 17:34:52', 1),
+(20, 'Nay.', 'Nayarit ', 'estados', '2019-03-31 17:39:19', 1),
+(21, 'NLL.', 'Nuevo León  ', 'estados', '2019-03-31 17:40:02', 1),
+(22, 'Oax.', 'Oaxaca  ', 'estados', '2019-03-31 17:41:08', 1),
+(23, 'Pue.', 'Puebla  ', 'estados', '2019-03-31 17:41:29', 1),
+(24, 'Roo.', 'Quintana Roo  ', 'estados', '2019-03-31 17:42:09', 0),
+(25, 'Roo.', 'Quintana Roo  ', 'estados', '2019-03-31 17:43:26', 1),
 (26, 'SLP.', 'San Luis Potosí', 'estados', '2019-03-31 17:43:55', 1),
-(27, 'Sin.', 'Sinaloa	', 'estados', '2019-03-31 17:44:49', 1),
-(28, 'Son.	', 'Sonora	', 'estados', '2019-03-31 17:46:04', 1),
-(29, 'Tab.', 'Tabasco	', 'estados', '2019-03-31 17:46:32', 1),
+(27, 'Sin.', 'Sinaloa ', 'estados', '2019-03-31 17:44:49', 1),
+(28, 'Son.  ', 'Sonora  ', 'estados', '2019-03-31 17:46:04', 1),
+(29, 'Tab.', 'Tabasco ', 'estados', '2019-03-31 17:46:32', 1),
 (30, 'Tamps', 'Tamaulipas', 'estados', '2019-03-31 17:47:34', 1),
-(31, 'Tlx.', 'Tlaxcala	', 'estados', '2019-03-31 17:48:03', 1),
-(32, 'Ver.', 'Veracruz	', 'estados', '2019-03-31 17:48:36', 1),
+(31, 'Tlx.', 'Tlaxcala  ', 'estados', '2019-03-31 17:48:03', 1),
+(32, 'Ver.', 'Veracruz  ', 'estados', '2019-03-31 17:48:36', 1),
 (33, 'Yuc.', 'Yucatan', 'estados', '2019-03-31 17:48:58', 1),
-(34, 'Zac.', 'Zacatecas	', 'estados', '2019-03-31 17:49:21', 1),
+(34, 'Zac.', 'Zacatecas ', 'estados', '2019-03-31 17:49:21', 1),
 (35, 'Ext.', 'Extranjero', 'estados', '2019-03-31 17:50:37', 1),
 (36, 'EXP', 'EXPERIENCIA', 'motivos', '2019-03-31 19:22:54', 1),
 (37, 'ANV', 'ANIVERSARIO', 'motivos', '2019-03-31 19:24:02', 1),
@@ -506,12 +504,12 @@ INSERT INTO `extras_volar` (`id_extra`, `abrev_extra`, `nombre_extra`, `clasific
 (43, 'FV', 'FELIZ VUELO', 'motivos', '2019-03-31 19:33:23', 1),
 (44, 'QSMN', 'QUIERES SER MI NOVI@', 'motivos', '2019-03-31 19:34:25', 1),
 (45, 'TA', 'TE AMO', 'motivos', '2019-03-31 19:34:44', 1),
-(46, 'PRV', 'PRIVADO', 'tiposv', '2019-03-31 19:40:57', 1),
-(47, 'COMP', 'COMPARTIDO BASICO', 'tiposv', '2019-03-31 19:41:23', 1),
+(46, 'PRIV', 'PRIVADO', 'tiposv', '2019-03-31 19:40:57', 1),
+(47, 'COMP', 'COMPARTIDO', 'tiposv', '2019-03-31 19:41:23', 1),
 (48, 'Descr', 'Normal', 'tarifas', '2019-03-31 19:45:02', 0),
 (49, 'Prom.', 'Promoción 1', 'tarifas', '2019-03-31 19:45:44', 0),
 (50, 'Prom', 'Promoción 2', 'tarifas', '2019-03-31 19:46:19', 0),
-(51, 'COMP+', 'COMPARTIDO PLUS', 'tiposv', '2019-04-07 20:34:45', 1),
+(51, 'COMP+', 'COMPARTIDO PLUS', 'tiposv', '2019-04-07 20:34:45', 0),
 (55, 'S/C', 'PAYPAL SRG', 'metodopago', '2019-04-11 21:22:01', 1),
 (56, '4555 1330 0115 1059', 'OXXO VGAP', 'metodopago', '2019-04-11 21:22:01', 1),
 (57, '0191809393', 'TRANSF ELEC VGAP', 'metodopago', '2019-04-11 21:22:01', 1),
@@ -538,8 +536,8 @@ INSERT INTO `extras_volar` (`id_extra`, `abrev_extra`, `nombre_extra`, `clasific
 (81, NULL, 'Sitio', 'metodopago', '2019-08-08 13:58:56', 0),
 (82, NULL, 'Sitio2', 'metodopago', '2019-08-08 13:59:54', 0),
 (83, 'STO', 'SITIO', 'cuentasvolar', '2019-08-08 14:01:31', 1),
-(84, 'PRV V', 'PRIVADO VIP', 'tiposv', '2019-08-12 17:22:55', 1),
-(85, 'COMPC', 'COMPARTIDO CUMPLE', 'tiposv', '2019-08-12 17:25:31', 1),
+(84, 'PRV V', 'PRIVADO VIP', 'tiposv', '2019-08-12 17:22:55', 0),
+(85, 'COMPC', 'COMPARTIDO CUMPLE', 'tiposv', '2019-08-12 17:25:31', 0),
 (86, '4152 3131 3885 3036', 'OXXO SRG BANCOMER', 'metodopago', '2019-08-16 18:55:28', 1),
 (87, '5204 1672 4767 6299', 'OXXO BANAMEX SRG', 'metodopago', '2019-08-16 18:58:20', 1),
 (88, '0010 7525 124', 'SCOTIABANCK ARS', 'cuentasvolar', '2019-08-16 19:03:06', 1),
@@ -944,7 +942,9 @@ INSERT INTO `permisos_volar` (`id_per`, `nombre_per`, `img_per`, `ruta_per`, `re
 (15, 'Servicios', 'servicio.png', 'vistas/servicios/', '2019-08-01 13:34:30', 1),
 (16, 'Ventas', 'ventas.png', 'vistas/ventas/', '2019-08-05 07:20:13', 1),
 (17, 'Gastos', 'pagos.jpg', 'vistas/pagos/', '2019-08-05 07:25:17', 1),
-(18, 'Catalogos', 'catalogo.png', 'vistas/catalogos/', '2019-08-07 00:12:05', 1);
+(18, 'Catalogos', 'catalogo.png', 'vistas/catalogos/', '2019-08-07 00:12:05', 1),
+(19, 'Vuelos', 'globo.png', 'vistas/vuelos/', '2019-08-26 21:48:35', 1),
+(20, 'Hoteles', 'hotel.png', 'vistas/hoteles/', '2019-08-26 21:48:35', 1);
 
 -- --------------------------------------------------------
 
@@ -1608,8 +1608,6 @@ INSERT INTO `vueloscat_volar` (`id_vc`, `nombre_vc`, `tipo_vc`, `precioa_vc`, `p
 (3, 'Compartido Promo 2', 47, '1950.00', '1500.00', '2019-04-05 11:04:31', 1),
 (4, 'Privado Normal', 46, '3500.00', '1700.00', '2019-04-05 11:28:14', 1),
 (5, 'Privado Promo 1', 46, '3000.00', '1600.00', '2019-04-05 11:28:53', 1),
-(14, ' preuba', 47, '43.00', '22.00', '2019-04-09 12:52:38', 0),
-(15, ' prueba35', 47, '3.00', '2.00', '2019-04-09 12:56:06', 0),
 (16, ' Privado Promo 2', 46, '2750.00', '1500.00', '2019-06-05 23:06:53', 1);
 
 --
@@ -1768,140 +1766,116 @@ ALTER TABLE `vueloscat_volar`
 --
 ALTER TABLE `bitacora_actualizaciones_volar`
   MODIFY `id_bit` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave Primaria', AUTO_INCREMENT=8;
-
 --
 -- AUTO_INCREMENT de la tabla `bitpagos_volar`
 --
 ALTER TABLE `bitpagos_volar`
   MODIFY `id_bp` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave Primaria', AUTO_INCREMENT=16;
-
 --
 -- AUTO_INCREMENT de la tabla `cat_servicios_volar`
 --
 ALTER TABLE `cat_servicios_volar`
   MODIFY `id_cat` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave Primaria', AUTO_INCREMENT=17;
-
 --
 -- AUTO_INCREMENT de la tabla `departamentos_volar`
 --
 ALTER TABLE `departamentos_volar`
   MODIFY `id_depto` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave Primaria', AUTO_INCREMENT=9;
-
 --
 -- AUTO_INCREMENT de la tabla `extras_volar`
 --
 ALTER TABLE `extras_volar`
   MODIFY `id_extra` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave Primaria', AUTO_INCREMENT=92;
-
 --
 -- AUTO_INCREMENT de la tabla `gastos_volar`
 --
 ALTER TABLE `gastos_volar`
   MODIFY `id_gasto` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave Primaria', AUTO_INCREMENT=4;
-
 --
 -- AUTO_INCREMENT de la tabla `globos_volar`
 --
 ALTER TABLE `globos_volar`
   MODIFY `id_globo` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave Primaria', AUTO_INCREMENT=21;
-
 --
 -- AUTO_INCREMENT de la tabla `habitaciones_volar`
 --
 ALTER TABLE `habitaciones_volar`
   MODIFY `id_habitacion` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave Primaria', AUTO_INCREMENT=20;
-
 --
 -- AUTO_INCREMENT de la tabla `hoteles_volar`
 --
 ALTER TABLE `hoteles_volar`
   MODIFY `id_hotel` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave Primaria', AUTO_INCREMENT=7;
-
 --
 -- AUTO_INCREMENT de la tabla `imghoteles_volar`
 --
 ALTER TABLE `imghoteles_volar`
   MODIFY `id_img` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave Primaria';
-
 --
 -- AUTO_INCREMENT de la tabla `permisosusuarios_volar`
 --
 ALTER TABLE `permisosusuarios_volar`
   MODIFY `id_puv` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave Primaria', AUTO_INCREMENT=379;
-
 --
 -- AUTO_INCREMENT de la tabla `permisos_volar`
 --
 ALTER TABLE `permisos_volar`
-  MODIFY `id_per` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave Primaria', AUTO_INCREMENT=19;
-
+  MODIFY `id_per` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave Primaria', AUTO_INCREMENT=21;
 --
 -- AUTO_INCREMENT de la tabla `puestos_volar`
 --
 ALTER TABLE `puestos_volar`
   MODIFY `id_puesto` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave Primaria', AUTO_INCREMENT=21;
-
 --
 -- AUTO_INCREMENT de la tabla `relacion_permisos`
 --
 ALTER TABLE `relacion_permisos`
   MODIFY `id_rel` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave Primaria', AUTO_INCREMENT=17;
-
 --
 -- AUTO_INCREMENT de la tabla `rel_catvuelos_volar`
 --
 ALTER TABLE `rel_catvuelos_volar`
   MODIFY `id_rel` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave Primaria', AUTO_INCREMENT=79;
-
 --
 -- AUTO_INCREMENT de la tabla `servicios_volar`
 --
 ALTER TABLE `servicios_volar`
   MODIFY `id_servicio` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave Primaria', AUTO_INCREMENT=39;
-
 --
 -- AUTO_INCREMENT de la tabla `servicios_vuelo_temp`
 --
 ALTER TABLE `servicios_vuelo_temp`
   MODIFY `id_sv` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave Primaria', AUTO_INCREMENT=2416;
-
 --
 -- AUTO_INCREMENT de la tabla `subpermisos_volar`
 --
 ALTER TABLE `subpermisos_volar`
   MODIFY `id_sp` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave Primaria', AUTO_INCREMENT=74;
-
 --
 -- AUTO_INCREMENT de la tabla `temp_volar`
 --
 ALTER TABLE `temp_volar`
   MODIFY `id_temp` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave Primaria', AUTO_INCREMENT=1250;
-
 --
 -- AUTO_INCREMENT de la tabla `ventasserv_volar`
 --
 ALTER TABLE `ventasserv_volar`
   MODIFY `id_vsv` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave Primaria', AUTO_INCREMENT=11;
-
 --
 -- AUTO_INCREMENT de la tabla `ventas_volar`
 --
 ALTER TABLE `ventas_volar`
   MODIFY `id_venta` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave Primaria', AUTO_INCREMENT=12;
-
 --
 -- AUTO_INCREMENT de la tabla `volar_usuarios`
 --
 ALTER TABLE `volar_usuarios`
   MODIFY `id_usu` int(4) NOT NULL AUTO_INCREMENT COMMENT 'Llave Primaria', AUTO_INCREMENT=16;
-
 --
 -- AUTO_INCREMENT de la tabla `vueloscat_volar`
 --
 ALTER TABLE `vueloscat_volar`
   MODIFY `id_vc` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave Primaria', AUTO_INCREMENT=17;
-COMMIT;
-
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
