@@ -20,16 +20,22 @@
 		$cp = $_POST['cp'];
 		$telefono = $_POST['telefono'];
 		$telefono2 = $_POST['telefono2'];
-		$registro=$con->insertar($tabla,"nombre_vc,tipo_vc,precioa_vc,precion_vc","'".$nombre."', ".$tipo.",".$precioa.",".$precion);
+		$campos ='nombre_hotel,calle_hotel,noint_hotel,noext_hotel,colonia_hotel,municipio_hotel,estado_hotel,cp_hotel,telefono_hotel,telefono2_hotel';
+		$registro=$con->insertar($tabla,$campos,"'".$nombre."', ".$tipo.",".$precioa.",".$precion);
 		if ($registro=='ok'){
 			$registro='Agregado';
 		}
 		echo $registro;
 	}elseif(isset($_POST['accion']) && $_POST['accion']=='editar'){	
 		$nombre = $_POST['nombre'];
-		$tipo = $_POST['tipo'];
-		$precioa = $_POST['precioa'];
-		$precion = $_POST['precion'];
+		$calle = $_POST['calle'];
+		$noint = $_POST['noint'];
+		$colonia = $_POST['colonia'];
+		$municipio = $_POST['municipio'];
+		$estado = $_POST['estado'];
+		$cp = $_POST['cp'];
+		$telefono = $_POST['telefono'];
+		$telefono2 = $_POST['telefono2'];
 		$id = $_POST['id'];
 		$campos = "nombre_vc='".$nombre."', tipo_vc=".$tipo.",precioa_vc=".$precioa.",precion_vc=".$precion;
 		$actualizar=$con->actualizar($tabla,$campos, " id_vc=".$id);
