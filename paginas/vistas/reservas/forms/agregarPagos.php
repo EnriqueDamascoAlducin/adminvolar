@@ -10,6 +10,17 @@
 
 	$pagos = $con->consulta("CONCAT(nombre_usu,' ',apellidop_usu) as usuario, referencia_bp as referencia, cantidad_bp as cantidad,fecha_bp as fecha, bp.status as stat,id_bp as id","bitpagos_volar bp INNER JOIN volar_usuarios vu  ON bp.idreg_bp=vu.id_usu","bp.status<>0 and idres_bp=".$reserva);
 ?>
+<style type="text/css">
+	
+	@media (max-width: 576){
+		.tableTh{
+			font-size: 50%;
+		}
+		.tableTd{
+			font-size: 60%;
+		}
+	}
+</style>
 <div class="row">
 	<div class="col-sm-3 col-lg-3 col-md-3 col-6 col-xl-3 ">
 		<div class="form-group">
@@ -65,10 +76,10 @@
 	<table class="table "  id="DataTable" style="max-width: 100%;width: 100%;" >
 		<thead>
 			<!--<th>Usuario</th>-->
-			<th  style="max-width: 20%;font-size: 60%;">Referencia</th>
-			<th style="max-width: 20%;font-size: 60%;">Cantidad</th>
-			<th style="max-width: 20%;font-size: 60%;">Fecha</th>
-			<th style="max-width: 20%;font-size: 60%;">Acciones</th>
+			<th  class="tableTh">Referencia</th>
+			<th class="tableTh">Cantidad</th>
+			<th class="tableTh">Fecha</th>
+			<th class="tableTh">Acciones</th>
 		</thead>
 		<tbody>
 			<?php
@@ -78,16 +89,16 @@
 					<!--<td>
 						<?php echo $pago->usuario; ?>
 					</td>-->
-					<td  style="max-width: 20%;font-size: 60%;">
+					<td  class="tableTd">
 						<?php echo $pago->referencia; ?>
 					</td>
-					<td  style="max-width: 20%;font-size: 60%;">
+					<td  class="tableTd">
 						<?php echo $pago->cantidad; ?>
 					</td>
-					<td  style="max-width: 20%;font-size: 60%;">
+					<td  class="tableTd">
 						<?php echo $pago->fecha; ?>
 					</td>
-					<td  style="max-width: 20%;font-size: 60%;">
+					<td  class="tableTd">
 						<!-- 4 es cuando solo se ha agregado el pago y no ha sido conciliado -->
 						<!-- 3 ya ha sido conciliado -->
 						<!-- 2 enviado al cliente sin cupon -->

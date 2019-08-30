@@ -83,6 +83,7 @@ function confirmarAgregar(id,accion){
 		method: "POST",
   		data: parametros,
   		success:function(response){
+  				abrir_gritter("Eliminado",  response  ,"success");
   			if(response=='Agregado' || response=='Actualizado' ){
   				abrir_gritter("Eliminado",  " Departamento "  ,"success");
 				cargarTabla();

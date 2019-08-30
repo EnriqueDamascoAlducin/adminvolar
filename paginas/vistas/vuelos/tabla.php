@@ -3,7 +3,7 @@
 	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/controladores/conexion.php';
 	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/controladores/fin_session.php';
 	$modulo= $_POST['modulo'];
-	$campos= "nombre_vc,nombre_extra,precioa_vc,precion_vc";
+	$campos= "nombre_vc,nombre_extra,precioa_vc,precion_vc,id_vc ";
 	$tabla = " vueloscat_volar vcv INNER JOIN extras_volar on tipo_vc = id_extra ";
 	$filtro = " vcv.status<>0";
 	$usuario= unserialize((base64_decode($_SESSION['usuario'])));
@@ -14,7 +14,7 @@
 	}
 	$vuelos=$con->consulta($campos,$tabla,$filtro);	
 ?>
-<table class=" table table-striped table-bordered table-hover" id="dataTable">
+<table class=" table table-striped table-bordered table-hover  DataTable" id="">
 	<thead>
 		<tr>
 			<th style="text-align: center;vertical-align: middle;max-width: 1%;width: 1%;">Nombre</th>
@@ -39,11 +39,11 @@
 					<!--========       Eliminar     ========= -->
 					
 					<?php if( in_array("EDITAR", $permisos)){ ?>
-						<i class="fa fa-pencil-square fa-md" style="color:#33b5e5" title="Editar"  onclick="accionusuarios('editar', <?php echo $usuarios->id; ?>)"></i>
+						<i class="fa fa-pencil-square fa-md" style="color:#33b5e5" title="Editar" data-toggle="modal" data-target="#modal"  onclick="acciones('editar', <?php echo $vuelo->id_vc; ?>)"></i>
 					<?php  } ?>
 					<!--========       Eliminar     ========= -->
 					<?php if( in_array("ELIMINAR", $permisos)){ ?>
-						<i class="fa fa-trash-o fa-md" style="color:#ff4444" title="Eliminar" data-toggle="modal" data-target="#modal"  onclick="eliminarusuarios( <?php echo $usuarios->id; ?>,'<?php echo $usuarios->nombre;  ?>')" ></i>
+						<i class="fa fa-trash-o fa-md" style="color:#ff4444" title="Eliminar" data-toggle="modal" data-target="#modal"  onclick="eliminar( <?php echo $vuelo->id_vc; ?>,'<?php echo $vuelo->nombre_vc;  ?>')" ></i>
 					<?php } ?>
 				</td>
 			</tr>
@@ -57,6 +57,6 @@
 
 
 <script type="text/javascript">
-	$("#dataTable").DataTable().destroy();
-	$("#dataTable").DataTable();
+	
+tables(1,"asc");
 </script>

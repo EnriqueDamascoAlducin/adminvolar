@@ -7,30 +7,42 @@
 	$reserva=$_POST['reserva'];
 	$pagos = $con->consulta("CONCAT(nombre_usu,' ',apellidop_usu) as usuario, referencia_bp as referencia, cantidad_bp as cantidad,fecha_bp as fecha, bp.status as stat,id_bp as id","bitpagos_volar bp INNER JOIN volar_usuarios vu  ON bp.idreg_bp=vu.id_usu","bp.status<>0 and idres_bp=".$reserva);
 ?>
+<style type="text/css">
+	
+	@media (max-width: 576){
+		.tableTh{
+			font-size: 50%;
+		}
+		.tableTd{
+			font-size: 60%;
+		}
+	}
+</style>
+
 <div class="col-6 col-md-12 col-sm-12 col-md-12 col-xl-12">
 <?php if(sizeof($pagos)>0){ ?>
 	<table class="table "  id="DataTable" style="max-width: 100%;width: 100%;" >
 		<thead>
-			<th style="max-width: 20%; font-size: 50%">Referencia</th>
-			<th style="max-width: 20%; font-size: 50%">Cantidad</th>
-			<th style="max-width: 20%; font-size: 50%">Fecha</th>
-			<th style="max-width: 20%; font-size: 50%">Acciones</th>
+			<th class="tableTh">Referencia</th>
+			<th class="tableTh">Cantidad</th>
+			<th class="tableTh">Fecha</th>
+			<th class="tableTh">Acciones</th>
 		</thead>
 		<tbody>
 			<?php
 				foreach ($pagos as $pago) {
 			?>
 				<tr>
-					<td style="max-width: 20%; font-size: 60%">
+					<td class="tableTd">
 						<?php echo trim($pago->referencia); ?>
 					</td>
-					<td style="max-width: 20%; font-size: 60%">
+					<td class="tableTd">
 						<?php echo trim($pago->cantidad); ?>
 					</td>
-					<td style="max-width: 20%; font-size: 60%">
+					<td class="tableTd">
 						<?php echo trim($pago->fecha); ?>
 					</td>
-					<td style="max-width: 20%;">
+					<td class="tableTd">
 						<!-- 4 es cuando solo se ha agregado el pago y no ha sido conciliado -->
 						<!-- 3 ya ha sido conciliado -->
 						<!-- 2 enviado al cliente sin cupon -->

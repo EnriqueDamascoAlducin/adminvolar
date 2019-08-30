@@ -13,7 +13,7 @@ function cargarTabla(){
 	nombre = $("#nombre").val();
 	modulo = $("#modulo").val();
 
-	url="vistas/vuelos/tabla.php";
+	url="vistas/hoteles/tabla.php";
 	parametros={fechaI:fechaI,fechaF:fechaF,empleado:empleado,nombre:nombre,modulo:modulo};
   	$.ajax({
 		url:url,
@@ -49,7 +49,7 @@ function eliminar(id, nombre){
 }
 function confirmarEliminar(id,nombre){
 	$.ajax({
-		url:'controladores/vuelosController.php',
+		url:'controladores/hotelesController.php',
 		method: "POST",
   		data: {id:id,accion:'cancelar'},
   		success:function(response){
@@ -88,7 +88,7 @@ function agregar(id,accion){
 		$("#DivBtnModal").append('<button autofocus   type="button" id="btnAgregar" class="btn btn-info" onclick=\'confirmarAgregar('+idA+',"'+accion+'")\' >Actualizar</button>');
 	
 	$("#btnAgregar"+idA).focus();
-	url="vistas/vuelos/forms/";
+	url="vistas/hoteles/forms/";
 	parametros={id:id};
   	$.ajax({
 		url:url,
@@ -165,3 +165,4 @@ function confirmarAgregar(id,accion){
 	$("#cuerpoModal").html("");
 	agregar(id,accion)
 }
+tables(1,"desc");

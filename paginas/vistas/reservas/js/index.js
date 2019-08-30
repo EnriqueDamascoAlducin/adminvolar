@@ -96,14 +96,7 @@ function confirmarEliminar(reserva,url,idModulo){
 		  }
 	});
 }
-function cambiarTamanoModal(modal,tamano,accion){
-	if(accion=='agregar'){
-		$("#"+modal).addClass("modal-"+tamano);
-	}else if(accion=='resetear'){
-		$("#"+modal).removeClass("modal-"+tamano);
-		$("#"+modal).removeClass("modal-md");
-	}
-}
+
 function confirmarAgregarPago(reserva,cliente){
 	metodo=$("#metodo").val().trim();
 	banco=$("#banco").val().trim();

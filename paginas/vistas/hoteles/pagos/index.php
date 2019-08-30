@@ -16,7 +16,7 @@
 	}
 ?>	
 <?php if(in_array("AGREGAR", $permisos)){ ?>
-	<div class="alert alert-info" data-toggle="modal" data-target="#modal"  onclick="acciones('agregar', <?php echo $usuario->getIdUsu(); ?>)">
+	<div class="alert alert-info" data-toggle="modal" data-target="#modal"  onclick="accionGastos('agregar', <?php echo $usuario->getIdUsu(); ?>)">
 	  <strong><i class="fa fa-plus fa-md"></i></strong> Agregar.
 	</div>
 <?php } ?>
@@ -69,4 +69,4 @@
     </div>
   </div>
 </div>
-<script type="text/javascript" src="vistas/vuelos/js/index.js"></script>
+<script type="text/javascript" src="vistas/pagos/js/index.js"></script>

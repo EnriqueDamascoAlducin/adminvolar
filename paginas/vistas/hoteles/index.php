@@ -27,7 +27,7 @@
 <input type="hidden" id="modulo" value="<?php echo $modulo; ?>">
 
 <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-md" id="modalSize" role="dialog">
+  <div class="modal-dialog modal-dialog-centered modal-lg" id="modalSize" role="dialog">
     <div class="modal-content ">
       <div class="modal-header">
         <h5 class="modal-title" id="tituloModal"></h5>
@@ -69,4 +69,4 @@
     </div>
   </div>
 </div>
-<script type="text/javascript" src="vistas/vuelos/js/index.js"></script>
+<script type="text/javascript" src="vistas/hoteles/js/index.js"></script>

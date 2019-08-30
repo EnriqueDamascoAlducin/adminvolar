@@ -7,7 +7,14 @@ function abrir_gritter(titulo,texto, clase){
       class_name: 'gritter gritter-'+clase
   });
 } 
-
+function cambiarTamanoModal(modal,tamano,accion){
+	if(accion=='agregar'){
+		$("#"+modal).addClass("modal-"+tamano);
+	}else if(accion=='resetear'){
+		$("#"+modal).removeClass("modal-"+tamano);
+		$("#"+modal).removeClass("modal-md");
+	}
+}
 function abrirPagina(url,id){
 	parametros={id:id};
 	$("#contenedor").empty();
