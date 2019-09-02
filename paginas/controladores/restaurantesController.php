@@ -57,6 +57,42 @@
 			$actualizar='Actualizado';
 		}
 		echo $actualizar;
+		/*
+INSERT INTO restaurantes_volar (
+nombre_restaurant,
+calle_restaurant,
+noint_restaurant,
+noext_restaurant,
+colonia_restaurant, 
+municipio_restaurant,
+estado_restaurant,
+cp_restaurant,
+telefono_restaurant,
+telefono2_restaurant,
+correo_restaurant,
+img_restaurant,
+pagina_restaurant,
+precion_restaurant,
+precioa_restaurant
+) select 'Prueba',
+		calle_hotel,
+		noint_hotel,
+		noext_hotel,
+		colonia_hotel, 
+		municipio_hotel,
+		estado_hotel,
+		cp_hotel,
+		telefono_hotel,
+		telefono2_hotel,
+		correo_hotel,
+		img_hotel,
+		pagina_hotel,
+		150.30,
+		100.20
+	from hoteles_volar
+	where id_hotel=1
+;
+		*/
 	}
 		
 	
