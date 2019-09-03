@@ -15,6 +15,14 @@ function cambiarTamanoModal(modal,tamano,accion){
 		$("#"+modal).removeClass("modal-md");
 	}
 }
+
+function isNumber(event){
+	var iKeyCode = (event.which) ? event.which : event.keyCode
+    if (iKeyCode != 46 && iKeyCode > 31 && (iKeyCode < 48 || iKeyCode > 57))
+        return false;
+
+    return true;
+}
 function abrirPagina(url,id){
 	parametros={id:id};
 	$("#contenedor").empty();
@@ -79,3 +87,13 @@ function tables(filas,forma){
 $('.modal').on('hidden.bs.modal', function () {
   $(".modal-body").html('');
 })
+
+
+function isNumberPositiveInt(event){
+	var iKeyCode = (event.which) ? event.which : event.keyCode
+	
+    if (iKeyCode == 46 || iKeyCode == 45 || iKeyCode == 43 || iKeyCode == 42 || iKeyCode == 47  || iKeyCode == 101 && iKeyCode > 31 && (iKeyCode < 48 || iKeyCode > 57))
+        return false;
+
+    return true;
+}

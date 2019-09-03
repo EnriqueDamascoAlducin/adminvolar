@@ -18,11 +18,16 @@
 						
 						<input type="number" min="0" onblur="validarValor(this.id)" onkeypress="return isNumber(event);" name="cantidad_<?php echo $servicio->id; ?>" id="cantidad_<?php echo $servicio->id; ?>" style="max-width: 60%;border-color: black!important;border-width: 1px!important;border-style: ridge!important;" value="0" >
 						<button style="max-width: 20%;" class="btn-info btn-sm" onclick="aumentar(<?php echo $servicio->id ?>)"><i class="fa fa-plus"></i></button>
-						<?php } else{
+						<?php } else{ 
 								$parametros = $_POST['id'].','.$servicio->id.',@respuesta';
 								$con->query("CALL getServiciosXVta(".$parametros.")");
 								$respuesta = $con->query("SELECT @respuesta as respuesta")->fetchALL (PDO::FETCH_OBJ);
 								echo $respuesta[0]->respuesta;
+						?>
+
+
+						<input type="number" min="0" onblur="validarValor(this.id)" onkeypress="return isNumber(event);" name="cantidad_<?php echo $servicio->id; ?>" id="cantidad_<?php echo $servicio->id; ?>" style="max-width: 60%;border-color: black!important;border-width: 1px!important;border-style: ridge!important;display:none;" value="<?php echo $respuesta[0]->respuesta; ?>" >
+						<?php 
 						} ?>
 					</div>
 				</div>

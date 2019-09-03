@@ -27,7 +27,7 @@
 			if($filtro!=""){
 				$where = " Where ".$filtro;
 			}
-			$sql= "Select ". $campos ." From ". $tabla ."". $where;
+			$sql= "Select ". $campos ." From ". $tabla ."". $where ;
 			$data= $this->con->query($sql)->fetchALL (PDO::FETCH_OBJ);
 			return $data;
 		}

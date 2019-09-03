@@ -30,8 +30,8 @@
 			foreach ($hoteles as $hotel) {
 		?>
 			<tr>
-				<td><?php echo utf8_encode($hotel->nombre); ?></td>
-				<td><?php echo utf8_encode($hotel->direccion); ?></td>
+				<td><?php echo ($hotel->nombre); ?></td>
+				<td><?php echo ($hotel->direccion); ?></td>
 				<td><?php echo $hotel->telefonos; ?></td>
 				<td><?php echo $hotel->correo; ?></td>
 				<td>
@@ -43,7 +43,11 @@
 					<?php  } ?>
 					<!--========       Eliminar     ========= -->
 					<?php if( in_array("ELIMINAR", $permisos)){ ?>
-						<i class="fa fa-trash-o fa-md" style="color:#ff4444" title="Eliminar" data-toggle="modal" data-target="#modal"  onclick="eliminar( <?php echo $hotel->id; ?>,'<?php echo utf8_encode($hotel->nombre);  ?>')" ></i>
+						<i class="fa fa-trash-o fa-md" style="color:#ff4444" title="Eliminar" data-toggle="modal" data-target="#modal"  onclick="eliminar( <?php echo $hotel->id; ?>,'<?php echo ($hotel->nombre);  ?>')" ></i>
+					<?php } ?>
+					<!--========       HABITACIONES     ========= -->
+					<?php if( in_array("HABITACIONES", $permisos)){ ?>
+						<i class="fa fa-bed fa-md" style="color:#aa66cc" title="Habitaciones" data-toggle="modal" data-target="#modal"  onclick="habitaciones( <?php echo $hotel->id; ?>,'<?php echo ($hotel->nombre);  ?>','')" ></i>
 					<?php } ?>
 				</td>
 			</tr>

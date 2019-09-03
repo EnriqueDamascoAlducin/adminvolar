@@ -15,7 +15,7 @@
 	<div class="col-sm-4 col-lg-4 col-md-4 col-6 col-xl-4 ">
 		<div class="form-group">
 			<label for="nombre">Nombre</label>
-			<input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre" value="<?php if(isset($hotel)){echo utf8_encode($hotel[0]->nombre_hotel);} ?>" >
+			<input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre" value="<?php if(isset($hotel)){echo ($hotel[0]->nombre_hotel);} ?>" >
 		</div>
 	</div>
 	<div class="col-sm-4 col-lg-4 col-md-4 col-6 col-xl-4 ">
@@ -39,13 +39,13 @@
 	<div class="col-sm-4 col-lg-4 col-md-4 col-6 col-xl-4 ">
 		<div class="form-group">
 			<label for="colonia">Colonia</label>
-			<input type="text" class="form-control" id="colonia" name="colonia" placeholder="Colonia" value="<?php if(isset($hotel)){echo utf8_encode($hotel[0]->colonia_hotel);} ?>" >
+			<input type="text" class="form-control" id="colonia" name="colonia" placeholder="Colonia" value="<?php if(isset($hotel)){echo ($hotel[0]->colonia_hotel);} ?>" >
 		</div>
 	</div>
 	<div class="col-sm-4 col-lg-4 col-md-4 col-6 col-xl-4 ">
 		<div class="form-group">
 			<label for="municipio">Municipio</label>
-			<input type="text" class="form-control" id="municipio" name="municipio" placeholder="Municipio" value="<?php if(isset($hotel)){echo utf8_encode($hotel[0]->municipio_hotel);} ?>" >
+			<input type="text" class="form-control" id="municipio" name="municipio" placeholder="Municipio" value="<?php if(isset($hotel)){echo ($hotel[0]->municipio_hotel);} ?>" >
 		</div>
 	</div>
 	<div class="col-sm-4 col-lg-4 col-md-4 col-6 col-xl-4 ">
@@ -59,7 +59,7 @@
 						if($estado->value == $hotel[0]->estado_hotel){
 							$opcEstado="selected";
 						}
-						echo "<option value='".$estado->value."' ".$opcTipo.">".utf8_encode($estado->text)."</option>";
+						echo "<option value='".$estado->value."' ".$opcEstado.">".($estado->text)."</option>";
 					}
 				?>
 				
@@ -75,13 +75,13 @@
 	<div class="col-sm-5 col-lg-5 col-md-5 col-6 col-xl-5 ">
 		<div class="form-group">
 			<label for="telefono">Telefono</label>
-			<input type="number" min="0" class="form-control" id="telefono" name="telefono" placeholder="Telefono"  value="<?php if(isset($hotel)){echo $hotel[0]->telefono_vc;} ?>"  >
+			<input type="number" min="0" class="form-control" id="telefono" name="telefono" placeholder="Telefono"  value="<?php if(isset($hotel)){echo $hotel[0]->telefono_hotel;} ?>"  >
 		</div>
 	</div>
 	<div class="col-sm-5 col-lg-5 col-md-5 col-6 col-xl-5 ">
 		<div class="form-group">
 			<label for="telefono2">Telefono 2</label>
-			<input type="number" min="0" class="form-control" id="telefono2" name="telefono2" placeholder="Telefono"  value="<?php if(isset($hotel)){echo $hotel[0]->telefono2_vc;} ?>"  >
+			<input type="number" min="0" class="form-control" id="telefono2" name="telefono2" placeholder="Telefono"  value="<?php if(isset($hotel)){echo $hotel[0]->telefono2_hotel;} ?>"  >
 		</div>
 	</div>
 </div>

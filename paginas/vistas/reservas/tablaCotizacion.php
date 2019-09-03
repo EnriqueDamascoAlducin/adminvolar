@@ -178,7 +178,7 @@
 								<?php if($servicioReserva->tipo==1){ ?>
 									<td>
 										<?php 
-											if ($servicioReserva->cantmax == 0){
+											if ($servicioReserva->cantmax == 1){
 												$totalReserva +=($totalPasajeros * $servicioReserva->precio);
 												echo number_format( ( $servicioReserva->precio ) , 2, '.', ',')."x".$tPasajeros ."=".($totalPasajeros * $servicioReserva->precio) ;
 											}else{

@@ -297,6 +297,8 @@
 					  				foreach ($servis as $servi) {
 					  					if(strlen($servi)>2){
 						  					echo substr($servi, 0, 11).'<br>';
+						  				}else{
+						  					echo $servi;
 						  				}
 					  				}
 						  			echo '('.number_format($servicio->precio_servicio, 2, '.', ',').')';

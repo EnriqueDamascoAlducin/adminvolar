@@ -140,7 +140,7 @@
 	$cuerpo.=					'<thead>';
 	$cuerpo.=						'<tr>';
 	$cuerpo.=							'<th class="tdtitulo" colspan="2">';
-	$cuerpo.=								'Resserva No.'. $reserva;
+	$cuerpo.=								'Reserva No.'. $reserva;
 	$cuerpo.=							'</th>';
 	$cuerpo.=						'</tr>';
 	$cuerpo.=					'</thead>';
@@ -173,7 +173,7 @@
 	} 
 	if($datosReserva[0]->motivo!=''){ 
 		$cuerpo.=						'<tr>';
-		$cuerpo.=							'<td class="tdtitulo">Comentario</td>';
+		$cuerpo.=							'<td class="tdtitulo">Motivo</td>';
 		$cuerpo.=							'<td>'. $datosReserva[0]->motivo.'</td>';
 		$cuerpo.=						'</tr>';
 	} 
@@ -203,7 +203,7 @@
 			$cuerpo.=					'<td class="tdtitulo">'. $servicioReserva->servicio .'</td>';
 			if($servicioReserva->tipo==1){
 				$cuerpo.=				'<td>';
-				if ($servicioReserva->cantmax == 0){
+				if ($servicioReserva->cantmax == 1){
 					$totalReserva +=($totalPasajeros * $servicioReserva->precio );
 					$cuerpo.=				number_format( ($servicioReserva->precio ) , 2, '.', ',')."x".$tPasajeros."=".($totalPasajeros * $servicioReserva->precio );
 				}else{
@@ -254,7 +254,7 @@
 	$cuerpo.=						'<tr>';
 	$cuerpo.=							'<td class="tdtotal">Total</td>';
 	$cuerpo.=							'<td> $'.number_format($totalReserva, 2, '.', ',') .'</td>';
-	$cuerpo.=						'<tr>';
+	$cuerpo.=						'</tr>';
 
 	$cuerpo.=						'<tr>';
 	$cuerpo.=							'<td class="" colspan="2">A partir de 6:00 AM los esperamos en nuestra recepción, sin embargo esta hora sera CONFIRMADA UN DIA ANTES de acuerdo a la logística de operación del día o a las condiciones meteorológicas, te pido estés al tanto ya que recibirás una llamada para confirmar horario</td>';
@@ -334,7 +334,7 @@ Recepción Volar en Globo, Aventura y Publicidad SA de CV. Esquina Francisco Vil
 	}
 	$cuerpo.=			'<p style="font-size:14px">Para mas información por favor contactate con tu vendedor</p>';
 	$cuerpo.=			'<b>'.$vendedor[0].'</b><br>';
-	$cuerpo.=			'<i>'.$vendedor[1].'-'.$vendedor[2].'</i>';
+	$cuerpo.=			'<i>'.$vendedor[1].'<br>'.$vendedor[2].'</i>';
 	$cuerpo.=		'</body>';
 	$cuerpo.=	'</html>';
 	//echo $cuerpo;

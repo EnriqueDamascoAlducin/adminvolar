@@ -127,7 +127,7 @@
 	$cuerpo.=					'<thead>';
 	$cuerpo.=						'<tr>';
 	$cuerpo.=							'<th class="tdtitulo" colspan="2">';
-	$cuerpo.=								'Resserva No.'. $reserva;
+	$cuerpo.=								'Reserva No.'. $reserva;
 	$cuerpo.=							'</th>';
 	$cuerpo.=						'</tr>';
 	$cuerpo.=					'</thead>';
@@ -162,6 +162,13 @@
 		$cuerpo.=							'<td>'. $datosReserva[0]->comentario.'</td>';
 		$cuerpo.=						'</tr>';
 	} 
+	if($datosReserva[0]->motivo!=''){ 
+		$cuerpo.=						'<tr>';
+		$cuerpo.=							'<td class="tdtitulo">Motivo</td>';
+		$cuerpo.=							'<td>'. $datosReserva[0]->motivo.'</td>';
+		$cuerpo.=						'</tr>';
+	} 
+
 	if($datosReserva[0]->otroscar1!=''){
 		$cuerpo.=					'<tr>';
 		$cuerpo.=						'<td class="tdtitulo">'. $datosReserva[0]->otroscar1. '</td>';
@@ -183,7 +190,7 @@
 			$cuerpo.=					'<td class="tdtitulo">'. $servicioReserva->servicio .'</td>';
 			if($servicioReserva->tipo==1){
 				$cuerpo.=				'<td>';
-				if ($servicioReserva->cantmax == 0){
+				if ($servicioReserva->cantmax == 1){
 					$totalReserva +=($totalPasajeros * $servicioReserva->precio );
 					$cuerpo.=				number_format( ($servicioReserva->precio ) , 2, '.', ',')."x".$tPasajeros."=".($totalPasajeros * $servicioReserva->precio );
 				}else{
@@ -224,7 +231,32 @@
 	$cuerpo.=						'<tr>';
 	$cuerpo.=							'<td class="tdtotal">Total</td>';
 	$cuerpo.=							'<td> $'.number_format($totalReserva, 2, '.', ',') .'</td>';
+	$cuerpo.=						'</tr>';
+
 	$cuerpo.=						'<tr>';
+	$cuerpo.=							'<td colspan="2">IMPORTANTE: Notificar vía telefónica o por mail tu depósito para poderte enviar la RESERVACION e itinerario del vuelo. Si te surgen dudas llámanos o escríbenos a nuestro correo electrónico</td>';
+	$cuerpo.=						'</tr>';
+	$cuerpo.=						'<tr>';
+	$cuerpo.=							'<td colspan="2">Tu cotización es válida por un período de 30 días desde la fecha de envío</td>';
+	$cuerpo.=						'</tr>';
+	$cuerpo.=						'<tr>';
+	$cuerpo.=							'<td colspan="2">';
+	$cuerpo.=								'<ol type="1">
+												<li>Restricciones:</li>
+												<ul>
+													<li>Ni&ntilde;os menores a 4 a&ntilde;os.</li>
+													<li>Si ha padecido del corazón.</li>
+													<li>Si tiene una cirugia reciente.</li>
+													<li>Lastimada de la columna.</li>
+													<li>Mujeres embarazadas.</li>
+													<li>No se puede abordar en estado de ebriedad.</li>
+												</ul>';
+	$cuerpo.=								'</ol>';
+	$cuerpo.=							'</td>';
+	$cuerpo.=						'</tr>';
+	$cuerpo.=						'<tr>';
+	$cuerpo.=							'<td colspan="2">Personas con peso superior a los 100 kg deben pagar $25 por kilo extra.</td>';
+	$cuerpo.=						'</tr>';
 	$cuerpo.=					'</tbody>';
 	$cuerpo.=				'</table>';
 	$cuerpo.=			'</div>';
@@ -238,8 +270,8 @@
 	$cuerpo.=			'CLABE Interbancaria 012180001918093935<br>';
 	$cuerpo.=			'IMPORTANTE: Notificar vía telefónica o por mail tu depósito para poderte enviar la RESERVACION e itinerario del vuelo. Si te surgen dudas llámanos o escríbenos a nuestro correo electrónico.';
 	$cuerpo.=			'<p style="font-size:14px">Para mas información por favor contactate con tu vendedor</p>';
-	$cuerpo.=			'<b>'.$vendedor[0].'</b><br>';
-	$cuerpo.=			'<i>'.$vendedor[1].'-'.$vendedor[2].'</i>';
+	$cuerpo.=			'<b>RESERVACIONES VOLAR EN GLOBO</b><br>';
+	$cuerpo.=			'<i>'.$vendedor[1].'<br>'.$vendedor[2].'</i>';
 	$cuerpo.=		'</body>';
 	$cuerpo.=	'</html>';
 	//	echo $cuerpo;
