@@ -10,9 +10,9 @@
 
 	
 ?>
-<div class="container row" style="margin-top: 5%;">
+<div class=" row" style="margin-top: 5%;">
 	<?php foreach ($modulos as $modulo) { ?>
-		<div class="card" style="width: 20rem;margin: 10px;">
+		<div class="card" style="width: 18rem;margin: 10px;">
 			<center>
 	  			<img class="card-img-top" src="../sources/images/modulos/<?php echo $modulo->img_per; ?>" alt="Card image cap " style ="width: 25%;max-width: 25%;margin-top: 3% " >
 	  		</center>
