@@ -51,10 +51,14 @@ function eliminarDepto(depto, nombre){
 	//confirmarEliminar(usuario,nombre)
 }
 function confirmarAgregarPuesto(depto,nombre){
-	nombre=$("#puesto").val();
+	nombre=$("#puesto").val().trim();
 	puesto=$("#idPuesto").val().trim();
 	depto=$("#depto").val().trim();
 	accion = "registrarPuesto";
+	if(nombre==""){
+		abrir_gritter("Advertencia","Debes Escribir un Nombre","warning");
+		return false;
+	}
 	url='controladores/deptosController.php';
 	parametros={
 		nombre:nombre,
