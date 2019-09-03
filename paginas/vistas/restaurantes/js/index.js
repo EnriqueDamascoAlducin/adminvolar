@@ -80,7 +80,7 @@ function agregar(id,accion){
 		idA=id;
 	}
 	$("button[id^='btn']").remove();
-	$("#tituloModal").html("Registrar un Tipo de Vuelo  ");
+	$("#tituloModal").html("Registrar un Restaurante ");
 	$("#cuerpoModal").html("");
 	if(idA=='0')
 		$("#DivBtnModal").append('<button autofocus   type="button" id="btnAgregar" class="btn btn-success" onclick=\'confirmarAgregar("","'+accion+'")\' >Agregar</button>');
