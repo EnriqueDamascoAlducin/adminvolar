@@ -140,6 +140,18 @@
 								vertical-align: middle;
 								color: white;	
 							}
+							td,th{
+								max-height: 5px!important;
+								font-size: 10px;
+							}
+							@media (max-width: 576){
+								.largeTd{
+									font-size:65%;
+									width:100px;
+									max-width:100px;
+  									table-layout: fixed;
+								}
+							}
 						</style>
 						<script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 					</head>';
@@ -165,27 +177,27 @@
 	$cuerpo.=					'<tbody>';
 	$cuerpo.=						'<tr>';
 	$cuerpo.=							'<td class="tdtitulo">FECHA DE VUELO</td>';
-	$cuerpo.=							'<td >'.$fechavuelo.'</td>';
+	$cuerpo.=							'<td class="largeTd">'.$fechavuelo.'</td>';
 	$cuerpo.=							'<td colspan="2"></td>';
 	$cuerpo.=						'</tr>';
 	$cuerpo.=						'<tr>';
 	$cuerpo.=							'<td class="tdtitulo">NOMBRE</td>';
-	$cuerpo.=							'<td >'.$datosReserva[0]->nombre.'</td>';
+	$cuerpo.=							'<td class="largeTd" >'.$datosReserva[0]->nombre.'</td>';
 	$cuerpo.=							'<td colspan="2"></td>';
 	$cuerpo.=						'</tr>';
 	$cuerpo.=						'<tr>';
 	$cuerpo.=							'<td class="tdtitulo">CORREO</td>';
-	$cuerpo.=							'<td >'.$datosReserva[0]->correo.'</td>';
+	$cuerpo.=							'<td  class="largeTd">'.$datosReserva[0]->correo.'</td>';
 	$cuerpo.=							'<td colspan="2"></td>';
 	$cuerpo.=						'</tr>';
 	$cuerpo.=						'<tr>';
 	$cuerpo.=							'<td class="tdtitulo">TELEFONOS</td>';
-	$cuerpo.=							'<td >'.$datosReserva[0]->telefonos.'</td>';
+	$cuerpo.=							'<td class="largeTd" >'.$datosReserva[0]->telefonos.'</td>';
 	$cuerpo.=							'<td colspan="2"></td>';
 	$cuerpo.=						'</tr>';
 	$cuerpo.=						'<tr>';
 	$cuerpo.=							'<td class="tdtitulo">TIPO DE VUELO</td>';
-	$cuerpo.=							'<td >'.utf8_encode($datosReserva[0]->tipoVuelo).'</td>';
+	$cuerpo.=							'<td  class="largeTd">'.utf8_encode($datosReserva[0]->tipoVuelo).'</td>';
 	$cuerpo.=							'<td colspan="2"></td>';
 	$cuerpo.=						'</tr>';
 	$cuerpo.=						'<tr>';
@@ -198,14 +210,14 @@
 	if($datosReserva[0]->comentario!=''){ 
 		$cuerpo.=						'<tr>';
 		$cuerpo.=							'<td class="tdtitulo">COMENTARIO</td>';
-		$cuerpo.=							'<td>'. $datosReserva[0]->comentario.'</td>';
+		$cuerpo.=							'<td class="largeTd">'. $datosReserva[0]->comentario.'</td>';
 		$cuerpo.=							'<td colspan="2"></td>';
 		$cuerpo.=						'</tr>';
 	} 
 	if($datosReserva[0]->motivo!=''){ 
 		$cuerpo.=						'<tr>';
 		$cuerpo.=							'<td class="tdtitulo">MOTIVO</td>';
-		$cuerpo.=							'<td>'. $datosReserva[0]->motivo.'</td>';
+		$cuerpo.=							'<td class="largeTd">'. $datosReserva[0]->motivo.'</td>';
 		$cuerpo.=							'<td colspan="2"></td>';
 		$cuerpo.=						'</tr>';
 	} 
@@ -263,10 +275,14 @@
 		}
 		$cuerpo.=					'<tr>';
 		$cuerpo.=						'<td>DESCUENTO</td>';
-	$cuerpo.=							'<td ></td>';
+		$cuerpo.=							'<td class="largeTd">';
+		if($datosReserva[0]->tdescuento==1) {
+			$cuerpo.=						$datosReserva[0]->cantdescuento."%";
+		}
+		$cuerpo.=							'</td>';
 		$cuerpo.=						'<td colspan="2">';
 		if($datosReserva[0]->tdescuento==1) {
-			$cuerpo.=						 $datosReserva[0]->cantdescuento."% ($" .number_format($totalDescuento, 2, '.', ',').")";
+			$cuerpo.=						 "$" .number_format($totalDescuento, 2, '.', ',');
 		}else{
 			$cuerpo.=						'$'.$totalDescuento;
 		}

@@ -157,6 +157,15 @@
 								vertical-align: middle;
 								color: white;	
 							}
+							td,th{
+								max-height: 5px!important;
+								font-size: 10px;
+							}
+							@media (max-width: 576){
+								td{
+									font-size:60%;
+								}
+							}
 						</style>
 						<script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 					</head>';

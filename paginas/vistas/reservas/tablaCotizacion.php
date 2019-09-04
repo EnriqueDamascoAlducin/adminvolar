@@ -119,9 +119,17 @@
 	}
 	td,th{
 		max-height: 5px!important;
-		font-size: 15px;
+		font-size: 10px;
 	}
-	
+	@media (max-width: 576){
+		.largeTd{
+			font-size:60%;
+			width:30%
+			max-width:30%;
+			table-layout: fixed;	
+		}
+
+	}
 
 </style>
 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
@@ -141,12 +149,12 @@
 					</tr>
 					<tr>
 						<td class="tdtitulo">NOMBRE</td>
-						<td><?php echo $datosReserva[0]->nombre ?></td>
+						<td class="largeTd"><?php echo $datosReserva[0]->nombre ?></td>
 						<td></td>
 					</tr>
 					<tr>
 						<td class="tdtitulo">CORREO</td>
-						<td colspan="1"><?php echo $datosReserva[0]->correo ?></td>
+						<td class="largeTd" colspan="1"><?php echo $datosReserva[0]->correo ?></td>
 						<td></td>
 					</tr>
 					<tr>
@@ -156,7 +164,7 @@
 					</tr>
 					<tr>
 						<td class="tdtitulo">TIPO DE VUELO</td>
-						<td  colspan=""><?php echo utf8_encode($datosReserva[0]->tipoVuelo); ?></td>
+						<td  colspan="" class="largeTd"><?php echo utf8_encode($datosReserva[0]->tipoVuelo); ?></td>
 						<td></td>
 					</tr>
 
@@ -168,14 +176,14 @@
 					<?php if($datosReserva[0]->comentario!=''){ ?>
 					<tr>
 						<td class="tdtitulo">COMENTARIO</td>
-						<td><?php echo $datosReserva[0]->comentario; ?></td>
+						<td class="largeTd"><?php echo $datosReserva[0]->comentario; ?></td>
 						<td></td>
 					</tr>
 					<?php } ?>	
 					<?php if($datosReserva[0]->motivo!=''){ ?>
 					<tr>
 						<td class="tdtitulo">MOTIVO</td>
-						<td ><?php echo $datosReserva[0]->motivo; ?></td>
+						<td class="largeTd"><?php echo $datosReserva[0]->motivo; ?></td>
 						<td></td>
 					</tr>
 					<?php } ?>	
@@ -198,7 +206,7 @@
 						</tr>
 						<tr>
 							<td class="tdtitulo" >DESCRIPCIÓN</td>
-							<td  ><?php echo $descripHabitacion; ?></td>
+							<td  class="largeTd"><?php echo $descripHabitacion; ?></td>
 							<td></td>
 						</tr>
 					<?php } ?>		
@@ -272,11 +280,15 @@
 					?>
 						<tr>
 							<td class="tdtitulo">DESCUENTO</td>
-							<td></td>
+							<td><?php
+								if($datosReserva[0]->tdescuento==1) { 
+									echo $datosReserva[0]->cantdescuento."%";
+								}
+							?></td>
 							<td>
 								<?php 
 									if($datosReserva[0]->tdescuento==1) { 
-										echo $datosReserva[0]->cantdescuento."% ($ " .number_format($totalDescuento, 2, '.', ',').")";
+										echo "$ " .number_format($totalDescuento, 2, '.', ',');
 									}else{
 										echo "$ ".$totalDescuento;
 									}
