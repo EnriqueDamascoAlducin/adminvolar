@@ -27,7 +27,12 @@ try {
     }
     $correoActual = $usuario->getCorreoUsu();
     $usuarioActual = $usuario->getNombreUsu(). " " .$usuario->getApellidopUsu(). " ". $usuario->getApellidomUsu();
-    $mail->setFrom(trim($correoActual), $usuarioActual);
+    if(isset($textoActual)){
+        $mail->setFrom(trim($correoActual), $textoActual);
+    }else{
+        $mail->setFrom(trim($correoActual), $usuarioActual);    
+    }
+    
     foreach ($correos as $correo) {
         $mail->addAddress(trim($correo[0]), $correo[1]);
     }

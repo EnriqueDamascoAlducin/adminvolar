@@ -30,7 +30,7 @@
 </div>
 <input type="hidden" id="modulo" value="<?php echo $modulo; ?>">
 <div class="modal fade" id="modalReservas" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered " id="modalSize" role="dialog">
+  <div class="modal-dialog modal-lg " id="modalSize" role="dialog">
     <div class="modal-content ">
       <div class="modal-header">
         <h5 class="modal-title" id="tituloModalReservas"></h5>

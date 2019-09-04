@@ -35,8 +35,6 @@
 			$registro= $con->query("Select @LID as lid")->fetchAll(PDO::FETCH_OBJ);
 			if($registro[0]->lid>0){
 				$registro='ok';
-			}else{
-				$registro='Falla';
 			}
 		}
 		if ($registro=='ok'){
@@ -77,7 +75,38 @@
 		}
 		echo $actualizar;
 		/*
-
+DELIMITER //
+CREATE PROCEDURE actualizarDireccionesRestaurantes( IN _hotel int, IN _nombre varchar(150), IN _precion DECIMAL(10,2), IN _precioa DECIMAL(10,2), OUT lid varchar(15))
+BEGIN
+	INSERT INTO restaurantes_volar (
+		nombre_restaurant,
+		hotel_restaurant,
+		calle_restaurant,
+		noint_restaurant,
+		noext_restaurant,
+		colonia_restaurant,
+		municipio_restaurant,
+		estado_restaurant,
+		cp_restaurant,
+		telefono_restaurant,
+		telefono2_restaurant,
+		precioa_restaurant,
+		precion_restaurant
+	)
+	SELECT _nombre,
+		hotel_hotel,
+		calle_hotel,
+		noint_hotel,
+		noext_hotel,
+		colonia_hotel,
+		municipio_hotel,
+		estado_hotel,
+		cp_hotel,
+		telefono_hotel,
+		telefono2_hotel,
+		_precioa,
+		_precion;
+END//
 		*/
 	}
 		

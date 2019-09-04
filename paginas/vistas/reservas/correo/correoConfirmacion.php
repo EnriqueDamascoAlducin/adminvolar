@@ -72,17 +72,49 @@
 		//echo "otros->".$datosReserva[0]->precio1."<br>";
 		$totalReserva +=$datosReserva[0]->precio2;
 		
-		
+		function convertirFecha($fecha){
+			$fecha=explode("-",$fecha);
+			if($fecha[1]=='01'){
+				$Nvafecha="$fecha[2]-ENE-$fecha[0]";
+			}else if($fecha[1]=='02'){
+				$Nvafecha="$fecha[2]-FEB-$fecha[0]";
+			}else if($fecha[1]=='03'){
+				$Nvafecha="$fecha[2]-MAR-$fecha[0]";
+			}else if($fecha[1]=='04'){
+				$Nvafecha="$fecha[2]-ABR-$fecha[0]";
+			}else if($fecha[1]=='05'){
+				$Nvafecha="$fecha[2]-MAYO-$fecha[0]";
+			}else if($fecha[1]=='06'){
+				$Nvafecha="$fecha[2]-JUN-$fecha[0]";
+			}else if($fecha[1]=='07'){
+				$Nvafecha="$fecha[2]-JUL-$fecha[0]";
+			}else if($fecha[1]=='08'){
+				$Nvafecha="$fecha[2]-AGO-$fecha[0]";
+			}else if($fecha[1]=='09'){
+				$Nvafecha="$fecha[2]-SEP-$fecha[0]";
+			}else if($fecha[1]=='10'){
+				$Nvafecha="$fecha[2]-OCT-$fecha[0]";
+			}else if($fecha[1]=='11'){
+				$Nvafecha="$fecha[2]-NOV-$fecha[0]";
+			}else if($fecha[1]=='12'){
+				$Nvafecha="$fecha[2]-DIC-$fecha[0]";
+			}else{
+				$Nvafecha="Error $";
+			}
+			return $Nvafecha;
+		}
 
 	}
 	
 ?>
 <?php 
 	/// Datos de Correo
+	//$getVendedorInfo[0]->nombre
 
+	$textoActual='Confirmación Volar en Globo';
 	$correos=[array($datosReserva[0]->correo,$datosReserva[0]->nombre)];
 	$vendedor =[$getVendedorInfo[0]->nombre,$getVendedorInfo[0]->correo, $getVendedorInfo[0]->telefono];
-	$asunto = "confirmación de Vuelo: ". $reserva;
+	$asunto = "Confirmación de Vuelo: ". $reserva;
 	$cuerpo='<!DOCTYPE html>
 				<html>
 					<head>
@@ -139,89 +171,103 @@
 	$cuerpo.=				'<table border="1">';
 	$cuerpo.=					'<thead>';
 	$cuerpo.=						'<tr>';
-	$cuerpo.=							'<th class="tdtitulo" colspan="2">';
-	$cuerpo.=								'Reserva No.'. $reserva;
+	$cuerpo.=							'<th class="tdtitulo" colspan="4">';
+	$cuerpo.=								'RESERVA No.'. $reserva;
 	$cuerpo.=							'</th>';
 	$cuerpo.=						'</tr>';
 	$cuerpo.=					'</thead>';
 	$cuerpo.=					'<tbody>';
 	$cuerpo.=						'<tr>';
-	$cuerpo.=							'<td class="tdtitulo">Fecha de Vuelo</td>';
-	$cuerpo.=							'<td >'.$datosReserva[0]->fechavuelo.'</td>';
+	$cuerpo.=							'<td class="tdtitulo">FECHA DE VUELO</td>';
+	$cuerpo.=							'<td >'.convertirFecha($datosReserva[0]->fechavuelo).'</td>';
+	$cuerpo.=							'<td colspan="2" ></td>';
 	$cuerpo.=						'</tr>';
 	$cuerpo.=						'<tr>';
-	$cuerpo.=							'<td class="tdtitulo">Nombre</td>';
+	$cuerpo.=							'<td class="tdtitulo">NOMBRE</td>';
 	$cuerpo.=							'<td >'.$datosReserva[0]->nombre.'</td>';
+	$cuerpo.=							'<td colspan="2"></td>';
 	$cuerpo.=						'</tr>';
 	$cuerpo.=						'<tr>';
-	$cuerpo.=							'<td class="tdtitulo">Telefono Fijo - Telefono Celular</td>';
+	$cuerpo.=							'<td class="tdtitulo">TELÉFONOS</td>';
 	$cuerpo.=							'<td >'.$datosReserva[0]->telefonos.'</td>';
+	$cuerpo.=							'<td colspan="2"></td>';
 	$cuerpo.=						'</tr>';
 	$cuerpo.=						'<tr>';
-	$cuerpo.=							'<td class="tdtitulo">Tipo de Vuelo</td>';
+	$cuerpo.=							'<td class="tdtitulo">TIPO DE VUELO</td>';
 	$cuerpo.=							'<td >'.utf8_encode($datosReserva[0]->tipoVuelo).'</td>';
+	$cuerpo.=							'<td colspan="2"></td>';
 	$cuerpo.=						'</tr>';
 	$cuerpo.=						'<tr>';
-	$cuerpo.=							'<td class="tdtitulo">Pasajeros</td>';
-	$cuerpo.=							'<td > Adultos:'.$datosReserva[0]->pasajerosA.'(<b>'.($datosReserva[0]->pasajerosA*$datosReserva[0]->precioA ) .'</b>) <br> '.('Ni&ntilde;os:').$datosReserva[0]->pasajerosN .'(<b>'.($datosReserva[0]->pasajerosN*$datosReserva[0]->precioN ).'</b>)</td>';
+	$cuerpo.=							'<td class="tdtitulo">PASAJEROS</td>';
+	$cuerpo.=							'<td >Adultos:'.$datosReserva[0]->pasajerosA.'<br>Ni&ntilde;os:'.$datosReserva[0]->pasajerosN .'</td>';
+	$cuerpo.=							'<td colspan="2"colspan="2">$ ';
+	$cuerpo.=									number_format(($datosReserva[0]->pasajerosA*$datosReserva[0]->precioA ) + ($datosReserva[0]->pasajerosN*$datosReserva[0]->precioN ), 2, '.', ',') ;
+	$cuerpo.=							'</td>';
 	$cuerpo.=						'</tr>';
 	if($datosReserva[0]->comentario!=''){ 
 		$cuerpo.=						'<tr>';
-		$cuerpo.=							'<td class="tdtitulo">Comentario</td>';
+		$cuerpo.=							'<td class="tdtitulo">COMENTARIO</td>';
 		$cuerpo.=							'<td>'. $datosReserva[0]->comentario.'</td>';
+		$cuerpo.=							'<td colspan="2"></td>';
 		$cuerpo.=						'</tr>';
 	} 
 	if($datosReserva[0]->motivo!=''){ 
 		$cuerpo.=						'<tr>';
-		$cuerpo.=							'<td class="tdtitulo">Motivo</td>';
+		$cuerpo.=							'<td class="tdtitulo">MOTIVO</td>';
 		$cuerpo.=							'<td>'. $datosReserva[0]->motivo.'</td>';
+		$cuerpo.=							'<td colspan="2"></td>';
 		$cuerpo.=						'</tr>';
 	} 
 
 	$cuerpo.=						'<tr>';
-	$cuerpo.=							'<td class="tdtitulo">Vendedor</td>';
+	$cuerpo.=							'<td class="tdtitulo">VENDEDOR</td>';
 	$cuerpo.=							'<td >'.$vendedor[0].'</td>';
+	$cuerpo.=							'<td colspan="2"></td>';
 	$cuerpo.=						'</tr>';
 	if($datosReserva[0]->otroscar1!=''){
 		$cuerpo.=					'<tr>';
 		$cuerpo.=						'<td class="tdtitulo">'. $datosReserva[0]->otroscar1. '</td>';
-		$cuerpo.=						'<td >'. $datosReserva[0]->precio1. '</td>';
+		$cuerpo.=						'<td >$ '. number_format( $datosReserva[0]->precio1 , 2, '.', ','). '</td>';
+	$cuerpo.=							'<td colspan="2"></td>';
 		$cuerpo.=					'</tr>';				
 	}
 	if($datosReserva[0]->otroscar2!=''){
 		$cuerpo.=					'<tr>';
 		$cuerpo.=						'<td class="tdtitulo">'. $datosReserva[0]->otroscar2. '</td>';
-		$cuerpo.=						'<td >'. $datosReserva[0]->precio2. '</td>';
+		$cuerpo.=						'<td >$'. number_format( $datosReserva[0]->precio2 , 2, '.', ','). '</td>';
+	$cuerpo.=							'<td colspan="2"></td>';
 		$cuerpo.=					'</tr>';				
 	}
 	if(sizeof($serviciosReserva)>0){ 
 		$cuerpo.=					'<tr>';
-		$cuerpo.=						'<td class="tdseparador" colspan="2">Servicios Solicitados	</td>';
+		$cuerpo.=						'<td class="tdseparador" colspan="3">SERVICIOS SOLICITADOS	</td>';
 		$cuerpo.=					'</tr>';
 		foreach ($serviciosReserva as $servicioReserva) {
 			$cuerpo.=				'<tr>';
 			$cuerpo.=					'<td class="tdtitulo">'. $servicioReserva->servicio .'</td>';
 			if($servicioReserva->tipo==1){
-				$cuerpo.=				'<td>';
 				if ($servicioReserva->cantmax == 1){
 					$totalReserva +=($totalPasajeros * $servicioReserva->precio );
-					$cuerpo.=				number_format( ($servicioReserva->precio ) , 2, '.', ',')."x".$tPasajeros."=".($totalPasajeros * $servicioReserva->precio );
+					$cuerpo.=				'<td>'.$tPasajeros.'</td>';
+					$cuerpo.=				'<td colspan="2">$ '.number_format(($totalPasajeros * $servicioReserva->precio ), 2, '.', ',').'</td>';
 				}else{
 					$totalReserva += $servicioReserva->precio ;
-					$cuerpo.=				number_format($servicioReserva->precio, 2, '.', ',');
+					$cuerpo.=				'<td></td>';
+					$cuerpo.=				'<td colspan="2">$ '.number_format($servicioReserva->precio, 2, '.', ',').'</td>';
 				}
-				$cuerpo.=				'</td>';
 			}else{
 				$cuerpo.=				'<td>';
 				$cuerpo.=					'Cortesia';	
 				$cuerpo.=				'<td>';
+				$cuerpo.=				'<td colspan="2"></td>';
 			}
 			$cuerpo.=				'</tr>';
 		}
 	}
 	$cuerpo.=						'<tr>';
-	$cuerpo.=							'<td class="tdtotal">Sub Total</td>';
-	$cuerpo.=							'<td> $'.number_format($totalReserva, 2, '.', ',') .'</td>';
+	$cuerpo.=							'<td class="tdtotal">SUB TOTAL</td>';
+	$cuerpo.=							'<td ></td>';
+	$cuerpo.=							'<td colspan="2">$ '.number_format($totalReserva, 2, '.', ',') .'</td>';
 	$cuerpo.=						'</tr>';
 	if($datosReserva[0]->tdescuento!='' && $datosReserva[0]->cantdescuento>0) {
 		if($datosReserva[0]->tdescuento==1){
@@ -230,8 +276,9 @@
 			$totalDescuento = $datosReserva[0]->cantdescuento;
 		}
 		$cuerpo.=					'<tr>';
-		$cuerpo.=						'<td>Descuento</td>';
-		$cuerpo.=						'<td>';
+		$cuerpo.=						'<td class="tddesc">DESCUENTO</td>';
+		$cuerpo.=						'<td ></td>';
+		$cuerpo.=						'<td colspan="2">';
 		if($datosReserva[0]->tdescuento==1) {
 			$cuerpo.=						 $datosReserva[0]->cantdescuento."% ($" .number_format($totalDescuento, 2, '.', ',').")";
 		}else{
@@ -243,32 +290,35 @@
 	}
 
 	$cuerpo.=						'<tr>';
-	$cuerpo.=							'<td class="tdtitulo">Anticipo</td>';
-	$cuerpo.=							'<td >'.number_format($pagoInfo[0]->cantidad, 2, '.', ',').'</td>';
+	$cuerpo.=							'<td class="tdtitulo">ANTICIPO</td>';
+	$cuerpo.=							'<td ></td>';
+	$cuerpo.=							'<td colspan="2">$ '.number_format($pagoInfo[0]->cantidad, 2, '.', ',').'</td>';
 	$cuerpo.=						'</tr>';
 	$cuerpo.=						'<tr>';
-	$cuerpo.=							'<td class="tdtitulo">Anticipo Total</td>';
-	$cuerpo.=							'<td >'.number_format($totalPagos[0]->totalPagos, 2, '.', ',').'</td>';
+	$cuerpo.=							'<td class="tdtitulo">ANTICIPO TOTAL</td>';
+	$cuerpo.=							'<td ></td>';
+	$cuerpo.=							'<td colspan="2">$ '.number_format($totalPagos[0]->totalPagos, 2, '.', ',').'</td>';
 	$cuerpo.=						'</tr>';
 									$totalReserva-=$totalPagos[0]->totalPagos;
 	$cuerpo.=						'<tr>';
-	$cuerpo.=							'<td class="tdtotal">Total</td>';
-	$cuerpo.=							'<td> $'.number_format($totalReserva, 2, '.', ',') .'</td>';
+	$cuerpo.=							'<td class="tdtotal">TOTAL</td>';
+	$cuerpo.=							'<td ></td>';
+	$cuerpo.=							'<td colspan="2">$ '.number_format($totalReserva, 2, '.', ',') .'</td>';
 	$cuerpo.=						'</tr>';
 
 	$cuerpo.=						'<tr>';
-	$cuerpo.=							'<td class="" colspan="2">A partir de 6:00 AM los esperamos en nuestra recepción, sin embargo esta hora sera CONFIRMADA UN DIA ANTES de acuerdo a la logística de operación del día o a las condiciones meteorológicas, te pido estés al tanto ya que recibirás una llamada para confirmar horario</td>';
+	$cuerpo.=							'<td class="" colspan="4">A partir de 6:00 AM los esperamos en nuestra recepción, sin embargo esta hora sera CONFIRMADA UN DIA ANTES de acuerdo a la logística de operación del día o a las condiciones meteorológicas, te pido estés al tanto ya que recibirás una llamada para confirmar horario</td>';
 	$cuerpo.=						'</tr>';
 
 	$cuerpo.=						'<tr>';
-	$cuerpo.=							'<td class="tdseparador" colspan="2">PUNTO DE REUNION:	</td>';
+	$cuerpo.=							'<td class="tdseparador" colspan="4">PUNTO DE REUNION:	</td>';
 	$cuerpo.=						'</tr>';
 	$cuerpo.=						'<tr>';
-	$cuerpo.=							'<td  colspan="2"><a href="https://www.google.com/maps/place//data=!4m2!3m1!1s0x85d1c03008c08e6d:0x2cd1a4cc8c3f3d5c?utm_source=mstt_1&utm_medium=mstt_2">
+	$cuerpo.=							'<td  colspan="4"><a href="https://www.google.com/maps/place//data=!4m2!3m1!1s0x85d1c03008c08e6d:0x2cd1a4cc8c3f3d5c?utm_source=mstt_1&utm_medium=mstt_2">
 Recepción Volar en Globo, Aventura y Publicidad SA de CV. Esquina Francisco Villa con Carretera Libre Mexico- Tulancingo (132) C.P. 55850 (Puedes dar clic aqui para abrir la ubicación en maps).</a></td>';
 	$cuerpo.=						'</tr>';
 	$cuerpo.=						'<tr>';
-	$cuerpo.=							'<td colspan="2">';
+	$cuerpo.=							'<td colspan="4">';
 	$cuerpo.=								'<ol type="1">
 												<li>Que incluye tu vuelo:</li>
 												<ul>
@@ -314,10 +364,10 @@ Recepción Volar en Globo, Aventura y Publicidad SA de CV. Esquina Francisco Vil
 	$cuerpo.=							'</td>';
 	$cuerpo.=						'</tr>';
 	$cuerpo.=						'<tr>
-										<td colspan="2" class="tdseparador">Direccion y Como Llegar:</td>
+										<td colspan="4" class="tdseparador">Direccion y Como Llegar:</td>
 									</tr>';
 	$cuerpo.=						'<tr>';
-		$cuerpo.=						'<td colspan="2">';
+		$cuerpo.=						'<td colspan="4">';
 			$cuerpo.=						'Tomar insurgentes hacia Pachuca numero de autopistá 132-D en cuanto llegues a las casetas tomar las del lado derecho mas con dirección a pirámides - Tulancingo, ( extremo derecho ), ahí pagaras una caseta de $75.00, INMEDIATAMENTE PEGARTE A LADO DERECHO Y SEGUIR LOS SE&ntilde;ALAMIENTOS HACIA PIRAMIDES seguir sobre la autopista en el Km. 17 y pasandoÂ  la gasolinera tomar la desviación hacia pirámidesÂ y continuar hasta la desviación a Tulancingo continuas sobre esta carretera donde a tu mano izquierda vas a encontrar una Estación de Policía Federal, un poco más adelante encontraras una salida a mano izquierda antes del puente, debes girar a la izquierda nuevamente y allí encontraras nuestra recepción.
 				<hr>
 				<a href="https://www.google.com/maps/place//data=!4m2!3m1!1s0x85d1c03008c08e6d:0x2cd1a4cc8c3f3d5c?utm_source=mstt_1&utm_medium=mstt_2">
@@ -333,7 +383,7 @@ Recepción Volar en Globo, Aventura y Publicidad SA de CV. Esquina Francisco Vil
 		$cuerpo.=		'<img src="https://www.volarenglobo.com.mx/admin1/sources/images/correos/cupon-descuento-volar-en-globo.jpg" style="width:100%;max-width:100%">';
 	}
 	$cuerpo.=			'<p style="font-size:14px">Para mas información por favor contactate con tu vendedor</p>';
-	$cuerpo.=			'<b>'.$vendedor[0].'</b><br>';
+	$cuerpo.=			'<b>'.$getVendedorInfo[0]->nombre.'</b><br>';
 	$cuerpo.=			'<i>'.$vendedor[1].'<br>'.$vendedor[2].'</i>';
 	$cuerpo.=		'</body>';
 	$cuerpo.=	'</html>';

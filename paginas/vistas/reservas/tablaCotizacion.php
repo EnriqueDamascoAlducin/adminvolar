@@ -66,6 +66,37 @@
 		
 
 	}
+	function convertirFecha($fecha){
+		$fecha=explode("-",$fecha);
+		if($fecha[1]=='01'){
+			$Nvafecha="$fecha[2]-ENE-$fecha[0]";
+		}else if($fecha[1]=='02'){
+			$Nvafecha="$fecha[2]-FEB-$fecha[0]";
+		}else if($fecha[1]=='03'){
+			$Nvafecha="$fecha[2]-MAR-$fecha[0]";
+		}else if($fecha[1]=='04'){
+			$Nvafecha="$fecha[2]-ABR-$fecha[0]";
+		}else if($fecha[1]=='05'){
+			$Nvafecha="$fecha[2]-MAYO-$fecha[0]";
+		}else if($fecha[1]=='06'){
+			$Nvafecha="$fecha[2]-JUN-$fecha[0]";
+		}else if($fecha[1]=='07'){
+			$Nvafecha="$fecha[2]-JUL-$fecha[0]";
+		}else if($fecha[1]=='08'){
+			$Nvafecha="$fecha[2]-AGO-$fecha[0]";
+		}else if($fecha[1]=='09'){
+			$Nvafecha="$fecha[2]-SEP-$fecha[0]";
+		}else if($fecha[1]=='10'){
+			$Nvafecha="$fecha[2]-OCT-$fecha[0]";
+		}else if($fecha[1]=='11'){
+			$Nvafecha="$fecha[2]-NOV-$fecha[0]";
+		}else if($fecha[1]=='12'){
+			$Nvafecha="$fecha[2]-DIC-$fecha[0]";
+		}else{
+			$Nvafecha="Error $";
+		}
+		return $Nvafecha;
+	}
 	
 ?>
 <style type="text/css">
@@ -97,80 +128,98 @@
 	<table class="table ">
 		<thead>
 			<tr>
-				<th colspan="2" style="text-align: center;background: #2BBBAD;color: white;">
-					Reserva No. <?php echo $reserva; ?>
+				<th colspan="3" style="text-align: center;background: #2BBBAD;color: white;">
+					RESERVA No. <?php echo $reserva; ?>
 				</th>
 			</tr>
 		</thead>
 		<tbody>
 			<tbody>
 					<tr>
-						<td class="tdtitulo">Fecha de Vuelo</td>
-						<td><?php echo $datosReserva[0]->fechavuelo ?></td>
+						<td class="tdtitulo">FECHA DE VUELO</td>
+						<td ><?php echo convertirFecha($datosReserva[0]->fechavuelo); ?></td>
 					</tr>
 					<tr>
-						<td class="tdtitulo">Nombre</td>
+						<td class="tdtitulo">NOMBRE</td>
 						<td><?php echo $datosReserva[0]->nombre ?></td>
+						<td></td>
 					</tr>
 					<tr>
-						<td class="tdtitulo">Correo</td>
-						<td><?php echo $datosReserva[0]->correo ?></td>
+						<td class="tdtitulo">CORREO</td>
+						<td colspan="1"><?php echo $datosReserva[0]->correo ?></td>
+						<td></td>
 					</tr>
 					<tr>
-						<td class="tdtitulo">Telefono Fijo - Telefono Celular</td>
-						<td><?php echo $datosReserva[0]->telefonos ?></td>
+						<td class="tdtitulo"> TELÉFONOS</td>
+						<td ><?php echo $datosReserva[0]->telefonos ?></td>
+						<td></td>
 					</tr>
 					<tr>
-						<td class="tdtitulo">Tipo de Vuelo</td>
+						<td class="tdtitulo">TIPO DE VUELO</td>
+						<td  colspan=""><?php echo utf8_encode($datosReserva[0]->tipoVuelo); ?></td>
+						<td></td>
+					</tr>
 
-						<td><?php echo utf8_encode($datosReserva[0]->tipoVuelo); ?></td>
-					</tr>
-
 					<tr>
-						<td class="tdtitulo">Pasajeros</td>
-						<td><?php echo "Adultos:".$datosReserva[0]->pasajerosA ."(<b>". ($datosReserva[0]->pasajerosA*$datosReserva[0]->precioA ) ."</b>) <br> Ni&ntilde;os:".$datosReserva[0]->pasajerosN ."(<b>". ($datosReserva[0]->pasajerosN*$datosReserva[0]->precioN ) ."</b>) " ?></td>
+						<td class="tdtitulo">PASAJEROS</td>
+						<td><?php echo "Adultos: ".$datosReserva[0]->pasajerosA . "<br> Ni&ntilde;os: ".$datosReserva[0]->pasajerosN  ?></td>
+						<td><?php  echo "$ ". number_format(($datosReserva[0]->pasajerosA*$datosReserva[0]->precioA ) + ($datosReserva[0]->pasajerosN*$datosReserva[0]->precioN ), 2, '.', ',') ?></td>
 					</tr>
 					<?php if($datosReserva[0]->comentario!=''){ ?>
 					<tr>
-						<td class="tdtitulo">Comentario</td>
+						<td class="tdtitulo">COMENTARIO</td>
 						<td><?php echo $datosReserva[0]->comentario; ?></td>
+						<td></td>
+					</tr>
+					<?php } ?>	
+					<?php if($datosReserva[0]->motivo!=''){ ?>
+					<tr>
+						<td class="tdtitulo">MOTIVO</td>
+						<td ><?php echo $datosReserva[0]->motivo; ?></td>
+						<td></td>
 					</tr>
 					<?php } ?>	
 					<?php if($datosReserva[0]->hotel!=''){ ?>
 						<tr>
-							<td class="tdseparador" colspan="2">Hotel</td>
+							<td class="tdseparador" colspan="3">HOTEL</td>
 						</tr>
 						<tr>
-							<td class="tdtitulo" colspan="2"><?php echo $hotel.'<br>'.$descripcionHospedaje; ?></td>
+							<td class="tdtitulo" colspan="3"><?php echo $hotel.'<br>'.$descripcionHospedaje; ?></td>
 						</tr>
 						<tr>
-							<td class="tdtitulo" >Habitación</td>
-							<td  ><?php echo $nombreHabitacion; ?></td>
+							<td class="tdtitulo" >HABITACIÓN</td>
+							<td   ><?php echo $nombreHabitacion; ?></td>
+							<td></td>
 						</tr>
 						<tr>
-							<td class="tdtitulo" >Precio/Noche</td>
-							<td  ><?php echo $precioHabitacion; ?></td>
+							<td class="tdtitulo" >PRECIO/NOCHE</td>
+							<td></td>
+							<td  ><?php echo "$ ".number_format(  $precioHabitacion, 2, '.', ','); ?></td>
 						</tr>
 						<tr>
-							<td class="tdtitulo" >Descripción</td>
+							<td class="tdtitulo" >DESCRIPCIÓN</td>
 							<td  ><?php echo $descripHabitacion; ?></td>
+							<td></td>
 						</tr>
 					<?php } ?>		
 					<?php if($datosReserva[0]->otroscar1!=''){ ?>
 						<tr>
 							<td class="tdtitulo"><?php echo $datosReserva[0]->otroscar1 ?></td>
-							<td><?php echo  $datosReserva[0]->precio1 ?></td>
+							<td></td>
+							<td><?php echo "$ ".number_format(  $datosReserva[0]->precio1 , 2, '.', ','); ?></td>
 						</tr>
 					<?php } ?>
 					<?php if($datosReserva[0]->otroscar2!=''){ ?>
 						<tr>
 							<td class="tdtitulo"><?php echo $datosReserva[0]->otroscar2 ?></td>
-							<td><?php echo  $datosReserva[0]->precio2 ?></td>
+							<td></td>
+							<td><?php echo "$ ".number_format(  $datosReserva[0]->precio2 , 2, '.', ',');  ?></td>
+
 						</tr>
 					<?php } ?>		
 					<?php if(sizeof($serviciosReserva)>0){ ?>
 						<tr>
-							<td class="tdseparador" colspan="2">Servicios Solicitados	</td>
+							<td class="tdseparador" colspan="3">SERVICIOS SOLICITADOS	</td>
 						</tr>
 						<?php foreach ($serviciosReserva as $servicioReserva) { ?>
 							<tr>
@@ -180,16 +229,25 @@
 										<?php 
 											if ($servicioReserva->cantmax == 1){
 												$totalReserva +=($totalPasajeros * $servicioReserva->precio);
-												echo number_format( ( $servicioReserva->precio ) , 2, '.', ',')."x".$tPasajeros ."=".($totalPasajeros * $servicioReserva->precio) ;
+												echo $tPasajeros ;
 											}else{
 												$totalReserva += $servicioReserva->precio ;
-												echo number_format($servicioReserva->precio, 2, '.', ',') ;
+												echo 1;
 											}
 										?>
 									</td>
-								<?php }else {?>
+									<td><?php 
+
+											if ($servicioReserva->cantmax == 1){
+												echo "$ ".number_format(($totalPasajeros * $servicioReserva->precio) , 2, '.', ',') ;
+											}else{
+												echo "$ ". number_format($servicioReserva->precio, 2, '.', ',') ;
+											}
+									?>
+									</td>
+									<?php }else {?>
 									<td>
-										Cortesia
+										CORTESIA
 									</td>
 								<?php } ?>			
 							</tr>
@@ -197,7 +255,8 @@
 					<?php } ?>
 
 					<tr>
-						<td class="tdtotal">Sub Total</td>
+						<td class="tdtotal">SUB TOTAL</td>
+						<td></td>
 						<td><?php echo  "$ ". number_format($totalReserva, 2, '.', ','); ?></td>
 					</tr>
 
@@ -212,15 +271,14 @@
 							}
 					?>
 						<tr>
-							<td class="tdtitulo">
-								Descuento								
-							</td>
+							<td class="tdtitulo">DESCUENTO</td>
+							<td></td>
 							<td>
 								<?php 
 									if($datosReserva[0]->tdescuento==1) { 
-										echo $datosReserva[0]->cantdescuento."% ($" .number_format($totalDescuento, 2, '.', ',').")";
+										echo $datosReserva[0]->cantdescuento."% ($ " .number_format($totalDescuento, 2, '.', ',').")";
 									}else{
-										echo "$".$totalDescuento;
+										echo "$ ".$totalDescuento;
 									}
 								?>
 							</td>
@@ -230,7 +288,8 @@
 						}
 					?>
 					<tr>
-						<td class="tdtotal">Total</td>
+						<td class="tdtotal">TOTAL</td>
+						<td></td>
 						<td> <?php echo "$ ". number_format($totalReserva, 2, '.', ','); ?></td>
 					</tr>
 				</tbody>

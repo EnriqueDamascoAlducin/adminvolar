@@ -345,7 +345,6 @@ function checkAsistencia (reserva,nombre){
 }
 function mostrarCotizacion(id,accion){
 	
-	cambiarTamanoModal("modalSize","lg",'resetear');
 	$("button[id^='btn']").remove();
 	$("#tituloModalReservas").html("Cotización "+ id);
 	url="vistas/reservas/tablaCotizacion.php";
