@@ -164,6 +164,9 @@
 							@media (max-width: 576){
 								td{
 									font-size:60%;
+									width:30%
+									max-width:30%;
+  									table-layout: fixed;	
 								}
 							}
 						</style>

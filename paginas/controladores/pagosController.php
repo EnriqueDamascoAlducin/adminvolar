@@ -37,7 +37,7 @@
 	}elseif (isset($_POST['accion']) && $_POST['accion']=='regalo'  ) {
 		$validar = $con->actualizar("bitpagos_volar","status=1","id_bp=".$_POST['pago']);
 		echo $validar;
-		require  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/vistas/reservas/correo/correoConfirmacion.php';
+		require  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/vistas/reservas/correo/correoRegalo.php';
 		$accion = $con->actualizar("temp_volar","status=4","id_temp=".$reserva);
 
 
