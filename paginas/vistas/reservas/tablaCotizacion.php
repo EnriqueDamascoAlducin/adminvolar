@@ -117,16 +117,17 @@
 		background: #2BBBAD;
 		color: white;
 	}
-	td,th{
-		max-height: 5px!important;
-		font-size: 10px;
-	}
 	@media (max-width: 576){
 		.largeTd{
 			font-size:60%;
 			width:30%
 			max-width:30%;
 			table-layout: fixed;	
+		}
+		
+		td,th{
+			max-height: 5px!important;
+			font-size: 10px;
 		}
 
 	}

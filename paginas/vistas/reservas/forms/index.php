@@ -116,13 +116,13 @@
 	<div class="col-6 col-md-3 col-sm-3 col-md-3 col-xl-2" >
 		<div class="form-group">
 		    <label for="apellidos"><b>Contacto 1</b></label>
-		    <input type="number" min="0"  class="form-control" id="telcelular" name="telcelular" placeholder="Telefono Celular" value="<?php echo $reserva->getTelcelularTemp(); ?>">
+		    <input type="number" min="0"  class="form-control" id="telcelular" name="telcelular" placeholder="Contacto 1" value="<?php echo $reserva->getTelcelularTemp(); ?>">
 	  	</div>
 	</div>
 	<div class="col-6 col-md-3 col-sm-3 col-md-3 col-xl-2" >
 		<div class="form-group">
 		    <label for="telfijo"><b>Contacto 2</b></label>
-		    <input type="number" min="0"  class="form-control" id="telfijo" name="telfijo" placeholder="Telefono Fijo" value="<?php echo $reserva->getTelfijoTemp(); ?>">
+		    <input type="number" min="0"  class="form-control" id="telfijo" name="telfijo" placeholder="Contacto 2" value="<?php echo $reserva->getTelfijoTemp(); ?>">
 	  	</div>
 	</div>
 	<div class="col-6 col-md-3 col-sm-3 col-md-3 col-xl-2" >

@@ -1,0 +1,39 @@
+[12-Aug-2019 00:13:13 America/New_York] PHP Fatal error:  Call to a member function fetchALL() on boolean in /home/afraqujt/public_html/admin1/paginas/controladores/loginController.php on line 7
+[12-Aug-2019 00:13:16 America/New_York] PHP Fatal error:  Call to a member function fetchALL() on boolean in /home/afraqujt/public_html/admin1/paginas/controladores/loginController.php on line 7
+[12-Aug-2019 00:13:17 America/New_York] PHP Fatal error:  Call to a member function fetchALL() on boolean in /home/afraqujt/public_html/admin1/paginas/controladores/loginController.php on line 7
+[12-Aug-2019 00:13:17 America/New_York] PHP Fatal error:  Call to a member function fetchALL() on boolean in /home/afraqujt/public_html/admin1/paginas/controladores/loginController.php on line 7
+[12-Aug-2019 00:13:18 America/New_York] PHP Fatal error:  Call to a member function fetchALL() on boolean in /home/afraqujt/public_html/admin1/paginas/controladores/loginController.php on line 7
+[12-Aug-2019 00:17:14 America/New_York] PHP Fatal error:  Call to a member function fetchALL() on boolean in /home/afraqujt/public_html/admin1/paginas/controladores/loginController.php on line 7
+[12-Aug-2019 00:18:23 America/New_York] PHP Fatal error:  Call to a member function fetchALL() on boolean in /home/afraqujt/public_html/admin1/paginas/controladores/loginController.php on line 7
+[12-Aug-2019 00:18:24 America/New_York] PHP Fatal error:  Call to a member function fetchALL() on boolean in /home/afraqujt/public_html/admin1/paginas/controladores/loginController.php on line 7
+[12-Aug-2019 00:21:45 America/New_York] PHP Fatal error:  Call to a member function fetchALL() on boolean in /home/afraqujt/public_html/admin1/paginas/controladores/loginController.php on line 7
+[12-Aug-2019 00:27:56 America/New_York] PHP Fatal error:  Call to a member function fetchALL() on boolean in /home/afraqujt/public_html/admin1/paginas/controladores/loginController.php on line 7
+[12-Aug-2019 00:28:11 America/New_York] PHP Fatal error:  Call to a member function fetchALL() on boolean in /home/afraqujt/public_html/admin1/paginas/controladores/loginController.php on line 7
+[12-Aug-2019 09:41:53 America/New_York] PHP Notice:  Undefined offset: 1 in /home/afraqujt/public_html/admin1/paginas/controladores/pagosController.php on line 27
+[12-Aug-2019 12:59:52 America/New_York] PHP Notice:  Undefined offset: 1 in /home/afraqujt/public_html/admin1/paginas/controladores/pagosController.php on line 27
+[12-Aug-2019 15:24:10 America/New_York] PHP Notice:  Undefined offset: 1 in /home/afraqujt/public_html/admin1/paginas/controladores/pagosController.php on line 27
+[03-Sep-2019 13:17:51 America/New_York] PHP Notice:  Array to string conversion in /home/afraqujt/public_html/admin1/paginas/controladores/restaurantesController.php on line 42
+[03-Sep-2019 15:50:31 America/New_York] PHP Notice:  Array to string conversion in /home/afraqujt/public_html/admin1/paginas/controladores/restaurantesController.php on line 42
+[03-Sep-2019 15:51:12 America/New_York] PHP Notice:  Array to string conversion in /home/afraqujt/public_html/admin1/paginas/controladores/restaurantesController.php on line 42
+[03-Sep-2019 15:51:52 America/New_York] PHP Notice:  Array to string conversion in /home/afraqujt/public_html/admin1/paginas/controladores/restaurantesController.php on line 42
+[03-Sep-2019 15:57:30 America/New_York] PHP Notice:  Array to string conversion in /home/afraqujt/public_html/admin1/paginas/controladores/restaurantesController.php on line 42
+[03-Sep-2019 15:57:57 America/New_York] PHP Notice:  Array to string conversion in /home/afraqujt/public_html/admin1/paginas/controladores/restaurantesController.php on line 42
+[03-Sep-2019 15:58:28 America/New_York] PHP Notice:  Array to string conversion in /home/afraqujt/public_html/admin1/paginas/controladores/restaurantesController.php on line 42
+[03-Sep-2019 15:58:50 America/New_York] PHP Notice:  Array to string conversion in /home/afraqujt/public_html/admin1/paginas/controladores/restaurantesController.php on line 42
+[03-Sep-2019 16:00:55 America/New_York] PHP Notice:  Array to string conversion in /home/afraqujt/public_html/admin1/paginas/controladores/restaurantesController.php on line 42
+[03-Sep-2019 17:05:46 America/New_York] PHP Notice:  Array to string conversion in /home/afraqujt/public_html/admin1/paginas/controladores/restaurantesController.php on line 42
+[03-Sep-2019 17:05:58 America/New_York] PHP Notice:  Array to string conversion in /home/afraqujt/public_html/admin1/paginas/controladores/restaurantesController.php on line 42
+[03-Sep-2019 17:09:33 America/New_York] PHP Notice:  Array to string conversion in /home/afraqujt/public_html/admin1/paginas/controladores/restaurantesController.php on line 42
+[03-Sep-2019 17:10:11 America/New_York] PHP Notice:  Array to string conversion in /home/afraqujt/public_html/admin1/paginas/controladores/restaurantesController.php on line 42
+[03-Sep-2019 17:11:08 America/New_York] PHP Notice:  Array to string conversion in /home/afraqujt/public_html/admin1/paginas/controladores/restaurantesController.php on line 42
+[03-Sep-2019 17:11:52 America/New_York] PHP Notice:  Array to string conversion in /home/afraqujt/public_html/admin1/paginas/controladores/restaurantesController.php on line 42
+[03-Sep-2019 17:12:24 America/New_York] PHP Notice:  Array to string conversion in /home/afraqujt/public_html/admin1/paginas/controladores/restaurantesController.php on line 42
+[03-Sep-2019 17:13:28 America/New_York] PHP Notice:  Array to string conversion in /home/afraqujt/public_html/admin1/paginas/controladores/restaurantesController.php on line 42
+[03-Sep-2019 22:38:48 America/New_York] PHP Notice:  Undefined offset: 1 in /home/afraqujt/public_html/admin1/paginas/controladores/pagosController.php on line 27
+[04-Sep-2019 12:39:02 America/New_York] PHP Notice:  Undefined offset: 1 in /home/afraqujt/public_html/admin1/paginas/controladores/pagosController.php on line 27
+[05-Sep-2019 16:53:39 America/New_York] PHP Notice:  Undefined offset: 1 in /home/afraqujt/public_html/admin1/paginas/controladores/pagosController.php on line 27
+[05-Sep-2019 17:02:44 America/New_York] PHP Notice:  Undefined offset: 1 in /home/afraqujt/public_html/admin1/paginas/controladores/pagosController.php on line 27
+[05-Sep-2019 17:24:17 America/New_York] PHP Notice:  Undefined offset: 1 in /home/afraqujt/public_html/admin1/paginas/controladores/pagosController.php on line 27
+[05-Sep-2019 18:11:46 America/New_York] PHP Notice:  Undefined offset: 1 in /home/afraqujt/public_html/admin1/paginas/controladores/pagosController.php on line 27
+[06-Sep-2019 12:34:27 America/New_York] PHP Notice:  Undefined offset: 1 in /home/afraqujt/public_html/admin1/paginas/controladores/pagosController.php on line 27
+[06-Sep-2019 13:34:20 America/New_York] PHP Notice:  Undefined offset: 1 in /home/afraqujt/public_html/admin1/paginas/controladores/pagosController.php on line 27

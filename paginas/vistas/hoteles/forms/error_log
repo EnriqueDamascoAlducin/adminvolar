@@ -1,0 +1,228 @@
+[02-Sep-2019 23:04:37 America/New_York] PHP Notice:  Undefined index: habitacion in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/habitaciones.php on line 11
+[02-Sep-2019 23:04:41 America/New_York] PHP Notice:  Undefined index: habitacion in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/habitaciones.php on line 11
+[02-Sep-2019 23:04:44 America/New_York] PHP Notice:  Undefined index: habitacion in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/habitaciones.php on line 11
+[02-Sep-2019 23:04:46 America/New_York] PHP Notice:  Undefined index: habitacion in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/habitaciones.php on line 11
+[02-Sep-2019 23:04:47 America/New_York] PHP Notice:  Undefined index: habitacion in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/habitaciones.php on line 11
+[02-Sep-2019 23:06:09 America/New_York] PHP Notice:  Undefined index: habitacion in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/habitaciones.php on line 11
+[02-Sep-2019 23:06:11 America/New_York] PHP Notice:  Undefined index: habitacion in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/habitaciones.php on line 11
+[02-Sep-2019 23:06:14 America/New_York] PHP Notice:  Undefined index: habitacion in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/habitaciones.php on line 11
+[02-Sep-2019 23:06:16 America/New_York] PHP Notice:  Undefined index: habitacion in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/habitaciones.php on line 11
+[02-Sep-2019 23:06:18 America/New_York] PHP Notice:  Undefined index: habitacion in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/habitaciones.php on line 11
+[02-Sep-2019 23:09:25 America/New_York] PHP Notice:  Undefined index: id in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/habitaciones.php on line 8
+[02-Sep-2019 23:09:25 America/New_York] PHP Fatal error:  Call to a member function fetchALL() on boolean in /home/afraqujt/public_html/admin1/paginas/controladores/conexion.php on line 31
+[02-Sep-2019 23:15:58 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:15:58 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:15:58 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:15:58 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:15:58 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:15:58 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:15:58 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:15:58 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:15:58 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:15:58 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:15:58 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:15:58 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:15:58 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:15:58 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:15:58 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:15:58 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:15:58 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:15:58 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:15:58 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:15:58 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:15:58 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:15:58 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:15:58 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:15:58 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:15:58 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:15:58 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:15:58 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:15:58 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:15:58 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:15:58 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:15:58 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:15:58 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:15:58 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:15:58 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:15:58 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:15:58 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:15:58 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:15:58 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:15:58 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:15:58 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:15:58 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:15:58 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:15:58 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:15:58 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:15:58 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:15:58 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:15:58 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:15:58 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:15:58 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:15:58 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:15:58 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:15:58 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:15:58 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:15:58 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:15:58 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:15:58 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:15:58 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:15:58 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:15:58 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:15:58 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:15:58 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:15:58 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:15:58 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:15:58 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:15:58 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:15:58 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:16:57 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:16:57 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:16:57 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:16:57 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:16:57 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:16:57 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:16:57 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:16:57 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:16:57 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:16:57 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:16:57 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:16:57 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:16:57 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:16:57 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:16:57 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:16:57 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:16:57 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:16:57 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:16:57 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:16:57 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:16:57 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:16:57 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:16:57 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:16:57 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:16:57 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:16:57 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:16:57 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:16:57 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:16:57 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:16:57 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:16:57 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:16:57 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:16:57 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:16:57 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:16:57 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:16:57 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:16:57 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:16:57 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:16:57 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:16:57 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:16:57 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:16:57 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:16:57 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:16:57 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:16:57 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:16:57 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:16:57 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:16:57 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:16:57 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:16:57 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:16:57 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:16:57 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:16:57 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:16:57 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:16:57 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:16:57 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:16:57 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:16:57 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:16:57 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:16:57 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:16:57 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:16:57 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:16:57 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:16:57 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:16:57 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:16:57 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:17:09 America/New_York] PHP Notice:  Undefined offset: 0 in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 18
+[02-Sep-2019 23:17:09 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 18
+[02-Sep-2019 23:17:09 America/New_York] PHP Notice:  Undefined offset: 0 in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 24
+[02-Sep-2019 23:17:09 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 24
+[02-Sep-2019 23:17:09 America/New_York] PHP Notice:  Undefined offset: 0 in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 30
+[02-Sep-2019 23:17:09 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 30
+[02-Sep-2019 23:17:09 America/New_York] PHP Notice:  Undefined offset: 0 in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 36
+[02-Sep-2019 23:17:09 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 36
+[02-Sep-2019 23:17:09 America/New_York] PHP Notice:  Undefined offset: 0 in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 42
+[02-Sep-2019 23:17:09 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 42
+[02-Sep-2019 23:17:09 America/New_York] PHP Notice:  Undefined offset: 0 in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 48
+[02-Sep-2019 23:17:09 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 48
+[02-Sep-2019 23:17:09 America/New_York] PHP Notice:  Undefined offset: 0 in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:17:09 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:17:09 America/New_York] PHP Notice:  Undefined offset: 0 in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:17:09 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:17:09 America/New_York] PHP Notice:  Undefined offset: 0 in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:17:09 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:17:09 America/New_York] PHP Notice:  Undefined offset: 0 in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:17:09 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:17:09 America/New_York] PHP Notice:  Undefined offset: 0 in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:17:09 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:17:09 America/New_York] PHP Notice:  Undefined offset: 0 in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:17:09 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:17:09 America/New_York] PHP Notice:  Undefined offset: 0 in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:17:09 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:17:09 America/New_York] PHP Notice:  Undefined offset: 0 in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:17:09 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:17:09 America/New_York] PHP Notice:  Undefined offset: 0 in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:17:09 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:17:09 America/New_York] PHP Notice:  Undefined offset: 0 in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:17:09 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:17:09 America/New_York] PHP Notice:  Undefined offset: 0 in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:17:09 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:17:09 America/New_York] PHP Notice:  Undefined offset: 0 in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:17:09 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:17:09 America/New_York] PHP Notice:  Undefined offset: 0 in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:17:09 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:17:09 America/New_York] PHP Notice:  Undefined offset: 0 in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:17:09 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:17:09 America/New_York] PHP Notice:  Undefined offset: 0 in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:17:09 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:17:09 America/New_York] PHP Notice:  Undefined offset: 0 in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:17:09 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:17:09 America/New_York] PHP Notice:  Undefined offset: 0 in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:17:09 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:17:09 America/New_York] PHP Notice:  Undefined offset: 0 in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:17:09 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:17:09 America/New_York] PHP Notice:  Undefined offset: 0 in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:17:09 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:17:09 America/New_York] PHP Notice:  Undefined offset: 0 in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:17:09 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:17:09 America/New_York] PHP Notice:  Undefined offset: 0 in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:17:09 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:17:09 America/New_York] PHP Notice:  Undefined offset: 0 in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:17:09 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:17:09 America/New_York] PHP Notice:  Undefined offset: 0 in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:17:09 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:17:09 America/New_York] PHP Notice:  Undefined offset: 0 in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:17:09 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:17:09 America/New_York] PHP Notice:  Undefined offset: 0 in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:17:09 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:17:09 America/New_York] PHP Notice:  Undefined offset: 0 in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:17:09 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:17:09 America/New_York] PHP Notice:  Undefined offset: 0 in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:17:09 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:17:09 America/New_York] PHP Notice:  Undefined offset: 0 in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:17:09 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:17:09 America/New_York] PHP Notice:  Undefined offset: 0 in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:17:09 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:17:09 America/New_York] PHP Notice:  Undefined offset: 0 in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:17:09 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:17:09 America/New_York] PHP Notice:  Undefined offset: 0 in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:17:09 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:17:09 America/New_York] PHP Notice:  Undefined offset: 0 in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:17:09 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:17:09 America/New_York] PHP Notice:  Undefined offset: 0 in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:17:09 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[02-Sep-2019 23:17:09 America/New_York] PHP Notice:  Undefined offset: 0 in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 72
+[02-Sep-2019 23:17:09 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 72
+[02-Sep-2019 23:17:09 America/New_York] PHP Notice:  Undefined offset: 0 in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 78
+[02-Sep-2019 23:17:09 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 78
+[02-Sep-2019 23:17:09 America/New_York] PHP Notice:  Undefined offset: 0 in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 84
+[02-Sep-2019 23:17:09 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 84

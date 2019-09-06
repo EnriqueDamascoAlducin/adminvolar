@@ -108,9 +108,9 @@
 							<i class="fa fa-trash fa-lg"  style="color:red" onclick="accionesPagos(<?php echo $pago->id ?>,'cancelar',<?php echo $reserva; ?>);" title="Enviar con Regalo"  ></i>
 						<?php }else if($pago->stat == 3){  ?>
 							<i class="fa fa-envelope-o fa-lg" data-toggle="modal" onclick="accionesPagos(<?php echo $pago->id ?>,'simple',<?php echo $reserva; ?>);" data-target="#modalReservas1" ></i>
-							<i class="fa fa-gift fa-lg" title="Enviar con Regalo" data-toggle="modal" style="color:#33b5e5" onclick="accionesPagos(<?php echo $pago->id ?>,'regalo',<?php echo $reserva; ?>);" data-target="#modalReservas1" ></i>
+							
 						<?php }else if($pago->stat == 2){  ?>
-							<i class="fa fa-envelope fa-lg" title="Enviado con Regalo"  ></i>
+							<i class="fa fa-gift fa-lg" title="Enviar con Regalo" data-toggle="modal" style="color:#33b5e5" onclick="accionesPagos(<?php echo $pago->id ?>,'regalo',<?php echo $reserva; ?>);" data-target="#modalReservas1" ></i>
 						<?php }else if($pago->stat == 1){  ?>
 							<i class="fa fa-gift fa-lg" title="Enviado con Regalo" ></i>
 						<?php } ?>

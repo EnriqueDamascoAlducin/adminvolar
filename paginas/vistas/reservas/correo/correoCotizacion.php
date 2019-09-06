@@ -140,16 +140,16 @@
 								vertical-align: middle;
 								color: white;	
 							}
-							td,th{
-								max-height: 5px!important;
-								font-size: 10px;
-							}
 							@media (max-width: 576){
 								.largeTd{
 									font-size:65%;
 									width:100px;
 									max-width:100px;
   									table-layout: fixed;
+								}
+								td,th{
+									max-height: 5px!important;
+									font-size: 10px;
 								}
 							}
 						</style>
@@ -331,8 +331,8 @@
 	$cuerpo.=			'No. de cuenta: 0191809393 Sucursal: 399<br>';
 	$cuerpo.=			'A nombre de: VOLAR EN GLOBO, AVENTURA Y PUBLICIDAD SA DE CV<br>';
 	$cuerpo.=			'CLABE Interbancaria 012180001918093935<br>';
-	$cuerpo.=			'IMPORTANTE: Notificar vía telefónica o por mail tu depósito para poderte enviar la RESERVACION e itinerario del vuelo. Si te surgen dudas llámanos o escríbenos a nuestro correo electrónico.';
-	$cuerpo.=			'<p style="font-size:14px">Para mas información por favor contactate con tu vendedor</p>';
+	$cuerpo.=			'IMPORTANTE: Notificar vía telefónica o por mail tu depósito para poderte enviar la RESERVACION e itinerario del vuelo. Si te surgen dudas llámanos o escríbenos a nuestro correo electrónico.<br>';
+	$cuerpo.=			'<p style="font-size:14px">Para mas información por favor comunicate con tu vendedor</p>';
 	$cuerpo.=			'<b>'.$getVendedorInfo[0]->nombre.'</b><br>';
 	$cuerpo.=			'<i>'.$vendedor[1].'<br>'.$vendedor[2].'</i>';
 	$cuerpo.=		'</body>';

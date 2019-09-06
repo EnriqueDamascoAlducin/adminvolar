@@ -31,12 +31,9 @@
 			$registro=$con->insertar($tabla,$campos,$valores);
 		}else{
 			$registro=$con->query("CALL registrarHabitacionHotel(".$hotel.",'".$nombre."', '".$precion."','".$precioa."',@LID )");
-			echo "CALL registrarHabitacionHotel(".$hotel.",'".$nombre."', '".$precion."','".$precioa."',@LID )";
 			$registro= $con->query("Select @LID as lid")->fetchAll(PDO::FETCH_OBJ);
 			if($registro[0]->lid>0){
 				$registro='ok';
-			}else{
-				$registro='Falla';
 			}
 		}
 		if ($registro=='ok'){

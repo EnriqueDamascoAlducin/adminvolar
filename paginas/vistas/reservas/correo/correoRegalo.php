@@ -111,7 +111,7 @@
 	/// Datos de Correo
 	//$getVendedorInfo[0]->nombre
 
-	$textoActual='Cupón de Regalo';
+	$textoActual='Cupón de Descuento';
 	$correos=[array($datosReserva[0]->correo,$datosReserva[0]->nombre)];
 	$vendedor =[$getVendedorInfo[0]->nombre,$getVendedorInfo[0]->correo, $getVendedorInfo[0]->telefono];
 	$asunto = "Cupón de Regalo para Reserva: ". $reserva;
@@ -125,9 +125,9 @@
 					</head>';
 	$cuerpo.=		'<body>';
 	$cuerpo.=			'<p>Hola!!! <b>'.$datosReserva[0]->nombre.'</b> </p>';
-	$cuerpo.=			'<p>Le Agradecemos su preferencia. Por ser un cliente especial le regalamos</p>';
+	$cuerpo.=			'<p>Aprovecha tu cupón de descuento.</p>';
 	$cuerpo.=			'<img src="https://www.volarenglobo.com.mx/admin1/sources/images/correos/cupon-descuento-volar-en-globo.jpg" style="width:100%;max-width:100%">';
-	$cuerpo.=			'<p style="font-size:14px">Para mas información por favor contactate con tu vendedor</p>';
+	$cuerpo.=			'<p style="font-size:14px">Para mas información por favor comunicate con tu vendedor</p>';
 	$cuerpo.=			'<b>'.$getVendedorInfo[0]->nombre.'</b><br>';
 	$cuerpo.=			'<i>'.$vendedor[1].'<br>'.$vendedor[2].'</i>';
 	$cuerpo.=		'</body>';
