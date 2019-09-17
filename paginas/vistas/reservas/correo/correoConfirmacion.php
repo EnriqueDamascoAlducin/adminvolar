@@ -175,7 +175,7 @@
 	$cuerpo.=		'<body>';
 	$cuerpo.=			'<img src="https://www.volarenglobo.com.mx/admin1/sources/images/correos/bannersito.png" style="width:100%; max-width=100%;" alt="Confiramcion">';
 	$cuerpo.=			'<p>';
-	$cuerpo.=				'Hola!!! <b>'.$datosReserva[0]->nombre.'</b>.Envío confirmación de vuelo, no olvides llevarla contigo el día de tu vuelo (No es necesario Imprimirla). </p>';
+	$cuerpo.=				'Hola!!! <b>'.$datosReserva[0]->nombre.'</b>. Envío confirmación de vuelo, no olvides llevarla contigo el día de tu vuelo (No es necesario imprimirla). </p>';
 	$cuerpo.=				'<p><b>Registro y Pago:</b> El día de tu vuelo deberás presentarte con nuestro anfitrión en la recepción para que registre tu asistencia y te reciba el pago del restante. Recuerda estar a tiempo en el lugar de la cita para no retrasar tu vuelo ni el de los demás. Te aconsejamos traer ropa cómoda, tal como si fueras a un día de campo: gorra, bufanda, guantes, bloqueador solar, cámara fotográfica o de video.</p>';
 
 
@@ -394,7 +394,7 @@ Recepción Volar en Globo, Aventura y Publicidad SA de CV. Esquina Francisco Vil
 	if($_POST['accion']=='regalo'){
 		$cuerpo.=		'<img src="https://www.volarenglobo.com.mx/admin1/sources/images/correos/cupon-descuento-volar-en-globo.jpg" style="width:100%;max-width:100%">';
 	}
-	$cuerpo.=			'<p style="font-size:14px">Para mas información por favor contactate con tu vendedor</p>';
+	$cuerpo.=			'<p style="font-size:14px">Para mas información por favor comunicate con tu vendedor</p>';
 	$cuerpo.=			'<b>'.$getVendedorInfo[0]->nombre.'</b><br>';
 	$cuerpo.=			'<i>'.$vendedor[1].'<br>'.$vendedor[2].'</i>';
 	$cuerpo.=		'</body>';

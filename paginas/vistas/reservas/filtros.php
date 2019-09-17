@@ -36,7 +36,7 @@
 						
 					
 						if( $reserva->status ==4){
-							$text="Confirmada";
+							$text="Conciliada";
 							$class="#33b5e5";
 						}else if($reserva->status==2){
 							$text="Sin Cotización";
@@ -56,6 +56,9 @@
 						}else if($reserva->status==7){
 							$text="Pagado Total";
 							$class="#00C851";
+						}else if($reserva->status==8){
+							$text="Confirmada";
+							$class="#00e676";
 						}else{
 							$text="Otro";
 							$class="#ff4444";

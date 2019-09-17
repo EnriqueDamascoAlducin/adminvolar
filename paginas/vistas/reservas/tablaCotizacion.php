@@ -117,10 +117,6 @@
 		background: #2BBBAD;
 		color: white;
 	}
-	td,th{
-		max-height: 5px!important;
-		font-size: 10px;
-	}
 	@media (max-width: 576){
 		.largeTd{
 			font-size:60%;
@@ -128,11 +124,16 @@
 			max-width:30%;
 			table-layout: fixed;	
 		}
+		
+		td,th{
+			max-height: 5px!important;
+			font-size: 10px;
+		}
 
 	}
 
 </style>
-<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" id="divCot">
 	<table class="table ">
 		<thead>
 			<tr>
@@ -313,5 +314,13 @@
 	if($_POST['accion']!='ver'){
 		$accion = $con->actualizar("temp_volar","total_temp=".$totalReserva,"id_temp=".$reserva);
 
+	}
+	if($totalReserva<=0){
+?>
+	<script type="text/javascript">
+		$("#divCot").html("El total de la reserva no puede ser menor $ 0.00");
+		$("#ConfirmarCotizacion").hide();
+	</script>
+<?php
 	}
 ?>

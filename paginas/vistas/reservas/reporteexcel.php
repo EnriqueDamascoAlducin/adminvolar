@@ -47,6 +47,7 @@ if(isset($_GET['reserva']) && $_GET['reserva']!='' ){
 $fila=3;
 $titulo=1;
 $enc=2;
+$con->query("SET NAMES UTF8");
 $reservas=$con->consulta($campos,"volar_usuarios vu, temp_volar tv",$filtro);
 include '../../../sources/PHPExcel/Classes/PHPExcel.php';
 $objphp= new PHPExcel();
@@ -200,44 +201,51 @@ $objphp->getActiveSheet()->getColumnDimension('T')->setWidth(25);
 foreach ($reservas as $reserva) {
 
 $objphp->getActiveSheet()->setCellValue('A'.$fila, $reserva->reserva );
-$objphp->getActiveSheet()->setCellValue('B'.$fila, utf8_encode($reserva->cliente) );
-$objphp->getActiveSheet()->setCellValue('C'.$fila, utf8_encode($reserva->vendedor) );
+$objphp->getActiveSheet()->setCellValue('B'.$fila, ($reserva->cliente) );
+$objphp->getActiveSheet()->setCellValue('C'.$fila, ($reserva->vendedor) );
 $objphp->getActiveSheet()->setCellValue('D'.$fila, $reserva->correo );
 $objphp->getActiveSheet()->setCellValue('E'.$fila, $reserva->telefono);
 $objphp->getActiveSheet()->setCellValue('F'.$fila, $reserva->fechavuelo);
-$objphp->getActiveSheet()->setCellValue('G'.$fila, utf8_encode($reserva->procedencia) );
+$objphp->getActiveSheet()->setCellValue('G'.$fila, utf8_decode($reserva->procedencia) );
 $objphp->getActiveSheet()->setCellValue('H'.$fila, $reserva->adultos );
 $objphp->getActiveSheet()->setCellValue('I'.$fila, $reserva->ninos );
-$objphp->getActiveSheet()->setCellValue('J'.$fila, utf8_encode($reserva->motivo) );
-$objphp->getActiveSheet()->setCellValue('K'.$fila, utf8_encode($reserva->tipo) );
-$objphp->getActiveSheet()->setCellValue('L'.$fila, utf8_encode($reserva->hotel) );
-$objphp->getActiveSheet()->setCellValue('M'.$fila, utf8_encode($reserva->habitacion) );
+$objphp->getActiveSheet()->setCellValue('J'.$fila, ($reserva->motivo) );
+$objphp->getActiveSheet()->setCellValue('K'.$fila, ($reserva->tipo) );
+$objphp->getActiveSheet()->setCellValue('L'.$fila, ($reserva->hotel) );
+$objphp->getActiveSheet()->setCellValue('M'.$fila, ($reserva->habitacion) );
 $objphp->getActiveSheet()->setCellValue('N'.$fila, $reserva->cotizado );
-$objphp->getActiveSheet()->setCellValue('O'.$fila, utf8_encode($reserva->globo) );
+$objphp->getActiveSheet()->setCellValue('O'.$fila, ($reserva->globo) );
 $objphp->getActiveSheet()->setCellValue('P'.$fila, $reserva->peso );
+						
 if( $reserva->status ==4){
-	$text="Confirmada";
-	$class="info";
+	$text="Conciliada";
+	$class="#33b5e5";
 }else if($reserva->status==2){
 	$text="Sin Cotización";
-	$class="danger";
+	$class="#ff4444";
 }else if($reserva->status==3){
 	$text="Pendiente de Pago";
-	$class="warning";
+	$class="#ffbb33";
 }else if($reserva->status==1){
 	$text="Terminado";
-	$class="success";
+	$class="#00C851";
 }else if($reserva->status==5){
-	$text="Esperando Autorizacion";
-	$class="success";
+	$text="Esperando Autorización";
+	$class="#00C851";
 }else if($reserva->status==6){
-	$text="Cancelado por Reemplazo";
-	$class="success";
+	$text="C. por Reemplazo ";
+	$class="#ffbb33";
+}else if($reserva->status==7){
+	$text="Pagado Total";
+	$class="#00C851";
+}else if($reserva->status==8){
+	$text="Confirmada";
+	$class="#00e676";
 }else{
 	$text="Otro";
-	$class="danger";
+	$class="#ff4444";
 }
-$objphp->getActiveSheet()->setCellValue('Q'.$fila,utf8_encode( $text) );
+$objphp->getActiveSheet()->setCellValue('Q'.$fila,( $text) );
 $objphp->getActiveSheet()->setCellValue('R'.$fila, $reserva->total );
 $objphp->getActiveSheet()->setCellValue('S'.$fila, $reserva->pagos );
 $objphp->getActiveSheet()->setCellValue('T'.$fila, "=R".$fila."-S".$fila );
@@ -257,7 +265,6 @@ if( strpos( $useragent, "Android" ) !== false || strpos( $useragent, "Mobile" ) 
 }else{
 
 	$objWriter = PHPExcel_IOFactory::createWriter($objphp, 'Excel5');
-	header("Content-Type: text/html; charset=utf-8");
 	header('Content-Disposition: attachment;filename="VentasDesktop.xls"');
 
 	$objWriter->save('php://output');
