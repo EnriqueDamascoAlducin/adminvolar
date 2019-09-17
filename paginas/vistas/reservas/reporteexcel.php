@@ -206,7 +206,7 @@ $objphp->getActiveSheet()->setCellValue('C'.$fila, ($reserva->vendedor) );
 $objphp->getActiveSheet()->setCellValue('D'.$fila, $reserva->correo );
 $objphp->getActiveSheet()->setCellValue('E'.$fila, $reserva->telefono);
 $objphp->getActiveSheet()->setCellValue('F'.$fila, $reserva->fechavuelo);
-$objphp->getActiveSheet()->setCellValue('G'.$fila, utf8_decode($reserva->procedencia) );
+$objphp->getActiveSheet()->setCellValue('G'.$fila, utf8_decode( $reserva->procedencia) );
 $objphp->getActiveSheet()->setCellValue('H'.$fila, $reserva->adultos );
 $objphp->getActiveSheet()->setCellValue('I'.$fila, $reserva->ninos );
 $objphp->getActiveSheet()->setCellValue('J'.$fila, ($reserva->motivo) );
