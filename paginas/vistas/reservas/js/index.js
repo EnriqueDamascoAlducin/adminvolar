@@ -260,6 +260,9 @@ function agregarReserva(id,accion){
 		url:url,
 		method: "POST",
   		data: parametros,
+  		beforeSend:function(){
+			$("#contenedor").html('<img src="../sources/images/icons/cargando.gif" style="max-width:70%;width:100%" >');	
+  		},
   		success:function(response){
 			$("#contenedor").html(response);	
   		},

@@ -18,6 +18,7 @@
 	$datosReserva = $con->query("CALL getResumenREserva(".$reserva.");")->fetchALL (PDO::FETCH_OBJ);
 	$serviciosReserva = $con->consulta("tipo_sv as tipo , nombre_servicio as servicio ,cantmax_servicio as cantmax, precio_servicio as precio "," servicios_vuelo_temp svt INNER JOIN servicios_volar sv ON svt.idservi_sv=sv.id_servicio ","  svt.status<>0 and cantidad_sv>0 and idtemp_sv =".$reserva);
 
+	$hotel=$datosReserva[0]->hotel;
 	$habitacion=$datosReserva[0]->habitacion;
 	$habitacion=explode("|", $habitacion);
 	
@@ -161,7 +162,7 @@
 								max-height: 5px!important;
 								font-size: 10px;
 							}
-							@media (max-width: 576){
+							@media (max-width: 576px){
 								td{
 									font-size:60%;
 									width:30%
@@ -231,6 +232,27 @@
 		$cuerpo.=						'</tr>';
 	} 
 
+
+
+	if($datosReserva[0]->hotel!=''){
+		$cuerpo.=						'<tr>';
+		$cuerpo.=							'<td class="tdseparador" colspan="4">HOTEL</td>';
+		$cuerpo.=						'</tr>'
+		$cuerpo.=						'<tr>';
+		$cuerpo.=							'<td class="tdtitulo" colspan="4">'.$hotel.'<br>$ '. number_format(  $precioHabitacion, 2, '.', ',') .'</td>';
+		$cuerpo.=						'</tr>';
+		$cuerpo.=						'<tr>';
+		$cuerpo.=							'<td class="tdtitulo" >HABITACIÓN</td>';
+		$cuerpo.=							'<td >'.$nombreHabitacion.'</td>';
+		$cuerpo.=							'<td ></td>';
+		$cuerpo.=						'</tr>'
+		$cuerpo.=						'<tr>';
+		$cuerpo.=							'<td class="tdtitulo" >PRECIO/NOCHE</td>';
+		$cuerpo.=							'<td >'.$descripcionHospedaje.'</td>';
+		$cuerpo.=							'<td >$ '.number_format(  $totalHabitacion, 2, '.', ',').'</td>';
+		$cuerpo.=						'</tr>'
+
+	}
 	$cuerpo.=						'<tr>';
 	$cuerpo.=							'<td class="tdtitulo">VENDEDOR</td>';
 	$cuerpo.=							'<td >'.$vendedor[0].'</td>';

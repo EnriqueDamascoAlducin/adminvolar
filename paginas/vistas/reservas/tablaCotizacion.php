@@ -5,6 +5,39 @@
 //	$datosVuelo = $con->consulta("IFNULL(fechavuelo_temp,' No asignada' as fechavuelo, ")
 		//2 es de cortesia ;1 es de paga
 	//cantmax 0 = automatico
+	
+	function convertirFecha($fecha){
+		$fecha=explode("-",$fecha);
+		if($fecha[1]=='01'){
+			$Nvafecha="$fecha[2]-ENE-$fecha[0]";
+		}else if($fecha[1]=='02'){
+			$Nvafecha="$fecha[2]-FEB-$fecha[0]";
+		}else if($fecha[1]=='03'){
+			$Nvafecha="$fecha[2]-MAR-$fecha[0]";
+		}else if($fecha[1]=='04'){
+			$Nvafecha="$fecha[2]-ABR-$fecha[0]";
+		}else if($fecha[1]=='05'){
+			$Nvafecha="$fecha[2]-MAYO-$fecha[0]";
+		}else if($fecha[1]=='06'){
+			$Nvafecha="$fecha[2]-JUN-$fecha[0]";
+		}else if($fecha[1]=='07'){
+			$Nvafecha="$fecha[2]-JUL-$fecha[0]";
+		}else if($fecha[1]=='08'){
+			$Nvafecha="$fecha[2]-AGO-$fecha[0]";
+		}else if($fecha[1]=='09'){
+			$Nvafecha="$fecha[2]-SEP-$fecha[0]";
+		}else if($fecha[1]=='10'){
+			$Nvafecha="$fecha[2]-OCT-$fecha[0]";
+		}else if($fecha[1]=='11'){
+			$Nvafecha="$fecha[2]-NOV-$fecha[0]";
+		}else if($fecha[1]=='12'){
+			$Nvafecha="$fecha[2]-DIC-$fecha[0]";
+		}else{
+			$Nvafecha="Error $";
+		}
+		return $Nvafecha;
+	}
+	
 	$totalReserva=0.0;
 	$totalPasajeros = $con->consulta("FORMAT(ifnull(pasajerosa_temp,0) + ifnull(pasajerosn_temp,0),2)  Total"," temp_volar "," id_temp = $reserva");
 	$datosReserva = $con->query("CALL getResumenREserva(".$reserva.");")->fetchALL (PDO::FETCH_OBJ);
@@ -56,7 +89,7 @@
 			             $months*30*60*60*24)/ (60*60*24)); 
 
 			$totalHabitacion= $days * $precioHabitacion;
-			$descripcionHospedaje = " De ".$checkin. " a ". $checkout. "(<b>".$days." dias</b> )";
+			$descripcionHospedaje = " De ".convertirFecha($checkin). " a ". convertirFecha($checkout). "(<b>".$days." dias</b> )";
 			$totalReserva+=$totalHabitacion;
 		}
 		$totalReserva +=$datosReserva[0]->precio1;
@@ -66,38 +99,6 @@
 		
 
 	}
-	function convertirFecha($fecha){
-		$fecha=explode("-",$fecha);
-		if($fecha[1]=='01'){
-			$Nvafecha="$fecha[2]-ENE-$fecha[0]";
-		}else if($fecha[1]=='02'){
-			$Nvafecha="$fecha[2]-FEB-$fecha[0]";
-		}else if($fecha[1]=='03'){
-			$Nvafecha="$fecha[2]-MAR-$fecha[0]";
-		}else if($fecha[1]=='04'){
-			$Nvafecha="$fecha[2]-ABR-$fecha[0]";
-		}else if($fecha[1]=='05'){
-			$Nvafecha="$fecha[2]-MAYO-$fecha[0]";
-		}else if($fecha[1]=='06'){
-			$Nvafecha="$fecha[2]-JUN-$fecha[0]";
-		}else if($fecha[1]=='07'){
-			$Nvafecha="$fecha[2]-JUL-$fecha[0]";
-		}else if($fecha[1]=='08'){
-			$Nvafecha="$fecha[2]-AGO-$fecha[0]";
-		}else if($fecha[1]=='09'){
-			$Nvafecha="$fecha[2]-SEP-$fecha[0]";
-		}else if($fecha[1]=='10'){
-			$Nvafecha="$fecha[2]-OCT-$fecha[0]";
-		}else if($fecha[1]=='11'){
-			$Nvafecha="$fecha[2]-NOV-$fecha[0]";
-		}else if($fecha[1]=='12'){
-			$Nvafecha="$fecha[2]-DIC-$fecha[0]";
-		}else{
-			$Nvafecha="Error $";
-		}
-		return $Nvafecha;
-	}
-	
 ?>
 <style type="text/css">
 	.tdtitulo{
@@ -117,7 +118,7 @@
 		background: #2BBBAD;
 		color: white;
 	}
-	@media (max-width: 576){
+	@media (max-width: 576px){
 		.largeTd{
 			font-size:60%;
 			width:30%
@@ -193,7 +194,7 @@
 							<td class="tdseparador" colspan="3">HOTEL</td>
 						</tr>
 						<tr>
-							<td class="tdtitulo" colspan="3"><?php echo $hotel.'<br>'.$descripcionHospedaje; ?></td>
+							<td class="tdtitulo" colspan="3"><?php echo $hotel.'<br>$ '.number_format(  $precioHabitacion, 2, '.', ','); ?></td>
 						</tr>
 						<tr>
 							<td class="tdtitulo" >HABITACIÓN</td>
@@ -202,8 +203,8 @@
 						</tr>
 						<tr>
 							<td class="tdtitulo" >PRECIO/NOCHE</td>
-							<td></td>
-							<td  ><?php echo "$ ".number_format(  $precioHabitacion, 2, '.', ','); ?></td>
+							<td><?php echo $descripcionHospedaje; ?></td>
+							<td  ><?php echo "$ ".number_format(  $totalHabitacion, 2, '.', ','); ?></td>
 						</tr>
 						<tr>
 							<td class="tdtitulo" >DESCRIPCIÓN</td>

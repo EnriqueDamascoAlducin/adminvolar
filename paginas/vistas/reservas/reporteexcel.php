@@ -52,7 +52,6 @@ $reservas=$con->consulta($campos,"volar_usuarios vu, temp_volar tv",$filtro);
 include '../../../sources/PHPExcel/Classes/PHPExcel.php';
 $objphp= new PHPExcel();
 
-header("Content-Type: text/html;charset=utf-8");
 $gdImage = imagecreatefrompng('../../../sources/images/icons/logo.png');//Logotipo
 $objphp->getProperties()
         ->setCreator("Volar en Globo")

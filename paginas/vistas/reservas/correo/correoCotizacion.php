@@ -8,102 +8,6 @@
 	if(isset($_SESSION['usuario'])){
         $usuario= unserialize((base64_decode($_SESSION['usuario'])));
     }
-//	$datosVuelo = $con->consulta("IFNULL(fechavuelo_temp,' No asignada' as fechavuelo, ")
-		//2 es de cortesia ;1 es de paga
-	//cantmax 0 = automatico
-	$totalReserva=0.0;
-	$totalPasajeros = $con->consulta("FORMAT(ifnull(pasajerosa_temp,0) + ifnull(pasajerosn_temp,0),2)  Total"," temp_volar "," id_temp = $reserva");
-	$datosReserva = $con->query("CALL getResumenREserva(".$reserva.");")->fetchALL (PDO::FETCH_OBJ);
-	$serviciosReserva = $con->consulta("tipo_sv as tipo , nombre_servicio as servicio ,cantmax_servicio as cantmax, precio_servicio as precio "," servicios_vuelo_temp svt INNER JOIN servicios_volar sv ON svt.idservi_sv=sv.id_servicio ","  svt.status<>0 and cantidad_sv>0 and idtemp_sv =".$reserva);
-
-	$habitacion=$datosReserva[0]->habitacion;
-	$habitacion=explode("|", $habitacion);
-	
-	$getVendedorInfo = $con->consulta("CONCAT(IFNULL(nombre_usu,''),' ',IFNULL(apellidop_usu,''),' ', IFNULL(apellidom_usu,'')) as nombre, correo_usu as correo,telefono_usu as telefono", " volar_usuarios vu INNER JOIN temp_volar tv ON tv.idusu_temp=vu.id_usu ","id_temp=".$reserva);
-	$tPasajeros = $datosReserva[0]->pasajerosN+ $datosReserva[0]->pasajerosA;
-	$tipoVuelo = $datosReserva[0]->tipo_temp;
-	$totalPasajeros = $totalPasajeros[0]->Total;
-	if($tPasajeros == $totalPasajeros){
-		//echo $totalPasajeros;
-		$preciosTipoVuelo = $con->consulta("precioa_vc,precion_vc","vueloscat_volar","id_vc=$tipoVuelo");
-		$totalVueloAdultos = $datosReserva[0]->pasajerosA * $preciosTipoVuelo[0]->precioa_vc;
-		$totalVueloNinos = $datosReserva[0]->pasajerosN * $preciosTipoVuelo[0]->precion_vc;
-		$totalVuelo= $totalVueloAdultos+$totalVueloNinos;
-		$totalReserva+=$totalVuelo;
-		//echo "<br>Vuelo = ".$totalVuelo."<br>";
-		if($datosReserva[0]->habitacion!=''){
-			$precioHabitacion=$habitacion[1];
-			$nombreHabitacion=$habitacion[0];
-			$capacidadHabitacion=$habitacion[2];
-			$descripHabitacion=$habitacion[3];
-			$checkin= $datosReserva[0]->checkin;
-			$checkout = $datosReserva[0]->checkout;
-			$date1 = strtotime($checkin);  
-			$date2 = strtotime($checkout);  
-			  
-			// Formulate the Difference between two dates 
-			$diff = abs($date2 - $date1);
-			// To get the year divide the resultant date into 
-			// total seconds in a year (365*60*60*24) 
-			$years = floor($diff / (365*60*60*24));  
-			  
-			  
-			// To get the month, subtract it with years and 
-			// divide the resultant date into 
-			// total seconds in a month (30*60*60*24) 
-			$months = floor(($diff - $years * 365*60*60*24) 
-			                               / (30*60*60*24));  
-			  
-			  
-			// To get the day, subtract it with years and  
-			// months and divide the resultant date into 
-			// total seconds in a days (60*60*24) 
-			$days = floor(($diff - $years * 365*60*60*24 -  
-			             $months*30*60*60*24)/ (60*60*24)); 
-
-			$totalHabitacion= $days * $precioHabitacion;
-			
-			$descripcionHospedaje = " De ".$checkin. " a ". $checkout. "(<b>".$days." dias</b> )";
-			$totalReserva+=$totalHabitacion;
-		}
-		$totalReserva +=$datosReserva[0]->precio1;
-		//echo "otros->".$datosReserva[0]->precio1."<br>";
-		$totalReserva +=$datosReserva[0]->precio2;
-		
-		function convertirFecha($fecha){
-				$fecha=explode("-",$fecha);
-				if($fecha[1]=='01'){
-					$Nvafecha="$fecha[2]-ENE-$fecha[0]";
-				}else if($fecha[1]=='02'){
-					$Nvafecha="$fecha[2]-FEB-$fecha[0]";
-				}else if($fecha[1]=='03'){
-					$Nvafecha="$fecha[2]-MAR-$fecha[0]";
-				}else if($fecha[1]=='04'){
-					$Nvafecha="$fecha[2]-ABR-$fecha[0]";
-				}else if($fecha[1]=='05'){
-					$Nvafecha="$fecha[2]-MAYO-$fecha[0]";
-				}else if($fecha[1]=='06'){
-					$Nvafecha="$fecha[2]-JUN-$fecha[0]";
-				}else if($fecha[1]=='07'){
-					$Nvafecha="$fecha[2]-JUL-$fecha[0]";
-				}else if($fecha[1]=='08'){
-					$Nvafecha="$fecha[2]-AGO-$fecha[0]";
-				}else if($fecha[1]=='09'){
-					$Nvafecha="$fecha[2]-SEP-$fecha[0]";
-				}else if($fecha[1]=='10'){
-					$Nvafecha="$fecha[2]-OCT-$fecha[0]";
-				}else if($fecha[1]=='11'){
-					$Nvafecha="$fecha[2]-NOV-$fecha[0]";
-				}else if($fecha[1]=='12'){
-					$Nvafecha="$fecha[2]-DIC-$fecha[0]";
-				}else{
-					$Nvafecha="Error $";
-				}
-				return $Nvafecha;
-		}
-	}
-
-	$fechavuelo = convertirFecha($datosReserva[0]->fechavuelo);
 	
 ?>
 <?php 
@@ -142,7 +46,7 @@
 								vertical-align: middle;
 								color: white;	
 							}
-							@media (max-width: 576){
+							@media (max-width: 576px){
 								.largeTd{
 									font-size:65%;
 									width:100px;
@@ -162,9 +66,6 @@
 	$cuerpo.=			'<b>Estimado(a) '.$datosReserva[0]->nombre.'</b>';
 	$cuerpo.=			'<p>';
 	$cuerpo.=				'Es un gusto poder atender tu solicitud de vuelo en globo. Nuestra operación se encuentra en el';
-	$cuerpo.=				'<a href="https://www.google.com/maps/place/VOLAR+EN+GLOBO/@19.695002,-98.8258507,17z/data=!3m1!4b1!4m5!3m4!1s0x85d1f5725d683f25:0xff4f4587c24e2324!8m2!3d19.695002!4d-98.823662"> Valle de Teotihuacan, Estado de M&eacute;xico</a>, ';
-	$cuerpo.=				'te ofrecemos la mejor vista de las pirámides y de la zona arqueológica. La cita es en nuestra recepción ubicada a 5 minutos de la zona arqueológica, en este lugar nuestro equipo te recibirá y te trasladara a nuestra zona de despegue, allí podrás ver el armado y el inflado de tu globo, desde ese momento inicia la aventura así que prepara tu cámara para tomar muchas fotos. ¡Prepárate para la mejor parte! Al aterrizar la tripulación se hará cargo del globo mientras tú y el piloto llevan a cabo el tradicional brindis, recibirás un certificado de vuelo (suvenir) y la tripulación te trasladará de regreso a la recepción.';
-	$cuerpo.=			'</p>';
 
 
 	$cuerpo.=			'<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">';
@@ -224,6 +125,25 @@
 		$cuerpo.=						'</tr>';
 	} 
 
+	if($datosReserva[0]->hotel!=''){
+		$cuerpo.=						'<tr>';
+		$cuerpo.=							'<td class="tdseparador" colspan="4">HOTEL</td>';
+		$cuerpo.=						'</tr>';
+		$cuerpo.=						'<tr>';
+		$cuerpo.=							'<td class="tdtitulo" colspan="4">'.$hotel.'<br>$ '. number_format(  $precioHabitacion, 2, '.', ',') .'</td>';
+		$cuerpo.=						'</tr>';
+		$cuerpo.=						'<tr>';
+		$cuerpo.=							'<td class="tdtitulo" >HABITACIÓN</td>';
+		$cuerpo.=							'<td >'.$nombreHabitacion.'</td>';
+		$cuerpo.=							'<td ></td>';
+		$cuerpo.=						'</tr>';
+		$cuerpo.=						'<tr>';
+		$cuerpo.=							'<td class="tdtitulo" >PRECIO/NOCHE</td>';
+		$cuerpo.=							'<td >'.$descripcionHospedaje.'</td>';
+		$cuerpo.=							'<td >$ '.number_format(  $totalHabitacion, 2, '.', ',').'</td>';
+		$cuerpo.=						'</tr>';
+
+	}
 	if($datosReserva[0]->otroscar1!=''){
 		$cuerpo.=					'<tr>';
 		$cuerpo.=						'<td class="tdtitulo">'. $datosReserva[0]->otroscar1. '</td>';

@@ -12,12 +12,12 @@
 ?>
 <style type="text/css">
 	
-	@media (max-width: 576){
+	@media (max-width: 576px){
 		.tableTh{
-			font-size: 50%;
+			font-size: 60%;
 		}
 		.tableTd{
-			font-size: 50%;
+			font-size: 55%;
 		}
 	}
 </style>

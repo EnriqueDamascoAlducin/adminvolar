@@ -3,11 +3,45 @@
 //	$datosVuelo = $con->consulta("IFNULL(fechavuelo_temp,' No asignada' as fechavuelo, ")
 		//2 es de cortesia ;1 es de paga
 	//cantmax 0 = automatico
+
+	function convertirFecha($fecha){
+		$fecha=explode("-",$fecha);
+		if($fecha[1]=='01'){
+			$Nvafecha="$fecha[2]-ENE-$fecha[0]";
+		}else if($fecha[1]=='02'){
+			$Nvafecha="$fecha[2]-FEB-$fecha[0]";
+		}else if($fecha[1]=='03'){
+			$Nvafecha="$fecha[2]-MAR-$fecha[0]";
+		}else if($fecha[1]=='04'){
+			$Nvafecha="$fecha[2]-ABR-$fecha[0]";
+		}else if($fecha[1]=='05'){
+			$Nvafecha="$fecha[2]-MAYO-$fecha[0]";
+		}else if($fecha[1]=='06'){
+			$Nvafecha="$fecha[2]-JUN-$fecha[0]";
+		}else if($fecha[1]=='07'){
+			$Nvafecha="$fecha[2]-JUL-$fecha[0]";
+		}else if($fecha[1]=='08'){
+			$Nvafecha="$fecha[2]-AGO-$fecha[0]";
+		}else if($fecha[1]=='09'){
+			$Nvafecha="$fecha[2]-SEP-$fecha[0]";
+		}else if($fecha[1]=='10'){
+			$Nvafecha="$fecha[2]-OCT-$fecha[0]";
+		}else if($fecha[1]=='11'){
+			$Nvafecha="$fecha[2]-NOV-$fecha[0]";
+		}else if($fecha[1]=='12'){
+			$Nvafecha="$fecha[2]-DIC-$fecha[0]";
+		}else{
+			$Nvafecha="Error $";
+		}
+		return $Nvafecha;
+	}
+	
 	$totalReserva=0.0;
 	$totalPasajeros = $con->consulta("FORMAT(ifnull(pasajerosa_temp,0) + ifnull(pasajerosn_temp,0),2)  Total"," temp_volar "," id_temp = $reserva");
 	$datosReserva = $con->query("CALL getResumenREserva(".$reserva.");")->fetchALL (PDO::FETCH_OBJ);
 	$serviciosReserva = $con->consulta("tipo_sv as tipo , nombre_servicio as servicio ,cantmax_servicio as cantmax, precio_servicio as precio "," servicios_vuelo_temp svt INNER JOIN servicios_volar sv ON svt.idservi_sv=sv.id_servicio ","  svt.status<>0 and cantidad_sv>0 and idtemp_sv =".$reserva);
 
+	$hotel=$datosReserva[0]->hotel;
 	$habitacion=$datosReserva[0]->habitacion;
 	$habitacion=explode("|", $habitacion);
 	
@@ -55,43 +89,12 @@
 
 			$totalHabitacion= $days * $precioHabitacion;
 			
-			$descripcionHospedaje = " De ".$checkin. " a ". $checkout. "(<b>".$days." dias</b> )";
+			$descripcionHospedaje = " De ".convertirFecha($checkin). " a ". convertirFecha($checkout). "(".$days." dias).";
 			$totalReserva+=$totalHabitacion;
 		}
 		$totalReserva +=$datosReserva[0]->precio1;
 		//echo "otros->".$datosReserva[0]->precio1."<br>";
 		$totalReserva +=$datosReserva[0]->precio2;
-	}
-	function convertirFecha($fecha){
-			$fecha=explode("-",$fecha);
-			if($fecha[1]=='01'){
-				$Nvafecha="$fecha[2]-ENE-$fecha[0]";
-			}else if($fecha[1]=='02'){
-				$Nvafecha="$fecha[2]-FEB-$fecha[0]";
-			}else if($fecha[1]=='03'){
-				$Nvafecha="$fecha[2]-MAR-$fecha[0]";
-			}else if($fecha[1]=='04'){
-				$Nvafecha="$fecha[2]-ABR-$fecha[0]";
-			}else if($fecha[1]=='05'){
-				$Nvafecha="$fecha[2]-MAYO-$fecha[0]";
-			}else if($fecha[1]=='06'){
-				$Nvafecha="$fecha[2]-JUN-$fecha[0]";
-			}else if($fecha[1]=='07'){
-				$Nvafecha="$fecha[2]-JUL-$fecha[0]";
-			}else if($fecha[1]=='08'){
-				$Nvafecha="$fecha[2]-AGO-$fecha[0]";
-			}else if($fecha[1]=='09'){
-				$Nvafecha="$fecha[2]-SEP-$fecha[0]";
-			}else if($fecha[1]=='10'){
-				$Nvafecha="$fecha[2]-OCT-$fecha[0]";
-			}else if($fecha[1]=='11'){
-				$Nvafecha="$fecha[2]-NOV-$fecha[0]";
-			}else if($fecha[1]=='12'){
-				$Nvafecha="$fecha[2]-DIC-$fecha[0]";
-			}else{
-				$Nvafecha="Error $";
-			}
-			return $Nvafecha;
 	}
 	$fechavuelo = convertirFecha($datosReserva[0]->fechavuelo);
 	$encabezado = "Estimado(a) ". $datosReserva[0]->nombre .".  Es un gusto poder atender tu solicitud de vuelo en globo. Nuestra operación se encuentra en el Valle de Teotihuacan, Estado de México. e ofrecemos la mejor vista de las pirámides y de la zona arqueológica. La cita es en nuestra recepción ubicada a 5 minutos de la zona arqueológica, en este lugar nuestro equipo te recibirá y te trasladara a nuestra zona de despegue, allí podrás ver el armado y el inflado de tu globo, desde ese momento inicia la aventura así que prepara tu cámara para tomar muchas fotos. ¡Prepárate para la mejor parte! Al aterrizar la tripulación se hará cargo del globo mientras tú y el piloto llevan a cabo el tradicional brindis, recibirás un certificado de vuelo (suvenir) y la tripulación te trasladará de regreso a la recepción.";
@@ -167,8 +170,11 @@
 		$pdf->SetFillColor(105,165,247);
 		$pdf->SetFont('Arial','',10);
 		$pdf->Cell(70,6,'COMENTARIO',1,0,'C',1);
-		$pdf->Cell(55,6,utf8_decode($datosReserva[0]->comentario),1,0,'C',0);
-		$pdf->Cell(60,6,'',1,1,'C',0);
+		$pdf->MultiCell(55,4, utf8_decode($datosReserva[0]->comentario),1,'L',0);
+    	$pdf->setXY(135,102);
+    	$pdf->setTextColor(255, 255, 255);
+		$pdf->MultiCell(60,4, utf8_decode($datosReserva[0]->comentario),1,'L',0);
+    	$pdf->setTextColor(0, 0, 0);
 	}
 
 	if($datosReserva[0]->motivo!=''){ 
@@ -179,6 +185,34 @@
 		$pdf->Cell(60,6,'',1,1,'C',0);
 	}
 
+
+	if($datosReserva[0]->hotel!=''){
+
+		$pdf->SetFillColor(51,255,147);
+		$pdf->SetFont('Arial','',10);
+		$pdf->Cell(185,6,'HOTEL',1,1,'C',1);
+
+		$pdf->SetFillColor(105,165,247);
+		$pdf->SetFont('Arial','',10);
+		$pdf->Cell(185,6,utf8_decode($hotel ),1,1,'C',1);
+
+		$pdf->SetFillColor(105,165,247);
+		$pdf->SetFont('Arial','',10);
+		$pdf->Cell(70,6,utf8_decode('HABITACIÓN'),1,0,'C',1);
+		$pdf->Cell(55,6,utf8_decode($nombreHabitacion .'($ '. number_format(  $precioHabitacion, 2, '.', ',') .')') ,1,0,'C',0);
+		$pdf->Cell(60,6,'',1,1,'C',0);
+
+
+		$pdf->SetFillColor(105,165,247);
+		$pdf->SetFont('Arial','',10);
+		$pdf->Cell(70,6,utf8_decode('TOTAL HABITACIÓN'),1,0,'C',1);
+		$pdf->SetFont('Arial','',7);
+		$pdf->Cell(55,6,utf8_decode($descripcionHospedaje),1,0,'C',0);
+		$pdf->SetFont('Arial','',10);
+		$pdf->Cell(60,6,'$ '.number_format(  $totalHabitacion, 2, '.', ',') ,1,1,'C',0);
+
+
+	}
 	if($datosReserva[0]->otroscar1!=''){
 		$pdf->SetFillColor(105,165,247);
 		$pdf->SetFont('Arial','',10);
