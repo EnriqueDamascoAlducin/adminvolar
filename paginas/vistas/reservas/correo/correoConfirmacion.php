@@ -237,7 +237,7 @@
 	if($datosReserva[0]->hotel!=''){
 		$cuerpo.=						'<tr>';
 		$cuerpo.=							'<td class="tdseparador" colspan="4">HOTEL</td>';
-		$cuerpo.=						'</tr>'
+		$cuerpo.=						'</tr>';
 		$cuerpo.=						'<tr>';
 		$cuerpo.=							'<td class="tdtitulo" colspan="4">'.$hotel.'<br>$ '. number_format(  $precioHabitacion, 2, '.', ',') .'</td>';
 		$cuerpo.=						'</tr>';
@@ -245,12 +245,12 @@
 		$cuerpo.=							'<td class="tdtitulo" >HABITACIÓN</td>';
 		$cuerpo.=							'<td >'.$nombreHabitacion.'</td>';
 		$cuerpo.=							'<td ></td>';
-		$cuerpo.=						'</tr>'
+		$cuerpo.=						'</tr>';
 		$cuerpo.=						'<tr>';
 		$cuerpo.=							'<td class="tdtitulo" >PRECIO/NOCHE</td>';
 		$cuerpo.=							'<td >'.$descripcionHospedaje.'</td>';
 		$cuerpo.=							'<td >$ '.number_format(  $totalHabitacion, 2, '.', ',').'</td>';
-		$cuerpo.=						'</tr>'
+		$cuerpo.=						'</tr>';
 
 	}
 	$cuerpo.=						'<tr>';
