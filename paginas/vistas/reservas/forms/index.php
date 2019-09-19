@@ -211,6 +211,19 @@
 		    <input type="date"   class="form-control" id="fechavuelo" name="fechavuelo" value="<?php echo $reserva->getFechavueloTemp(); ?>">
 	  	</div>
 	</div>
+	<div class="col-6 col-md-3 col-sm-3 col-md-3 col-xl-2" >
+		<div class="form-group">
+		    <label for="idioma"><b>Idioma</b></label>
+	      	<select id="idioma" name="idioma" class="form-control">
+	        	<?php 
+	        		$es="";$en="";
+	        		if($reserva->getIdiomaTemp()==1){$es="selected";}else{$en="selected";} 
+	        	?>
+	        	<option value="1" <?php echo $es; ?>>Español</option>
+	        	<option value="2" <?php echo $en; ?>>Inglés</option>
+	        </select>
+	  	</div>
+	</div>
 </div>
 <div class="col-12 col-md-12 col-sm-12 col-md-12 col-xl-12" style="background-color: #3674B2">
 	<i style="color:white">Hospedaje</i>

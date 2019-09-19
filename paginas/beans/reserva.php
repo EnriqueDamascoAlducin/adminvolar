@@ -31,6 +31,7 @@
 		private $kgTemp;
 		private $globoTemp;
 		private $horaTemp;
+		private $idiomaTemp;
 		private $register;
 		private $status;
 		function Reserva(){
@@ -276,6 +277,13 @@
 			return $this->status;
 		}
 		
+		///////////
+		function setIdiomaTemp($idiomaTemp){
+			$this->idiomaTemp=$idiomaTemp;
+		}
+		function getIdiomaTemp(){
+			return $this->idiomaTemp;
+		}
 		
 	}
 	$reserva = new Reserva();

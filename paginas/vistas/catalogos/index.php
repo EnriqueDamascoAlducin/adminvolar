@@ -20,7 +20,7 @@
 <?php if(in_array("ESTADOS", $permisos)){ ?>
   <div class="col-6 col-sm-3 col-md-3 col-lg-3 col-xl-3">
   	<div class="alert alert-info" data-toggle="modal" data-target="#modal" data-info="estados"  onclick="accionExtras('agregar', <?php echo $usuario->getIdUsu(); ?>,'estados')">
-  	  <strong><i class="fa fa-plus fa-md"></i></strong> Agregar Estados.
+  	  <strong><i class="fa fa-plus fa-md"></i></strong> Agregar Procedencias.
   	</div>
   </div>
 <?php } ?>

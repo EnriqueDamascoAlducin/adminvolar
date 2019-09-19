@@ -38,7 +38,7 @@
 				}elseif($extra->clasificacion=='metodopago'){
 					$clasificacion='Metodos de Pago';
 				}elseif($extra->clasificacion=='cuentasvolar'){
-					$clasificacion='Cuentas de Volar';
+					$clasificacion='Cuentas de Banco';
 				}elseif($extra->clasificacion=='tipogastos'){
 					$clasificacion='Tipos de Gastos';
 				}

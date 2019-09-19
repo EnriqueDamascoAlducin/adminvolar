@@ -96,8 +96,10 @@
 		//echo "otros->".$datosReserva[0]->precio1."<br>";
 		$totalReserva +=$datosReserva[0]->precio2;
 	}
+
+	$vendedor =[$getVendedorInfo[0]->nombre,$getVendedorInfo[0]->correo, $getVendedorInfo[0]->telefono];
 	$fechavuelo = convertirFecha($datosReserva[0]->fechavuelo);
-	$encabezado = "Estimado(a) ". $datosReserva[0]->nombre .".  Es un gusto poder atender tu solicitud de vuelo en globo. Nuestra operación se encuentra en el Valle de Teotihuacan, Estado de México. e ofrecemos la mejor vista de las pirámides y de la zona arqueológica. La cita es en nuestra recepción ubicada a 5 minutos de la zona arqueológica, en este lugar nuestro equipo te recibirá y te trasladara a nuestra zona de despegue, allí podrás ver el armado y el inflado de tu globo, desde ese momento inicia la aventura así que prepara tu cámara para tomar muchas fotos. ¡Prepárate para la mejor parte! Al aterrizar la tripulación se hará cargo del globo mientras tú y el piloto llevan a cabo el tradicional brindis, recibirás un certificado de vuelo (suvenir) y la tripulación te trasladará de regreso a la recepción.";
+	$encabezado = "Estimado(a) ". $datosReserva[0]->nombre .".  Es un gusto poder atender tu solicitud de vuelo en globo. Nuestra operación se encuentra en el Valle de Teotihuacan, Estado de México. Te ofrecemos la mejor vista de las pirámides y de la zona arqueológica. La cita es en nuestra recepción ubicada a 5 minutos de la zona arqueológica, en este lugar nuestro equipo te recibirá y te trasladara a nuestra zona de despegue, allí podrás ver el armado y el inflado de tu globo, desde ese momento inicia la aventura así que prepara tu cámara para tomar muchas fotos. ¡Prepárate para la mejor parte! Al aterrizar la tripulación se hará cargo del globo mientras tú y el piloto llevan a cabo el tradicional brindis, recibirás un certificado de vuelo (suvenir) y la tripulación te trasladará de regreso a la recepción.";
 	$importante ="IMPORTANTE: Notificar vía telefónica o por mail tu depósito para poderte enviar la RESERVACION e itinerario del vuelo. Si te surgen dudas llámanos o escríbenos a nuestro correo electrónico.";
 	$tiempo="Tu cotización es válida por un período de 30 días desde la fecha de envío.";
 	$pdf = new PDF();
@@ -356,6 +358,16 @@
 	$pdf->MultiCell(185,5,utf8_decode('CLABE Interbancaria 012180001918093935'),0,'J',0);
 	$pdf->SetFont('Arial','',9);
 	$pdf->MultiCell(185,5,utf8_decode('IMPORTANTE: Notificar vía telefónica o por mail tu depósito para poderte enviar la RESERVACION e itinerario del vuelo. Si te surgen dudas llámanos o escríbenos a nuestro correo electrónico.'),0,'J',0);
+
+	$pdf->MultiCell(185,6,'',0,'J',0);
+	$pdf->SetFont('Arial','',9);
+	$pdf->MultiCell(185,5,utf8_decode('Para mas información por favor comunicate con tu vendedor'),0,'J',0);
+	$pdf->SetFont('Arial','',9);
+	$pdf->MultiCell(185,5,utf8_decode($getVendedorInfo[0]->nombre),0,'J',0);
+	$pdf->SetFont('Arial','B',9);
+	$pdf->MultiCell(185,5,utf8_decode($vendedor[1]),0,'J',0);
+	$pdf->SetFont('Arial','B',9);
+	$pdf->MultiCell(185,5,utf8_decode($vendedor[2]),0,'J',0);
 
 
 

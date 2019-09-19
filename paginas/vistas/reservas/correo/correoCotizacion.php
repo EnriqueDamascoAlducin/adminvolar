@@ -1,6 +1,5 @@
 <?php 
 	$reserva = $_POST['reserva'];
-
 	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/controladores/conexion.php';
 	require  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/modelos/login.php';
 	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/controladores/fin_session.php';
@@ -8,13 +7,12 @@
 	if(isset($_SESSION['usuario'])){
         $usuario= unserialize((base64_decode($_SESSION['usuario'])));
     }
-	
+
 ?>
 <?php 
 	/// Datos de Correo
 	$textoActual='Cotización Volar en Globo';
 	$correos=[array($datosReserva[0]->correo,$datosReserva[0]->nombre)];
-	$vendedor =[$getVendedorInfo[0]->nombre,$getVendedorInfo[0]->correo, $getVendedorInfo[0]->telefono];
 	$asunto = "Cotización de la Reserva ". $reserva;
 	$cuerpo='<!DOCTYPE html>
 				<html>
@@ -46,7 +44,7 @@
 								vertical-align: middle;
 								color: white;	
 							}
-							@media (max-width: 576px){
+							@media (max-width: 576){
 								.largeTd{
 									font-size:65%;
 									width:100px;
@@ -66,6 +64,9 @@
 	$cuerpo.=			'<b>Estimado(a) '.$datosReserva[0]->nombre.'</b>';
 	$cuerpo.=			'<p>';
 	$cuerpo.=				'Es un gusto poder atender tu solicitud de vuelo en globo. Nuestra operación se encuentra en el';
+	$cuerpo.=				'<a href="https://www.google.com/maps/place/VOLAR+EN+GLOBO/@19.695002,-98.8258507,17z/data=!3m1!4b1!4m5!3m4!1s0x85d1f5725d683f25:0xff4f4587c24e2324!8m2!3d19.695002!4d-98.823662"> Valle de Teotihuacan, Estado de M&eacute;xico</a>, ';
+	$cuerpo.=				'te ofrecemos la mejor vista de las pirámides y de la zona arqueológica. La cita es en nuestra recepción ubicada a 5 minutos de la zona arqueológica, en este lugar nuestro equipo te recibirá y te trasladara a nuestra zona de despegue, allí podrás ver el armado y el inflado de tu globo, desde ese momento inicia la aventura así que prepara tu cámara para tomar muchas fotos. ¡Prepárate para la mejor parte! Al aterrizar la tripulación se hará cargo del globo mientras tú y el piloto llevan a cabo el tradicional brindis, recibirás un certificado de vuelo (suvenir) y la tripulación te trasladará de regreso a la recepción.';
+	$cuerpo.=			'</p>';
 
 
 	$cuerpo.=			'<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">';
@@ -125,25 +126,6 @@
 		$cuerpo.=						'</tr>';
 	} 
 
-	if($datosReserva[0]->hotel!=''){
-		$cuerpo.=						'<tr>';
-		$cuerpo.=							'<td class="tdseparador" colspan="4">HOTEL</td>';
-		$cuerpo.=						'</tr>';
-		$cuerpo.=						'<tr>';
-		$cuerpo.=							'<td class="tdtitulo" colspan="4">'.$hotel.'<br>$ '. number_format(  $precioHabitacion, 2, '.', ',') .'</td>';
-		$cuerpo.=						'</tr>';
-		$cuerpo.=						'<tr>';
-		$cuerpo.=							'<td class="tdtitulo" >HABITACIÓN</td>';
-		$cuerpo.=							'<td >'.$nombreHabitacion.'</td>';
-		$cuerpo.=							'<td ></td>';
-		$cuerpo.=						'</tr>';
-		$cuerpo.=						'<tr>';
-		$cuerpo.=							'<td class="tdtitulo" >PRECIO/NOCHE</td>';
-		$cuerpo.=							'<td >'.$descripcionHospedaje.'</td>';
-		$cuerpo.=							'<td >$ '.number_format(  $totalHabitacion, 2, '.', ',').'</td>';
-		$cuerpo.=						'</tr>';
-
-	}
 	if($datosReserva[0]->otroscar1!=''){
 		$cuerpo.=					'<tr>';
 		$cuerpo.=						'<td class="tdtitulo">'. $datosReserva[0]->otroscar1. '</td>';
