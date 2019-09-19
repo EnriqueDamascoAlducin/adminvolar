@@ -36,7 +36,7 @@
 		$eliminarPuesto = $con->query("CALL eliminarPuesto(". $puesto .",@respuesta)") ;
 		$respuesta= $con->query("SELECT @respuesta as respuesta")->fetchALL (PDO::FETCH_OBJ);
 		if($respuesta[0]->respuesta=="Eliminado"){
-			echo "El puesto ha sido eliminado. Se elimino este departamento y los puestos de los usuarios que lo ocupaban";
+			echo "El puesto ha sido eliminado. Se elimino este puesto de los usuarios que lo ocupaban";
 		}else{
 			echo $respuesta[0]->respuesta;
 		}
