@@ -31,7 +31,7 @@
 		<div class="col-sm-6 col-lg-6 col-md-6 col-6 col-xl-6 ">
 			<div class="form-group">
 				<label for="abrev">
-				    <?php $lab = "Abreciaci&oacute;n";
+				    <?php $lab = "Abreviaci&oacute;n";
 				        if($_POST['tipo']=='cuentasvolar' || $_POST['tipo']=='metodopago'){ $lab = "Cuenta"; }  echo utf8_decode($lab); ?>
 				        </label>
 				<input type="text" class="form-control" id="abrev" name="abrev" placeholder="<?php echo utf8_decode($lab); ?>"  value="<?php if(isset($catalogo)){ echo $catalogo[0]->abrev; } ?>">

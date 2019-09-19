@@ -52,7 +52,7 @@
     </div>
   </div>
 <?php } ?>
-<?php if(in_array("CUENTAS VOLAR", $permisos)){ ?>
+<?php if(in_array("CUENTAS BANCOS", $permisos)){ ?>
   <div class="col-6 col-sm-3 col-md-3 col-lg-3 col-xl-3">
     <div class="alert alert-info" data-toggle="modal" data-target="#modal" data-info="cuentasvolar" onclick="accionExtras('agregar', <?php echo $usuario->getIdUsu(); ?>,'cuentasvolar')">
       <strong><i class="fa fa-plus fa-md"></i></strong> Agregar Cuentas de Banco
