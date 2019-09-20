@@ -63,11 +63,11 @@
 	$cuerpo.=			'<img src="https://www.volarenglobo.com.mx/admin1/sources/images/correos/cotizacionHeader.jpeg" style="width:100%; max-width=100%;" alt="Cotización">';
 	$cuerpo.=			'<b>Estimado(a) '.$datosReserva[0]->nombre.'</b>';
 	$cuerpo.=			'<p>';
-	$cuerpo.=				'Es un gusto poder atender tu solicitud de vuelo en globo. Volamos en el Valle de Teotihuacan, Estado de México ofreciéndote la mejor vista de las pirámides y de la zona arqueológica. La cita es en nuestro ';
+	$cuerpo.=				'Es un gusto poder atender tu solicitud de vuelo en globo. Volamos en el Valle de Teotihuacán, Estado de México ofreciéndote la mejor vista de las pirámides y de la zona arqueológica. La cita es en nuestro ';
 	$cuerpo.=				'<a href="https://www.google.com/maps/place/VOLAR+EN+GLOBO/@19.6956597,-98.8269825,17z/data=!3m1!4b1!4m5!3m4!1s0x85d1f5725d683f25:0xff4f4587c24e2324!8m2!3d19.6956597!4d-98.8247938">';
 	$cuerpo.=				'globopuerto';
 	$cuerpo.=				'</a>';
-	$cuerpo.=				'a 5 minutos de la zona arqueológica, en donde nuestro equipo te recibirá y podrás ver el armado e inflado de tu globo, desde ese momento inicia tu aventura así que prepara tu cámara para tomar muchas fotos. ¡Prepárate para vivir el sueño de Volar en Globo!';
+	$cuerpo.=				' a 5 minutos de la zona arqueológica, en donde nuestro equipo te recibirá y podrás ver el armado e inflado de tu globo, desde ese momento inicia tu aventura así que prepara tu cámara para tomar muchas fotos. ¡Prepárate para vivir el sueño de Volar en Globo!';
 	$cuerpo.=			'</p>';
 
 
