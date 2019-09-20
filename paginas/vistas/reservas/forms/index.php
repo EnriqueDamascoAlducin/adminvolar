@@ -97,25 +97,25 @@
 <div class="row">
 	<div class="col-6 col-md-3 col-sm-3 col-md-3 col-xl-2" >
 		<div class="form-group">
-		    <label for="nombre"><b>Nombre</b></label>
+		    <label for="nombre"><b><span style="color:red">Nombre</span></b></label>
 		    <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre" value="<?php echo $reserva->getNombreTemp(); ?>">
 	  	</div>
 	</div>
 	<div class="col-6 col-md-3 col-sm-3 col-md-3 col-xl-2" >
 		<div class="form-group">
-		    <label for="apellidos"><b>Apellidos</b></label>
+		    <label for="apellidos"><b><span >Apellidos</span></b></label>
 		    <input type="text" class="form-control" id="apellidos" name="apellidos" placeholder="Apellidos" value="<?php echo $reserva->getApellidosTemp(); ?>">
 	  	</div>
 	</div>
 	<div class="col-6 col-md-3 col-sm-3 col-md-3 col-xl-2" >
 		<div class="form-group">
-		    <label for="mail"><b>Email</b></label>
+		    <label for="mail"><b><span style="color:red">Email</span></b></label>
 		    <input type="mail" class="form-control" id="mail" name="mail" placeholder="Correo" value="<?php echo $reserva->getMailTemp(); ?>">
 	  	</div>
 	</div>
 	<div class="col-6 col-md-3 col-sm-3 col-md-3 col-xl-2" >
 		<div class="form-group">
-		    <label for="apellidos"><b>Contacto 1</b></label>
+		    <label for="telcelular"><b><span style="color:red">Contacto 1</span></b></label>
 		    <input type="number" min="0"  class="form-control" id="telcelular" name="telcelular" placeholder="Contacto 1" value="<?php echo $reserva->getTelcelularTemp(); ?>">
 	  	</div>
 	</div>
@@ -147,20 +147,20 @@
 
 	<div class="col-6 col-md-3 col-sm-3 col-md-3 col-xl-2" >
 		<div class="form-group">
-		    <label for="pasajerosa"><b>Adultos</b></label>
+		    <label for="pasajerosa"><b><span style="color:red">Adultos</span></b></label>
 		    <input type="number" min="0"  class="form-control" id="pasajerosa" name="pasajerosa" placeholder="Pasajeros Adultos" value="<?php echo $reserva->getPasajerosaTemp(); ?>">
 	  	</div>
 	</div>
 	<div class="col-6 col-md-3 col-sm-3 col-md-3 col-xl-2" >
 		<div class="form-group">
-		    <label for="pasajerosn"><b>Niños</b></label>
+		    <label for="pasajerosn"><b><span style="color:red">Niños</span></b></label>
 		    <input type="number" min="0"  class="form-control" id="pasajerosn" name="pasajerosn" placeholder="Pasajeros Niños" value="<?php echo $reserva->getPasajerosnTemp(); ?>">
 	  	</div>
 	</div>
 
 	<div class="col-6 col-md-3 col-sm-3 col-md-3 col-xl-2" >
 		<div class="form-group ">
-	      	<label for="motivo" ><b>Motivo</b></label>
+	      	<label for="motivo" ><b><span style="color:red">Motivo</span></b></label>
 	      	<select id="motivo" name="motivo" class="form-control">
 	        	<option selected value="">Motivo</option>
 	        	<?php
@@ -179,7 +179,7 @@
 	</div>
 	<div class="col-6 col-md-3 col-sm-3 col-md-3 col-xl-2" >
 		<div class="form-group ">
-	      	<label for="tipo" ><b>Tipo de Vuelo</b></label>
+	      	<label for="tipo" ><b><span style="color:red">Tipo de Vuelo</span></b></label>
 	      	<select id="tipo" name="tipo" class="form-control">
 	        	<option selected value="">Tipo de Vuelo</option>
 	        	<?php
@@ -207,7 +207,7 @@
 	</div>
 	<div class="col-6 col-md-3 col-sm-3 col-md-3 col-xl-2" >
 		<div class="form-group">
-		    <label for="fechavuelo"><b>Fecha de Vuelo</b></label>
+		    <label for="fechavuelo"><b><span style="color:red">Fecha de Vuelo</span></b></label>
 		    <input type="date"   class="form-control" id="fechavuelo" name="fechavuelo" value="<?php echo $reserva->getFechavueloTemp(); ?>">
 	  	</div>
 	</div>

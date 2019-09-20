@@ -365,7 +365,7 @@
 
 	$pdf->MultiCell(186,6,'',0,'J',0);
 	$pdf->SetFont('Arial','',9);
-	$pdf->MultiCell(186,5,utf8_decode('Para mas información por favor comunicate con tu vendedor'),0,'J',0);
+	$pdf->MultiCell(186,5,utf8_decode('Para más información por favor comunícate con tu vendedor'),0,'J',0);
 	$pdf->SetFont('Arial','',9);
 	$pdf->MultiCell(186,5,utf8_decode($getVendedorInfo[0]->nombre),0,'J',0);
 	$pdf->SetFont('Arial','B',9);

@@ -25,7 +25,7 @@
 <div class="row">
 	<div class="col-sm-3 col-lg-3 col-md-3 col-6 col-xl-3 ">
 		<div class="form-group">
-			<label for="metodo">Metodo</label>
+			<label for="metodo">Método</label>
 			<select class="selectpicker form-control" id="metodo" name="metodo" data-live-search="true">
 				<option value='0'>Todos...</option>
 				<?php

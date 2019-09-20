@@ -138,7 +138,7 @@
 
 					<!--========       BITACORA     ========= -->
 					<?php if((($idUsu==$reserva->idusu && in_array("BITACORA",$permisos)) || in_array("BITACORA GRA", $permisos)) && $reserva->status!=2){ ?>
-					<!--<i class="fa fa-file-text-o fa-md" style="color:#2BBBAD" title="Bitacora de Pagos"  onclick="accionReserva('bitacora', <?php echo $reserva->id_temp; ?>)"></i> -->
+					<i class="fa fa-file-text-o fa-md" style="color:#2BBBAD" title="Bitacora de Pagos"  onclick="accionReserva('bitacora', <?php echo $reserva->id_temp; ?>)"></i> 
 					<?php } ?>
 					<!--========       PILOTOS     ========= -->
 					<?php if(in_array("PILOTOSS",$permisos)){ ?>

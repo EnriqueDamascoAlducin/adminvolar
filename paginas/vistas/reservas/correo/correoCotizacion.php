@@ -239,7 +239,7 @@
 	$cuerpo.=			'A nombre de: VOLAR EN GLOBO, AVENTURA Y PUBLICIDAD SA DE CV<br>';
 	$cuerpo.=			'CLABE Interbancaria 012180001918093935<br>';
 	$cuerpo.=			'IMPORTANTE: Notificar vía telefónica o por mail tu depósito para poderte enviar la RESERVACION e itinerario del vuelo. Si te surgen dudas llámanos o escríbenos a nuestro correo electrónico.<br>';
-	$cuerpo.=			'<p style="font-size:14px">Para mas información por favor comunicate con tu vendedor</p>';
+	$cuerpo.=			'<hr><p style="font-size:14px"><b>Para más información por favor comunícate con tu vendedor</b></p>';
 	$cuerpo.=			'<b>'.$getVendedorInfo[0]->nombre.'</b><br>';
 	$cuerpo.=			'<i>'.$vendedor[1].'<br>'.$vendedor[2].'</i>';
 	$cuerpo.=		'</body>';
