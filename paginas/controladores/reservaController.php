@@ -11,7 +11,7 @@
 			$eliminarReserva = $con->actualizar("servicios_vuelo_temp","status=0","idtemp_sv=".$_POST['reserva']);
 			echo $eliminarReserva;
 		}
-		
+
 	}elseif(isset($_POST['accion']) && $_POST['accion']=='asistencia'){
 		$eliminarReserva = $con->actualizar("temp_volar","status=1","id_temp=".$_POST['reserva']);
 		$eliminarReserva = $con->actualizar("servicios_vuelo_temp","status=0","idtemp_sv=".$_POST['reserva']);
@@ -81,10 +81,10 @@
 			}else{
 				$valor="'".$valor."'";
 			}
-			if($campo=="tdescuento"){	
+			if($campo=="tdescuento"){
 				$registrarDato=$con->actualizar("temp_volar","cantdescuento_temp=0" , "id_temp=$id");
 			}
-			if($campo=="hotel"){	
+			if($campo=="hotel"){
 				$registrarDato=$con->actualizar("temp_volar","habitacion_temp=null" , "id_temp=$id");
 			}
 			$registrarDato=$con->actualizar("temp_volar",$campo ."_temp=". $valor , "id_temp=$id");
@@ -98,5 +98,5 @@
 			echo $servicio[0]->respuesta;
 		}
 	}
-		
+
 ?>

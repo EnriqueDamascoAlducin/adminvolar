@@ -135,7 +135,7 @@
 	  		success:function(response){
 	  		    //$("body").html(response);
 				abrir_gritter("Bien",response,"success");
-				//abrirPagina('vistas/reservas/', 2);
+				abrirPagina('vistas/reservas/', 2);
 	  		},
 	  		error:function(){
 	  			alert("Error");

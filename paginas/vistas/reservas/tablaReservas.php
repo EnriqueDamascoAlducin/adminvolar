@@ -1,9 +1,9 @@
-<?php 
+<?php
 	require  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/modelos/login.php';
 	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/controladores/conexion.php';
-	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/controladores/fin_session.php';	
+	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/controladores/fin_session.php';
 
-	
+
 	$modulo= $_POST['modulo'];
 	$usuario= unserialize((base64_decode($_SESSION['usuario'])));
 	$idUsu=$usuario->getIdUsu();
@@ -55,7 +55,7 @@
 		<tr>
 			<th style="text-align: center;vertical-align: middle;max-width: 1%;width: 1%;"># Reserva</th>
 			<th style="text-align: center;vertical-align: middle;max-width: 1%;width: 1%;">Nombre</th>
-			
+
 			<?php if(in_array("GENERAL",$permisos)){ ?>
 				<th style="text-align: center;vertical-align: middle;max-width: 1%;width: 1%;">Empleado</th>
 			<?php } ?>
@@ -79,7 +79,7 @@
 				<td><?php echo $reserva->mail_temp; ?></td>
 				<td><?php echo $reserva->telefonos; ?></td>
 				<td><?php echo $reserva->fechavuelo_temp; ?></td>
-				<?php 
+				<?php
 					$color="";
 					if( $reserva->status ==4){
 						$text="Conciliado";
@@ -113,7 +113,7 @@
 					}
 				?>
 				<td>
-					<?php 
+					<?php
 						echo '<div class="progress">
 						<div class="progress-bar bg-'.$class.'" role="progressbar" style="width: 100%;'.$color.'" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">'. $text .'</div>
 								</div>';
@@ -157,7 +157,7 @@
 					<i class="fa fa-trash-o fa-md" style="color:#ff4444" title="Eliminar" data-toggle="modal" data-target="#modalReservas"  onclick="eliminarReserva('vistas/reservas/', <?php echo $reserva->id_temp; ?>, <?php echo $modulo; ?>)" ></i>
 					<?php } ?>
 					<!--========       Cotización     ========= -->
-					<?php if(in_array("ASISTENCIA",$permisos)  && $reserva->status==7 ){ ?>
+					<?php if(in_array("ASISTENCIA",$permisos)   ){ ?>
 						<i class="fa fa-street-view fa-md" style="color:#311b92 " title="Confirmar Asistencia" data-toggle="modal" data-target="#modalReservas"  onclick="checkAsistencia(<?php echo $reserva->id_temp; ?>,'<?php echo $reserva->nombre; ?>')"></i>
 					<?php } ?>
 					<!--========       Pago en SItio     ========= -->

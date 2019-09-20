@@ -5,8 +5,8 @@
 
  	function Header(){
  		//Imagen, SETX,SETY, tamaño
- 		$this->Image( $_SERVER['DOCUMENT_ROOT'].'/admin1/sources/images/icons/header.jpg',10,10,185);
- 		$this->Ln(15);
+ 		$this->Image( $_SERVER['DOCUMENT_ROOT'].'/admin1/sources/images/correos/cotizacionHeader.jpeg',35,10,135,25);
+ 		$this->Ln(30);
  	}
  	/*function Footer(){
 			$this->SetY(-15);

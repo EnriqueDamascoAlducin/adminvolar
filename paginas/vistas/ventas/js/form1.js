@@ -83,10 +83,10 @@ function cotizar(accion){
   	}else{
 		url="controladores/ventasController.php";
   	}
-	
+
   	$.ajax({
-		url:url,
-		method: "POST",
+			url:url,
+			method: "POST",
   		data: parametros,
   		beforeSend:function(){
 			$("#cuerpoModal").html("<img src='../sources/images/icons/cargando.gif'>");
@@ -95,22 +95,24 @@ function cotizar(accion){
   			if(accion=='calcular' ){
 				$("#totalVta").html('Total: '+response);
 			}else if(accion=='cotizar'){
-				$("#cuerpoModal").html(response);	
+				$("#cuerpoModal").html(response);
 				$("#btnConfirmar").show();
 			}else{
-				if(response.includes('correctamente'))
+				if(response.includes('Registrada')){
 					abrir_gritter("Correcto",response,"info");
-				else
+					abrirPagina('vistas/ventas/', 16);
+				}else{
 					abrir_gritter("Error",response,"danger");
+				}
 			}
   		},
   		error:function(){
-  		
+
           abrir_gritter("Error","Error desconocido" ,"danger");
   		},
   		statusCode: {
 		    404: function() {
-		     
+
           abrir_gritter("Error","URL NO encontrada" ,"danger");
 		    }
 		  }

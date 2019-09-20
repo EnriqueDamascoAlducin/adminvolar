@@ -9,7 +9,7 @@ function accionReserva(accion, id) {
 	}
 }
 function cargarTablaReservas(){
-	
+
 	fechaI = $("#fechaI").val();
 	fechaF = $("#fechaF").val();
 	cliente = $("#cliente").val();
@@ -30,15 +30,15 @@ function cargarTablaReservas(){
   		},
   		success:function(response){
 
-			$("#tablaReservas").html(response);	
+			$("#tablaReservas").html(response);
   		},
   		error:function(){
-  		
+
           abrir_gritter("Error","Error desconocido" ,"danger");
   		},
   		statusCode: {
 		    404: function() {
-		     
+
           abrir_gritter("Error","URL NO encontrada" ,"danger");
 		    }
 		  }
@@ -56,7 +56,7 @@ function imprimirReporte(){
 
 	url= "vistas/reservas/reporteexcel.php" ;
 	parametros="?fechaI="+fechaI+"&fechaF="+fechaF+"&cliente="+cliente+"&status="+status+"&empleado="+empleado+"&reserva="+reserva;
-	
+
 	direcion = url+parametros;
 	$("#imprimirReporte").attr("href",direcion);
 	$("#imprimirReporte").click();
@@ -82,15 +82,15 @@ function confirmarEliminar(reserva,url,idModulo){
 
   				abrir_gritter("Error","Error al eliminar a reserva " + response,"danger");
   			}
-				
+
   		},
   		error:function(){
-  		
+
           abrir_gritter("Error","Error desconocido" ,"danger");
   		},
   		statusCode: {
 		    404: function() {
-		     
+
           abrir_gritter("Error","URL NO encontrada" ,"danger");
 		    }
 		  }
@@ -103,41 +103,57 @@ function confirmarAgregarPago(reserva,cliente){
 	referencia=$("#referencia").val().trim();
 	cantidad=$("#cantidad").val().trim();
 	fecha=$("#fecha").val().trim();
+	peso=$("#peso").val();
+	tipopeso=$("#tipopeso").val();
 	error = 0;
-	if(metodo=="0"){
-		abrir_gritter("Advertencia","Debe Capturar un metodo","warning");
-		error++;
-	}
-	if(banco=="0"){
-		abrir_gritter("Advertencia","Debe Capturar un banco","warning");
-		error++;
-	}
-	if(referencia==""){
-		abrir_gritter("Advertencia","Debe Capturar una referencia","warning");
-		error++;
-	}
-	if(cantidad==""){
-		abrir_gritter("Advertencia","Debe Capturar una cantidad","warning");
-		error++;
-	}
-	if(fecha==""){
-		abrir_gritter("Advertencia","Debe Capturar una fecha","warning");
-		error++;
+	if(metodo!=0 ){
+		if(metodo=="0"){
+			abrir_gritter("Advertencia","Debe Capturar un metodo","warning");
+			error++;
+		}
+		if(banco=="0"){
+			abrir_gritter("Advertencia","Debe Capturar un banco","warning");
+			error++;
+		}
+		if(referencia==""){
+			abrir_gritter("Advertencia","Debe Capturar una referencia","warning");
+			error++;
+		}
+		if(cantidad==""){
+			abrir_gritter("Advertencia","Debe Capturar una cantidad","warning");
+			error++;
+		}
+		if(fecha==""){
+			abrir_gritter("Advertencia","Debe Capturar una fecha","warning");
+			error++;
+		}
+		datos={
+  			reserva:reserva,
+  			metodo:metodo,
+				banco:banco,
+				referencia:referencia,
+				cantidad:cantidad,
+				fecha:fecha,
+				peso:peso,
+				tipopeso:tipopeso,
+  			accion:'registrarPago'
+		};
+	}else{
+		abrir_gritter("Advertencia","Solo se modificará el peso.","info");
+		datos={
+			peso:peso,
+  			reserva:reserva,
+				tipopeso:tipopeso,
+				accion:'registrarPago'
+		};
+
 	}
 	if (error>0)
 		return false;
 	$.ajax({
 		url:'controladores/pagosController.php',
 		method: "POST",
-  		data: {
-  			reserva:reserva,
-  			metodo:metodo,
-			banco:banco,
-			referencia:referencia,
-			cantidad:cantidad,
-			fecha:fecha,
-  			accion:'registrarPago'
-  		},
+  		data: datos,
   		success:function(response){
   			if(response.includes("ERROR"))
   				abrir_gritter(response, "No puedes agregar mas pagos" ,"warning");
@@ -150,12 +166,12 @@ function confirmarAgregarPago(reserva,cliente){
 
   		},
   		error:function(){
-  		
+
           abrir_gritter("Error","Error desconocido" ,"danger");
   		},
   		statusCode: {
 		    404: function() {
-		     
+
           abrir_gritter("Error","URL NO encontrada" ,"danger");
 		    }
 		  }
@@ -163,7 +179,7 @@ function confirmarAgregarPago(reserva,cliente){
 	cambiarTamanoModal("modalSize","lg",'resetear');
 }
 function agregarPago(reserva,cliente){
-	
+
 	$("button[id^='btn']").remove();
 	$("#cuerpoModalReservas").html("Agregar Pago para "+ cliente);
 	$("#tituloModalReservas").html("Agregar Pago para "+ cliente);
@@ -177,15 +193,15 @@ function agregarPago(reserva,cliente){
 		method: "POST",
   		data: parametros,
   		success:function(response){
-			$("#cuerpoModalReservas").html(response);	
+			$("#cuerpoModalReservas").html(response);
   		},
   		error:function(){
-  		
+
           abrir_gritter("Error","Error desconocido" ,"danger");
   		},
   		statusCode: {
 		    404: function() {
-		     
+
           abrir_gritter("Error","URL NO encontrada" ,"danger");
 		    }
 		  }
@@ -194,7 +210,7 @@ function agregarPago(reserva,cliente){
 }
 
 function agregarPagoSitio(reserva,cliente){
-	
+
 	cambiarTamanoModal("modalSize","lg",'resetear');
 	$("button[id^='btn']").remove();
 	$("#cuerpoModalReservas").html("Agregar Pago para "+ cliente);
@@ -208,15 +224,15 @@ function agregarPagoSitio(reserva,cliente){
 		method: "POST",
   		data: parametros,
   		success:function(response){
-			$("#cuerpoModalReservas").html(response);	
+			$("#cuerpoModalReservas").html(response);
   		},
   		error:function(){
-  		
+
           abrir_gritter("Error","Error desconocido" ,"danger");
   		},
   		statusCode: {
 		    404: function() {
-		     
+
           abrir_gritter("Error","URL NO encontrada" ,"danger");
 		    }
 		  }
@@ -235,15 +251,15 @@ function conciliarPago(reserva,cliente){
 		method: "POST",
   		data: parametros,
   		success:function(response){
-			$("#cuerpoModalReservas").html(response);	
+			$("#cuerpoModalReservas").html(response);
   		},
   		error:function(){
-  		
+
           abrir_gritter("Error","Error desconocido" ,"danger");
   		},
   		statusCode: {
 		    404: function() {
-		     
+
           abrir_gritter("Error","URL NO encontrada" ,"danger");
 		    }
 		  }
@@ -261,18 +277,18 @@ function agregarReserva(id,accion){
 		method: "POST",
   		data: parametros,
   		beforeSend:function(){
-			$("#contenedor").html('<img src="../sources/images/icons/cargando.gif" style="max-width:70%;width:100%" >');	
+			$("#contenedor").html('<img src="../sources/images/icons/cargando.gif" style="max-width:70%;width:100%" >');
   		},
   		success:function(response){
-			$("#contenedor").html(response);	
+			$("#contenedor").html(response);
   		},
   		error:function(){
-  		
+
           abrir_gritter("Error","Error desconocido" ,"danger");
   		},
   		statusCode: {
 		    404: function() {
-		     
+
           abrir_gritter("Error","URL NO encontrada" ,"danger");
 		    }
 		  }
@@ -284,7 +300,7 @@ function ConfirmarAsistencia(reserva,cliente,accion){
 	piloto = $("#piloto").val();
 	globo = $("#globo").val();
 	peso = $("#peso").val();
-	
+
 	$.ajax({
 		url:'controladores/reservaController.php',
 		method: "POST",
@@ -303,22 +319,22 @@ function ConfirmarAsistencia(reserva,cliente,accion){
   				abrir_gritter("Correcto", response ,"info");
 
   			agregarPago(reserva,cliente);
-				
+
   		},
   		error:function(){
-  		
+
           abrir_gritter("Error","Error desconocido" ,"danger");
   		},
   		statusCode: {
 		    404: function() {
-		     
+
           abrir_gritter("Error","URL NO encontrada" ,"danger");
 		    }
 		  }
 	});
 }
 function checkAsistencia (reserva,nombre){
-	
+
 	$("button[id^='btn']").remove();
 	$("#tituloModalReservas").html("Confirmar Asistencia para "+ nombre);
 	cambiarTamanoModal("modalSize","lg",'agregar');
@@ -330,15 +346,15 @@ function checkAsistencia (reserva,nombre){
 		method: "POST",
   		data: parametros,
   		success:function(response){
-			$("#cuerpoModalReservas").html(response);	
+			$("#cuerpoModalReservas").html(response);
   		},
   		error:function(){
-  		
+
           abrir_gritter("Error","Error desconocido" ,"danger");
   		},
   		statusCode: {
 		    404: function() {
-		     
+
           abrir_gritter("Error","URL NO encontrada" ,"danger");
 		    }
 		  }
@@ -347,7 +363,7 @@ function checkAsistencia (reserva,nombre){
 	cambiarTamanoModal("modalSize","lg",'resetear');
 }
 function mostrarCotizacion(id,accion){
-	
+
 	$("button[id^='btn']").remove();
 	$("#tituloModalReservas").html("Cotización "+ id);
 	url="vistas/reservas/tablaCotizacion.php";
@@ -361,16 +377,16 @@ function mostrarCotizacion(id,accion){
 			$("#cuerpoModalReservas").html("<img src='../sources/images/icons/cargando.gif'>");
   		},
   		success:function(response){
-  			
+
 				$("#cuerpoModalReservas").html(response);
   		},
   		error:function(){
-  		
+
           abrir_gritter("Error","Error desconocido" ,"danger");
   		},
   		statusCode: {
 		    404: function() {
-		     
+
           abrir_gritter("Error","URL NO encontrada" ,"danger");
 		    }
 		}

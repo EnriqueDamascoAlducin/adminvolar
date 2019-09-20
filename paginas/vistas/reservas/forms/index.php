@@ -2,7 +2,7 @@
 	require  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/modelos/login.php';
 	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/controladores/conexion.php';
 	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/controladores/fin_session.php';
-	include_once $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/modelos/reserva.php';	
+	include_once $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/modelos/reserva.php';
 	$usuario= unserialize((base64_decode($_SESSION['usuario'])));
 	$bloqueado="";
 	if(isset($_POST['accion'])){
@@ -15,7 +15,7 @@
 	$motivos = $con->consulta("id_extra,nombre_extra","extras_volar","status <> 0 and clasificacion_extra='motivos'");
 	$clasificacionesTipoV = $con->consulta("nombre_extra,id_extra","extras_volar","status<>0 and id_extra in (Select DISTINCT (tipo_vc) FROM vueloscat_volar where status <> 0 )");
 	$hoteles= $con->consulta("id_hotel,nombre_hotel","hoteles_volar","status<>0");
-	$servicios = $con->consulta("*","servicios_volar","status<>0"); 
+	$servicios = $con->consulta("*","servicios_volar","status<>0");
 	$id = $_POST['id'];
 	if(!isset($_POST['accion'])){
 		if($id==""){
@@ -34,7 +34,7 @@
 	}
 ?>
 <style type="text/css">
-	<?php 
+	<?php
 		if($bloqueado=="bloqueado"){
 	?>
 			input{
@@ -72,7 +72,7 @@
 		border-color: #0091ea !important;
 		border-width: 1px !important;
 	}
-	
+
 	input[type="checkbox"] {
 	    display: none;
 	}
@@ -130,7 +130,7 @@
 	      	<label for="procedencia"><b>Procedencia</b></label>
 	      	<select id="procedencia" name="procedencia" class="form-control">
 	        	<option selected value="">Procedencia</option>
-	        	<?php 
+	        	<?php
 	        		foreach ($procedencias as $procedencia) {
 	        			$sel="";
 	        			if($reserva->getNombreTemp() == $procedencia->id_extra ){
@@ -163,7 +163,7 @@
 	      	<label for="motivo" ><b>Motivo</b></label>
 	      	<select id="motivo" name="motivo" class="form-control">
 	        	<option selected value="">Motivo</option>
-	        	<?php 
+	        	<?php
 	        		foreach ($motivos as $motivo) {
 	        			$sel="";
 	        			if($reserva->getMotivoTemp() == $motivo->id_extra ){
@@ -182,12 +182,12 @@
 	      	<label for="tipo" ><b>Tipo de Vuelo</b></label>
 	      	<select id="tipo" name="tipo" class="form-control">
 	        	<option selected value="">Tipo de Vuelo</option>
-	        	<?php 
-	        		foreach ($clasificacionesTipoV as $clasificacionTipoV) { 
+	        	<?php
+	        		foreach ($clasificacionesTipoV as $clasificacionTipoV) {
 	        	?>
 	        		<optgroup label="<?php echo $clasificacionTipoV->nombre_extra ?>">
 		        		<?php $tiposV = $con->consulta("nombre_vc,id_vc","vueloscat_volar","status<>0 and tipo_vc=". $clasificacionTipoV->id_extra); ?>
-		        		<?php 
+		        		<?php
 		        			foreach ($tiposV as $tipoV) {
 		        				$sel="";
 			        			if($reserva->getTipoTemp() == $tipoV->id_vc ){
@@ -199,8 +199,8 @@
 			        		}
 			        	?>
 		        	</optgroup>
-	        	<?php 
-	        		} 
+	        	<?php
+	        		}
 	        	?>
 	      	</select>
 	    </div>
@@ -215,9 +215,9 @@
 		<div class="form-group">
 		    <label for="idioma"><b>Idioma</b></label>
 	      	<select id="idioma" name="idioma" class="form-control">
-	        	<?php 
+	        	<?php
 	        		$es="";$en="";
-	        		if($reserva->getIdiomaTemp()==1){$es="selected";}else{$en="selected";} 
+	        		if($reserva->getIdiomaTemp()==1){$es="selected";}else{$en="selected";}
 	        	?>
 	        	<option value="1" <?php echo $es; ?>>Español</option>
 	        	<option value="2" <?php echo $en; ?>>Inglés</option>
@@ -229,7 +229,7 @@
 	<i style="color:white">Hospedaje</i>
 </div>
 <div class="row">
-	
+
 	<div class="col-6 col-md-3 col-sm-3 col-md-3 col-xl-3" >
 		<div class="form-group ">
 	      	<label for="hotel" ><b>Hotel</b></label>
@@ -283,7 +283,7 @@
 		$cortesia = "";
 		$getPrecio = $con->query("CALL getServiciosReservas($actId,1,$servicio->id_servicio)")->fetchALL (PDO::FETCH_OBJ);
 		$getCortesia = $con->query("CALL getServiciosReservas($actId,2,$servicio->id_servicio)")->fetchALL (PDO::FETCH_OBJ);
-		
+
 		if(sizeof($getPrecio)>0){
 			$precio = "checked";
 		}
@@ -305,8 +305,8 @@
 					  	<figcaption class="figure-caption" style="margin-top: -2px;width: 50%; max-width: 50%;text-align: center;">
 					  		<label>
 					  			<small class="label"  style="color:black;z-index: -1;text-align: center;">
-					  			<?php 
-					  				$servis = explode(" ", $servicio->nombre_servicio); 
+					  			<?php
+					  				$servis = explode(" ", $servicio->nombre_servicio);
 					  				foreach ($servis as $servi) {
 					  					if(strlen($servi)>2){
 						  					echo substr($servi, 0, 11).'<br>';
@@ -316,8 +316,8 @@
 					  				}
 						  			echo '('.number_format($servicio->precio_servicio, 2, '.', ',').')';
 					  			?>
-					  				
-					  		</small> 
+
+					  		</small>
 					  	</label>
 					  	</figcaption>
 					</figure>
@@ -328,13 +328,13 @@
 				<label for="cortesia_<?php echo $servicio->id_servicio; ?>" class="badge" style="color:black;margin-left: -25px;position: absolute;float: left"><b>Cortesia</b>
 					<img src="../sources/images/icons/check2.png" class="figure-img img-fluid rounded" alt="<?php echo $servicio->nombre_servicio; ?>" id="imgChecked" style="max-height: 50px;height: 50px;width: 50%; max-width: 50%;position: absolute;">
 				</label>
-				
-				
+
+
 			</div>
 		</div>
 	</div>
 <?php
-	} 
+	}
 ?>
 </div>
 </div>
@@ -383,7 +383,7 @@
 
 	<div class="col-6 col-md-6 col-sm-6 col-md-6 col-xl-6" >
 		<div class="form-group ">
-			<?php 
+			<?php
 				$por = "";
 				$pes = "";
 				if($reserva->getTdescuentoTemp()==1){
@@ -412,7 +412,7 @@
 </div>
 <div class="col-12 col-md-12 col-sm-12 col-md-12 col-xl-12" >
 	<div class="container" style="margin-top: 8px;">
-		<?php if($_POST['id']==""){ ?>	
+		<?php if($_POST['id']==""){ ?>
 			<button class="btn btn-success" type="button"  data-toggle="modal" data-target="#cotizacion"  onclick="mostrarCotizacion(<?php echo $actId; ?>, 'enviar')">Enviar Cotización</button>
 		<?php }else{ ?>
 			<button class="btn btn-primary" type="button"   data-toggle="modal" data-target="#cotizacion" onclick="mostrarCotizacion(<?php echo $actId; ?>, 'reenviar')">Reenviar Cotización</button>
@@ -431,7 +431,7 @@
         </button>
       </div>
       <div class="modal-body" id="cuerpoCotizacion">
-        
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
@@ -442,7 +442,7 @@
 </div>
 
 <script type="text/javascript">
-	var idAct = <?php echo $actId ?>; 
+	var idAct = <?php echo $actId ?>;
 	var habitacion = "<?php echo $reserva->getHabitacionTemp(); ?>";
 
 

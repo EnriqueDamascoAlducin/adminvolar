@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 	require  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/modelos/login.php';
 	if(isset($_SESSION['usuario'])){
@@ -21,7 +21,7 @@
 	$hotel=$datosReserva[0]->hotel;
 	$habitacion=$datosReserva[0]->habitacion;
 	$habitacion=explode("|", $habitacion);
-	
+
 	$getVendedorInfo = $con->consulta("CONCAT(IFNULL(nombre_usu,''),' ',IFNULL(apellidop_usu,''),' ', IFNULL(apellidom_usu,'')) as nombre, correo_usu as correo,telefono_usu as telefono", " volar_usuarios vu INNER JOIN temp_volar tv ON tv.idusu_temp=vu.id_usu ","id_temp=".$reserva);
 	$tPasajeros = $datosReserva[0]->pasajerosN+ $datosReserva[0]->pasajerosA;
 	$tipoVuelo = $datosReserva[0]->tipo_temp;
@@ -41,38 +41,38 @@
 			$descripHabitacion=$habitacion[3];
 			$checkin= $datosReserva[0]->checkin;
 			$checkout = $datosReserva[0]->checkout;
-			$date1 = strtotime($checkin);  
-			$date2 = strtotime($checkout);  
-			  
-			// Formulate the Difference between two dates 
+			$date1 = strtotime($checkin);
+			$date2 = strtotime($checkout);
+
+			// Formulate the Difference between two dates
 			$diff = abs($date2 - $date1);
-			// To get the year divide the resultant date into 
-			// total seconds in a year (365*60*60*24) 
-			$years = floor($diff / (365*60*60*24));  
-			  
-			  
-			// To get the month, subtract it with years and 
-			// divide the resultant date into 
-			// total seconds in a month (30*60*60*24) 
-			$months = floor(($diff - $years * 365*60*60*24) 
-			                               / (30*60*60*24));  
-			  
-			  
-			// To get the day, subtract it with years and  
-			// months and divide the resultant date into 
-			// total seconds in a days (60*60*24) 
-			$days = floor(($diff - $years * 365*60*60*24 -  
-			             $months*30*60*60*24)/ (60*60*24)); 
+			// To get the year divide the resultant date into
+			// total seconds in a year (365*60*60*24)
+			$years = floor($diff / (365*60*60*24));
+
+
+			// To get the month, subtract it with years and
+			// divide the resultant date into
+			// total seconds in a month (30*60*60*24)
+			$months = floor(($diff - $years * 365*60*60*24)
+			                               / (30*60*60*24));
+
+
+			// To get the day, subtract it with years and
+			// months and divide the resultant date into
+			// total seconds in a days (60*60*24)
+			$days = floor(($diff - $years * 365*60*60*24 -
+			             $months*30*60*60*24)/ (60*60*24));
 
 			$totalHabitacion= $days * $precioHabitacion;
-			
+
 			$descripcionHospedaje = " De ".$checkin. " a ". $checkout. "(<b>".$days." dias</b> )";
 			$totalReserva+=$totalHabitacion;
 		}
 		$totalReserva +=$datosReserva[0]->precio1;
 		//echo "otros->".$datosReserva[0]->precio1."<br>";
 		$totalReserva +=$datosReserva[0]->precio2;
-		
+
 		function convertirFecha($fecha){
 			$fecha=explode("-",$fecha);
 			if($fecha[1]=='01'){
@@ -106,9 +106,9 @@
 		}
 
 	}
-	
+
 ?>
-<?php 
+<?php
 	/// Datos de Correo
 	//$getVendedorInfo[0]->nombre
 
@@ -138,25 +138,25 @@
 								background: #7986cb ;
 								text-align: center;
 								vertical-align: middle;
-								color: white;	
+								color: white;
 							}
 							.tdseparador{
 								background: #2BBBAD ;
 								text-align: center;
 								vertical-align: middle;
-								color: white;	
+								color: white;
 							}
 							.tdtotal{
 								background: #9933CC ;
 								text-align: center;
 								vertical-align: middle;
-								color: white;	
+								color: white;
 							}
 							.tddesc{
 								background: #c51162 ;
 								text-align: center;
 								vertical-align: middle;
-								color: white;	
+								color: white;
 							}
 							td,th{
 								max-height: 5px!important;
@@ -167,14 +167,14 @@
 									font-size:60%;
 									width:30%
 									max-width:30%;
-  									table-layout: fixed;	
+  									table-layout: fixed;
 								}
 							}
 						</style>
 						<script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 					</head>';
 	$cuerpo.=		'<body>';
-	$cuerpo.=			'<img src="https://www.volarenglobo.com.mx/admin1/sources/images/correos/bannersito.png" style="width:100%; max-width=100%;" alt="Confiramcion">';
+	$cuerpo.=			'<img src="https://www.volarenglobo.com.mx/admin1/sources/images/correos/bannersito.png" style="width:100%; max-width=100%;" alt="Confirmacion">';
 	$cuerpo.=			'<p>';
 	$cuerpo.=				'Hola!!! <b>'.$datosReserva[0]->nombre.'</b>. Envío confirmación de vuelo, no olvides llevarla contigo el día de tu vuelo (No es necesario imprimirla). </p>';
 	$cuerpo.=				'<p><b>Registro y Pago:</b> El día de tu vuelo deberás presentarte con nuestro anfitrión en la recepción para que registre tu asistencia y te reciba el pago del restante. Recuerda estar a tiempo en el lugar de la cita para no retrasar tu vuelo ni el de los demás. Te aconsejamos traer ropa cómoda, tal como si fueras a un día de campo: gorra, bufanda, guantes, bloqueador solar, cámara fotográfica o de video.</p>';
@@ -217,20 +217,20 @@
 	$cuerpo.=									number_format(($datosReserva[0]->pasajerosA*$datosReserva[0]->precioA ) + ($datosReserva[0]->pasajerosN*$datosReserva[0]->precioN ), 2, '.', ',') ;
 	$cuerpo.=							'</td>';
 	$cuerpo.=						'</tr>';
-	if($datosReserva[0]->comentario!=''){ 
+	if($datosReserva[0]->comentario!=''){
 		$cuerpo.=						'<tr>';
 		$cuerpo.=							'<td class="tdtitulo">COMENTARIO</td>';
 		$cuerpo.=							'<td>'. $datosReserva[0]->comentario.'</td>';
 		$cuerpo.=							'<td colspan="2"></td>';
 		$cuerpo.=						'</tr>';
-	} 
-	if($datosReserva[0]->motivo!=''){ 
+	}
+	if($datosReserva[0]->motivo!=''){
 		$cuerpo.=						'<tr>';
 		$cuerpo.=							'<td class="tdtitulo">MOTIVO</td>';
 		$cuerpo.=							'<td>'. $datosReserva[0]->motivo.'</td>';
 		$cuerpo.=							'<td colspan="2"></td>';
 		$cuerpo.=						'</tr>';
-	} 
+	}
 
 
 
@@ -263,16 +263,16 @@
 		$cuerpo.=						'<td class="tdtitulo">'. $datosReserva[0]->otroscar1. '</td>';
 		$cuerpo.=						'<td >$ '. number_format( $datosReserva[0]->precio1 , 2, '.', ','). '</td>';
 	$cuerpo.=							'<td colspan="2"></td>';
-		$cuerpo.=					'</tr>';				
+		$cuerpo.=					'</tr>';
 	}
 	if($datosReserva[0]->otroscar2!=''){
 		$cuerpo.=					'<tr>';
 		$cuerpo.=						'<td class="tdtitulo">'. $datosReserva[0]->otroscar2. '</td>';
 		$cuerpo.=						'<td >$'. number_format( $datosReserva[0]->precio2 , 2, '.', ','). '</td>';
 	$cuerpo.=							'<td colspan="2"></td>';
-		$cuerpo.=					'</tr>';				
+		$cuerpo.=					'</tr>';
 	}
-	if(sizeof($serviciosReserva)>0){ 
+	if(sizeof($serviciosReserva)>0){
 		$cuerpo.=					'<tr>';
 		$cuerpo.=						'<td class="tdseparador" colspan="3">SERVICIOS SOLICITADOS	</td>';
 		$cuerpo.=					'</tr>';
@@ -291,7 +291,7 @@
 				}
 			}else{
 				$cuerpo.=				'<td>';
-				$cuerpo.=					'Cortesia';	
+				$cuerpo.=					'Cortesia';
 				$cuerpo.=				'<td>';
 				$cuerpo.=				'<td colspan="2"></td>';
 			}
