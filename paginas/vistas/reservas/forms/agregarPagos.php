@@ -154,7 +154,6 @@
 									<i class="fa fa-home fa-lg" title="Pagado en Sitio" ></i>
 								<?php }else{ ?>
 									<i class="fa fa-gift fa-lg" title="Enviar con Regalo" data-toggle="modal" style="color:#33b5e5" onclick="accionesPagos(<?php echo $pago->id ?>,'regalo',<?php echo $reserva; ?>);" data-target="#modalReservas1" ></i>
-
 								<?php } ?>
 						<?php }else if($pago->stat == 1){  ?>
 									<i class="fa fa-gift fa-lg" title="Enviado con Regalo" ></i>
