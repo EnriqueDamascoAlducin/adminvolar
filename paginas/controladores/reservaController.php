@@ -13,15 +13,14 @@
 		}
 
 	}elseif(isset($_POST['accion']) && $_POST['accion']=='asistencia'){
-		$eliminarReserva = $con->actualizar("temp_volar","status=1","id_temp=".$_POST['reserva']);
-		$eliminarReserva = $con->actualizar("servicios_vuelo_temp","status=0","idtemp_sv=".$_POST['reserva']);
-		echo $eliminarReserva;
-	}elseif(isset($_POST['accion']) && $_POST['accion']=='asignarGlobo'){
+		$confirmarAsistencia = $con->actualizar("temp_volar","status=1","id_temp=".$_POST['reserva']);
+		$confirmarAsistencia = $con->actualizar("servicios_vuelo_temp","status=1","idtemp_sv=".$_POST['reserva']);
+		echo $confirmarAsistencia;
+	}elseif(isset($_POST['accion']) && $_POST['accion']=='globos'){
 		$globo=$_POST['globo'];
 		$hora=$_POST['hora'];
 		$piloto=$_POST['piloto'];
 		$reserva=$_POST['reserva'];
-		$peso=$_POST['peso'];
 		if($globo==""){
 			$globo="null";
 		}
@@ -31,43 +30,12 @@
 		if($reserva==""){
 			$reserva="null";
 		}
-
-		if($peso==""){
-			$peso="null";
-		}
 		if($hora==""){
 			$hora="null";
 		}else{
 			$hora="'".$hora."'";
 		}
-		$upd="globo_temp=".$globo.",kg_temp=".$peso.",hora_temp=".$hora .",piloto_temp=".$piloto;
-		$asignarVuelo = $con->actualizar("temp_volar",	$upd ," id_temp=".$reserva);
-		echo $asignarVuelo;
-	}elseif(isset($_POST['accion']) && $_POST['accion']=='asistencia'){
-		$globo=$_POST['globo'];
-		$hora=$_POST['hora'];
-		$piloto=$_POST['piloto'];
-		$reserva=$_POST['reserva'];
-		$peso=$_POST['peso'];
-		if($globo==""){
-			$globo="null";
-		}
-		if($piloto==""){
-			$piloto="null";
-		}
-		if($reserva==""){
-			$reserva="null";
-		}
-
-		if($peso==""){
-			$peso="null";
-		}
-		if($hora==""){
-			$hora="null";
-		}else{
-			$hora="'".$hora."'";
-		}
-		$upd="status=1,globo_temp=".$globo.",kg_temp=".$peso.",hora_temp=".$hora .",piloto_temp=".$piloto;
+		$upd="globo_temp=".$globo.",hora_temp=".$hora .",piloto_temp=".$piloto;
 		$asignarVuelo = $con->actualizar("temp_volar",	$upd ," id_temp=".$reserva);
 		echo $asignarVuelo;
 	}else{

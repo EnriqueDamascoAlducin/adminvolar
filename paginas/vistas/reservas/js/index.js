@@ -8,6 +8,7 @@ function accionReserva(accion, id) {
 		agregarReserva(id,accion);
 	}
 }
+
 function cargarTablaReservas(){
 
 	fechaI = $("#fechaI").val();
@@ -159,10 +160,8 @@ function confirmarAgregarPago(reserva,cliente){
   				abrir_gritter(response, "No puedes agregar mas pagos" ,"warning");
   			else
   				abrir_gritter("Correcto", response ,"info");
-  			if(banco!=83)
-  				agregarPago(reserva,cliente);
-			else
-  				agregarPagoSitioo(reserva,cliente);
+
+  			agregarPago(reserva,cliente);
 
   		},
   		error:function(){
@@ -215,7 +214,7 @@ function agregarPagoSitio(reserva,cliente){
 	$("button[id^='btn']").remove();
 	$("#cuerpoModalReservas").html("Agregar Pago para "+ cliente);
 	$("#tituloModalReservas").html("Agregar Pago para "+ cliente);
-	$("#divBtnModalReservas").append('<button autofocus   type="button" id="btnAgregarPago'+reserva+'" class="btn btn-success" onclick="confirmarAgregarPago('+reserva+',\''+cliente+'\');" >Confirmar</button>');
+	$("#divBtnModalReservas").append('<button autofocus   type="button" id="btnAgregarPago'+reserva+'" class="btn btn-success" onclick="confirmaragregarPagoSitio('+reserva+',\''+cliente+'\');" >Confirmar</button>');
 	$("#btnPago"+reserva).focus();
 	url="vistas/reservas/forms/agregarPagosSitio.php";
 	parametros={reserva:reserva};
@@ -238,6 +237,50 @@ function agregarPagoSitio(reserva,cliente){
 		  }
 	});
 
+}
+
+function confirmaragregarPagoSitio(reserva,cliente){
+	metodo=$("#metodo").val().trim();
+	banco=$("#banco").val().trim();
+	referencia=$("#referencia").val().trim();
+	cantidad=$("#cantidad").val().trim();
+	fecha=$("#fecha").val().trim();
+	if(cantidad=="" ){
+		abrir_gritter("Advertencia","Debe Capturar una cantidad","warning");
+		return false;
+	}
+	datos={
+			reserva:reserva,
+			metodo:metodo,
+			banco:banco,
+			referencia:referencia,
+			cantidad:cantidad,
+			fecha:fecha,
+			accion:'registrarPagoSitio'
+	};
+	$.ajax({
+		url:'controladores/pagosController.php',
+		method: "POST",
+		data: datos,
+		success:function(response){
+
+			if(response.includes("ERROR"))
+				abrir_gritter(response, "No puedes agregar mas pagos" ,"warning");
+			else
+				abrir_gritter("Correcto", response ,"info");
+			cargarTablaReservas();
+			agregarPagoSitio(reserva,cliente);
+
+		},
+		error:function(){
+				abrir_gritter("Error","Error desconocido" ,"danger");
+		},
+		statusCode: {
+			404: function() {
+				abrir_gritter("Error","URL NO encontrada" ,"danger");
+			}
+		}
+	});
 }
 function conciliarPago(reserva,cliente){
 	$("button[id^='btn']").remove();
@@ -296,30 +339,22 @@ function agregarReserva(id,accion){
 }
 function ConfirmarAsistencia(reserva,cliente,accion){
 
-	hora = $("#hora").val();
-	piloto = $("#piloto").val();
-	globo = $("#globo").val();
-	peso = $("#peso").val();
 
 	$.ajax({
 		url:'controladores/reservaController.php',
 		method: "POST",
   		data: {
-  			hora:hora,
-  			piloto:piloto,
-			globo:globo,
-			reserva:reserva,
-			peso:peso,
+				reserva:reserva,
   			accion:accion
   		},
   		success:function(response){
   			if(response=="")
-  				abrir_gritter(response, "No puedes agregar mas pagos" ,"warning");
+  				abrir_gritter(response, "No se pudo confirmar la asitencia" ,"warning");
   			else
-  				abrir_gritter("Correcto", response ,"info");
+  				abrir_gritter("Correcto", "Gracias por confirmar la asistencia." ,"info");
 
   			agregarPago(reserva,cliente);
-
+				cargarTablaReservas();
   		},
   		error:function(){
 
@@ -335,12 +370,12 @@ function ConfirmarAsistencia(reserva,cliente,accion){
 }
 function checkAsistencia (reserva,nombre){
 
-	$("button[id^='btn']").remove();
-	$("#tituloModalReservas").html("Confirmar Asistencia para "+ nombre);
-	cambiarTamanoModal("modalSize","lg",'agregar');
-	$("#btnPago"+reserva).focus();
-	url="vistas/reservas/forms/confirmarAsistencia.php";
-	parametros={reserva:reserva};
+		$("button[id^='btn']").remove();
+		$("#tituloModalReservas").html("Confirmar Asistencia para "+ nombre);
+		cambiarTamanoModal("modalSize","lg",'agregar');
+		$("#btnPago"+reserva).focus();
+		url="vistas/reservas/forms/confirmarAsistencia.php";
+		parametros={reserva:reserva};
   	$.ajax({
 		url:url,
 		method: "POST",
@@ -359,7 +394,6 @@ function checkAsistencia (reserva,nombre){
 		    }
 		  }
 	});
-
 	cambiarTamanoModal("modalSize","lg",'resetear');
 }
 function mostrarCotizacion(id,accion){
@@ -392,4 +426,90 @@ function mostrarCotizacion(id,accion){
 		}
 	});
 
+}
+
+function verBitacora(reserva){
+
+		$("button[id^='btn']").remove();
+		$("#tituloModalReservas").html("Bitacora de Reserva "+ reserva);
+		cambiarTamanoModal("modalSize","lg",'agregar');
+		url="vistas/reservas/forms/bitacora	.php";
+		parametros={reserva:reserva};
+  	$.ajax({
+		url:url,
+		method: "POST",
+  		data: parametros,
+  		success:function(response){
+			$("#cuerpoModalReservas").html(response);
+  		},
+  		error:function(){
+          abrir_gritter("Error","Error desconocido" ,"danger");
+  		},
+  		statusCode: {
+		    404: function() {
+          abrir_gritter("Error","URL NO encontrada" ,"danger");
+		    }
+		  }
+		});
+}
+function asignarGlobo(reserva){
+
+	$("#tituloModalReservas").html("Bitacora de Reserva "+ reserva);
+			$("button[id^='btn']").remove();
+	cambiarTamanoModal("modalSize","lg",'agregar');
+	$("#divBtnModalReservas").append('<button autofocus type="button" id="btnAgregarPago'+reserva+'" class="btn btn-success" onclick="confirmarAsignarGlobo('+reserva+');" >Confirmar</button>');
+	$("#btnPago"+reserva).focus();
+	url="vistas/reservas/forms/asignarGlobo.php";
+	parametros={reserva:reserva};
+	$.ajax({
+	url:url,
+	method: "POST",
+		data: parametros,
+		success:function(response){
+		$("#cuerpoModalReservas").html(response);
+		},
+		error:function(){
+				abrir_gritter("Error","Error desconocido" ,"danger");
+		},
+		statusCode: {
+			404: function() {
+				abrir_gritter("Error","URL NO encontrada" ,"danger");
+			}
+		}
+	});
+}
+function confirmarAsignarGlobo(reserva){
+	hora = $("#hora").val();
+	piloto = $("#piloto").val();
+	globo = $("#globo").val();
+	datos	=	{
+			hora:hora,
+			piloto:piloto,
+			globo:globo,
+			reserva:reserva,
+			accion:'globos'
+	};
+	$.ajax({
+			url:'controladores/reservaController.php',
+			method: "POST",
+  		data: datos,
+  		success:function(response){
+  			if(response=="ok")
+  				abrir_gritter("Correcto", "Datos Correctos." ,"info");
+  			else
+					abrir_gritter("Error", "No se pudo registrar estos datos." + response,"warning");
+
+				asignarGlobo(reserva);
+  		},
+  		error:function(){
+
+          abrir_gritter("Error","Error desconocido" ,"danger");
+  		},
+  		statusCode: {
+		    404: function() {
+
+          abrir_gritter("Error","URL NO encontrada" ,"danger");
+		    }
+		  }
+	});
 }

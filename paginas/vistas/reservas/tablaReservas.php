@@ -123,46 +123,46 @@
 
 					<!--========       EDITAR     ========= -->
 					<?php if( (($idUsu==$reserva->idusu && in_array("EDITAR",$permisos)) || in_array("EDITAR GRAL",$permisos)) && ($reserva->status!=1 && $reserva->status!=7 && $reserva->status!=6 )  ) { ?>
-					<i class="fa fa-pencil-square fa-md" style="color:#33b5e5" title="Editar"  onclick="accionReserva('editar', <?php echo $reserva->id_temp; ?>)"></i>
+						<i class="fa fa-pencil-square fa-lg" style="color:#33b5e5" title="Editar"  onclick="accionReserva('editar', <?php echo $reserva->id_temp; ?>)"></i>&nbsp;
 					<?php } ?>
 
-					<!--========       CONCILIAR     ========= -->
-					<?php if( in_array("CONCILIAR",$permisos) && $reserva->status!=6 && $reserva->status!=2){ ?>
-					<i class="fa fa-check-square-o fa-md" style="color:#aa66cc" title="Conciliar" data-toggle="modal" data-target="#modalReservas"    onclick="conciliarPago(<?php echo $reserva->id_temp; ?>,'<?php echo $reserva->nombre; ?>')"></i>
-					<?php } ?>
-
-					<!--========       PAGOS     ========= -->
-					<?php if(in_array("AGREGAR PAGO",$permisos) && $reserva->status!=6 && $reserva->status!=2){ ?>
-					<i class="fa fa-money fa-md" style="color:#00C851" title="Agregar Pago" data-toggle="modal" data-target="#modalReservas" onclick="agregarPago(<?php echo $reserva->id_temp; ?>,'<?php echo $reserva->nombre; ?>')"> </i>
-					<?php } ?>
-
-					<!--========       BITACORA     ========= -->
-					<?php if((($idUsu==$reserva->idusu && in_array("BITACORA",$permisos)) || in_array("BITACORA GRA", $permisos)) && $reserva->status!=2){ ?>
-					<i class="fa fa-file-text-o fa-md" style="color:#2BBBAD" title="Bitacora de Pagos"  onclick="accionReserva('bitacora', <?php echo $reserva->id_temp; ?>)"></i> 
-					<?php } ?>
-					<!--========       PILOTOS     ========= -->
-					<?php if(in_array("PILOTOSS",$permisos)){ ?>
-					<i class="fa fa-user-o fa-md" style="color:rgba(0, 150, 136, 0.7) " title="Asignar Pilotos"  onclick="accionReserva('pilotos', <?php echo $reserva->id_temp; ?>)"></i>
-					<?php } ?>
 					<!--========       VER     ========= -->
 					<?php if(($idUsu==$reserva->idusu && in_array("VER",$permisos)) || in_array("VER GRAL",$permisos)) { ?>
-					<i class="fa fa-eye fa-md" style="color:#311b92 " title="Ver" onclick="accionReserva('ver', <?php echo $reserva->id_temp; ?>)" ></i>
+						<i class="fa fa-eye fa-lg" style="color:#311b92 " title="Ver" onclick="accionReserva('ver', <?php echo $reserva->id_temp; ?>)" ></i>&nbsp;
 					<?php } ?>
-					<!--========       Cotización     ========= -->
+
+								<!--========       PAGOS     ========= -->
+					<?php if(in_array("AGREGAR PAGO",$permisos) && $reserva->status!=6 && $reserva->status!=2){ ?>
+						<i class="fa fa-money fa-lg" style="color:#00C851" title="Agregar Pago" data-toggle="modal" data-target="#modalReservas" onclick="agregarPago(<?php echo $reserva->id_temp; ?>,'<?php echo $reserva->nombre; ?>')"> </i>&nbsp;
+					<?php } ?>
+					<!--========       CONCILIAR     ========= -->
+					<?php if( in_array("CONCILIAR",$permisos) && $reserva->status!=6 && $reserva->status!=2){ ?>
+						<i class="fa fa-check-square-o fa-lg" style="color:#aa66cc" title="Conciliar" data-toggle="modal" data-target="#modalReservas"    onclick="conciliarPago(<?php echo $reserva->id_temp; ?>,'<?php echo $reserva->nombre; ?>')"></i>&nbsp;
+					<?php } ?>
+					<!--========       BITACORA     ========= -->
+					<?php if((($idUsu==$reserva->idusu && in_array("BITACORA",$permisos)) || in_array("BITACORA GRA", $permisos)) && $reserva->status!=2){ ?>
+					<i class="fa fa-file-text-o fa-md" style="color:#2BBBAD" title="Bitacora de Pagos" data-toggle="modal" data-target="#modalReservas"   onclick="verBitacora( <?php echo $reserva->id_temp; ?>)"></i>&nbsp;
+					<?php } ?>
+					<!--========      Mostrar Cotización     ========= -->
 					<?php if(in_array("COTIZACION",$permisos) && $reserva->status!=2){ ?>
-						<i class="fa fa-expand fa-md" style="color:#311b92 " title="Cotización" data-toggle="modal" data-target="#modalReservas"  onclick="mostrarCotizacion(<?php echo $reserva->id_temp; ?>, 'ver')" ></i>
+						<i class="fa fa-expand fa-lg" style="color:#311b92 " title="Cotización" data-toggle="modal" data-target="#modalReservas"  onclick="mostrarCotizacion(<?php echo $reserva->id_temp; ?>, 'ver')" ></i>&nbsp;
+					<?php } ?>
+					<!--========       Pago en SItio     ========= -->
+					<?php if(in_array("PAGO SITIO",$permisos) && $reserva->status!=6 && $reserva->status!=2){ ?>
+						<i class="fa fa-dollar fa-lg" style="color:#00C851" title="Agregar Pago" data-toggle="modal" data-target="#modalReservas"  onclick="agregarPagoSitio(<?php echo $reserva->id_temp; ?>,'<?php echo $reserva->nombre; ?>')"></i>&nbsp;
+					<?php } ?>
+
+					<!--========       PILOTOS     ========= -->
+					<?php if(in_array("PILOTOS",$permisos)){ ?>
+						<i class="fa fa-user-o fa-lg" style="color:rgba(0, 150, 136, 0.7) " title="Asignar Globos y Pilotos"  onclick="asignarGlobo(<?php echo $reserva->id_temp; ?>)" data-toggle="modal" data-target="#modalReservas" ></i>&nbsp;
+					<?php } ?>
+					<!--========       Confirmar Asistencia     ========= -->
+					<?php if(in_array("ASISTENCIA",$permisos)   ){ ?>
+						<i class="fa fa-street-view fa-lg" style="color:#311b92 " title="Confirmar Asistencia" data-toggle="modal" data-target="#modalReservas"  onclick="checkAsistencia(<?php echo $reserva->id_temp; ?>,'<?php echo $reserva->nombre; ?>')"></i>&nbsp;
 					<?php } ?>
 					<!--========       Eliminar     ========= -->
 					<?php if( (($idUsu==$reserva->idusu && in_array("ELIMINAR",$permisos)) || in_array("ELIMINAR GRL",$permisos))  && ($reserva->status!=1 && $reserva->status!=7) ) { ?>
-					<i class="fa fa-trash-o fa-md" style="color:#ff4444" title="Eliminar" data-toggle="modal" data-target="#modalReservas"  onclick="eliminarReserva('vistas/reservas/', <?php echo $reserva->id_temp; ?>, <?php echo $modulo; ?>)" ></i>
-					<?php } ?>
-					<!--========       Cotización     ========= -->
-					<?php if(in_array("ASISTENCIA",$permisos)   ){ ?>
-						<i class="fa fa-street-view fa-md" style="color:#311b92 " title="Confirmar Asistencia" data-toggle="modal" data-target="#modalReservas"  onclick="checkAsistencia(<?php echo $reserva->id_temp; ?>,'<?php echo $reserva->nombre; ?>')"></i>
-					<?php } ?>
-					<!--========       Pago en SItio     ========= -->
-					<?php if(in_array("AGREGAR PAGO",$permisos) && $reserva->status!=6 && $reserva->status!=2){ ?>
-						<i class="fa fa-dollar fa-md" style="color:#00C851" title="Confirmar Asistencia" data-toggle="modal" data-target="#modalReservas"  onclick="agregarPagoSitio(<?php echo $reserva->id_temp; ?>,'<?php echo $reserva->nombre; ?>')"></i>
+						<i class="fa fa-trash-o fa-lg" style="color:#ff4444" title="Eliminar" data-toggle="modal" data-target="#modalReservas"  onclick="eliminarReserva('vistas/reservas/', <?php echo $reserva->id_temp; ?>, <?php echo $modulo; ?>)" ></i>&nbsp;
 					<?php } ?>
 				</td>
 			</tr>

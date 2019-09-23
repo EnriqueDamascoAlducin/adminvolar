@@ -10,6 +10,7 @@
 
 	$pagos = $con->consulta("CONCAT(nombre_usu,' ',apellidop_usu) as usuario, referencia_bp as referencia, cantidad_bp as cantidad,fecha_bp as fecha, bp.status as stat,id_bp as id","bitpagos_volar bp INNER JOIN volar_usuarios vu  ON bp.idreg_bp=vu.id_usu","bp.status<>0 and idres_bp=".$reserva);
 	$peso = $con->consulta("kg_temp,tipopeso_temp","temp_volar","id_temp=".$reserva);
+		$total = $con->consulta(" SUM(cantidad_bp) as pagado, total_temp as cotizado","bitpagos_volar bitp INNER JOIN temp_volar t on idres_bp = id_temp"," bitp.status in (1,2) and idres_bp=".$reserva);
 ?>
 <style type="text/css">
 
@@ -22,6 +23,24 @@
 		}
 	}
 </style>
+
+<div class="row">
+  <div class="col-sm-4 col-lg-4 col-md-4 col-4 col-xl-4 ">
+		<div class="form-group">
+			<label for="referencia">Total Pagado: <?php echo '$ '.number_format($total[0]->pagado, 2, '.', ','); ?></label>
+		</div>
+	</div>
+  <div class="col-sm-4 col-lg-4 col-md-4 col-4 col-xl-4 ">
+		<div class="form-group">
+			<label for="referencia">Cotizado: <?php echo '$ '.number_format($total[0]->cotizado, 2, '.', ','); ?></label>
+		</div>
+	</div>
+		<div class="col-sm-4 col-lg-4 col-md-4 col-4 col-xl-4 ">
+			<div class="form-group">
+				<label for="referencia">Por Pagar: <?php echo '$ '.number_format( $total[0]->cotizado -$total[0]->pagado, 2, '.', ',');  ?></label>
+			</div>
+		</div>
+</div>
 <div class="row">
 	<div class="col-sm-3 col-lg-3 col-md-3 col-6 col-xl-3 ">
 		<div class="form-group">
@@ -131,9 +150,14 @@
 							<i class="fa fa-envelope-o fa-lg" data-toggle="modal" onclick="accionesPagos(<?php echo $pago->id ?>,'simple',<?php echo $reserva; ?>);" data-target="#modalReservas1" ></i>
 
 						<?php }else if($pago->stat == 2){  ?>
-							<i class="fa fa-gift fa-lg" title="Enviar con Regalo" data-toggle="modal" style="color:#33b5e5" onclick="accionesPagos(<?php echo $pago->id ?>,'regalo',<?php echo $reserva; ?>);" data-target="#modalReservas1" ></i>
+								<?php if($pago->referencia=='Pago en Sitio'){ ?>
+									<i class="fa fa-home fa-lg" title="Pagado en Sitio" ></i>
+								<?php }else{ ?>
+									<i class="fa fa-gift fa-lg" title="Enviar con Regalo" data-toggle="modal" style="color:#33b5e5" onclick="accionesPagos(<?php echo $pago->id ?>,'regalo',<?php echo $reserva; ?>);" data-target="#modalReservas1" ></i>
+
+								<?php } ?>
 						<?php }else if($pago->stat == 1){  ?>
-							<i class="fa fa-gift fa-lg" title="Enviado con Regalo" ></i>
+									<i class="fa fa-gift fa-lg" title="Enviado con Regalo" ></i>
 						<?php } ?>
 
 					</td>
