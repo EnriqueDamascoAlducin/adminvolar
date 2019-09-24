@@ -9,7 +9,7 @@
 ?>
 <style type="text/css">
 	
-	@media (max-width: 576){
+	@media (max-width: 576px){
 		.tableTh{
 			font-size: 50%;
 		}
