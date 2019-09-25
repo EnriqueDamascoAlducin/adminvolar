@@ -174,7 +174,7 @@
 		$pdf->SetFont('Arial','',10);
 		$pdf->Cell(70,6,'COMENTARIO',1,0,'C',1);
 		$pdf->MultiCell(58,4, utf8_decode(str_replace("â€¢","°",$datosReserva[0]->comentario)),1,'L',0);
-  	$pdf->setXY(138,102);
+  	$pdf->setXY(138,106);
   	$pdf->setTextColor(255, 255, 255);
 		$pdf->MultiCell(58,4, utf8_decode($datosReserva[0]->comentario),1,'L',0);
     	$pdf->setTextColor(0, 0, 0);

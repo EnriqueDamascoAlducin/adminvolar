@@ -89,7 +89,7 @@
 
 			$totalHabitacion= $days * $precioHabitacion;
 
-			$descripcionHospedaje = " De ".convertirFecha($checkin). " a ". convertirFecha($checkout). "(".$days." dias).";
+			$descripcionHospedaje = " From ".convertirFecha($checkin). " to ". convertirFecha($checkout). "(".$days." dias).";
 			$totalReserva+=$totalHabitacion;
 		}
 		$totalReserva +=$datosReserva[0]->precio1;
@@ -189,10 +189,10 @@
 		$pdf->SetFont('Arial','',10);
 		$pdf->Cell(70,6,'COMMENTS',1,0,'C',1);
 		$pdf->MultiCell(58,4, utf8_decode(str_replace("â€¢","°",$datosReserva[0]->comentario)),1,'L',0);
-	  	$pdf->setXY(138,90);
-	  	$pdf->setTextColor(255, 255, 255);
+	  $pdf->setXY(138,102);
+	  $pdf->setTextColor(255, 255, 255);
 		$pdf->MultiCell(58,4, utf8_decode($datosReserva[0]->comentario),1,'L',0);
-    	$pdf->setTextColor(0, 0, 0);
+    $pdf->setTextColor(0, 0, 0);
 	}
 
 	if($datosReserva[0]->motivo!=''){
@@ -390,7 +390,7 @@
 
 
 
-	$archivo=$_SERVER['DOCUMENT_ROOT'].'/admin1/sources/pdfs/cotizacion2-'.$reserva.'.pdf';
+	$archivo=$_SERVER['DOCUMENT_ROOT'].'/adminTest/sources/pdfs/cotizacion2-'.$reserva.'.pdf';
 	$pdf->Output($archivo,'F');
 	//$pdf->Output();
 ?>

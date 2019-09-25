@@ -5,6 +5,8 @@
         $usuario= unserialize((base64_decode($_SESSION['usuario'])));
     }
 
+			$totalReserva=0.0;
+			$totalReserva+=$totalVuelo;
 ?>
 <?php
 	/// Datos de Correo
@@ -57,7 +59,7 @@
 						<script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 					</head>';
 	$cuerpo.=		'<body>';
-	$cuerpo.=			'<img src="https://www.volarenglobo.com.mx/admin1/sources/images/correos/cotizacionHeader.jpeg" style="width:100%; max-width=100%;" alt="Cotización">';
+	$cuerpo.=			'<img src="https://www.volarenglobo.com.mx/adminTest/sources/images/correos/cotizacionHeader.jpeg" style="width:100%; max-width=100%;" alt="Cotización">';
 	$cuerpo.=			'<b>Dear '.$datosReserva[0]->nombre.'</b>';
 	$cuerpo.=			'<p>';
 	$cuerpo.=				'It’s a pleasure to reply to your flight request. Our operation is located in Teotihuacan Valley, here you will enjoy the best view of pyramids and the whole arquelogical site. The appointment is at ';
@@ -160,7 +162,7 @@
 	}
 	if(sizeof($serviciosReserva)>0){
 		$cuerpo.=					'<tr>';
-		$cuerpo.=						'<td class="tdseparador" colspan="3">SERVICES:</td>';
+		$cuerpo.=						'<td class="tdseparador" colspan="4">SERVICES:</td>';
 		$cuerpo.=					'</tr>';
 		foreach ($serviciosReserva as $servicioReserva) {
 			$cuerpo.=				'<tr>';
@@ -177,8 +179,8 @@
 				}
 			}else{
 				$cuerpo.=				'<td>';
-				$cuerpo.=					'Cortesia';
-				$cuerpo.=				'<td>';
+				$cuerpo.=					'COURTESY';
+				$cuerpo.=				'</td>';
 				$cuerpo.=				'<td colspan="2"></td>';
 			}
 			$cuerpo.=				'</tr>';
@@ -219,7 +221,7 @@
 	$cuerpo.=						'</tr>';
 
 	$cuerpo.=						'<tr>';
-	
+
 	$cuerpo.=						'</tr>';
 	$cuerpo.=						'<tr>';
 	$cuerpo.=							'<td colspan="4">*Prices valid for 30 days from date on your quote.</td>';
@@ -245,7 +247,7 @@
 	$cuerpo.=					'</tbody>';
 	$cuerpo.=				'</table>';
 	$cuerpo.=			'</div>';
-	$cuerpo .= 			'<h3>HOW TO PAY?</h3>';
+	$cuerpo .= 			'<h3>How to pay?</h3>';
 	$cuerpo .= 			'<p>Advance payment for $2,000.00 on bank account or transfer. The remainder will be paid the flight day.</p>';
 
 	$cuerpo.=			'<h3 style="color:red";><b>Deposit bank account:</b></h3>';
@@ -261,7 +263,7 @@
 	$cuerpo.=		'</body>';
 	$cuerpo.=	'</html>';
 	//	echo $cuerpo;
-	$ruta=$_SERVER['DOCUMENT_ROOT'].'/admin1/sources/PHPMailer/mail.php';
+	$ruta=$_SERVER['DOCUMENT_ROOT'].'/adminTest/sources/PHPMailer/mail.php';
 	require_once  $ruta;
 
 	$accion = $con->actualizar("temp_volar","status=3","id_temp=".$reserva);
