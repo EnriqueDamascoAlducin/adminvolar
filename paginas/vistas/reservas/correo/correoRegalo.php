@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 	require  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/modelos/login.php';
 	if(isset($_SESSION['usuario'])){
@@ -20,7 +20,7 @@
 
 	$habitacion=$datosReserva[0]->habitacion;
 	$habitacion=explode("|", $habitacion);
-	
+
 	$getVendedorInfo = $con->consulta("CONCAT(IFNULL(nombre_usu,''),' ',IFNULL(apellidop_usu,''),' ', IFNULL(apellidom_usu,'')) as nombre, correo_usu as correo,telefono_usu as telefono", " volar_usuarios vu INNER JOIN temp_volar tv ON tv.idusu_temp=vu.id_usu ","id_temp=".$reserva);
 	$tPasajeros = $datosReserva[0]->pasajerosN+ $datosReserva[0]->pasajerosA;
 	$tipoVuelo = $datosReserva[0]->tipo_temp;
@@ -40,38 +40,38 @@
 			$descripHabitacion=$habitacion[3];
 			$checkin= $datosReserva[0]->checkin;
 			$checkout = $datosReserva[0]->checkout;
-			$date1 = strtotime($checkin);  
-			$date2 = strtotime($checkout);  
-			  
-			// Formulate the Difference between two dates 
+			$date1 = strtotime($checkin);
+			$date2 = strtotime($checkout);
+
+			// Formulate the Difference between two dates
 			$diff = abs($date2 - $date1);
-			// To get the year divide the resultant date into 
-			// total seconds in a year (365*60*60*24) 
-			$years = floor($diff / (365*60*60*24));  
-			  
-			  
-			// To get the month, subtract it with years and 
-			// divide the resultant date into 
-			// total seconds in a month (30*60*60*24) 
-			$months = floor(($diff - $years * 365*60*60*24) 
-			                               / (30*60*60*24));  
-			  
-			  
-			// To get the day, subtract it with years and  
-			// months and divide the resultant date into 
-			// total seconds in a days (60*60*24) 
-			$days = floor(($diff - $years * 365*60*60*24 -  
-			             $months*30*60*60*24)/ (60*60*24)); 
+			// To get the year divide the resultant date into
+			// total seconds in a year (365*60*60*24)
+			$years = floor($diff / (365*60*60*24));
+
+
+			// To get the month, subtract it with years and
+			// divide the resultant date into
+			// total seconds in a month (30*60*60*24)
+			$months = floor(($diff - $years * 365*60*60*24)
+			                               / (30*60*60*24));
+
+
+			// To get the day, subtract it with years and
+			// months and divide the resultant date into
+			// total seconds in a days (60*60*24)
+			$days = floor(($diff - $years * 365*60*60*24 -
+			             $months*30*60*60*24)/ (60*60*24));
 
 			$totalHabitacion= $days * $precioHabitacion;
-			
+
 			$descripcionHospedaje = " De ".$checkin. " a ". $checkout. "(<b>".$days." dias</b> )";
 			$totalReserva+=$totalHabitacion;
 		}
 		$totalReserva +=$datosReserva[0]->precio1;
 		//echo "otros->".$datosReserva[0]->precio1."<br>";
 		$totalReserva +=$datosReserva[0]->precio2;
-		
+
 		function convertirFecha($fecha){
 			$fecha=explode("-",$fecha);
 			if($fecha[1]=='01'){
@@ -105,9 +105,9 @@
 		}
 
 	}
-	
+
 ?>
-<?php 
+<?php
 	/// Datos de Correo
 	//$getVendedorInfo[0]->nombre
 
@@ -120,12 +120,12 @@
 					<head>
 						<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 						<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-					
+
 						<script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 					</head>';
 	$cuerpo.=		'<body>';
 	$cuerpo.=			'<p>Hola!!! <b>'.$datosReserva[0]->nombre.'</b> </p>';
-	$cuerpo.=			'<p>Aprovecha tu cupón de descuento.</p>';
+	$cuerpo.=			'<p>Aprovecha tu cupón de descuento, válido al momento de tu registro en nuestra Recepción.</p>';
 	$cuerpo.=			'<img src="https://www.volarenglobo.com.mx/admin1/sources/images/correos/cupon-descuento-volar-en-globo.jpg" style="width:100%;max-width:100%">';
 	$cuerpo.=			'<p style="font-size:14px">Para mas información por favor comunicate con tu vendedor</p>';
 	$cuerpo.=			'<b>'.$getVendedorInfo[0]->nombre.'</b><br>';
