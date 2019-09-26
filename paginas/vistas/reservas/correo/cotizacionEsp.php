@@ -7,6 +7,9 @@
 
 					$totalReserva=0.0;
 					$totalReserva+=$totalVuelo;
+					$totalReserva +=$datosReserva[0]->precio1;
+				 //echo "otros->".$datosReserva[0]->precio1."<br>";
+				 $totalReserva +=$datosReserva[0]->precio2;
 ?>
 <?php
 	/// Datos de Correo
