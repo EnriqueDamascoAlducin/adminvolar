@@ -1,104 +1,14 @@
 <?php
-
-$pago = $_POST['pago'];
-$pagoInfo= $con->consulta("cantidad_bp as cantidad, idres_bp as reserva","bitpagos_volar","id_bp=".$pago);
-$reserva=$pagoInfo[0]->reserva;
-
-$totalPagos  = $con->consulta("SUM(cantidad_bp) as totalPagos ","bitpagos_volar","idres_bp=".$reserva);
-$totalReserva=0.0;
-$totalPasajeros = $con->consulta("FORMAT(ifnull(pasajerosa_temp,0) + ifnull(pasajerosn_temp,0),2)  Total"," temp_volar "," id_temp = $reserva");
-$datosReserva = $con->query("CALL getResumenREserva(".$reserva.");")->fetchALL (PDO::FETCH_OBJ);
-$serviciosReserva = $con->consulta("tipo_sv as tipo , nombre_servicio as servicio ,cantmax_servicio as cantmax, precio_servicio as precio "," servicios_vuelo_temp svt INNER JOIN servicios_volar sv ON svt.idservi_sv=sv.id_servicio ","  svt.status<>0 and cantidad_sv>0 and idtemp_sv =".$reserva);
-
-$hotel=$datosReserva[0]->hotel;
-$habitacion=$datosReserva[0]->habitacion;
-$habitacion=explode("|", $habitacion);
-
-$getVendedorInfo = $con->consulta("CONCAT(IFNULL(nombre_usu,''),' ',IFNULL(apellidop_usu,''),' ', IFNULL(apellidom_usu,'')) as nombre, correo_usu as correo,telefono_usu as telefono", " volar_usuarios vu INNER JOIN temp_volar tv ON tv.idusu_temp=vu.id_usu ","id_temp=".$reserva);
-$tPasajeros = $datosReserva[0]->pasajerosN+ $datosReserva[0]->pasajerosA;
-$tipoVuelo = $datosReserva[0]->tipo_temp;
-$totalPasajeros = $totalPasajeros[0]->Total;
-if($tPasajeros == $totalPasajeros){
-  //echo $totalPasajeros;
-  $preciosTipoVuelo = $con->consulta("precioa_vc,precion_vc","vueloscat_volar","id_vc=$tipoVuelo");
-  $totalVueloAdultos = $datosReserva[0]->pasajerosA * $preciosTipoVuelo[0]->precioa_vc;
-  $totalVueloNinos = $datosReserva[0]->pasajerosN * $preciosTipoVuelo[0]->precion_vc;
-  $totalVuelo= $totalVueloAdultos+$totalVueloNinos;
-  $totalReserva+=$totalVuelo;
-  //echo "<br>Vuelo = ".$totalVuelo."<br>";
-  if($datosReserva[0]->habitacion!=''){
-    $precioHabitacion=$habitacion[1];
-    $nombreHabitacion=$habitacion[0];
-    $capacidadHabitacion=$habitacion[2];
-    $descripHabitacion=$habitacion[3];
-    $checkin= $datosReserva[0]->checkin;
-    $checkout = $datosReserva[0]->checkout;
-    $date1 = strtotime($checkin);
-    $date2 = strtotime($checkout);
-
-    // Formulate the Difference between two dates
-    $diff = abs($date2 - $date1);
-    // To get the year divide the resultant date into
-    // total seconds in a year (365*60*60*24)
-    $years = floor($diff / (365*60*60*24));
-
-
-    // To get the month, subtract it with years and
-    // divide the resultant date into
-    // total seconds in a month (30*60*60*24)
-    $months = floor(($diff - $years * 365*60*60*24)
-                                   / (30*60*60*24));
-
-
-    // To get the day, subtract it with years and
-    // months and divide the resultant date into
-    // total seconds in a days (60*60*24)
-    $days = floor(($diff - $years * 365*60*60*24 -
-                 $months*30*60*60*24)/ (60*60*24));
-
-    $totalHabitacion= $days * $precioHabitacion;
-
-    $descripcionHospedaje = " From ".$checkin. " to ". $checkout. "(<b>".$days." days</b> )";
-    $totalReserva+=$totalHabitacion;
+require_once  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/vistas/reservas/pdfs/confirmacionEng.php';
+if(isset($_SESSION['usuario'])){
+      $usuario= unserialize((base64_decode($_SESSION['usuario'])));
   }
+  $totalReserva=0.0;
+  $totalReserva+=$totalVuelo;
   $totalReserva +=$datosReserva[0]->precio1;
-  //echo "otros->".$datosReserva[0]->precio1."<br>";
   $totalReserva +=$datosReserva[0]->precio2;
 
 
-  	function convertirFecha($fecha){
-  		$fecha=explode("-",$fecha);
-  		if($fecha[1]=='01'){
-  			$Nvafecha="JAN-$fecha[2]-$fecha[0]";
-  		}else if($fecha[1]=='02'){
-  			$Nvafecha="FEB-$fecha[2]-$fecha[0]";
-  		}else if($fecha[1]=='03'){
-  			$Nvafecha="MAR-$fecha[2]-$fecha[0]";
-  		}else if($fecha[1]=='04'){
-  			$Nvafecha="APR-$fecha[2]-$fecha[0]";
-  		}else if($fecha[1]=='05'){
-  			$Nvafecha="MAY-$fecha[2]-$fecha[0]";
-  		}else if($fecha[1]=='06'){
-  			$Nvafecha="JUN-$fecha[2]-$fecha[0]";
-  		}else if($fecha[1]=='07'){
-  			$Nvafecha="JUL-$fecha[2]-$fecha[0]";
-  		}else if($fecha[1]=='08'){
-  			$Nvafecha="AUG-$fecha[2]-$fecha[0]";
-  		}else if($fecha[1]=='09'){
-  			$Nvafecha="SEP-$fecha[2]-$fecha[0]";
-  		}else if($fecha[1]=='10'){
-  			$Nvafecha="OCT-$fecha[2]-$fecha[0]";
-  		}else if($fecha[1]=='11'){
-  			$Nvafecha="NOV-$fecha[2]-$fecha[0]";
-  		}else if($fecha[1]=='12'){
-  			$Nvafecha="DEC-$fecha[2]-$fecha[0]";
-  		}else{
-  			$Nvafecha="Error";
-  		}
-  		return $Nvafecha;
-  	}
-
-}
 
 ?>
 <?php
@@ -168,7 +78,7 @@ $cuerpo='<!DOCTYPE html>
         </head>';
 $cuerpo.=		'<body>';
 $cuerpo.=			'<img src="https://www.volarenglobo.com.mx/admin1/sources/images/correos/confirmacionHeader.jpeg" style="width:100%; max-width=100%;" alt="Confirmacion">';
-$cuerpo.=			'<p>Hello!!! <b>'.$datosReserva[0]->nombre.'</b>.This is your flight confirmation. It’s not necessary to be printed! </p>';
+$cuerpo.=			'<p>Hello!!! <b>'.$datosReserva[0]->nombre.'</b>. This is your flight confirmation. It’s not necessary to be printed! </p>';
 $cuerpo.=				'<p><b>Registration and Payment:</b> Your flight date, you must get to our reception where our hostess will welcome you, make your registration and get the remaining payment. Remember to be on time at the appointment place. Our advice is to bring comfortable clothes, just as if you were on a picnic: cap, scarf, gloves, jacket, sunscreen, and camera.</p>';
 
 
@@ -313,7 +223,7 @@ if(sizeof($serviciosReserva)>0){
       }
     }else{
       $cuerpo.=				'<td>';
-      $cuerpo.=					'COURTESY';
+      $cuerpo.=					'INCLUDED';
       $cuerpo.=				'</td>';
       $cuerpo.=				'<td colspan="2"></td>';
     }
@@ -391,7 +301,7 @@ $cuerpo.=								'<ol type="1">
                           </ul>
                           <li>Weather restrictions:</li>
                           <ul>
-                            <li>Winds over 20 km/hr</li>
+                            <li>Winds over 20 km/hr.</li>
                             <li>Rain or electric storm</li>
                             <li>Fog excess </li>
                             <li><i>If your flight is cancelled because of weather conditions, the flight might be rescheduled on a period of one year or you might ask for the refund of the total paid.</i></li>

@@ -1,6 +1,6 @@
 <?php
 	$reserva = $_POST['reserva'];
-	require  $_SERVER['DOCUMENT_ROOT'].'/adminTest/paginas/modelos/login.php';
+	require  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/modelos/login.php';
 	if(isset($_SESSION['usuario'])){
         $usuario= unserialize((base64_decode($_SESSION['usuario'])));
     }
@@ -10,9 +10,9 @@
 
 	$idioma = $con->consulta("idioma_temp","temp_volar","id_temp=".$reserva);
 	if($idioma[0]->idioma_temp==2){
-		require_once  $_SERVER['DOCUMENT_ROOT'].'/adminTest/paginas/vistas/reservas/correo/ConfirmacionEng.php';
+		require_once  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/vistas/reservas/correo/ConfirmacionEng.php';
 	}else{
-		require_once  $_SERVER['DOCUMENT_ROOT'].'/adminTest/paginas/vistas/reservas/correo/ConfirmacionEsp.php';
+		require_once  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/vistas/reservas/correo/ConfirmacionEsp.php';
 
 	}
 	?>

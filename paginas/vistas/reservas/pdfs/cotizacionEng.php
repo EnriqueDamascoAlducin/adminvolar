@@ -390,7 +390,7 @@
 
 
 
-	$archivo=$_SERVER['DOCUMENT_ROOT'].'/adminTest/sources/pdfs/cotizacion2-'.$reserva.'.pdf';
+	$archivo=$_SERVER['DOCUMENT_ROOT'].'/admin1/sources/pdfs/cotizacion2-'.$reserva.'.pdf';
 	$pdf->Output($archivo,'F');
 	//$pdf->Output();
 ?>
