@@ -77,7 +77,7 @@ $cuerpo='<!DOCTYPE html>
           <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
         </head>';
 $cuerpo.=		'<body>';
-$cuerpo.=			'<img src="https://www.volarenglobo.com.mx/admin1/sources/images/correos/confirmacionHeader.jpeg" style="width:100%; max-width=100%;" alt="Confirmacion">';
+$cuerpo.=			'<img src="https://www.volarenglobo.com.mx/admin1/sources/images/correos/confirmationHeader.jpeg" style="width:100%; max-width=100%;" alt="Confirmacion">';
 $cuerpo.=			'<p>Hello!!! <b>'.$datosReserva[0]->nombre.'</b>. This is your flight confirmation. It’s not necessary to be printed! </p>';
 $cuerpo.=				'<p><b>Registration and Payment:</b> Your flight date, you must get to our reception where our hostess will welcome you, make your registration and get the remaining payment. Remember to be on time at the appointment place. Our advice is to bring comfortable clothes, just as if you were on a picnic: cap, scarf, gloves, jacket, sunscreen, and camera.</p>';
 

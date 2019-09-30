@@ -1,5 +1,21 @@
 <?php
-	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin1/sources/FPDF/plantillaConfirmacion.php';
+	$imagen="quoteHeader.jpeg";
+	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin1/sources/FPDF/fpdf.php';
+
+
+  Class PDF extends FPDF{
+
+  	function Header(){
+  		//Imagen, SETX,SETY, tamaño
+  		$this->Image( $_SERVER['DOCUMENT_ROOT'].'/admin1/sources/images/correos/confirmationHeader.jpeg',35,10,135,25);
+  		$this->Ln(30);
+  	}
+  	/*function Footer(){
+ 			$this->SetY(-15);
+ 			$this->SetFont('Arial','I', 8);
+ 			$this->Cell(0,10, 'Pagina '.$this->PageNo().'/{nb}',0,0,'C' );
+  	}*/
+  }
 	$pago = $_POST['pago'];
 	$pagoInfo= $con->consulta("cantidad_bp as cantidad, idres_bp as reserva","bitpagos_volar","id_bp=".$pago);
 	$reserva=$pagoInfo[0]->reserva;

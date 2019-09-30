@@ -1,4 +1,4 @@
-<?php 
+<?php
 	$empleados = $con->consulta("CONCAT( IFNULL(nombre_usu,''),' ',IFNULL(apellidop_usu,''),' ',IFNULL(apellidom_usu,'')) as text, id_usu as value","volar_usuarios","id_usu in (Select DISTINCT(idusu_temp) from temp_volar where status<>0) and status<>0 ");
 	$reservas = $con->consulta("DISTINCT(status) as status","temp_volar","status<>0");
 ?>
@@ -21,7 +21,7 @@
 			<label for="cliente">Cliente</label>
 			<select class="selectpicker form-control" id="cliente" name="cliente" data-live-search="true">
 				<option value='0'>Todos...</option>
-				
+
 			</select>
 		</div>
 	</div>
@@ -31,10 +31,10 @@
 			<label for="status">Estatus</label>
 			<select class="selectpicker form-control" id="status" name="status" data-live-search="true">
 				<option value='0'>Todos...</option>
-				<?php 
+				<?php
 					foreach ($reservas as $reserva) {
-						
-					
+
+
 						if( $reserva->status ==4){
 							$text="Conciliada";
 							$class="#33b5e5";
@@ -66,7 +66,7 @@
 						echo "<option value='".$reserva->status."' style='color:".$class."' > <label class='badge badge-warning'>".$text."</label></option>";
 					}
 				?>
-				
+
 			</select>
 		</div>
 	</div>
@@ -81,7 +81,7 @@
 						echo "<option value='".$empleado->value."'>".$empleado->text."</option>";
 					}
 				?>
-				
+
 			</select>
 		</div>
 	</div>
@@ -95,7 +95,7 @@
 
 	<div class="col-sm-3 col-lg-3 col-md-3 col-6 col-xl-2 " >
 		<button type="button" class="btn btn-info" onclick="cargarTablaReservas()"><i class="fa fa-search" ></i></button>
-		<?php 
+		<?php
 			if(in_array("REPORTES", $permisos)){
 		?>
 				<a id="imprimirReporte" download target="_NEW"> <button type="button" class="btn btn-success" onclick="imprimirReporte()"><i class="fa fa-file-excel-o "></i></button></a>
@@ -104,4 +104,3 @@
 		?>
 	</div>
 </div>
-

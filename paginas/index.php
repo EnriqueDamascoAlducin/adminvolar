@@ -12,11 +12,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Volar en GLobo</title>
+	<title>Volar en Globo</title>
 	<meta charset="UTF-8">
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<!--===============================================================================================-->  
+	<!--===============================================================================================-->
 	<link rel="icon" type="image/png" href="../sources/images/icons/logo.png"/>
 	<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="../sources/vendor/bootstrap/css/bootstrap.min.css">
@@ -26,13 +26,13 @@
 	<link rel="stylesheet" type="text/css" href="../sources/fonts/iconic/css/material-design-iconic-font.min.css">
 	<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="../sources/vendor/animate/animate.css">
-	<!--===============================================================================================-->  
+	<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="../sources/vendor/css-hamburgers/hamburgers.min.css">
 	<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="../sources/vendor/animsition/css/animsition.min.css">
 	<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="../sources/vendor/select2/select2.min.css">
-	<!--===============================================================================================-->  
+	<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="../sources/vendor/daterangepicker/daterangepicker.css">
 	<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="../sources/css/util.css">
@@ -77,9 +77,9 @@
 		<?php } ?>
 	</div>
 	<div id="menuDer">
-		
+
 		<div class="col-sm-12 col-lg-12 col-md-12 col-12 col-xl-12 " id="contenedor">
-				
+
 		</div>
 
 	</div>
@@ -128,7 +128,14 @@
 
 	  <script type="text/javascript" src="../sources/js/index.js"></script>
 	<!--===============================================================================================-->
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-149104441-1"></script>
+	<script>
+	  window.dataLayer = window.dataLayer || [];
+	  function gtag(){dataLayer.push(arguments);}
+	  gtag('js', new Date());
 
+	  gtag('config', 'UA-149104441-1');
+	</script>
 </body>
 </html>
-

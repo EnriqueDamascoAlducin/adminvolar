@@ -44,8 +44,11 @@
 	if(!in_array("GENERAL", $permisos)){
 		$filtro.= " and idusu_temp=".$idUsu;
 	}
+	if(!isset($_POST['status']) || $_POST['status']=='0' ){
+		$filtro .= " and tv.status not in (1,6,7) ";
+	}
 	//echo "SELECT $campos FROM $tabla WHERE $filtro";
-	$filtro .= " ORDER BY id_temp DESC limit 100";
+	$filtro .= " ORDER BY id_temp DESC limit 300";
 	$reservas=$con->consulta($campos,$tabla,$filtro);
 	$cancelarSinCot= $con->query("UPDATE temp_volar set status= 0 where  register <=  CURRENT_TIMESTAMP - INTERVAL 1 DAY and status=2");
 	$cancelar30Dias= $con->query("UPDATE temp_volar set status= 0 where register <=  CURRENT_TIMESTAMP - INTERVAL 30 DAY and status =3;");
@@ -125,10 +128,13 @@
 					<?php if( (($idUsu==$reserva->idusu && in_array("EDITAR",$permisos)) || in_array("EDITAR GRAL",$permisos)) && ($reserva->status!=1 && $reserva->status!=7 && $reserva->status!=6 )  ) { ?>
 						<i class="fa fa-pencil-square fa-lg" style="color:#33b5e5" title="Editar"  onclick="accionReserva('editar', <?php echo $reserva->id_temp; ?>)"></i>&nbsp;
 					<?php } ?>
-
 					<!--========       VER     ========= -->
 					<?php if(($idUsu==$reserva->idusu && in_array("VER",$permisos)) || in_array("VER GRAL",$permisos)) { ?>
 						<i class="fa fa-eye fa-lg" style="color:#311b92 " title="Ver" onclick="accionReserva('ver', <?php echo $reserva->id_temp; ?>)" ></i>&nbsp;
+					<?php } ?>
+					<!--========       REPROGRAMACIONES     ========= -->
+					<?php if(($idUsu==$reserva->idusu && in_array("REPROGRAMAR",$permisos)) || in_array("REPROGRAMAR GRAL",$permisos)) { ?>
+						<i class="fa fa-clock-o fa-lg" style="color:#311b92 " data-toggle="modal" data-target="#modalReservas"  title="Reprogramar" onclick="reprogramar( <?php echo $reserva->id_temp; ?>,'<?php echo $reserva->nombre; ?>')" ></i>&nbsp;
 					<?php } ?>
 
 								<!--========       PAGOS     ========= -->
@@ -164,6 +170,11 @@
 					<?php if( (($idUsu==$reserva->idusu && in_array("ELIMINAR",$permisos)) || in_array("ELIMINAR GRL",$permisos))  && ($reserva->status!=1 && $reserva->status!=7) ) { ?>
 						<i class="fa fa-trash-o fa-lg" style="color:#ff4444" title="Eliminar" data-toggle="modal" data-target="#modalReservas"  onclick="eliminarReserva('vistas/reservas/', <?php echo $reserva->id_temp; ?>, <?php echo $modulo; ?>)" ></i>&nbsp;
 					<?php } ?>
+					<!--========       Comentario     ========= -->
+					<?php if(($idUsu==$reserva->idusu && in_array("COMENTAR",$permisos)) ) { ?>
+						<i class="fa fa-comments-o fa-lg" style="color:#311b92 " title="Comentarios" onclick="comentario( <?php echo $reserva->id_temp; ?>)" ></i>&nbsp;
+					<?php } ?>
+
 				</td>
 			</tr>
 

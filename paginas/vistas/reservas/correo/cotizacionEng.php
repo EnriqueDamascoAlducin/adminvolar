@@ -61,7 +61,7 @@
 						<script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 					</head>';
 	$cuerpo.=		'<body>';
-	$cuerpo.=			'<img src="https://www.volarenglobo.com.mx/admin1/sources/images/correos/cotizacionHeader.jpeg" style="width:100%; max-width=100%;" alt="Cotización">';
+	$cuerpo.=			'<img src="https://www.volarenglobo.com.mx/admin1/sources/images/correos/quoteHeader.jpeg" style="width:100%; max-width=100%;" alt="Quote">';
 	$cuerpo.=			'<b>Dear '.$datosReserva[0]->nombre.'</b>';
 	$cuerpo.=			'<p>';
 	$cuerpo.=				'It’s a pleasure to reply to your flight request. Our operation is located in Teotihuacan Valley, here you will enjoy the best view of pyramids and the whole arquelogical site. The appointment is at ';
