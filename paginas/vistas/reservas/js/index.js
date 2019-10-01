@@ -515,7 +515,7 @@ function confirmarAsignarGlobo(reserva){
 }
 function reprogramar(reserva, cliente){
 
-			$("button[id^='btn']").remove();
+	$("button[id^='btn']").remove();
 	$("#tituloModalReservas").html("Reprogramar Rereserva para "+ cliente);
 	cambiarTamanoModal("modalSize","lg",'resetear');
 	$("#divBtnModalReservas").append('<button autofocus type="button"  data-dismiss="modal" id="btnReprograma'+reserva+'" class="btn btn-success" onclick="confirmarReprogramacion('+reserva+');" >Confirmar</button>');
@@ -526,6 +526,37 @@ function reprogramar(reserva, cliente){
 			data: {reserva:reserva},
 			success:function(response){
 			 $("#cuerpoModalReservas").html(response)
+			},
+			error:function(){
+
+					abrir_gritter("Error","Error desconocido" ,"danger");
+			},
+			statusCode: {
+				404: function() {
+
+					abrir_gritter("Error","URL NO encontrada" ,"danger");
+				}
+			}
+	});
+}
+function confirmarReprogramacion(reserva){
+	url = 'controladores/reservaController.php';
+	var motivo = $("#motivo").val();
+	var fechavuelo = $("#fechavuelo").val();
+	var cargo = $("#cargo").val();
+	datos={
+		motivo:motivo,
+		fechavuelo:fechavuelo,
+		cargo:cargo,
+		reserva:reserva,
+		accion:'reprogramar'
+	};
+	$.ajax({
+			url:url,
+			method: "POST",
+			data: datos,
+			success:function(response){
+								abrir_gritter("Error",response ,"info");
 			},
 			error:function(){
 

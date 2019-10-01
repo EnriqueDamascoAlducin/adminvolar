@@ -38,6 +38,11 @@
 		$upd="globo_temp=".$globo.",hora_temp=".$hora .",piloto_temp=".$piloto;
 		$asignarVuelo = $con->actualizar("temp_volar",	$upd ," id_temp=".$reserva);
 		echo $asignarVuelo;
+	}elseif(isset($_POST['accion']) && $_POST['accion']=='reprogramar'){
+		echo "Reprogrado";
+		require  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/modelos/login.php';
+		$usuario= unserialize((base64_decode($_SESSION['usuario'])));
+		$idUsu=$usuario->getIdUsu();
 	}else{
 		$reserva = $_POST['id'];
 		if(!isset($_POST['tipo'])){

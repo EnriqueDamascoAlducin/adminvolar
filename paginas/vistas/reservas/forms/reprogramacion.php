@@ -5,6 +5,7 @@
 	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/controladores/fin_session.php';
 	/*	Requeridos	*/
 	$reserva=$_POST['reserva'];
+	$fechaActual = $con->consulta("IFNULL(fechavuelo_temp,'') as fecha","temp_volar","id_temp=".$reserva);
 	?>
 <style type="text/css">
 
@@ -30,25 +31,29 @@
 			</select>
 		</div>
 	</div>
-	<div class="col-sm-3 col-lg-3 col-md-3 col-6 col-xl-3 ">
+	<div class="col-sm-6 col-lg-6 col-md-6 col-6 col-xl-6 ">
 		<div class="form-group">
 			<label for="fechavuelo">Fecha de Vuelo</label>
-			<input type="date" class="form-control" id="fechavuelo" value="">
+			<input type="date" class="form-control" id="fechavuelo" value="<?php echo $fechaActual[0]->fecha; ?>">
 		</div>
 	</div>
 		<div class="col-sm-6 col-lg-6 col-md-6 col-6 col-xl-6 ">
 			<div class="form-group">
-				<label for="motivo">Aplica Cargo Adicional?</label>
-				<select class="selectpicker form-control" id="motivo" name="motivo" data-live-search="true">
+				<label for="cargo">Aplica Cargo Adicional?</label>
+				<select class="selectpicker form-control" id="cargo" name="cargo" data-live-search="true">
 						<option value='0'   >0</option>
-					<?php for ($i=0; $i <=35 ; $i+5) { ?>
+					<?php for ($i=0; $i <=35 ; $i=$i+5) { ?>
 						<option value='<?php echo $i; ?>'   ><?php echo $i .'%'; ?></option>
-						// code...
 				 <?php	} ?>
 				</select>
 			</div>
 		</div>
-
+		<div class="col-sm-12 col-lg-12 col-md-12 col-12 col-xl-12 ">
+			<div class="form-group">
+				<label for="comentario">Comentario</label>
+				<textarea name="comentario" rows="3" style="resize:none;border-style:double;width:100% ;max-width:100%"></textarea>
+			</div>
+		</div>
 
 </div>
 
@@ -70,6 +75,6 @@
 		if(mes < 10){
 			mes = "0"+mes;
 		}
-		var fecha = year + "-" + (mes) + "-" + (dia);
+		var fecha = year + "-" + (mes) + "-" + (dia+1);
 		$("#fechavuelo").attr("min",fecha)
 </script>
