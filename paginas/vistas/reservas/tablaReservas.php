@@ -171,7 +171,7 @@
 						<i class="fa fa-trash-o fa-lg" style="color:#ff4444" title="Eliminar" data-toggle="modal" data-target="#modalReservas"  onclick="eliminarReserva('vistas/reservas/', <?php echo $reserva->id_temp; ?>, <?php echo $modulo; ?>)" ></i>&nbsp;
 					<?php } ?>
 					<!--========       Comentario     ========= -->
-					<?php if(($idUsu==$reserva->idusu && in_array("COMENTAR",$permisos)) ) { ?>
+					<?php if(($idUsu==$reserva->idusu && in_array("COMENTAR",$permisos) ) || in_array("COMENTAR GRAL",$permisos) ) { ?>
 						<i class="fa fa-comments-o fa-lg" style="color:#311b92 " title="Comentarios" onclick="comentario( <?php echo $reserva->id_temp; ?>)" ></i>&nbsp;
 					<?php } ?>
 

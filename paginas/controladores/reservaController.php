@@ -39,10 +39,14 @@
 		$asignarVuelo = $con->actualizar("temp_volar",	$upd ," id_temp=".$reserva);
 		echo $asignarVuelo;
 	}elseif(isset($_POST['accion']) && $_POST['accion']=='reprogramar'){
-		echo "Reprogrado";
 		require  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/modelos/login.php';
 		$usuario= unserialize((base64_decode($_SESSION['usuario'])));
 		$idUsu=$usuario->getIdUsu();
+		$reserva = $_POST['reserva'];
+		$motivo = $_POST['motivo'];
+		$fechavuelo = $_POST['fechavuelo'];
+		$cargo = $_POST['cargo'];
+		$comentario = $_POST['comentario'];
 	}else{
 		$reserva = $_POST['id'];
 		if(!isset($_POST['tipo'])){
