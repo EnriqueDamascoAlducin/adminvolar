@@ -348,6 +348,12 @@
 		    <textarea class="form-control" id="comentario" name="comentario" rows="3" ><?php echo $reserva->getComentarioTemp(); ?></textarea>
 	  	</div>
 	 </div>
+	 	<div class="col-12 col-md-12 col-sm-12 col-md-12 col-xl-12" >
+	 		<div class="form-group">
+	 		    <label for="comentarioint"><b>Comentarios Internos</b></label>
+	 		    <textarea class="form-control" id="comentarioint" name="comentarioint" rows="3" ><?php echo $reserva->getComentarioIntTemp(); ?></textarea>
+	 	  	</div>
+	 	 </div>
 	<div class="col-6 col-md-3 col-sm-3 col-md-3 col-xl-3" >
 		<div class="form-group">
 		    <label for="otroscar1"><b>Otros Cargos</b></label>

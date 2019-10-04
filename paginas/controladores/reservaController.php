@@ -47,6 +47,20 @@
 		$fechavuelo = $_POST['fechavuelo'];
 		$cargo = $_POST['cargo'];
 		$comentario = $_POST['comentario'];
+		$sql = "CALL reprogramarReserva(". $reserva .",". $idUsu .",'". $fechavuelo ."','".$comentario."','". $motivo ."',". $cargo .", @res)";
+		$reprogramar = $con->query($sql);
+		$reprogramar = $con->query("Select @res as rep ")->fetchALL (PDO::FETCH_OBJ);
+		echo $reprogramar[0]->rep;
+	}elseif(isset($_POST['accion']) && $_POST['accion']=='comentar'){
+		require  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/modelos/login.php';
+		$usuario= unserialize((base64_decode($_SESSION['usuario'])));
+		$idUsu=$usuario->getIdUsu();
+		$comentario = $_POST['comentario'];
+		$reserva = $_POST['reserva'];
+		$sql = "CALL registrarComentario('".$comentario."',". $idUsu .",".$reserva.",@respuesta)";
+		$comentario = $con->query($sql);
+		$comentario = $con->query("Select @respuesta as rep ")->fetchALL (PDO::FETCH_OBJ);
+		echo $comentario[0]->rep;
 	}else{
 		$reserva = $_POST['id'];
 		if(!isset($_POST['tipo'])){

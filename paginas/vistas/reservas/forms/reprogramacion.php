@@ -51,7 +51,7 @@
 		<div class="col-sm-12 col-lg-12 col-md-12 col-12 col-xl-12 ">
 			<div class="form-group">
 				<label for="comentario">Comentario</label>
-				<textarea name="comentario" rows="3" style="resize:none;border-style:double;width:100% ;max-width:100%"></textarea>
+				<textarea name="comentario" id="comentario" rows="3" style="resize:none;border-style:double;width:100% ;max-width:100%"></textarea>
 			</div>
 		</div>
 
@@ -61,7 +61,6 @@
 		date = new Date();
 		var primerDia = new Date(date.getFullYear(), date.getMonth(), 1);
 		var ultimoDia = new Date(date.getFullYear(), date.getMonth() + 1, 0);
-
 		var currentDate = new Date();
 		var wrong="";
 		var dia = currentDate.getDate();
@@ -71,7 +70,6 @@
 		if(dia < 10){
 			dia = "0"+dia;
 		}
-
 		if(mes < 10){
 			mes = "0"+mes;
 		}

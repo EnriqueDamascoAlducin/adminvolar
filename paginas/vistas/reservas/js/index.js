@@ -544,10 +544,12 @@ function confirmarReprogramacion(reserva){
 	var motivo = $("#motivo").val();
 	var fechavuelo = $("#fechavuelo").val();
 	var cargo = $("#cargo").val();
+	var comentario = $("#comentario").val();
 	datos={
 		motivo:motivo,
 		fechavuelo:fechavuelo,
 		cargo:cargo,
+		comentario:comentario,
 		reserva:reserva,
 		accion:'reprogramar'
 	};
@@ -556,7 +558,72 @@ function confirmarReprogramacion(reserva){
 			method: "POST",
 			data: datos,
 			success:function(response){
-								abrir_gritter("Error",response ,"info");
+				if(response=="Reprogramado"){
+						abrir_gritter("Ok!",response ,"info");
+				}else{
+						abrir_gritter("Error",response ,"danger");
+				}
+
+			},
+			error:function(){
+
+					abrir_gritter("Error","Error desconocido" ,"danger");
+			},
+			statusCode: {
+				404: function() {
+
+					abrir_gritter("Error","URL NO encontrada" ,"danger");
+				}
+			}
+	});
+}
+
+function comentario(reserva,nombre){
+
+	$("button[id^='btn']").remove();
+	$("#tituloModalReservas").html("Agregar Comentario ");
+	cambiarTamanoModal("modalSize","lg",'resetear');
+	$("#divBtnModalReservas").append('<button autofocus type="button"  data-dismiss="modal" id="btnComentar'+reserva+'" class="btn btn-success" onclick="confirmarComentar('+reserva+');" >Confirmar</button>');
+	url="vistas/reservas/forms/comentarios.php";
+	$.ajax({
+			url:url,
+			method: "POST",
+			data: {reserva:reserva},
+			success:function(response){
+			 $("#cuerpoModalReservas").html(response)
+			},
+			error:function(){
+
+					abrir_gritter("Error","Error desconocido" ,"danger");
+			},
+			statusCode: {
+				404: function() {
+
+					abrir_gritter("Error","URL NO encontrada" ,"danger");
+				}
+			}
+	});
+}
+
+function confirmarComentar(reserva){
+	url = 'controladores/reservaController.php';
+	var comentario = $("#comentario").val();
+	datos={
+		comentario:comentario,
+		reserva:reserva,
+		accion:'comentar'
+	};
+	$.ajax({
+			url:url,
+			method: "POST",
+			data: datos,
+			success:function(response){
+				if(response=="Actualizado"){
+						abrir_gritter("Ok!",response ,"info");
+				}else{
+						abrir_gritter("Error",response ,"danger");
+				}
+
 			},
 			error:function(){
 

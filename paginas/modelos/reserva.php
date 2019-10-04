@@ -34,6 +34,7 @@
 		$reserva->setGloboTemp($reservas[0]->globo_temp);
 		$reserva->setHoraTemp($reservas[0]->hora_temp);
 		$reserva->setIdiomaTemp($reservas[0]->idioma_temp);
+		$reserva->setComentarioIntTemp($reservas[0]->comentarioint_temp	);
 		$reserva->setRegister($reservas[0]->register);
 		$reserva->setStatus($reservas[0]->status);
 		return $reserva;

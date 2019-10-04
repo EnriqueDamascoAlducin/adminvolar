@@ -32,6 +32,7 @@
 		private $globoTemp;
 		private $horaTemp;
 		private $idiomaTemp;
+		private $comentarioIntTemp;
 		private $register;
 		private $status;
 		function Reserva(){
@@ -52,7 +53,7 @@
 		function getIdusuTemp(){
 			return $this->idusuTemp;
 		}
-		
+
 		///////////
 		function setClaveTemp($claveTemp){
 			$this->claveTemp=$claveTemp;
@@ -60,7 +61,7 @@
 		function getClaveTemp(){
 			return $this->claveTemp;
 		}
-		
+
 		///////////
 		function setNombreTemp($nombreTemp){
 			$this->nombreTemp=$nombreTemp;
@@ -270,13 +271,20 @@
 			return $this->register;
 		}
 		///////////
+		function setComentarioIntTemp($comentarioIntTemp){
+			$this->comentarioIntTemp=$comentarioIntTemp;
+		}
+		function getComentarioIntTemp(){
+			return $this->comentarioIntTemp;
+		}
+		///////////
 		function setStatus($status){
 			$this->status=$status;
 		}
 		function getStatus(){
 			return $this->status;
 		}
-		
+
 		///////////
 		function setIdiomaTemp($idiomaTemp){
 			$this->idiomaTemp=$idiomaTemp;
@@ -284,7 +292,7 @@
 		function getIdiomaTemp(){
 			return $this->idiomaTemp;
 		}
-		
+
 	}
 	$reserva = new Reserva();
 ?>
