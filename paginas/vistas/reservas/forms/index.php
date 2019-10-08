@@ -133,7 +133,7 @@
 	        	<?php
 	        		foreach ($procedencias as $procedencia) {
 	        			$sel="";
-	        			if($reserva->getNombreTemp() == $procedencia->id_extra ){
+	        			if($reserva->getProcedenciaTemp() == $procedencia->id_extra ){
 	        				$sel="selected";
 	        			}
 	        	?>

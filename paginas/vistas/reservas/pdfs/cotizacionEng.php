@@ -359,6 +359,10 @@ Class PDF extends FPDF{
 	$pdf->MultiCell(186,5,utf8_decode('*People over 100 kg, must pay $25.00 per extra kilo.'),0,'J',0);
 
 
+	$pdf->SetFont('Arial','',9);
+	$pdf->MultiCell(186,5,utf8_decode('*All Our Prices are Expressed in Mexican Pesos'),0,'J',0);
+
+
 
     $pdf->setTextColor(252, 0, 0);
 	$pdf->SetFont('Arial','B',11);

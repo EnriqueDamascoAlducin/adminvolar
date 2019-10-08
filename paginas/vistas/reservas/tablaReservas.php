@@ -44,8 +44,8 @@
 	if(!in_array("GENERAL", $permisos)){
 		$filtro.= " and idusu_temp=".$idUsu;
 	}
-	if(!isset($_POST['status']) || $_POST['status']=='0' ){
-		$filtro .= " and tv.status not in (1,6,7) ";
+	if(!isset($_POST['status']) || $_POST['status']=='0'  ){
+		$filtro .= " and tv.status not in (1,6) ";
 	}
 	//echo "SELECT $campos FROM $tabla WHERE $filtro";
 	$filtro .= " ORDER BY id_temp DESC limit 300";

@@ -245,6 +245,7 @@ function confirmaragregarPagoSitio(reserva,cliente){
 	referencia=$("#referencia").val().trim();
 	cantidad=$("#cantidad").val().trim();
 	fecha=$("#fecha").val().trim();
+	comision=$("#comision").val().trim();
 	if(cantidad=="" ){
 		abrir_gritter("Advertencia","Debe Capturar una cantidad","warning");
 		return false;
@@ -255,6 +256,7 @@ function confirmaragregarPagoSitio(reserva,cliente){
 			banco:banco,
 			referencia:referencia,
 			cantidad:cantidad,
+			comision:comision,
 			fecha:fecha,
 			accion:'registrarPagoSitio'
 	};

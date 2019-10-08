@@ -248,6 +248,9 @@
 	$cuerpo.=						'<tr>';
 	$cuerpo.=							'<td colspan="4">Personas con peso superior a los 100 kg deben pagar $25 por kilo extra.</td>';
 	$cuerpo.=						'</tr>';
+	$cuerpo.=						'<tr>';
+	$cuerpo.=							'<td colspan="4">Todos Nuestros Precios son Expresados en Pesos Mexicanos</td>';
+	$cuerpo.=						'</tr>';
 	$cuerpo.=					'</tbody>';
 	$cuerpo.=				'</table>';
 	$cuerpo.=			'</div>';

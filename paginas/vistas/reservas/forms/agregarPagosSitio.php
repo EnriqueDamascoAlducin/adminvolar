@@ -59,7 +59,13 @@
 	<div class="col-sm-6 col-lg-6 col-md-6 col-6 col-xl-6 ">
 		<div class="form-group">
 			<label for="cantidad">Cantidad</label>
-			<input type="number" class="form-control" id="cantidad" placeholder="Cantidad" value="<?php echo $total[0]->cotizado -  $total[0]->pagado  ?>">
+			<input type="number" class="form-control" id="cantidad" onchange="modificarPrecio()" placeholder="Cantidad" value="<?php echo 	$total[0]->cotizado -  $total[0]->pagado  ;?>">
+		</div>
+	</div>
+	<div class="col-sm-6 col-lg-6 col-md-6 col-6 col-xl-6 ">
+		<div class="form-group">
+			<label for="comision">Comisión %</label>
+			<input type="number" class="form-control" onchange="modificarPrecio()" id="comision" placeholder="%" value="0">
 		</div>
 	</div>
 	<div class="col-sm-6 col-lg-6 col-md-6 col-6 col-xl-6 " style="display:none">
@@ -68,12 +74,13 @@
 			<input type="date" readonly class="form-control" id="fecha" placeholder="Fecha de Pago">
 		</div>
 	</div>
+	<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+		<label >Total  por Pagar: <span id="spanCant">$ <?php echo 	number_format($total[0]->cotizado -  $total[0]->pagado  , 2, '.', ',') ;?></span></label>
+	</div>
 </div>
 <?php if(sizeof($pagos)>0){ ?>
 
 	<script type="text/javascript">
-		$("#DataTable").DataTable();
-
 		function accionesPagos(pago,accion,reserva){
 			$.ajax({
 			url:'controladores/pagosController.php',
@@ -107,6 +114,19 @@
 	</script>
 <?php } ?>
 <script type="text/javascript">
+	function modificarPrecio(){
+		var comision = $("#comision").val();
+		if(comision==''){
+			comision=0;
+		}
+		var cantidad = $("#cantidad").val();
+		if(cantidad==''){
+			cantidad = 0;
+		}
+
+		nuevoValor = parseInt(cantidad) + ((parseInt(cantidad) * parseInt(comision))/100);
+		$("#spanCant").html("$ "+new Intl.NumberFormat().format(nuevoValor ));
+	}
 		date = new Date();
 		var primerDia = new Date(date.getFullYear(), date.getMonth(), 1);
 		var ultimoDia = new Date(date.getFullYear(), date.getMonth() + 1, 0);

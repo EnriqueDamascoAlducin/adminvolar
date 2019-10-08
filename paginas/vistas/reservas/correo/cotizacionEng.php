@@ -246,6 +246,9 @@
 	$cuerpo.=						'<tr>';
 	$cuerpo.=							'<td colspan="4">*People over 100 kg, must pay $25.00 per extra kilo.</td>';
 	$cuerpo.=						'</tr>';
+	$cuerpo.=						'<tr>';
+	$cuerpo.=							'<td colspan="4">*All Our Prices are Expressed in Mexican Pesos</td>';
+	$cuerpo.=						'</tr>';
 	$cuerpo.=					'</tbody>';
 	$cuerpo.=				'</table>';
 	$cuerpo.=			'</div>';

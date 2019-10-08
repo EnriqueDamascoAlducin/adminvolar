@@ -89,7 +89,7 @@
 	<div class="col-sm-3 col-lg-3 col-md-3 col-6 col-xl-2 ">
 		<div class="form-group">
 			<label for="reserva"># de Reserva</label>
-			<input type="number" class="form-control" id="reserva" placeholder="Fecha de Inicio">
+			<input type="number" class="form-control" id="reserva" placeholder="# de Reserva">
 		</div>
 	</div>
 

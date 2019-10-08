@@ -13,7 +13,7 @@
 		require  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/modelos/login.php';
 		$usuario= unserialize((base64_decode($_SESSION['usuario'])));
 		$idUsu=$usuario->getIdUsu();
-		$parametros = $_POST['pago'].',0,0,0,0,"",0,"0",'.$idUsu;
+		$parametros = $_POST['pago'].',0,0,0,0,"",0,"0",'.$idUsu.',0';
 		$sql="CALL registrarPago(". $parametros .",@respuesta)";
 		$registrarPago = $con->query($sql);
 		$registrarPago = $con->query("Select @respuesta as respuesta")->fetchALL (PDO::FETCH_OBJ);
@@ -28,7 +28,15 @@
 		$validar = $con->actualizar("bitpagos_volar","status=2","id_bp=".$_POST['pago']);
 		echo $validar;
 		require  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/vistas/reservas/correo/correoConfirmacion.php';
-		$accion = $con->actualizar("temp_volar","status=8","id_temp=".$reserva);
+		$cotizado = $con->consulta("total_temp","temp_volar","id_temp=".$reserva);
+		$pagado = $con->consulta("SUM(cantidad_bp) as pagado","bitpagos_volar","idres_bp=".$reserva);
+		if($cotizado[0]->total_temp==$pagado[0]->pagado){
+			$accion = $con->actualizar("temp_volar","status=7","id_temp=".$reserva);
+		}elseif($cotizado[0]->total_temp<$pagado[0]->pagado){
+			$accion = $con->actualizar("temp_volar","status=8","id_temp=".$reserva);
+		}elseif($cotizado[0]->total_temp<$pagado[0]->pagado){
+			echo "Sobre pasaste los pagos";
+		}
 	}elseif (isset($_POST['accion']) && $_POST['accion']=='regalo'  ) {
 		$validar = $con->actualizar("bitpagos_volar","status=1","id_bp=".$_POST['pago']);
 		echo $validar;
@@ -50,9 +58,9 @@
 			//Actualiza peso
 			$actualizarPeso=$con->actualizar("temp_volar","kg_temp='".$peso."',tipopeso_temp=".$tipopeso,"id_temp=".$reserva);
 			//Registra Pagos
-			$parametros = '0,'. $reserva.','.$idUsu.','.$metodo.','.$banco.',"'.$referencia.'",'.$cantidad.',"'.$fecha.'",0';
+			$parametros = '0,'. $reserva.','.$idUsu.','.$metodo.','.$banco.',"'.$referencia.'",'.$cantidad.',"'.$fecha.'",0,0';
 			$sql="CALL registrarPago(". $parametros .",@respuesta)";
-
+			//echo $sql;
 			$registrarPago = $con->query($sql);
 			$registrarPago = $con->query("Select @respuesta as respuesta")->fetchALL (PDO::FETCH_OBJ);
 			if($registrarPago[0]->respuesta=="ERROR EN PAGO"){
@@ -82,12 +90,14 @@
 		$reserva=$_POST['reserva'];
 		$cantidad=$_POST['cantidad'];
 		$fecha=$_POST['fecha'];
+		$comision=$_POST['comision'];
 		//Registra Pagos
-		$parametros = '0,'. $reserva.','.$idUsu.','.$metodo.','.$banco.',"'.$referencia.'",'.$cantidad.',"'.$fecha.'",0';
+		$parametros = '0,'. $reserva.','.$idUsu.','.$metodo.','.$banco.',"'.$referencia.'",'.$cantidad.',"'.$fecha.'",0,'.$comision;
 		$sql="CALL registrarPago(". $parametros .",@respuesta)";
+		//echo $sql;
 		$registrarPago = $con->query($sql);
 		$registrarPago = $con->query("Select @respuesta as respuesta")->fetchALL (PDO::FETCH_OBJ);
-		print_r($registrarPago);
+	//	print_r($registrarPago);
 		if($registrarPago[0]->respuesta=="ERROR EN PAGO"){
 			echo $registrarPago[0]->respuesta;
 		}else{

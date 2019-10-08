@@ -330,7 +330,10 @@
 	$pdf->MultiCell(186,5,utf8_decode(' °No se permiten abordar con: equipaje, armas punzocortantes o de fuego.'),0,'J',0);
 
 	$pdf->SetFont('Arial','',9);
-	$pdf->MultiCell(186,5,utf8_decode('Personas con peso superior a los 100 kg deben pagar $25 por kilo extra.'),0,'J',0);
+	$pdf->MultiCell(186,5,utf8_decode('*Personas con peso superior a los 100 kg deben pagar $25 por kilo extra.'),0,'J',0);
+
+	$pdf->SetFont('Arial','',9);
+	$pdf->MultiCell(186,5,utf8_decode('*Todos Nuestros Precios son Expresados en Pesos Mexicanos'),0,'J',0);
 
 
 
