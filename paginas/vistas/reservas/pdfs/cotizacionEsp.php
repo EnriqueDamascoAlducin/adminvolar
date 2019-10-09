@@ -62,8 +62,8 @@
 			$nombreHabitacion=$habitacion[0];
 			$capacidadHabitacion=$habitacion[2];
 			$descripHabitacion=$habitacion[3];
-			$checkin= $datosReserva[0]->checkin;
-			$checkout = $datosReserva[0]->checkout;
+			$checkin= $datosReserva[0]->checkin_temp;
+			$checkout = $datosReserva[0]->checkout_temp;
 			$date1 = strtotime($checkin);
 			$date2 = strtotime($checkout);
 

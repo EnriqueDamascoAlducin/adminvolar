@@ -14,7 +14,7 @@
 	}
 	$campos= "id_temp,CONCAT(ifnull(nombre_temp,''),' ',ifnull(apellidos_temp,'')) as nombre, mail_temp,CONCAT(ifnull(telfijo_temp,''),' / ',ifnull(telcelular_temp,'')) as telefonos, tv.status,CONCAT(nombre_usu, ' ', IFNULL(apellidop_usu,''),' ',IFNULL(apellidom_usu,'')) as empleado,idusu_temp as idusu ,fechavuelo_temp";
 	$tabla = "temp_volar tv INNER JOIN volar_usuarios ve on tv.idusu_temp = ve.id_usu";
-	$filtro = "tv.status<>0";
+	$filtro = "tv.status<>0 ";
 	if(isset($_POST['fechaI']) && $_POST['fechaI']!='' ){
 		$filtro.= " and fechavuelo_temp >='".$_POST['fechaI']."'";
 	}
@@ -44,10 +44,10 @@
 	if(!in_array("GENERAL", $permisos)){
 		$filtro.= " and idusu_temp=".$idUsu;
 	}
-	if(!isset($_POST['status']) || $_POST['status']=='0'  ){
-		$filtro .= " and tv.status not in (1,6) ";
+	if($_POST['fechaI']=='' &&  $_POST['fechaF']=='' && $_POST['reserva']=='' ){
+		$filtro .= " and fechavuelo_temp >= CURRENT_TIMESTAMP ";
 	}
-	//echo "SELECT $campos FROM $tabla WHERE $filtro";
+//	echo "SELECT $campos FROM $tabla WHERE $filtro";
 	$filtro .= " ORDER BY id_temp DESC limit 300";
 	$reservas=$con->consulta($campos,$tabla,$filtro);
 	$cancelarSinCot= $con->query("UPDATE temp_volar set status= 0 where  register <=  CURRENT_TIMESTAMP - INTERVAL 1 DAY and status=2");

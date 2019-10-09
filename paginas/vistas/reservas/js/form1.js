@@ -2,7 +2,7 @@
 	var date = new Date();
 	var primerDia = new Date(date.getFullYear(), date.getMonth(), 1);
 	var ultimoDia = new Date(date.getFullYear(), date.getMonth() + 1, 0);
- 
+
 	var currentDate = new Date();
 	var wrong="";
 	var dia = currentDate.getDate();
@@ -30,7 +30,7 @@
 	var fecha2 = year + "-" + (mes) + "-" + (dia2);
 	$("#fechavuelo").attr("min",fecha2);
 	$("input[id^='check']").attr("min",fecha);
-	
+
 	$("input[name='tdescuento']").on("click",function(){
 		if($(this).val()=="1"){
 			$("#cantdescuento1").attr("disabled","disabled");
@@ -64,6 +64,7 @@
 		fecha= year + "-" + (mes) + "-" + (dia);
 		$("#checkout").attr("min",fecha);
 		$("#checkout").val(fecha);
+		$("#checkout").focus();
 
 	});
 	$("input:not(:checkbox):not(#cantdescuento1)").on("blur",function(){
@@ -120,7 +121,7 @@
 		}
 		//2 es de cortesia ;1 es de paga
 		guardarServicio(id[1],tipo,value);
-		
+
 	}
 	$("#tdescuento").on("change",function(){
 		$("#cantdescuento").val(0);
@@ -138,11 +139,11 @@
 				abrirPagina('vistas/reservas/', 2);
 	  		},
 	  		error:function(){
-	  			alert("Error");
+						abrir_gritter("Error","Error ","danger");
 	  		},
 	  		statusCode: {
 			    404: function() {
-			     
+
 					abrir_gritter("Error","URL no encontrada","danger");
 			    }
 			  }
@@ -151,7 +152,7 @@
 	function save_Data(campo,value){
 		url="controladores/reservaController.php";
 		parametros={campo:campo, valor:value,id:idAct};
-		
+
 	  	$.ajax({
 			url:url,
 			method: "POST",
@@ -164,12 +165,12 @@
 				}
 	  		},
 	  		error:function(){
-	  		
+
 	          abrir_gritter("Error","Error desconocido" ,"danger");
 	  		},
 	  		statusCode: {
 			    404: function() {
-			     
+
 	          abrir_gritter("Error","URL NO encontrada" ,"danger");
 			    }
 			  }
@@ -190,12 +191,12 @@
 				}
 	  		},
 	  		error:function(){
-	  		
+
 	          abrir_gritter("Error","Error desconocido" ,"danger");
 	  		},
 	  		statusCode: {
 			    404: function() {
-			     
+
 	          abrir_gritter("Error","URL NO encontrada" ,"danger");
 			    }
 			  }
@@ -221,7 +222,7 @@
 				id="";
 		}
 		if($("#habitacion").val()!=""){
-			
+
 			if($("#checkin").val()==""){
 				text="Error, debe de cargar un Checkin";
 				id="";
@@ -271,7 +272,7 @@
 				errores++;
 				wrong += "Error en el CheckOut. ";
 			}
-			
+
 		}
 		pasajerosa=$("#pasajerosa").val();
 		pasajerosn=$("#pasajerosn").val();
@@ -326,12 +327,12 @@
 					$("#cuerpoCotizacion").html(response);
 	  		},
 	  		error:function(){
-	  		
+
 	          abrir_gritter("Error","Error desconocido" ,"danger");
 	  		},
 	  		statusCode: {
 			    404: function() {
-			     
+
 	          abrir_gritter("Error","URL NO encontrada" ,"danger");
 			    }
 			  }
@@ -371,7 +372,7 @@
 	      dataType:"json",
 	      url:'controladores/query_json.php',
 	      type:"POST",
-	      success: function(data){	
+	      success: function(data){
 	        $.each( data, function( key, value ) {
 			  text=value.text;
 			  val=value.value;
@@ -383,8 +384,8 @@
 			});
 	      },
 	      error:function(){
-	      	alert("Error al cargar habitación");
+						abrir_gritter("Error","Error al cargar habitación","warning");
 	      }
 
-	    }); 
+	    });
 	}

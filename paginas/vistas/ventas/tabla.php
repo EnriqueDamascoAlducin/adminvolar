@@ -1,9 +1,9 @@
-<?php 
+<?php
 	require  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/modelos/login.php';
 	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/controladores/conexion.php';
 	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/controladores/fin_session.php';
 	$modulo= $_POST['modulo'];
-	$campos= "id_venta as id, comentario_venta comentario,register as fecha,total_venta as total ";
+	$campos= "id_venta as id, comentario_venta comentario,fechavta_venta as fecha,total_venta as total ";
 	$tabla = "ventas_volar  ";
 	$filtro = "status<>0";
 	$usuario= unserialize((base64_decode($_SESSION['usuario'])));
@@ -12,7 +12,19 @@
 	foreach ($subPermisos as $subPermiso) {
 		$permisos[] = $subPermiso->nombre_sp;
 	}
-	$ventas=$con->consulta($campos,$tabla,$filtro);	
+	if(isset($_POST['fechaI']) && $_POST['fechaI']!='' ){
+		$filtro.= " and fechavta_venta>='". $_POST['fechaI'] . "' ";
+	}
+	if(isset($_POST['fechaF']) && $_POST['fechaF']!='' ){
+		$filtro.= " and fechavta_venta<='". $_POST['fechaF'] . "' ";
+	}
+	if($_POST['fechaF']=='' &&  $_POST['fechaI']==''){
+		$filtro .=' and fechavta_venta=CURRENT_DATE ';
+	}
+/*	for($x = 'A'; $x < 'ZZ'; $x++)
+    echo $x, ' ';*/
+	//echo "SELECT $campos FROM $tabla WHERE $filtro";
+	$ventas=$con->consulta($campos,$tabla,$filtro);
 ?>
 <table class="DataTable table table-striped table-bordered table-hover">
 	<thead>
@@ -20,7 +32,7 @@
 			<th style="text-align: center;vertical-align: middle;max-width: 1%;width: 1%;">Comentario</th>
 			<th style="text-align: center;vertical-align: middle;max-width: 1%;width: 1%;">Total</th>
 			<th style="text-align: center;vertical-align: middle;max-width: 1%;width: 1%;">Fecha</th>
-			
+
 			<th style="text-align: center;vertical-align: middle;max-width: 1%;width: 1% !important;">Acciones</th>
 		</tr>
 	</thead>

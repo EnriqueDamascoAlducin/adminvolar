@@ -400,6 +400,7 @@ function checkAsistencia (reserva,nombre){
 }
 function mostrarCotizacion(id,accion){
 
+	cambiarTamanoModal("modalSize","lg",'agregar');
 	$("button[id^='btn']").remove();
 	$("#tituloModalReservas").html("Cotización "+ id);
 	url="vistas/reservas/tablaCotizacion.php";
@@ -638,4 +639,13 @@ function confirmarComentar(reserva){
 				}
 			}
 	});
+}
+
+function tables(){
+	$(".DataTable").DataTable().destroy();
+		$(".DataTable").dataTable( {
+			"pageLength": 50,
+
+	        "order": [[ '5','asc' ]]
+		} );
 }

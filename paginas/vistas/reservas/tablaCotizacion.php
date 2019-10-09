@@ -1,11 +1,11 @@
-<?php 
+<?php
 	$reserva = $_POST['reserva'];
 	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/controladores/conexion.php';
 	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/controladores/fin_session.php';
 //	$datosVuelo = $con->consulta("IFNULL(fechavuelo_temp,' No asignada' as fechavuelo, ")
 		//2 es de cortesia ;1 es de paga
 	//cantmax 0 = automatico
-	
+
 	function convertirFecha($fecha){
 		$fecha=explode("-",$fecha);
 		if($fecha[1]=='01'){
@@ -37,13 +37,13 @@
 		}
 		return $Nvafecha;
 	}
-	
+
 	$totalReserva=0.0;
 	$totalPasajeros = $con->consulta("FORMAT(ifnull(pasajerosa_temp,0) + ifnull(pasajerosn_temp,0),2)  Total"," temp_volar "," id_temp = $reserva");
 	$datosReserva = $con->query("CALL getResumenREserva(".$reserva.");")->fetchALL (PDO::FETCH_OBJ);
 	$serviciosReserva = $con->consulta("tipo_sv as tipo , nombre_servicio as servicio ,cantmax_servicio as cantmax, precio_servicio as precio "," servicios_vuelo_temp svt INNER JOIN servicios_volar sv ON svt.idservi_sv=sv.id_servicio ","  svt.status<>0 and svt.cantidad_sv>0 and idtemp_sv =".$reserva);
 
-		
+
 	$hotel=$datosReserva[0]->hotel;
 	$habitacion=$datosReserva[0]->habitacion;
 	$habitacion=explode("|", $habitacion);
@@ -63,30 +63,30 @@
 			$nombreHabitacion=$habitacion[0];
 			$capacidadHabitacion=$habitacion[2];
 			$descripHabitacion=$habitacion[3];
-			$checkin= $datosReserva[0]->checkin;
-			$checkout = $datosReserva[0]->checkout;
-			$date1 = strtotime($checkin);  
-			$date2 = strtotime($checkout);  
-			  
-			// Formulate the Difference between two dates 
+			$checkin= $datosReserva[0]->checkin_temp;
+			$checkout = $datosReserva[0]->checkout_temp;
+			$date1 = strtotime($checkin);
+			$date2 = strtotime($checkout);
+
+			// Formulate the Difference between two dates
 			$diff = abs($date2 - $date1);
-			// To get the year divide the resultant date into 
-			// total seconds in a year (365*60*60*24) 
-			$years = floor($diff / (365*60*60*24));  
-			  
-			  
-			// To get the month, subtract it with years and 
-			// divide the resultant date into 
-			// total seconds in a month (30*60*60*24) 
-			$months = floor(($diff - $years * 365*60*60*24) 
-			                               / (30*60*60*24));  
-			  
-			  
-			// To get the day, subtract it with years and  
-			// months and divide the resultant date into 
-			// total seconds in a days (60*60*24) 
-			$days = floor(($diff - $years * 365*60*60*24 -  
-			             $months*30*60*60*24)/ (60*60*24)); 
+			// To get the year divide the resultant date into
+			// total seconds in a year (365*60*60*24)
+			$years = floor($diff / (365*60*60*24));
+
+
+			// To get the month, subtract it with years and
+			// divide the resultant date into
+			// total seconds in a month (30*60*60*24)
+			$months = floor(($diff - $years * 365*60*60*24)
+			                               / (30*60*60*24));
+
+
+			// To get the day, subtract it with years and
+			// months and divide the resultant date into
+			// total seconds in a days (60*60*24)
+			$days = floor(($diff - $years * 365*60*60*24 -
+			             $months*30*60*60*24)/ (60*60*24));
 
 			$totalHabitacion= $days * $precioHabitacion;
 			$descripcionHospedaje = " De ".convertirFecha($checkin). " a ". convertirFecha($checkout). "(<b>".$days." dias</b> )";
@@ -95,8 +95,8 @@
 		$totalReserva +=$datosReserva[0]->precio1;
 		//echo "otros->".$datosReserva[0]->precio1."<br>";
 		$totalReserva +=$datosReserva[0]->precio2;
-		
-		
+
+
 
 	}
 ?>
@@ -123,9 +123,9 @@
 			font-size:60%;
 			width:30%
 			max-width:30%;
-			table-layout: fixed;	
+			table-layout: fixed;
 		}
-		
+
 		td,th{
 			max-height: 5px!important;
 			font-size: 10px;
@@ -181,14 +181,14 @@
 						<td class="largeTd"><?php echo $datosReserva[0]->comentario; ?></td>
 						<td></td>
 					</tr>
-					<?php } ?>	
+					<?php } ?>
 					<?php if($datosReserva[0]->motivo!=''){ ?>
 					<tr>
 						<td class="tdtitulo">MOTIVO</td>
 						<td class="largeTd"><?php echo $datosReserva[0]->motivo; ?></td>
 						<td></td>
 					</tr>
-					<?php } ?>	
+					<?php } ?>
 					<?php if($datosReserva[0]->hotel!=''){ ?>
 						<tr>
 							<td class="tdseparador" colspan="3">HOTEL</td>
@@ -211,7 +211,7 @@
 							<td  class="largeTd"><?php echo $descripHabitacion; ?></td>
 							<td></td>
 						</tr>
-					<?php } ?>		
+					<?php } ?>
 					<?php if($datosReserva[0]->otroscar1!=''){ ?>
 						<tr>
 							<td class="tdtitulo"><?php echo $datosReserva[0]->otroscar1 ?></td>
@@ -226,7 +226,7 @@
 							<td><?php echo "$ ".number_format(  $datosReserva[0]->precio2 , 2, '.', ',');  ?></td>
 
 						</tr>
-					<?php } ?>		
+					<?php } ?>
 					<?php if(sizeof($serviciosReserva)>0){ ?>
 						<tr>
 							<td class="tdseparador" colspan="3">SERVICIOS SOLICITADOS	</td>
@@ -236,7 +236,7 @@
 								<td class="tdtitulo"><?php echo $servicioReserva->servicio; ?></td>
 								<?php if($servicioReserva->tipo==1){ ?>
 									<td>
-										<?php 
+										<?php
 											if ($servicioReserva->cantmax == 1){
 												$totalReserva +=($totalPasajeros * $servicioReserva->precio);
 												echo $tPasajeros ;
@@ -246,7 +246,7 @@
 											}
 										?>
 									</td>
-									<td><?php 
+									<td><?php
 
 											if ($servicioReserva->cantmax == 1){
 												echo "$ ".number_format(($totalPasajeros * $servicioReserva->precio) , 2, '.', ',') ;
@@ -259,7 +259,7 @@
 									<td>
 										CORTESIA
 									</td>
-								<?php } ?>			
+								<?php } ?>
 							</tr>
 						<?php } ?>
 					<?php } ?>
@@ -270,7 +270,7 @@
 						<td><?php echo  "$ ". number_format($totalReserva, 2, '.', ','); ?></td>
 					</tr>
 
-					<?php 
+					<?php
 						if($datosReserva[0]->tdescuento!='' && $datosReserva[0]->cantdescuento>0) {
 							$desc="";
 							if($datosReserva[0]->tdescuento==1){
@@ -283,13 +283,13 @@
 						<tr>
 							<td class="tdtitulo">DESCUENTO</td>
 							<td><?php
-								if($datosReserva[0]->tdescuento==1) { 
+								if($datosReserva[0]->tdescuento==1) {
 									echo $datosReserva[0]->cantdescuento."%";
 								}
 							?></td>
 							<td>
-								<?php 
-									if($datosReserva[0]->tdescuento==1) { 
+								<?php
+									if($datosReserva[0]->tdescuento==1) {
 										echo "$ " .number_format($totalDescuento, 2, '.', ',');
 									}else{
 										echo "$ ".$totalDescuento;
@@ -307,11 +307,11 @@
 						<td> <?php echo "$ ". number_format($totalReserva, 2, '.', ','); ?></td>
 					</tr>
 				</tbody>
-		</tbody>	
+		</tbody>
 
 	</table>
 </div>
-<?php 
+<?php
 	if($_POST['accion']!='ver'){
 		$accion = $con->actualizar("temp_volar","total_temp=".$totalReserva,"id_temp=".$reserva);
 
