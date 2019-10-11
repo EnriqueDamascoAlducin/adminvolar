@@ -32,7 +32,7 @@
 		$pagado = $con->consulta("SUM(cantidad_bp) as pagado","bitpagos_volar","idres_bp=".$reserva);
 		if($cotizado[0]->total_temp==$pagado[0]->pagado){
 			$accion = $con->actualizar("temp_volar","status=7","id_temp=".$reserva);
-		}elseif($cotizado[0]->total_temp<$pagado[0]->pagado){
+		}elseif($cotizado[0]->total_temp>$pagado[0]->pagado){
 			$accion = $con->actualizar("temp_volar","status=8","id_temp=".$reserva);
 		}elseif($cotizado[0]->total_temp<$pagado[0]->pagado){
 			echo "Sobre pasaste los pagos";

@@ -74,7 +74,7 @@
 
 	    $totalHabitacion= $days * $precioHabitacion;
 
-	    $descripcionHospedaje = " From ".$checkin. " to ". $checkout. "(<b>".$days." days</b> )";
+	    $descripcionHospedaje = " From ".$checkin. " to ". $checkout. "(".$days." days)";
 	    $totalReserva+=$totalHabitacion;
 	  }
 	  $totalReserva +=$datosReserva[0]->precio1;

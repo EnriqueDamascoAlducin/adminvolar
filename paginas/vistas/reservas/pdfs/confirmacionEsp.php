@@ -61,7 +61,7 @@
 
 	    $totalHabitacion= $days * $precioHabitacion;
 
-	    $descripcionHospedaje = " De ".$checkin. " a ". $checkout. "(<b>".$days." dias</b> )";
+	    $descripcionHospedaje = " De ".$checkin. " a ". $checkout. "(".$days." dias)";
 	    $totalReserva+=$totalHabitacion;
 	  }
 	  $totalReserva +=$datosReserva[0]->precio1;
@@ -108,7 +108,7 @@
 	$registroPago = "Registro y Pago: El día de tu vuelo deberás presentarte con nuestro anfitrión en la recepción para que registre tu asistencia y te reciba el pago del restante. Recuerda estar a tiempo en el lugar de la cita para no retrasar tu vuelo ni el de los demás. Te aconsejamos traer ropa cómoda, tal como si fueras a un día de campo: gorra, bufanda, guantes, bloqueador solar, cámara fotográfica o de video.";
 	$tiempo ='A partir de 6:00 AM los esperamos en nuestra recepción, sin embargo esta hora sera CONFIRMADA UN DIA ANTES de acuerdo a la logística de operación del día o a las condiciones meteorológicas, te pido estés al tanto ya que recibirás una llamada para confirmar horario';
 
-	$reunion='Recepción Volar en Globo, Aventura y Publicidad SA de CV. Esquina Francisco Villa con Carretera Libre Mexico- Tulancingo (132) C.P. 55850 (Puedes dar clic aqui para abrir la ubicación en maps).';
+	$reunion='Recepción Volar en Globo, Aventura y Publicidad SA de CV. Esquina Francisco Villa con Carretera Libre Mexico- Tulancingo (132) C.P. 55850 .';
 	$pdf = new PDF();
 	$pdf->AliasNbPages();
 	$pdf->AddPage();
@@ -225,7 +225,7 @@
 	$pdf->SetFont('Arial','',10);
 	$pdf->Cell(70,6,'VENDEDOR',1,0,'C',1);
 	$pdf->Cell(58,6,$vendedor[0],1,0,'C',0);
-	$pdf->Cell(58,6,"$ ". number_format( $datosReserva[0]->precio1 , 2, '.', ','),1,1,'C',0);
+	$pdf->Cell(58,6,"",1,1,'C',0);
 
 
 

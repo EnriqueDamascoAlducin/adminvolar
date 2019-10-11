@@ -7,7 +7,9 @@ if(isset($_SESSION['usuario'])){
   $totalReserva+=$totalVuelo;
   $totalReserva +=$datosReserva[0]->precio1;
   $totalReserva +=$datosReserva[0]->precio2;
-
+  if(isset($datosReserva[0]->habitacion) && $datosReserva[0]->habitacion!=''){
+   $totalReserva+=$totalHabitacion;
+  }
 
 
 ?>

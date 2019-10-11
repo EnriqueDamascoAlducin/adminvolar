@@ -7,7 +7,7 @@
 	$globos = $con->consulta("nombre_globo as text, id_globo as value","globos_volar","status<>0");
 	$pilotos = $con->consulta("CONCAT(nombre_usu, ' ', IFNULL(apellidop_usu,''),' ',IFNULL(apellidom_usu,'')) as text, id_usu as value","volar_usuarios","status<>0 and puesto_usu = 4");
 
-	$datoReserva = $con->consulta("CONCAT(IFNULL(nombre_temp,''),' ',IFNULL(apellidos_temp,'')) as nombre, IFNULL(hora_temp,'') as hora,IFNULL(globo_temp,'') as globo,IFNULL(piloto_temp,'') as piloto ,status,IFNULL(kg_temp,'') as kg","temp_volar","id_temp=".$_POST['reserva']);
+	$datoReserva = $con->consulta("CONCAT(IFNULL(nombre_temp,''),' ',IFNULL(apellidos_temp,'')) as nombre, IFNULL(hora_temp,'') as hora,IFNULL(globo_temp,'') as globo,IFNULL(piloto_temp,'') as piloto ,status, IFNULL(kg_temp,'0.0') as kg,IFNULL(tipopeso_temp,'1') as tipopeso ","temp_volar", "id_temp=".$_POST['reserva']);
 ?>
 <div class="row">
 	<div class="col-sm-6 col-lg-6 col-md-6 col-6 col-xl-6 ">
@@ -53,4 +53,14 @@
 			</select>
 		</div>
 	</div>
+
+		<div class="col-sm-6 col-lg-6 col-md-6 col-6 col-xl-6 " style="margin-top:25px">
+			<div class="form-group">
+				<?php if($datoReserva[0]->tipopeso=='1'){ ?>
+					<label >Peso: <?php echo $datoReserva[0]->kg; ?> Kg </label>
+				<?php }else{ ?>
+					<label>Peso: <?php echo ($datoReserva[0]->kg * 0.453592); ?> Kg</label>
+				<?php } ?>
+			</div>
+		</div>
 </div>
