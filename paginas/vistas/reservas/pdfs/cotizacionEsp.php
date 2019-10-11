@@ -174,7 +174,7 @@
 		$pdf->SetFont('Arial','',10);
 		$pdf->Cell(70,6,'COMENTARIO',1,0,'C',1);
 		$pdf->MultiCell(58,6, utf8_decode(str_replace("â€¢","°",$datosReserva[0]->comentario)),1,'L',0);
-  	$pdf->setXY(138,107);
+  	$pdf->setXY(138,102);
   	$pdf->setTextColor(255, 255, 255);
 		$pdf->MultiCell(58,6, utf8_decode($datosReserva[0]->comentario),1,'L',0);
     $pdf->setTextColor(0, 0, 0);
@@ -363,8 +363,6 @@
 	$pdf->MultiCell(186,5,utf8_decode('A nombre de: VOLAR EN GLOBO, AVENTURA Y PUBLICIDAD SA DE CV'),0,'J',0);
 	$pdf->SetFont('Arial','',9);
 	$pdf->MultiCell(186,5,utf8_decode('CLABE Interbancaria 012180001918093935'),0,'J',0);
-	$pdf->SetFont('Arial','',9);
-	$pdf->MultiCell(186,5,utf8_decode('IMPORTANTE: Notificar vía telefónica o por mail tu depósito para poderte enviar la RESERVACION e itinerario del vuelo. Si te surgen dudas llámanos o escríbenos a nuestro correo electrónico.'),0,'J',0);
 	$pdf->SetFont('Arial','',9);
 	$pdf->MultiCell(186,5,utf8_decode('Tenemos otras opciones de pago como: PayPal, cargo en línea a Tarjeta de crédito y/o depósitos en OXXO, comunícate con tu vendedor'),0,'J',0);
 

@@ -102,7 +102,7 @@ Class PDF extends FPDF{
 
 			$totalHabitacion= $days * $precioHabitacion;
 
-			$descripcionHospedaje = " From ".convertirFecha($checkin). " to ". convertirFecha($checkout). "(".$days." dias).";
+			$descripcionHospedaje = " From ".convertirFecha($checkin). " to ". convertirFecha($checkout). "(".$days." days).";
 			$totalReserva+=$totalHabitacion;
 		}
 		$totalReserva +=$datosReserva[0]->precio1;
@@ -112,7 +112,7 @@ Class PDF extends FPDF{
 
 	$vendedor =[$getVendedorInfo[0]->nombre,$getVendedorInfo[0]->correo, $getVendedorInfo[0]->telefono];
 	$fechavuelo = convertirFecha($datosReserva[0]->fechavuelo);
-	$encabezado = "Dear ". $datosReserva[0]->nombre .". It’s a pleasure to reply to your flight request. Our operation is located in Teotihuacan Valley, here you will enjoy the best view of pyramids and the whole arquelogical site. The appointment is at our reception, located 5 minutes from arquelogical site, where our team will welcome you and you can see the inflation of the hot air balloons. The adventure of flying begins, so prepare your camera! Get ready to live the dream of hot air ballooning!";
+	$encabezado = "Dear ". $datosReserva[0]->nombre .". It's a pleasure to reply to your flight request. Our operation is located in Teotihuacan Valley, here you will enjoy the best view of pyramids and the whole arquelogical site. The appointment is at our reception, located 5 minutes from arquelogical site, where our team will welcome you and you can see the inflation of the hot air balloons. The adventure of flying begins, so prepare your camera! Get ready to live the dream of hot air ballooning!";
 	$importante ="IMPORTANT: Once you have done the payment, you must notify your deposit by phone, email or message so we can send you a confirmation. If you have questions, call us or write to our email.";
 	$tiempo="*Prices valid for 30 days from date on your quote.";
 	$pdf = new PDF();
@@ -120,7 +120,7 @@ Class PDF extends FPDF{
 	$pdf->AddPage();
 
 	$pdf->SetFont('Arial','',9);
-	$pdf->MultiCell(186,5,utf8_decode($encabezado),0,'J',0);
+	$pdf->MultiCell(186,5,($encabezado),0,'J',0);
 
 
 	$pdf->SetFillColor(51,255,147);
@@ -201,10 +201,10 @@ Class PDF extends FPDF{
 		$pdf->SetFillColor(105,165,247);
 		$pdf->SetFont('Arial','',10);
 		$pdf->Cell(70,6,'COMMENTS',1,0,'C',1);
-		$pdf->MultiCell(58,4, utf8_decode(str_replace("â€¢","°",$datosReserva[0]->comentario)),1,'L',0);
+		$pdf->MultiCell(58,6, utf8_decode(str_replace("â€¢","°",$datosReserva[0]->comentario)),1,'L',0);
 	  $pdf->setXY(138,102);
 	  $pdf->setTextColor(255, 255, 255);
-		$pdf->MultiCell(58,4, utf8_decode($datosReserva[0]->comentario),1,'L',0);
+		$pdf->MultiCell(58,6, utf8_decode($datosReserva[0]->comentario),1,'L',0);
     $pdf->setTextColor(0, 0, 0);
 	}
 

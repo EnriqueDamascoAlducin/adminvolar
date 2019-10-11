@@ -118,9 +118,9 @@
 
 	$vendedor =[$getVendedorInfo[0]->nombre,$getVendedorInfo[0]->correo, $getVendedorInfo[0]->telefono];
 	$fechavuelo = convertirFecha($datosReserva[0]->fechavuelo);
-	$encabezado = "Hello!!! ". $datosReserva[0]->nombre .". This is your flight confirmation. It’s not necessary to be printed!. ";
+	$encabezado = "Hello!!! ". $datosReserva[0]->nombre .". This is your flight confirmation. It's not necessary to be printed!. ";
 	$registroPago = "Registration and Payment: Your flight date, you must get to our reception where our hostess will welcome you, make your registration and get the remaining payment. Remember to be on time at the appointment place. Our advice is to bring comfortable clothes, just as if you were on a picnic: cap, scarf, gloves, jacket, sunscreen, and camera.";
-	$tiempo ='From 6:00 a.m. we wait you at our reception, however this time will be <b>CONFIRMED ONE DAY BEFORE</b> your flight day according to the logistic of the day or weather conditions, please be aware as you will receive a call or message to confirm the schedule.';
+	$tiempo ='From 6:00 a.m. we wait you at our reception, however this time will be CONFIRMED ONE DAY BEFORE your flight day according to the logistic of the day or weather conditions, please be aware as you will receive a call or message to confirm the schedule.';
 
 	$reunion='Recepción Volar en Globo, Aventura y Publicidad SA de CV. Esquina Francisco Villa con Carretera Libre Mexico- Tulancingo (132) C.P. 55850 .';
 	$pdf = new PDF();
@@ -359,8 +359,10 @@
 
 	$pdf->SetFont('Arial','',9);
 	$pdf->MultiCell(186,5,utf8_decode($tiempo),0,'J',0);
+	$pdf->SetFont('Arial','',9);
+	$pdf->MultiCell(186,5,utf8_decode('*All Our Prices are Expressed in Mexican Pesos'),0,'J',0);
 	$pdf->SetFont('Arial','B',9);
-	$pdf->MultiCell(186,5,utf8_decode('Meeting Point:	'),0,'C',0);
+	$pdf->MultiCell(186,5,utf8_decode('Meeting Point:'),0,'C',0);
 	$pdf->SetFont('Arial','',9);
 	$pdf->MultiCell(186,5,utf8_decode($reunion),0,'J',0);
 ///Que incluye el vuelos
@@ -391,10 +393,10 @@
 	$pdf->MultiCell(186,5,utf8_decode('Restrictions:'),0,'J',0);
 
 	$pdf->SetFont('Arial','',9);
-	$pdf->MultiCell(186,5,utf8_decode(' °	Children under 4 years old.'),0,'J',0);
+	$pdf->MultiCell(186,5,utf8_decode(' ° Children under 4 years old.'),0,'J',0);
 
 	$pdf->SetFont('Arial','',9);
-		$pdf->MultiCell(186,5,utf8_decode(' °	If you have suffered a heart disease.'),0,'J',0);
+		$pdf->MultiCell(186,5,utf8_decode(' ° If you have suffered a heart disease.'),0,'J',0);
 
 	$pdf->SetFont('Arial','',9);
 	$pdf->MultiCell(186,5,utf8_decode(' ° If you have had a recent surgery.'),0,'J',0);
@@ -406,7 +408,7 @@
 	$pdf->MultiCell(186,5,utf8_decode(' °	Pregnant women.'),0,'J',0);
 
 	$pdf->SetFont('Arial','',9);
-	$pdf->MultiCell(186,5,utf8_decode(' °	If you are intoxicated. (Alcohol or drugs)'),0,'J',0);
+	$pdf->MultiCell(186,5,utf8_decode(' ° If you are intoxicated. (Alcohol or drugs)'),0,'J',0);
 
 	$pdf->SetFont('Arial','',9);
 	$pdf->MultiCell(186,5,utf8_decode(' ° It is not allowed to board with: luggage, sharps or firearms.'),0,'J',0);

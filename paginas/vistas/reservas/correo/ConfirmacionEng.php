@@ -279,6 +279,10 @@ $cuerpo.=							'<td class="" colspan="4">From 6:00 a.m. we wait you at our rece
 $cuerpo.=						'</tr>';
 
 $cuerpo.=						'<tr>';
+$cuerpo.=							'<td class="" colspan="4">*All Our Prices are Expressed in Mexican Pesos.</td>';
+$cuerpo.=						'</tr>';
+
+$cuerpo.=						'<tr>';
 $cuerpo.=							'<td class="tdseparador" colspan="4">Meeting Point:	</td>';
 $cuerpo.=						'</tr>';
 $cuerpo.=						'<tr>';

@@ -47,7 +47,7 @@
 				$where = " WHERE $filtro ";
 			}
 			$sql="UPDATE $tabla SET $set $where";
-			
+
 			$data= $this->con->query($sql);
 			if($data){
 				return "ok";
@@ -58,6 +58,9 @@
 		function query($sql){
 			$data= $this->con->query($sql);
 			return $data;
+		}
+		function getConexion(){
+			return $this->con;
 		}
 
 	}
