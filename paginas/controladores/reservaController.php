@@ -16,6 +16,9 @@
 		$confirmarAsistencia = $con->actualizar("temp_volar","status=1","id_temp=".$_POST['reserva']);
 		$confirmarAsistencia = $con->actualizar("servicios_vuelo_temp","status=1","idtemp_sv=".$_POST['reserva']);
 		echo $confirmarAsistencia;
+	}elseif (isset($_POST['accion']) && $_POST['accion']=='cpc'  ) {
+		$confirmarAsistencia = $con->actualizar("temp_volar","status=9","id_temp=".$_POST['reserva']);
+		echo $confirmarAsistencia;
 	}elseif(isset($_POST['accion']) && $_POST['accion']=='globos'){
 		$globo=$_POST['globo'];
 		$hora=$_POST['hora'];

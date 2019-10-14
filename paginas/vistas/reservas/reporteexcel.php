@@ -1,6 +1,6 @@
 <?php
 	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/controladores/conexion.php';
-	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/controladores/fin_session.php';	
+	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/controladores/fin_session.php';
 $filtro="tv.status <>0 and tv.idusu_temp=vu.id_usu ";
 $campos =" id_temp as reserva,CONCAT(ifnull(nombre_usu,''),' ', ifnull(apellidop_usu,''),' ',ifnull(apellidom_usu,'')) as vendedor,
     CONCAT(ifnull(nombre_temp,''),' ',ifnull(apellidos_temp,'')) as cliente,
@@ -99,7 +99,7 @@ $estiloTituloReporte = array(
 			'vertical' => PHPExcel_Style_Alignment::VERTICAL_CENTER
     	)
 	);
-	
+
 	$estiloTituloColumnas = array(
     	'font' => array(
 			'name'  => 'Arial',
@@ -121,7 +121,7 @@ $estiloTituloReporte = array(
 			'vertical'  => PHPExcel_Style_Alignment::VERTICAL_CENTER
     	)
 	);
-	
+
 	$estiloInformacion = new PHPExcel_Style();
 	$estiloInformacion->applyFromArray( array(
     	'font' => array(
@@ -139,9 +139,9 @@ $estiloTituloReporte = array(
 		'alignment' =>  array(
 			'horizontal'=> PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
 			'vertical'  => PHPExcel_Style_Alignment::VERTICAL_CENTER
-    	)	
+    	)
 	));
-	
+
 
 /////////////////     Estilos de las celdas (titulos y contenido)
 
@@ -173,7 +173,7 @@ $objphp->getActiveSheet()->setCellValue('G'.$enc, 'Procedencia');
 $objphp->getActiveSheet()->getColumnDimension('G')->setWidth(25);
 $objphp->getActiveSheet()->setCellValue('H'.$enc, 'P. Adultos');
 $objphp->getActiveSheet()->getColumnDimension('H')->setWidth(25);
-$objphp->getActiveSheet()->setCellValue('I'.$enc, utf8_encode('P. Niños'));
+$objphp->getActiveSheet()->setCellValue('I'.$enc, utf8_encode('P. Niï¿½os'));
 $objphp->getActiveSheet()->getColumnDimension('I')->setWidth(22);
 $objphp->getActiveSheet()->setCellValue('J'.$enc, 'Motivo');
 $objphp->getActiveSheet()->getColumnDimension('J')->setWidth(25);
@@ -181,7 +181,7 @@ $objphp->getActiveSheet()->setCellValue('K'.$enc, 'Tipo');
 $objphp->getActiveSheet()->getColumnDimension('K')->setWidth(25);
 $objphp->getActiveSheet()->setCellValue('L'.$enc, 'Hotel');
 $objphp->getActiveSheet()->getColumnDimension('L')->setWidth(25);
-$objphp->getActiveSheet()->setCellValue('M'.$enc, utf8_encode('Habitación'));
+$objphp->getActiveSheet()->setCellValue('M'.$enc, utf8_encode('Habitaciï¿½n'));
 $objphp->getActiveSheet()->getColumnDimension('M')->setWidth(25);
 $objphp->getActiveSheet()->setCellValue('N'.$enc, 'Cotizado');
 $objphp->getActiveSheet()->getColumnDimension('N')->setWidth(25);
@@ -215,12 +215,12 @@ $objphp->getActiveSheet()->setCellValue('M'.$fila, ($reserva->habitacion) );
 $objphp->getActiveSheet()->setCellValue('N'.$fila, $reserva->cotizado );
 $objphp->getActiveSheet()->setCellValue('O'.$fila, ($reserva->globo) );
 $objphp->getActiveSheet()->setCellValue('P'.$fila, $reserva->peso );
-						
+
 if( $reserva->status ==4){
 	$text="Conciliada";
 	$class="#33b5e5";
 }else if($reserva->status==2){
-	$text="Sin Cotización";
+	$text="Sin Cotizaciï¿½n";
 	$class="#ff4444";
 }else if($reserva->status==3){
 	$text="Pendiente de Pago";
@@ -229,7 +229,7 @@ if( $reserva->status ==4){
 	$text="Terminado";
 	$class="#00C851";
 }else if($reserva->status==5){
-	$text="Esperando Autorización";
+	$text="Esperando Autorizaciï¿½n";
 	$class="#00C851";
 }else if($reserva->status==6){
 	$text="C. por Reemplazo ";
@@ -240,6 +240,9 @@ if( $reserva->status ==4){
 }else if($reserva->status==8){
 	$text="Confirmada";
 	$class="#00e676";
+}else if($reserva->status==9){
+	$text="CxC";
+	$class="#fb8c00 ";
 }else{
 	$text="Otro";
 	$class="#ff4444";
@@ -258,7 +261,7 @@ if( strpos( $useragent, "Android" ) !== false || strpos( $useragent, "Mobile" ) 
     header('Content-Type: application/vnd.ms-excel');
     header('Content-Disposition: attachment;filename="VentasDevice.xls"');
     header('Cache-Control: max-age=0');
-    	
+
     $objWriter = PHPExcel_IOFactory::createWriter($objphp, 'Excel5');
     $objWriter->save('php://output');
 }else{

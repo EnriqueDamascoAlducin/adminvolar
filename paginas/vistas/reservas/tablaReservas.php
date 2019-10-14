@@ -113,7 +113,11 @@
 					}else if($reserva->status==8){
 						$text="Confirmado";
 						$class="";
-						$class="background-color:#00e676 ;";
+						$color="background-color:#4285F4 ;";
+					}else if($reserva->status==9){
+						$text="CxC";
+						$class="";
+						$color="background-color:#fb8c00 ;";
 					}else{
 						$text="Error";
 						$class="danger";
@@ -189,5 +193,5 @@
 
 </table>
 <script type="text/javascript">
-	tables(5,"asc");
+	tables();
 </script>

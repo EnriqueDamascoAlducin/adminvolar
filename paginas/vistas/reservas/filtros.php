@@ -58,7 +58,10 @@
 							$class="#00C851";
 						}else if($reserva->status==8){
 							$text="Confirmada";
-							$class="#00e676";
+							$class="#4285F4";
+						}else if($reserva->status==9){
+							$text="CxC";
+							$class="#fb8c00 ";
 						}else{
 							$text="Otro";
 							$class="#ff4444";

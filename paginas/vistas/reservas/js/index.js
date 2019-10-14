@@ -350,12 +350,19 @@ function ConfirmarAsistencia(reserva,cliente,accion){
   			accion:accion
   		},
   		success:function(response){
-  			if(response=="")
-  				abrir_gritter(response, "No se pudo confirmar la asitencia" ,"warning");
-  			else
-  				abrir_gritter("Correcto", "Gracias por confirmar la asistencia." ,"info");
+				if(accion=="cpc"){
+					if(response=="")
+						abrir_gritter(response, "No se pudo enviar a Cuentas por cobrar" ,"warning");
+					else
+						abrir_gritter("Correcto", "Se envío a Cuentas por Cobrar." ,"info");
 
-  			agregarPago(reserva,cliente);
+				}else{
+	  			if(response=="")
+	  				abrir_gritter(response, "No se pudo confirmar la asitencia" ,"warning");
+	  			else
+	  				abrir_gritter("Correcto", "Gracias por confirmar la asistencia." ,"info");
+
+				}
 				cargarTablaReservas();
   		},
   		error:function(){
@@ -645,7 +652,8 @@ function tables(){
 	$(".DataTable").DataTable().destroy();
 		$(".DataTable").dataTable( {
 			"pageLength": 50,
-
+			"autoWidth": true,
+			"scrollX": true,
 	        "order": [[ '5','asc' ]]
 		} );
 }

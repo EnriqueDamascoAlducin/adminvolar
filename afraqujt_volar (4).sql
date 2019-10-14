@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 08-10-2019 a las 00:26:02
+-- Tiempo de generación: 14-10-2019 a las 13:13:14
 -- Versión del servidor: 10.3.18-MariaDB-cll-lve
 -- Versión de PHP: 7.2.7
 
@@ -115,9 +115,9 @@ END$$
 
 CREATE DEFINER=`afraqujt`@`localhost` PROCEDURE `getReservaData` (IN `_reserva` INT)  BEGIN
 	Select id_temp, idusu_temp, IFNULL(clave_temp,"") as clave_temp, IFNULL(nombre_temp,"") as nombre_temp, IFNULL(apellidos_temp,"") as apellidos_temp, IFNULL(mail_temp,"") as mail_temp, IFNULL(telfijo_temp,"") as telfijo_temp, IFNULL(telcelular_temp,"") as telcelular_temp, IFNULL(procedencia_temp,"") as procedencia_temp, IFNULL(pasajerosa_temp,"") as pasajerosa_temp,IFNULL(pasajerosn_temp,"") as pasajerosn_temp, IFNULL(motivo_temp,"") as motivo_temp, IFNULL(tipo_temp,"") as tipo_temp,  IFNULL(fechavuelo_temp,"") as fechavuelo_temp,  IFNULL(tarifa_temp,"") as tarifa_temp, IFNULL(hotel_temp,"") as hotel_temp,  IFNULL(habitacion_temp,"") as habitacion_temp,  IFNULL(checkin_temp,"") as checkin_temp,IFNULL(checkout_temp,"") as checkout_temp,IFNULL(comentario_temp,"") as comentario_temp, IFNULL(otroscar1_temp,"") as otroscar1_temp, IFNULL(otroscar2_temp,"") as otroscar2_temp, IFNULL(precio1_temp,"") as precio1_temp,
-IFNULL(precio2_temp,"") as precio2_temp, IFNULL(tdescuento_temp,"") as tdescuento_temp, IFNULL(cantdescuento_temp,"") as cantdescuento_temp, IFNULL(total_temp,"") as total_temp, IFNULL(piloto_temp,"") as piloto_temp, IFNULL(kg_temp,"") as kg_temp, IFNULL(globo_temp,"") AS globo_temp, IFNULL(hora_temp,"") as hora_temp,idioma_temp,tipopeso_temp,comentarioint_temp register,status
+IFNULL(precio2_temp,"") as precio2_temp, IFNULL(tdescuento_temp,"") as tdescuento_temp, IFNULL(cantdescuento_temp,"") as cantdescuento_temp, IFNULL(total_temp,"") as total_temp, IFNULL(piloto_temp,"") as piloto_temp, IFNULL(kg_temp,"") as kg_temp, IFNULL(globo_temp,"") AS globo_temp, IFNULL(hora_temp,"") as hora_temp,idioma_temp,tipopeso_temp,comentarioint_temp, register,status
 from temp_volar
-Where id_temp = _reserva;
+Where id_temp =_reserva ;
 END$$
 
 CREATE DEFINER=`afraqujt`@`localhost` PROCEDURE `getResumenREserva` (IN `_reserva` BIGINT)  BEGIN
@@ -188,6 +188,14 @@ FROM subpermisos_volar sp INNER JOIN permisos_volar pv on pv.id_per=sp.permiso_s
 WHERE pv.status<>0 and sp.status<>0 and pus.status<>0 AND pus.idusu_puv=_idusu and pv.id_per=_idmodulo;
 END$$
 
+CREATE DEFINER=`afraqujt`@`localhost` PROCEDURE `registrarComentario` (IN `_comentario` TEXT, IN `_idusu` INT, IN `_reserva` INT, OUT `respuesta` VARCHAR(15))  BEGIN
+	UPDATE bitcomentarios_volar set status = 2 where idtemp_bc = _reserva;
+    INSERT INTO bitcomentarios_volar(idusu_bc,idtemp_bc,comentariop_bc,comentarion_bc)
+    SELECT _idusu, _reserva, comentarioint_temp,_comentario from temp_volar where id_temp = _reserva;
+    UPDATE temp_volar set comentarioint_temp = _comentario where id_temp = _reserva;
+    set respuesta = 'Actualizado';
+END$$
+
 CREATE DEFINER=`afraqujt`@`localhost` PROCEDURE `registrarHabitacionHotel` (IN `_hotel` INT, IN `_nombre` VARCHAR(150), IN `_precion` DECIMAL(10,2), IN `_precioa` DECIMAL(10,2), OUT `lid` VARCHAR(15))  BEGIN
 	INSERT INTO restaurantes_volar (
 		nombre_restaurant,
@@ -222,7 +230,7 @@ From hoteles_volar
 	     SET lid = LAST_INSERT_ID();
 END$$
 
-CREATE DEFINER=`afraqujt`@`localhost` PROCEDURE `registrarPago` (IN `_pago` BIGINT, IN `_reserva` BIGINT, IN `_usuario` INT, IN `_metodo` INT, IN `_banco` INT, IN `_referencia` VARCHAR(200), IN `_cantidad` DOUBLE(10,2), IN `_fechaPago` VARCHAR(30), IN `_usuarioCOncilia` INT, OUT `respuesta` VARCHAR(25))  BEGIN
+CREATE DEFINER=`afraqujt`@`localhost` PROCEDURE `registrarPago` (IN `_pago` BIGINT, IN `_reserva` BIGINT, IN `_usuario` INT, IN `_metodo` INT, IN `_banco` INT, IN `_referencia` VARCHAR(200), IN `_cantidad` DOUBLE(10,2), IN `_fechaPago` VARCHAR(30), IN `_usuarioCOncilia` INT, IN `_comision` TINYINT, OUT `respuesta` VARCHAR(25))  BEGIN
 IF(SELECT COUNT(id_bp) as pagos from bitpagos_volar  where idres_bp=_reserva )>0 THEN
     IF (SELECT (ifnull(sum(cantidad_bp),0)+ _cantidad ) from bitpagos_volar where idres_bp=_reserva )>(Select total_temp FROM temp_volar where id_temp  = _reserva) THEN
         SET respuesta = 'ERROR EN PAGO';
@@ -419,6 +427,15 @@ CREATE DEFINER=`afraqujt`@`localhost` PROCEDURE `remplazarServiciosReservas` (IN
         UPDATE servicios_vuelo_temp set idtemp_sv = _reserva where idtemp_sv is null;
 END$$
 
+CREATE DEFINER=`afraqujt`@`localhost` PROCEDURE `reprogramarReserva` (IN `_reserva` BIGINT, IN `_idusu` INT, IN `_fechan` DATE, IN `_comentario` TEXT, IN `_motivo` TINYINT, IN `_cargo` TINYINT, OUT `_respuesta` VARCHAR(15))  BEGIN
+	UPDATE reprogramaciones_volar set status = 2 where idtemp_rep = _reserva;
+	INSERT INTO reprogramaciones_volar
+(idtemp_rep,idusu_rep,fechaa_rep,fechan_rep,comentario_rep,motivo_rep,cargo_rep)
+		SELECT _reserva, _idusu,fechavuelo_temp,_fechan,_comentario, _motivo, _cargo FROM temp_volar where id_temp=_reserva;
+	UPDATE temp_volar set fechavuelo_temp =_fechan where id_temp = _reserva;
+    SET _respuesta = 'Reprogramado';
+END$$
+
 CREATE DEFINER=`afraqujt`@`localhost` PROCEDURE `usuarioLoggeado` (IN `_usuario` VARCHAR(100), IN `_password` VARCHAR(150))  BEGIN
  SELECT *
  FROM volar_usuarios vu
@@ -474,6 +491,15 @@ CREATE TABLE `bitcomentarios_volar` (
   `register` datetime NOT NULL DEFAULT current_timestamp() COMMENT 'Registro',
   `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT 'Status'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `bitcomentarios_volar`
+--
+
+INSERT INTO `bitcomentarios_volar` (`id_bc`, `idusu_bc`, `idtemp_bc`, `comentariop_bc`, `comentarion_bc`, `register`, `status`) VALUES
+(12, 14, 1318, '', 'pago por error $10.500.00 por conekta, favor de regresar  $500.00 pesos en sitio', '2019-10-11 16:29:21', 1),
+(13, 16, 1320, '', 'INCLUYE DESAYUNOS Y FOTO IMPRESA/ FIRMAR CARTA DE PAGO POR CONEKTA PEDIDO 4135 /PEDIR TARJETA DE CREDITO  E IDENTIFICACIÃ“N', '2019-10-11 17:22:36', 1),
+(14, 16, 1321, '', 'INCLUYE DESAYUNOS/ FIRMAR CARTA DE PAGO CON TC/ PEDIR ID/ PAGA CON TARJETA BANCOMER PUEDE SER A MESES SIN COMISION DEL 4%/ SE ENVIA TICKET DE PAGO EN TERMINAL DE OFICINA', '2019-10-11 17:23:17', 1);
 
 -- --------------------------------------------------------
 
@@ -559,7 +585,7 @@ INSERT INTO `bitpagos_volar` (`id_bp`, `idres_bp`, `idreg_bp`, `metodo_bp`, `ban
 (75, 1075, 9, 59, 64, 'aut 025468', 1000.00, '2019-09-21', 17, '2019-09-21 14:43:52', 0, '2019-09-21 14:20:04', 2),
 (76, 1064, 14, 57, 64, '8070909637', 2000.00, '2019-09-21', 17, '2019-09-21 18:21:52', 0, '2019-09-21 18:18:31', 1),
 (77, 1132, 14, 61, 64, 'CONEKTA PED 4028', 4198.00, '2019-09-23', 17, '2019-09-23 12:26:27', 0, '2019-09-23 12:25:07', 2),
-(78, 1134, 9, 94, 64, 'CXC BESTDAY ID 73929099-1', 0.00, '2019-09-23', 17, '2019-09-23 13:24:21', 0, '2019-09-23 13:22:32', 3),
+(78, 1134, 9, 94, 64, 'CXC BESTDAY ID 73929099-1', 0.00, '2019-09-23', 17, '2019-09-23 13:24:21', 0, '2019-09-23 13:22:32', 2),
 (79, 1061, 14, 55, 64, 'FACT 0104', 2000.00, '2019-09-21', 17, '2019-09-23 13:34:16', 0, '2019-09-23 13:30:49', 2),
 (80, 1135, 9, 94, 64, 'CXC BESTDAY ID 73929685-1', 0.00, '2019-09-23', NULL, NULL, 0, '2019-09-23 13:31:04', 4),
 (81, 1072, 14, 61, 64, 'CONEKTA PED 4010', 7000.00, '2019-09-20', 3, '2019-09-23 13:51:33', 0, '2019-09-23 13:38:05', 2),
@@ -658,7 +684,88 @@ INSERT INTO `bitpagos_volar` (`id_bp`, `idres_bp`, `idreg_bp`, `metodo_bp`, `ban
 (175, 1271, 9, 94, 64, 'CXC BOOKING', 0.00, '2019-10-05', 3, '2019-10-05 16:09:25', 0, '2019-10-05 15:47:42', 3),
 (176, 1272, 9, 94, 64, 'CXC GRAN TEOCALLI', 0.00, '2019-10-05', 3, '2019-10-05 16:09:37', 0, '2019-10-05 15:51:11', 3),
 (177, 1233, 16, 57, 64, 'tranfer wise', 2000.00, '2019-10-02', 17, '2019-10-07 11:38:09', 0, '2019-10-07 11:35:57', 2),
-(178, 1275, 16, 57, 64, 'CUENTA ORIGEN 1162', 12000.00, '2019-10-07', 17, '2019-10-07 14:25:38', 0, '2019-10-07 14:22:21', 1);
+(178, 1275, 16, 57, 64, 'CUENTA ORIGEN 1162', 12000.00, '2019-10-07', 17, '2019-10-07 14:25:38', 0, '2019-10-07 14:22:21', 1),
+(179, 1283, 1, 55, 75, '1105638', 1000.00, '2019-10-08', NULL, NULL, 0, '2019-10-08 14:32:06', 0),
+(180, 1283, 11, 55, 75, '6LU006286M1105638', 1000.00, '2019-10-08', 17, '2019-10-08 14:36:24', 0, '2019-10-08 14:32:44', 2),
+(181, 1281, 14, 55, 64, '0154', 1000.00, '2019-10-08', 17, '2019-10-08 14:59:31', 0, '2019-10-08 14:57:43', 2),
+(182, 1286, 14, 57, 64, 'FOL 0051943010', 2000.00, '2019-10-08', 17, '2019-10-08 16:19:08', 0, '2019-10-08 16:18:35', 2),
+(183, 1207, 11, 60, 83, 'Marichuy', 2000.00, '2019-09-29', NULL, NULL, 0, '2019-10-08 16:19:30', 2),
+(184, 1207, 11, 60, 83, 'marichuy', 1600.00, '2019-09-29', NULL, NULL, 0, '2019-10-08 16:25:49', 2),
+(185, 1207, 11, 60, 76, 'checo', 0.00, '2019-10-08', 17, '2019-10-08 17:03:35', 0, '2019-10-08 17:02:26', 2),
+(186, 1291, 16, 57, 64, 'SPEI FOLIO9689585025', 2000.00, '2019-10-10', 17, '2019-10-10 11:19:10', 0, '2019-10-10 11:18:03', 2),
+(187, 1292, 14, 61, 64, '4124', 7000.00, '2019-10-10', 17, '2019-10-10 11:55:58', 0, '2019-10-10 11:54:50', 2),
+(188, 1293, 14, 61, 64, '4127', 4798.00, '2019-10-10', 17, '2019-10-10 12:00:15', 0, '2019-10-10 11:58:25', 2),
+(189, 1289, 14, 59, 64, 'FOL 9562 AUT 429181', 2000.00, '2019-10-08', 17, '2019-10-10 12:16:07', 0, '2019-10-10 12:08:55', 2),
+(190, 1295, 14, 55, 64, '0141', 2000.00, '2019-10-05', 17, '2019-10-10 12:17:52', 0, '2019-10-10 12:15:02', 2),
+(191, 1296, 16, 55, 64, 'FORMATO 0159', 2000.00, '2019-10-10', 17, '2019-10-10 12:31:24', 0, '2019-10-10 12:21:29', 2),
+(192, 1297, 14, 89, 64, 'APROB 584726', 1000.00, '2019-10-10', 17, '2019-10-10 16:20:16', 0, '2019-10-10 16:09:10', 1),
+(193, 1298, 9, 94, 64, 'CXC TURISKY', 0.00, '2019-10-10', 17, '2019-10-10 18:20:05', 0, '2019-10-10 18:17:36', 3),
+(194, 1299, 9, 94, 64, 'CXC GRAN TEOCALLI', 0.00, '2019-10-10', 17, '2019-10-10 18:29:18', 0, '2019-10-10 18:25:59', 3),
+(195, 1300, 9, 94, 64, '6000.00 - clave de rastreo 085901091120328297', 6000.00, '2019-10-10', 17, '2019-10-10 18:39:10', 0, '2019-10-10 18:36:13', 3),
+(196, 1301, 9, 94, 64, 'CXC EXPEDIA', 0.00, '2019-10-10', 17, '2019-10-10 18:42:30', 0, '2019-10-10 18:40:55', 3),
+(197, 1302, 9, 94, 64, 'CXC EXPEDIA', 0.00, '2019-10-10', 17, '2019-10-10 18:46:07', 0, '2019-10-10 18:44:46', 3),
+(201, 1218, 18, 60, 83, 'Pago en Sitio', 0.00, '2019-10-11', NULL, NULL, 0, '2019-10-11 12:35:57', 2),
+(202, 1303, 16, 55, 64, 'FORMATO 0101', 2000.00, '2019-09-24', 17, '2019-10-11 12:51:54', 0, '2019-10-11 12:49:10', 2),
+(203, 1304, 16, 57, 64, 'SPEI GERMAN RUA', 3000.00, '2019-10-04', 17, '2019-10-11 13:00:35', 0, '2019-10-11 12:58:17', 2),
+(204, 1305, 16, 59, 64, 'Depositoolio 8573 Aut. 392299', 2000.00, '2019-10-08', 17, '2019-10-11 13:09:08', 0, '2019-10-11 13:06:56', 2),
+(205, 1306, 16, 57, 64, 'SPEI FOLIO 0011075013', 4000.00, '2019-10-09', 17, '2019-10-11 13:15:05', 0, '2019-10-11 13:13:38', 2),
+(206, 1307, 14, 59, 64, '2419', 2000.00, '2019-10-11', 17, '2019-10-11 13:31:22', 0, '2019-10-11 13:28:34', 1),
+(207, 1309, 16, 61, 64, 'pedido 4096', 5098.00, '2019-10-01', 17, '2019-10-11 13:53:38', 0, '2019-10-11 13:41:09', 2),
+(208, 1310, 14, 61, 64, '4112', 7097.00, '2019-10-11', 17, '2019-10-11 13:44:38', 0, '2019-10-11 13:43:00', 2),
+(209, 1109, 14, 61, 64, '4131', 4798.00, '2019-10-11', 17, '2019-10-11 13:57:47', 0, '2019-10-11 13:55:55', 2),
+(210, 1312, 16, 55, 64, 'PAYPAL FORMATO 0163', 1000.00, '2019-10-11', NULL, NULL, 0, '2019-10-11 13:57:29', 4),
+(211, 1313, 16, 59, 64, 'Deposito en efectivo Folio 7003 Aut. 600817', 2000.00, '2019-10-07', 17, '2019-10-11 14:43:44', 0, '2019-10-11 14:42:06', 2),
+(212, 1314, 14, 57, 64, 'FOL 0037200008', 2798.00, '2019-10-05', 17, '2019-10-11 14:57:26', 0, '2019-10-11 14:52:39', 1),
+(213, 1309, 11, 60, 64, 'TODOOK', 0.00, '2019-10-11', 3, '2019-10-11 15:06:50', 0, '2019-10-11 15:05:49', 2),
+(214, 1315, 14, 55, 64, '0065', 2000.00, '2019-10-07', 17, '2019-10-11 15:22:34', 0, '2019-10-11 15:10:50', 1),
+(215, 1316, 16, 57, 64, '9709195287', 7000.00, '2019-10-10', 17, '2019-10-11 15:21:20', 0, '2019-10-11 15:18:09', 2),
+(216, 1316, 16, 57, 64, '9788869100', 10000.00, '2019-10-11', 17, '2019-10-11 15:21:18', 0, '2019-10-11 15:19:25', 2),
+(217, 1317, 14, 57, 64, '91019', 2000.00, '2019-10-09', 3, '2019-10-11 15:43:54', 0, '2019-10-11 15:30:03', 1),
+(218, 1318, 14, 61, 64, '3795', 10000.00, '2019-08-03', 17, '2019-10-11 16:32:16', 0, '2019-10-11 16:28:27', 2),
+(219, 1319, 9, 94, 75, 'CXC ESPIRITU AVENTURERO', 0.00, '2019-10-11', 17, '2019-10-11 16:32:30', 0, '2019-10-11 16:30:35', 3),
+(220, 1311, 16, 59, 64, 'FOLIO 6376 AUT 803166', 2000.00, '2019-10-11', 17, '2019-10-11 16:38:40', 0, '2019-10-11 16:36:24', 2),
+(221, 1320, 16, 61, 64, 'pedido 4135', 7000.00, '2019-10-11', 17, '2019-10-11 16:47:40', 0, '2019-10-11 16:45:31', 2),
+(222, 1321, 16, 89, 64, '734389', 2000.00, '2019-10-11', 17, '2019-10-11 17:03:31', 0, '2019-10-11 17:01:10', 2),
+(223, 1323, 9, 94, 64, 'CXC TRIPAVDISOR', 0.00, '2019-10-11', 17, '2019-10-11 17:35:20', 0, '2019-10-11 17:34:08', 2),
+(224, 1324, 9, 94, 64, 'CXC BOOKING', 0.00, '2019-10-11', 17, '2019-10-11 17:48:58', 0, '2019-10-11 17:46:45', 2),
+(225, 1325, 9, 94, 64, 'CXC WAYAK', 0.00, '2019-10-11', 17, '2019-10-11 17:55:13', 0, '2019-10-11 17:54:04', 2),
+(226, 1326, 9, 94, 64, 'CXC EZRA', 0.00, '2019-10-11', 17, '2019-10-11 17:58:31', 0, '2019-10-11 17:57:17', 2),
+(227, 1327, 9, 61, 64, 'CONEKTA PED 3940 PAGO TC', 6698.00, '2019-10-11', 17, '2019-10-11 18:08:19', 0, '2019-10-11 18:04:10', 2),
+(228, 1328, 9, 94, 64, 'CXC BOOKING', 0.00, '2019-10-11', 17, '2019-10-11 18:14:35', 0, '2019-10-11 18:13:44', 2),
+(229, 1329, 9, 94, 64, 'CXC BOOKING', 0.00, '2019-10-11', 17, '2019-10-11 18:24:55', 0, '2019-10-11 18:18:00', 2),
+(230, 1330, 9, 94, 64, '15600.00 - numero de recibo 3W603993T63812738', 15600.00, '2019-10-11', 17, '2019-10-11 18:25:30', 0, '2019-10-11 18:23:34', 2),
+(231, 1332, 9, 94, 64, '11100.00 - Folio de Internet: 0005407017', 11100.00, '2019-10-11', 17, '2019-10-11 18:35:29', 0, '2019-10-11 18:32:51', 2),
+(232, 1333, 9, 94, 64, 'CXC GRAN TEOCALLI', 0.00, '2019-10-11', 17, '2019-10-11 18:37:24', 0, '2019-10-11 18:36:11', 2),
+(233, 1335, 16, 55, 64, 'PAYPAL FORMATO 0166', 1000.00, '2019-10-11', 3, '2019-10-11 19:14:17', 0, '2019-10-11 19:11:54', 2),
+(234, 1335, 18, 60, 83, 'Pago en Sitio', 1899.00, '2019-10-12', NULL, NULL, 0, '2019-10-12 12:20:40', 2),
+(235, 1326, 18, 94, 83, 'Pago en Sitio', 11700.00, '2019-10-12', NULL, NULL, 0, '2019-10-12 13:04:42', 2),
+(236, 1324, 18, 94, 83, 'Pago en Sitio', 21955.00, '2019-10-12', NULL, NULL, 0, '2019-10-12 13:05:23', 2),
+(237, 1323, 18, 94, 83, 'Pago en Sitio', 3900.00, '2019-10-12', NULL, NULL, 0, '2019-10-12 13:05:55', 2),
+(238, 1317, 18, 60, 83, 'Pago en Sitio', 3656.00, '2019-10-12', NULL, NULL, 0, '2019-10-12 13:08:15', 2),
+(239, 1315, 18, 60, 83, 'Pago en Sitio', 14793.00, '2019-10-12', NULL, NULL, 0, '2019-10-12 13:08:46', 2),
+(240, 1314, 18, 60, 83, 'Pago en Sitio', 2000.00, '2019-10-12', NULL, NULL, 0, '2019-10-12 13:09:09', 2),
+(241, 1306, 18, 60, 83, 'Pago en Sitio', 600.00, '2019-10-12', NULL, NULL, 0, '2019-10-12 13:09:26', 2),
+(242, 1305, 18, 55, 83, 'Pago en Sitio', 8598.00, '2019-10-12', NULL, NULL, 4, '2019-10-12 13:10:18', 2),
+(243, 1304, 18, 90, 83, 'Pago en Sitio', 4000.00, '2019-10-12', NULL, NULL, 4, '2019-10-12 13:11:25', 2),
+(244, 1303, 18, 90, 83, 'Pago en Sitio', 23755.00, '2019-10-12', NULL, NULL, 4, '2019-10-12 13:11:55', 2),
+(245, 1286, 18, 60, 83, 'Pago en Sitio', 4500.00, '2019-10-12', NULL, NULL, 0, '2019-10-12 13:13:52', 2),
+(246, 1286, 18, 60, 83, 'Pago en Sitio', 6500.00, '2019-10-12', NULL, NULL, 4, '2019-10-12 13:16:08', 2),
+(247, 1336, 16, 57, 64, '0073392007', 2000.00, '2019-10-12', 3, '2019-10-12 13:57:58', 0, '2019-10-12 13:36:42', 2),
+(248, 1338, 9, 57, 88, '081834', 11750.00, '2019-10-12', NULL, NULL, 0, '2019-10-12 13:51:19', 4),
+(249, 1340, 14, 59, 64, 'Fol 4528', 2000.00, '2019-10-12', 3, '2019-10-12 15:39:23', 0, '2019-10-12 15:34:51', 1),
+(250, 1341, 14, 59, 64, '9094', 2000.00, '2019-10-12', 3, '2019-10-12 18:10:46', 0, '2019-10-12 17:52:23', 1),
+(251, 1343, 16, 60, 64, 'Pago en sitio con Mary', 6000.00, '2019-10-12', 3, '2019-10-12 20:41:41', 0, '2019-10-12 20:13:13', 2),
+(252, 1344, 14, 56, 64, 'Aut 113654', 1000.00, '2019-10-12', 3, '2019-10-12 21:54:46', 0, '2019-10-12 21:52:11', 1),
+(253, 1321, 1, 90, 83, 'Pago en Sitio', 5197.00, '2019-10-13', NULL, NULL, 0, '2019-10-13 10:41:19', 2),
+(254, 1313, 1, 60, 83, 'Pago en Sitio', 6646.00, '2019-10-13', NULL, NULL, 0, '2019-10-13 10:41:50', 2),
+(255, 1311, 1, 60, 83, 'Pago en Sitio', 5700.00, '2019-10-13', NULL, NULL, 0, '2019-10-13 10:42:12', 2),
+(256, 1248, 1, 60, 83, 'Pago en Sitio', 11800.00, '2019-10-13', NULL, NULL, 0, '2019-10-13 10:42:27', 2),
+(257, 1353, 9, 94, 64, 'TURISKY L-V', 0.00, '2019-10-12', 3, '2019-10-13 12:40:14', 0, '2019-10-13 12:38:46', 3),
+(258, 1352, 9, 56, 96, 'AUT. 342067', 1000.00, '2019-10-13', 17, '2019-10-13 19:05:55', 0, '2019-10-13 18:20:15', 3),
+(259, 1354, 16, 55, 64, 'Formato 0170', 1000.00, '2019-10-13', 17, '2019-10-13 21:22:17', 0, '2019-10-13 21:13:37', 2),
+(260, 1349, 14, 56, 64, '973823', 1000.00, '2019-10-13', 17, '2019-10-13 21:41:07', 0, '2019-10-13 21:36:35', 1),
+(261, 1355, 14, 55, 64, '0155', 1000.00, '2019-10-14', 17, '2019-10-14 10:52:50', 0, '2019-10-14 10:51:55', 1),
+(262, 1357, 9, 94, 64, 'CXC EXPEDIA', 0.00, '2019-10-14', 17, '2019-10-14 11:19:29', 0, '2019-10-14 11:03:55', 3);
 
 -- --------------------------------------------------------
 
@@ -852,15 +959,6 @@ CREATE TABLE `gastos_volar` (
   `status` int(11) DEFAULT 1 COMMENT 'Status'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci COMMENT='Tabla de Gastos';
 
---
--- Volcado de datos para la tabla `gastos_volar`
---
-
-INSERT INTO `gastos_volar` (`id_gasto`, `fecha_gasto`, `tipo_gasto`, `cantidad_gasto`, `metodo_gasto`, `referencia_gasto`, `comentario_gasto`, `register`, `status`) VALUES
-(1, '2019-08-08', 66, 2.00, 2, '0', '0', '2019-08-06 23:48:48', 1),
-(2, '2019-08-08', 67, 22.00, 1, 'assa', 'prueba', '2019-08-06 23:48:48', 1),
-(3, '2019-08-01', 66, 66.00, 3, '3', 'sasa', '2019-08-06 23:48:48', 1);
-
 -- --------------------------------------------------------
 
 --
@@ -945,7 +1043,8 @@ INSERT INTO `habitaciones_volar` (`id_habitacion`, `nombre_habitacion`, `idhotel
 (21, 'Suite', 1, 1950.00, 5, 'HabitaciÃ³n Suite', '2019-09-02 23:08:42', 1),
 (22, 'Triple', 1, 1450.00, 3, 'HabitaciÃ³n Triple', '2019-09-02 23:09:15', 1),
 (23, 'CuÃ¡druple', 7, 1750.00, 4, 'HabitaciÃ³n CuÃ¡druple', '2019-09-02 23:17:40', 1),
-(24, 'Doble', 7, 1450.00, 2, 'HabitaciÃ³n Doble', '2019-09-02 23:17:56', 1);
+(24, 'Doble', 7, 1450.00, 2, 'HabitaciÃ³n Doble', '2019-09-02 23:17:56', 1),
+(25, 'Doble', 1, 1300.00, 2, '1 cama queeen', '2019-10-09 14:20:11', 1);
 
 -- --------------------------------------------------------
 
@@ -1273,7 +1372,75 @@ INSERT INTO `permisosusuarios_volar` (`id_puv`, `idusu_puv`, `idsp_puv`, `regist
 (440, 18, 60, '2019-09-18 19:04:05', 1),
 (441, 18, 61, '2019-09-18 19:04:07', 1),
 (442, 18, 62, '2019-09-18 19:04:16', 1),
-(443, 18, 63, '2019-09-18 19:04:16', 1);
+(443, 18, 63, '2019-09-18 19:04:16', 1),
+(444, 1, 84, '2019-10-08 00:36:05', 1),
+(445, 1, 86, '2019-10-08 00:36:10', 1),
+(446, 1, 85, '2019-10-08 00:36:29', 1),
+(447, 1, 87, '2019-10-08 00:36:30', 1),
+(448, 11, 86, '2019-10-08 16:41:35', 1),
+(449, 11, 87, '2019-10-08 16:41:40', 1),
+(450, 9, 86, '2019-10-08 17:06:50', 1),
+(451, 9, 87, '2019-10-08 17:06:51', 1),
+(452, 18, 86, '2019-10-08 17:07:40', 1),
+(453, 18, 87, '2019-10-08 17:07:42', 1),
+(454, 18, 84, '2019-10-08 17:07:47', 1),
+(455, 18, 85, '2019-10-08 17:07:48', 1),
+(456, 9, 84, '2019-10-08 17:08:03', 1),
+(457, 9, 85, '2019-10-08 17:08:04', 1),
+(458, 14, 84, '2019-10-08 17:08:21', 1),
+(459, 8, 84, '2019-10-08 17:09:10', 1),
+(460, 8, 85, '2019-10-08 17:09:12', 1),
+(461, 11, 84, '2019-10-08 17:09:26', 1),
+(462, 11, 85, '2019-10-08 17:09:27', 1),
+(463, 19, 7, '2019-10-08 17:09:41', 1),
+(464, 19, 8, '2019-10-08 17:09:42', 1),
+(465, 19, 9, '2019-10-08 17:09:43', 1),
+(466, 19, 12, '2019-10-08 17:09:46', 1),
+(467, 19, 13, '2019-10-08 17:09:47', 1),
+(468, 19, 84, '2019-10-08 17:09:52', 1),
+(469, 19, 85, '2019-10-08 17:09:53', 1),
+(470, 19, 86, '2019-10-08 17:09:56', 1),
+(471, 19, 87, '2019-10-08 17:09:58', 1),
+(472, 19, 24, '2019-10-08 17:10:02', 1),
+(473, 19, 26, '2019-10-08 17:10:04', 1),
+(474, 3, 84, '2019-10-08 17:10:24', 1),
+(475, 3, 85, '2019-10-08 17:10:26', 1),
+(476, 15, 56, '2019-10-11 13:28:05', 1),
+(477, 15, 57, '2019-10-11 13:28:09', 1),
+(478, 15, 58, '2019-10-11 13:28:11', 1),
+(479, 15, 7, '2019-10-11 13:28:37', 1),
+(480, 15, 8, '2019-10-11 13:28:38', 1),
+(481, 15, 9, '2019-10-11 13:28:39', 1),
+(482, 15, 11, '2019-10-11 13:29:26', 1),
+(483, 15, 12, '2019-10-11 13:29:27', 1),
+(484, 15, 13, '2019-10-11 13:29:29', 1),
+(485, 15, 23, '2019-10-11 13:29:31', 0),
+(486, 15, 24, '2019-10-11 13:29:33', 1),
+(487, 15, 26, '2019-10-11 13:29:35', 1),
+(488, 15, 36, '2019-10-11 13:29:41', 1),
+(489, 15, 84, '2019-10-11 13:29:42', 1),
+(490, 15, 25, '2019-10-11 13:30:11', 1),
+(491, 15, 47, '2019-10-11 13:30:20', 1),
+(492, 15, 85, '2019-10-11 13:30:30', 1),
+(493, 15, 86, '2019-10-11 13:30:36', 1),
+(494, 15, 87, '2019-10-11 13:30:45', 1),
+(495, 14, 86, '2019-10-11 13:31:10', 1),
+(496, 8, 86, '2019-10-11 13:32:24', 1),
+(497, 11, 47, '2019-10-11 13:32:41', 1),
+(498, 16, 86, '2019-10-11 13:33:25', 1),
+(499, 16, 84, '2019-10-11 13:33:27', 1),
+(500, 15, 60, '2019-10-11 13:34:54', 1),
+(501, 15, 74, '2019-10-11 13:35:04', 1),
+(502, 15, 75, '2019-10-11 13:35:05', 1),
+(503, 15, 76, '2019-10-11 13:35:08', 1),
+(504, 20, 8, '2019-10-11 14:53:17', 1),
+(505, 20, 24, '2019-10-11 14:54:38', 1),
+(506, 20, 13, '2019-10-11 14:56:49', 1),
+(507, 20, 25, '2019-10-11 14:56:52', 1),
+(508, 20, 26, '2019-10-11 14:57:00', 1),
+(509, 20, 84, '2019-10-11 14:57:06', 1),
+(510, 20, 11, '2019-10-11 15:03:21', 1),
+(511, 20, 36, '2019-10-11 15:09:43', 1);
 
 -- --------------------------------------------------------
 
@@ -1477,6 +1644,15 @@ CREATE TABLE `reprogramaciones_volar` (
   `register` datetime NOT NULL DEFAULT current_timestamp() COMMENT 'Regsitro',
   `status` int(11) NOT NULL DEFAULT 1 COMMENT 'Status'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `reprogramaciones_volar`
+--
+
+INSERT INTO `reprogramaciones_volar` (`id_rep`, `idtemp_rep`, `idusu_rep`, `fechaa_rep`, `fechan_rep`, `comentario_rep`, `motivo_rep`, `cargo_rep`, `register`, `status`) VALUES
+(8, 1159, 11, '2019-09-26', '2019-10-13', 'Reprogramacion por cancelaciÃ³n de vuelo por clima', 1, 0, '2019-10-08 16:46:02', 2),
+(9, 1207, 11, '2019-09-29', '2019-10-13', 'ReprogramaciÃ³n por cancelaciÃ³n de vuelo por mal clima', 1, 0, '2019-10-08 16:53:02', 1),
+(10, 1159, 1, '2019-10-13', '2019-09-26', '', 1, 0, '2019-10-08 17:02:42', 1);
 
 -- --------------------------------------------------------
 
@@ -1901,7 +2077,70 @@ INSERT INTO `servicios_vuelo_temp` (`id_sv`, `idtemp_sv`, `idservi_sv`, `tipo_sv
 (2786, 1271, 26, 1, 1, '2019-10-05 15:46:06', 2),
 (2787, 1273, 14, 1, 1, '2019-10-06 22:09:10', 2),
 (2788, 1274, 5, 1, 1, '2019-10-07 13:55:20', 2),
-(2789, 1275, 5, 1, 1, '2019-10-07 14:17:25', 2);
+(2789, 1275, 5, 1, 1, '2019-10-07 14:17:25', 2),
+(2802, 1281, 14, 1, 1, '2019-10-08 13:21:27', 2),
+(2803, 1283, 5, 1, 1, '2019-10-08 14:10:26', 2),
+(2804, 1286, 14, 1, 1, '2019-10-08 15:47:07', 2),
+(2805, 1292, 5, 2, 1, '2019-10-10 11:52:08', 2),
+(2806, 1292, 16, 2, 2, '2019-10-10 11:52:10', 2),
+(2807, 1296, 5, 1, 1, '2019-10-10 12:19:54', 2),
+(2808, 1296, 7, 1, 3, '2019-10-10 12:19:56', 2),
+(2809, 1296, 2, 1, 3, '2019-10-10 12:19:59', 2),
+(2810, 1297, 14, 1, 1, '2019-10-10 16:07:24', 2),
+(2811, 1298, 14, 1, 1, '2019-10-10 18:14:54', 2),
+(2815, 1303, 5, 1, 0, '2019-10-11 12:44:04', 2),
+(2816, 1307, 14, 1, 1, '2019-10-11 13:26:12', 2),
+(2817, 1309, 1, 1, 2, '2019-10-11 13:35:28', 2),
+(2818, 1309, 5, 1, 1, '2019-10-11 13:35:30', 2),
+(2819, 1310, 7, 1, 3, '2019-10-11 13:39:05', 2),
+(2820, 1312, 14, 1, 1, '2019-10-11 13:54:37', 2),
+(2821, 1312, 5, 1, 1, '2019-10-11 13:54:41', 2),
+(2822, 1313, 5, 1, 1, '2019-10-11 14:38:28', 2),
+(2823, 1316, 5, 1, 1, '2019-10-11 15:13:03', 2),
+(2824, 1317, 17, 1, 2, '2019-10-11 15:21:12', 2),
+(2825, 1318, 14, 1, 1, '2019-10-11 16:05:58', 2),
+(2826, 1318, 2, 1, 2, '2019-10-11 16:06:01', 2),
+(2827, 1318, 7, 1, 2, '2019-10-11 16:06:03', 2),
+(2828, 1321, 5, 1, 1, '2019-10-11 16:55:46', 2),
+(2829, 1324, 14, 1, 1, '2019-10-11 17:42:23', 2),
+(2830, 1324, 5, 1, 1, '2019-10-11 17:42:28', 2),
+(2831, 1324, 18, 1, 0, '2019-10-11 17:42:31', 2),
+(2832, 1324, 17, 1, 8, '2019-10-11 17:42:34', 2),
+(2833, 1324, 26, 1, 1, '2019-10-11 17:42:35', 2),
+(2834, 1325, 5, 1, 1, '2019-10-11 17:49:19', 2),
+(2835, 1325, 14, 1, 1, '2019-10-11 17:49:24', 2),
+(2836, 1325, 17, 1, 2, '2019-10-11 17:50:26', 2),
+(2837, 1325, 26, 1, 1, '2019-10-11 17:51:26', 2),
+(2838, 1327, 5, 1, 1, '2019-10-11 18:01:58', 2),
+(2839, 1327, 14, 1, 1, '2019-10-11 18:02:00', 2),
+(2840, 1327, 17, 1, 2, '2019-10-11 18:02:03', 2),
+(2841, 1328, 5, 1, 1, '2019-10-11 18:11:31', 2),
+(2842, 1328, 14, 1, 1, '2019-10-11 18:11:33', 2),
+(2843, 1328, 17, 1, 10, '2019-10-11 18:11:34', 2),
+(2844, 1328, 26, 1, 1, '2019-10-11 18:11:37', 2),
+(2845, 1329, 5, 1, 1, '2019-10-11 18:15:21', 2),
+(2846, 1329, 14, 1, 1, '2019-10-11 18:15:23', 2),
+(2847, 1329, 17, 1, 8, '2019-10-11 18:15:25', 2),
+(2848, 1329, 26, 1, 1, '2019-10-11 18:15:26', 2),
+(2849, 1332, 5, 1, 1, '2019-10-11 18:29:19', 2),
+(2850, 1332, 14, 1, 1, '2019-10-11 18:29:20', 2),
+(2851, 1332, 17, 1, 4, '2019-10-11 18:29:21', 2),
+(2852, 1332, 26, 1, 1, '2019-10-11 18:29:22', 2),
+(2853, 1334, 5, 1, 1, '2019-10-11 18:59:10', 2),
+(2854, 1334, 14, 1, 1, '2019-10-11 18:59:11', 2),
+(2855, 1335, 5, 1, 1, '2019-10-11 19:02:27', 2),
+(2856, 1335, 14, 1, 1, '2019-10-11 19:02:27', 2),
+(2858, 1337, 5, 2, 1, '2019-10-12 13:13:09', 2),
+(2859, 1337, 16, 2, 2, '2019-10-12 13:13:11', 2),
+(2860, 1337, 14, 1, 1, '2019-10-12 13:14:44', 2),
+(2861, 1338, 14, 2, 1, '2019-10-12 13:48:08', 2),
+(2862, 1340, 5, 2, 1, '2019-10-12 14:26:49', 2),
+(2863, 1340, 16, 2, 2, '2019-10-12 14:26:52', 2),
+(2864, 1350, 14, 1, 1, '2019-10-13 14:56:53', 2),
+(2865, 1350, 5, 1, 1, '2019-10-13 14:57:22', 2),
+(2866, 1354, 5, 1, 1, '2019-10-13 21:11:53', 2),
+(2867, 1355, 14, 1, 1, '2019-10-14 10:50:18', 2),
+(2868, 1357, 14, 1, 1, '2019-10-14 11:02:21', 2);
 
 -- --------------------------------------------------------
 
@@ -1956,7 +2195,7 @@ INSERT INTO `subpermisos_volar` (`id_sp`, `nombre_sp`, `permiso_sp`, `register`,
 (57, 'EDITAR', 14, '2019-08-01 22:59:17', 1),
 (58, 'ELIMINAR', 14, '2019-08-01 22:59:17', 1),
 (59, 'AGREGAR', 16, '2019-08-05 07:21:26', 1),
-(60, 'REPORTES', 16, '2019-08-05 07:21:26', 0),
+(60, 'REPORTES', 16, '2019-08-05 07:21:26', 1),
 (61, 'VER', 16, '2019-08-06 21:14:33', 1),
 (62, 'AGREGAR', 17, '2019-08-06 22:29:40', 1),
 (63, 'VER', 17, '2019-08-06 22:29:40', 1),
@@ -2040,10 +2279,10 @@ INSERT INTO `temp_volar` (`id_temp`, `idusu_temp`, `clave_temp`, `nombre_temp`, 
 (1003, 16, NULL, 'ANA', 'ACUÃ‘A', 'anaacun1190@hotmail.com', NULL, '573107647968', 35, 3, 0, 36, 1, '2019-09-09', NULL, NULL, NULL, NULL, NULL, 'TE INCLUYE: \nâ€¢	VUELO LIBRE SOBRE EL VALLE DE TEOTIHUACÃN DE 45 A 60 MINUTOS \nâ€¢	BRINDIS CON VINO ESPUMOSO O JUGO DE FRUTA \nâ€¢	CERTIFICADO DE VUELO PERSONALIZADO \nâ€¢	SEGURO DE VIAJERO DURANTE LA ACTIVIDAD\nâ€¢	COFFE BREAK: CAFE, ', NULL, NULL, NULL, NULL, 2, 3.00, 8817.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-09-06 13:18:44', 8),
 (1004, 16, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, 0.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-09-06 13:30:18', 0),
 (1005, 16, NULL, 'EDSON', 'CONTRERAS', 'edconher@yahoo.com.mx', NULL, '6241785337', NULL, 2, 0, 38, 4, '2019-09-27', NULL, NULL, NULL, NULL, NULL, 'â€¢	Vuelo en globo exclusivo\nâ€¢	Brindis en vuelo con vino espumoso Freixenet\nâ€¢	Certificado de vuelo\nâ€¢	Seguro viajero\nâ€¢	Desayuno tipo Buffet (Restaurante Gran Teocalli o Rancho Azteca)\nâ€¢	TransportaciÃ³n local durante la a', NULL, NULL, NULL, NULL, NULL, 0.00, 7000.00, 0, 140.00, 1, 0, NULL, 1, NULL, '2019-09-09 11:37:39', 7),
-(1006, 16, NULL, 'KELLY', 'PEREZ', 'kelly.perez@live.com', NULL, '573002084689', 35, 2, 0, 36, 1, '2019-09-18', NULL, NULL, NULL, NULL, NULL, 'TE INCLUYE: \nâ€¢	VUELO LIBRE SOBRE EL VALLE DE TEOTIHUACÃN DE 45 A 60 MINUTOS \nâ€¢	BRINDIS CON VINO ESPUMOSO O JUGO DE FRUTA \nâ€¢	CERTIFICADO DE VUELO PERSONALIZADO \nâ€¢	SEGURO DE VIAJERO DURANTE LA ACTIVIDAD\nâ€¢	COFFE BREAK: CAFE, ', NULL, NULL, NULL, NULL, NULL, 0.00, 4600.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-09-09 15:24:23', 3),
+(1006, 16, NULL, 'KELLY', 'PEREZ', 'kelly.perez@live.com', NULL, '573002084689', 35, 2, 0, 36, 1, '2019-09-18', NULL, NULL, NULL, NULL, NULL, 'TE INCLUYE: \nâ€¢	VUELO LIBRE SOBRE EL VALLE DE TEOTIHUACÃN DE 45 A 60 MINUTOS \nâ€¢	BRINDIS CON VINO ESPUMOSO O JUGO DE FRUTA \nâ€¢	CERTIFICADO DE VUELO PERSONALIZADO \nâ€¢	SEGURO DE VIAJERO DURANTE LA ACTIVIDAD\nâ€¢	COFFE BREAK: CAFE, ', NULL, NULL, NULL, NULL, NULL, 0.00, 4600.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-09-09 15:24:23', 0),
 (1007, 14, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, 0.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-09-10 15:48:18', 0),
 (1008, 14, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, 0.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-09-10 16:34:27', 0),
-(1009, 14, NULL, 'FLOR', 'GONZALEZ', 'sergio@volarenglobo.com.mx', NULL, '50671056755', 35, 2, 0, 37, 4, '2019-11-29', NULL, NULL, NULL, NULL, NULL, 'VUELO PRIVADO PARA 2 PERSONAS, VUELO SOBRE EL VALLE DE TEOTIHUACAN DURANTE 45 MINS APROX. INCLUYE COFFE BREAK (CAFE,TE,GALLETAS Y PAN) SEGURO DE VIAJERO,BRINDIS CON VINO ESPUMOSO,CERTIFICADO PERSONALIZADO,TRANSPORTE DURANTE LA ACTIVIDAD,DESPLIEGUE DE LONA', NULL, NULL, NULL, NULL, NULL, 0.00, 7000.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-09-10 16:34:46', 3),
+(1009, 14, NULL, 'FLOR', 'GONZALEZ', 'sergio@volarenglobo.com.mx', NULL, '50671056755', 35, 2, 0, 37, 4, '2019-11-29', NULL, NULL, NULL, NULL, NULL, 'VUELO PRIVADO PARA 2 PERSONAS, VUELO SOBRE EL VALLE DE TEOTIHUACAN DURANTE 45 MINS APROX. INCLUYE COFFE BREAK (CAFE,TE,GALLETAS Y PAN) SEGURO DE VIAJERO,BRINDIS CON VINO ESPUMOSO,CERTIFICADO PERSONALIZADO,TRANSPORTE DURANTE LA ACTIVIDAD,DESPLIEGUE DE LONA', NULL, NULL, NULL, NULL, NULL, 0.00, 7000.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-09-10 16:34:46', 0),
 (1010, 11, NULL, 'LUIS', 'LEONARDO', 'luis@dominicanballoons.com', NULL, '18099778877', 35, 1, 0, 36, 1, '2019-09-12', NULL, NULL, NULL, NULL, NULL, 'INCLUYE\nVUELO LIBRE SOBRE TEOTIHUACAN DE 45 A 60 MINUTOS, \nCOFFEE BREAK, \nBRINDIS CON VINO ESPUMOSO PETILLANT DE FREIXENET, \nCERTIFICADO DE VUELO, \nSEGURO DE VIAJERO DURANTE LA ACTIVIDAD, \nTRANSPORTE DESDE HOTEL DEL ANGEL CDMX IDA Y VUELTA\nCORTESIA SRG', NULL, NULL, NULL, NULL, 2, 2799.00, 1.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-09-10 17:30:26', 6),
 (1011, 11, '1010', 'LUIS', 'LEONARDO', 'luis@dominicanballoons.com', NULL, '18099778877', 35, 1, 0, 36, 1, '2019-09-12', NULL, NULL, NULL, NULL, NULL, 'INCLUYE\nVUELO LIBRE SOBRE TEOTIHUACAN DE 45 A 60 MINUTOS, \nCOFFEE BREAK, \nBRINDIS CON VINO ESPUMOSO PETILLANT DE FREIXENET, \nCERTIFICADO DE VUELO, \nSEGURO DE VIAJERO DURANTE LA ACTIVIDAD, \nTRANSPORTE DESDE HOTEL DEL ANGEL CDMX IDA Y VUELTA\nCORTESIA SRG', NULL, NULL, NULL, NULL, 2, 2799.00, 1.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-09-10 18:36:07', 4),
 (1012, 14, NULL, 'ENRIQUE', 'NAVARRO', 'sergio@volarenglobo.com.mx', NULL, '50660044026', 35, 4, 0, 37, 1, '2019-09-21', NULL, NULL, NULL, NULL, NULL, 'VUELO COMPARTIDO PARA 4 PERSONAS, VUELO SOBRE EL VALLE DE TEOTIHUACAN, DURANTE 45 MINS APROX, INCLUYE COFFE BREAK (CAFÃ‰, TE, PAN GALLETAS) SEGURO DE VIAJERO, CERTIFICADO PERSONALIZADO, TRANSPORTE DURANTE LA ACTIVIDAD, BRINDIS CON VINO ESPUMOSO, DESPLI', NULL, NULL, NULL, NULL, NULL, 0.00, 11200.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-09-11 10:32:55', 8),
@@ -2054,15 +2293,15 @@ INSERT INTO `temp_volar` (`id_temp`, `idusu_temp`, `clave_temp`, `nombre_temp`, 
 (1017, 16, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, 0.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-09-11 14:37:52', 0),
 (1018, 16, '1016', 'JESSICA', 'MONDRAGON', 'jessi.juan.09@gmail.com', NULL, '5611880089', NULL, 2, 0, 37, 4, '2019-09-12', NULL, NULL, NULL, NULL, NULL, 'â€¢	Vuelo en globo exclusivo\nâ€¢	Brindis en vuelo con vino espumoso Freixenet\nâ€¢	Certificado de vuelo\nâ€¢	Seguro viajero\nâ€¢	Desayuno tipo Buffet (Restaurante Gran Teocalli o Rancho Azteca)\nâ€¢	TransportaciÃ³n local durante la a', NULL, NULL, NULL, NULL, NULL, 0.00, 8600.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-09-11 14:56:48', 6),
 (1019, 16, '1018', 'JESSICA', 'MONDRAGON', 'jessi.juan.09@gmail.com', NULL, '5611880089', NULL, 2, 0, 37, 4, '2019-09-12', NULL, NULL, NULL, NULL, NULL, 'â€¢	Vuelo en globo exclusivo\nâ€¢	Brindis en vuelo con vino espumoso Freixenet\nâ€¢	Certificado de vuelo\nâ€¢	Seguro viajero\nâ€¢	Desayuno tipo Buffet (Restaurante Gran Teocalli o Rancho Azteca)\nâ€¢	TransportaciÃ³n local durante la a', NULL, NULL, NULL, NULL, NULL, 0.00, 8600.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-09-11 14:57:27', 8),
-(1020, 14, NULL, 'SALVADOR ', 'HERNANDEZ', 'sergio@volarenglobo.com.mx', NULL, '5547072447', 35, 2, 0, 36, 1, '2019-09-14', NULL, NULL, NULL, NULL, NULL, 'VUELO COMPARTIDO PARA 2 PERSONAS, VUELO SOBRE EL VALLE DE TEOTIHUACAN DURANTE 45 MINS APROX.INCLUYE COFFE BREAK (CAFE,TE,GALLETAS Y PAN)SEGURO DE VIAJERO,BRINDIS CON VINO ESPUMOSO,CERTIFICADO PERSONALIZADO, TRANSPORTE LOCAL, DESPLIEGUE DE LONA , TRANSPORT', 'DESAYUNOS', 198.00, NULL, NULL, NULL, 0.00, 5798.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-09-11 15:36:22', 3),
-(1021, 16, NULL, 'ISRAEL', 'GARCIA', 'toloigg@gmail.com', NULL, '5524303380', NULL, 2, 0, 36, 1, '2019-09-14', NULL, NULL, NULL, NULL, NULL, 'TE INCLUYE: \nâ€¢	VUELO LIBRE SOBRE EL VALLE DE TEOTIHUACÃN DE 45 A 60 MINUTOS \nâ€¢	BRINDIS CON VINO ESPUMOSO O JUGO DE FRUTA \nâ€¢	CERTIFICADO DE VUELO PERSONALIZADO \nâ€¢	SEGURO DE VIAJERO DURANTE LA ACTIVIDAD\nâ€¢	COFFE BREAK: CAFE, ', NULL, NULL, NULL, NULL, 2, 82.00, 4798.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-09-12 11:22:58', 3),
+(1020, 14, NULL, 'SALVADOR ', 'HERNANDEZ', 'sergio@volarenglobo.com.mx', NULL, '5547072447', 35, 2, 0, 36, 1, '2019-09-14', NULL, NULL, NULL, NULL, NULL, 'VUELO COMPARTIDO PARA 2 PERSONAS, VUELO SOBRE EL VALLE DE TEOTIHUACAN DURANTE 45 MINS APROX.INCLUYE COFFE BREAK (CAFE,TE,GALLETAS Y PAN)SEGURO DE VIAJERO,BRINDIS CON VINO ESPUMOSO,CERTIFICADO PERSONALIZADO, TRANSPORTE LOCAL, DESPLIEGUE DE LONA , TRANSPORT', 'DESAYUNOS', 198.00, NULL, NULL, NULL, 0.00, 5798.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-09-11 15:36:22', 0),
+(1021, 16, NULL, 'ISRAEL', 'GARCIA', 'toloigg@gmail.com', NULL, '5524303380', NULL, 2, 0, 36, 1, '2019-09-14', NULL, NULL, NULL, NULL, NULL, 'TE INCLUYE: \nâ€¢	VUELO LIBRE SOBRE EL VALLE DE TEOTIHUACÃN DE 45 A 60 MINUTOS \nâ€¢	BRINDIS CON VINO ESPUMOSO O JUGO DE FRUTA \nâ€¢	CERTIFICADO DE VUELO PERSONALIZADO \nâ€¢	SEGURO DE VIAJERO DURANTE LA ACTIVIDAD\nâ€¢	COFFE BREAK: CAFE, ', NULL, NULL, NULL, NULL, 2, 82.00, 4798.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-09-12 11:22:58', 0),
 (1022, 14, NULL, 'CAROLINA', 'PEÃ‘A', NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, 0.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-09-12 12:27:44', 0),
-(1023, 14, NULL, 'CLAUDIA', 'YOC', 'volarenglobo@yahoo.es', NULL, '50242100449', 35, 3, 0, 36, 1, '2019-09-15', NULL, NULL, NULL, NULL, NULL, 'VUELO COMPARTIDO PARA 3 PERSONAS, VUELO SOBRE EL VALLE DE TEOTIHUACAN DURANTE 45 MINS APROX.INCLUYE COFFE BREAK (CAFE,TE,GALLETAS Y PAN)SEGURO DE VIAJERO,BRINDIS CON VINO ESPUMOSO,CERTIFICADO PERSONALIZADO,TRANSPORTE DURANTE LA ACTIVIDAD,DESPLIEGUE DE LON', 'DESAYUNOS', 297.00, NULL, NULL, NULL, 0.00, 7197.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-09-12 12:29:05', 3),
-(1024, 14, NULL, 'CECILIA', 'VAZQUEZ', 'volarenglobo@yahoo.es', NULL, '5512386502', 11, 15, 0, 36, 1, '2019-10-18', NULL, NULL, NULL, NULL, NULL, 'VUELO COMPARTIDO PARA 15 PERSONAS, VUELO SOBRE EL VALLE DE TEOTIHUACAN DURANTE 45 MINS APROX.INCLUYE COFFE BREAK (CAFE,TE,GALLETAS Y PAN)SEGURO DE VIAJERO,BRINDIS CON VINO ESPUMOSO,CERTIFICADO PERSONALIZADO,TRANSPORTE DURANTE LA ACTIVIDAD,DESPLIEGUE DE LO', NULL, NULL, NULL, NULL, 2, 4500.00, 34725.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-09-12 12:33:44', 3),
+(1023, 14, NULL, 'CLAUDIA', 'YOC', 'volarenglobo@yahoo.es', NULL, '50242100449', 35, 3, 0, 36, 1, '2019-09-15', NULL, NULL, NULL, NULL, NULL, 'VUELO COMPARTIDO PARA 3 PERSONAS, VUELO SOBRE EL VALLE DE TEOTIHUACAN DURANTE 45 MINS APROX.INCLUYE COFFE BREAK (CAFE,TE,GALLETAS Y PAN)SEGURO DE VIAJERO,BRINDIS CON VINO ESPUMOSO,CERTIFICADO PERSONALIZADO,TRANSPORTE DURANTE LA ACTIVIDAD,DESPLIEGUE DE LON', 'DESAYUNOS', 297.00, NULL, NULL, NULL, 0.00, 7197.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-09-12 12:29:05', 0),
+(1024, 14, NULL, 'CECILIA', 'VAZQUEZ', 'volarenglobo@yahoo.es', NULL, '5512386502', 11, 15, 0, 36, 1, '2019-10-18', NULL, NULL, NULL, NULL, NULL, 'VUELO COMPARTIDO PARA 15 PERSONAS, VUELO SOBRE EL VALLE DE TEOTIHUACAN DURANTE 45 MINS APROX.INCLUYE COFFE BREAK (CAFE,TE,GALLETAS Y PAN)SEGURO DE VIAJERO,BRINDIS CON VINO ESPUMOSO,CERTIFICADO PERSONALIZADO,TRANSPORTE DURANTE LA ACTIVIDAD,DESPLIEGUE DE LO', NULL, NULL, NULL, NULL, 2, 4500.00, 34725.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-09-12 12:33:44', 0),
 (1025, 14, NULL, 'LISSETTE', 'PERDOMO', 'volarenglobo@yahoo.es', NULL, '50255899206', 35, 3, 0, 36, 1, '2019-09-27', NULL, NULL, NULL, NULL, NULL, 'VUELO COMPARTIDO PARA 3 PERSONAS,VUELO SOBRE EL VALLE DE TEOTIHUACAN DURANTE 45 MINS APROX.INCLUYE COFFE BREAK (CAFE,TE,GALLETAS Y PAN)SEGURO DE VIAJERO,BRINDIS CON VINO ESPUMOSO,CERTIFICADO PERSONALIZADO,TRANSPORTE LOCAL, DESAYUNO BUFFET EN RESTAURANTE G', NULL, NULL, NULL, NULL, 2, 900.00, 7920.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-09-12 12:38:10', 4),
-(1026, 14, NULL, 'YURIANA', 'QUERO', 'volarenglobo@yahoo.es', NULL, '5580056993', 11, 2, 0, 36, 4, '2019-09-30', NULL, NULL, NULL, NULL, NULL, 'VUELO PRIVADO PARA 2 PERSONAS,VUELO SOBRE EL VALLE DE TEOTIHUACAN DURANTE 45 MINS APROX.INCLUYE COFFE BREAK (CAFE,TE,GALLETAS Y PAN) SEGURO DE VIAJERO,BRINDIS CON VINO ESPUMOSO,CERTIFICADO PERSONALIZADO,TRANSPORTE LOCAL,SEGURO DE VIAJERO,BRINDIS CON VINO ', NULL, NULL, NULL, NULL, NULL, 0.00, 7000.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-09-12 12:42:32', 3),
+(1026, 14, NULL, 'YURIANA', 'QUERO', 'volarenglobo@yahoo.es', NULL, '5580056993', 11, 2, 0, 36, 4, '2019-09-30', NULL, NULL, NULL, NULL, NULL, 'VUELO PRIVADO PARA 2 PERSONAS,VUELO SOBRE EL VALLE DE TEOTIHUACAN DURANTE 45 MINS APROX.INCLUYE COFFE BREAK (CAFE,TE,GALLETAS Y PAN) SEGURO DE VIAJERO,BRINDIS CON VINO ESPUMOSO,CERTIFICADO PERSONALIZADO,TRANSPORTE LOCAL,SEGURO DE VIAJERO,BRINDIS CON VINO ', NULL, NULL, NULL, NULL, NULL, 0.00, 7000.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-09-12 12:42:32', 0),
 (1027, 16, NULL, 'RODRIGO', 'NOVELO', 'ronovelo2003@hotmail.com', NULL, '9811600715', NULL, 2, 0, NULL, 1, '2019-10-06', NULL, NULL, NULL, NULL, NULL, 'TE INCLUYE: \nâ€¢	VUELO LIBRE SOBRE EL VALLE DE TEOTIHUACÃN DE 45 A 60 MINUTOS \nâ€¢	BRINDIS CON VINO ESPUMOSO O JUGO DE FRUTA \nâ€¢	CERTIFICADO DE VUELO PERSONALIZADO \nâ€¢	SEGURO DE VIAJERO DURANTE LA ACTIVIDAD\nâ€¢	COFFE BREAK: CAFE, ', NULL, NULL, NULL, NULL, 2, 82.00, 5798.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-09-12 12:45:02', 8),
-(1028, 16, NULL, 'LUISA FERNANDA', 'CANO', 'cotizacionesgirardottravel@gmail.com', NULL, '3204583383', NULL, 2, 0, NULL, 1, '2019-11-27', NULL, NULL, NULL, NULL, NULL, 'TE INCLUYE: \nâ€¢	VUELO LIBRE SOBRE EL VALLE DE TEOTIHUACÃN DE 45 A 60 MINUTOS \nâ€¢	BRINDIS CON VINO ESPUMOSO O JUGO DE FRUTA \nâ€¢	CERTIFICADO DE VUELO PERSONALIZADO \nâ€¢	SEGURO DE VIAJERO DURANTE LA ACTIVIDAD\nâ€¢	COFFE BREAK: CAFE, ', NULL, NULL, NULL, NULL, NULL, 0.00, 4600.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-09-12 12:57:17', 3),
+(1028, 16, NULL, 'LUISA FERNANDA', 'CANO', 'cotizacionesgirardottravel@gmail.com', NULL, '3204583383', NULL, 2, 0, NULL, 1, '2019-11-27', NULL, NULL, NULL, NULL, NULL, 'TE INCLUYE: \nâ€¢	VUELO LIBRE SOBRE EL VALLE DE TEOTIHUACÃN DE 45 A 60 MINUTOS \nâ€¢	BRINDIS CON VINO ESPUMOSO O JUGO DE FRUTA \nâ€¢	CERTIFICADO DE VUELO PERSONALIZADO \nâ€¢	SEGURO DE VIAJERO DURANTE LA ACTIVIDAD\nâ€¢	COFFE BREAK: CAFE, ', NULL, NULL, NULL, NULL, NULL, 0.00, 4600.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-09-12 12:57:17', 0),
 (1029, 16, NULL, 'GABRIEL', 'NUÃ‘EZ', 'lgnp3108@hotmail.com', NULL, '9931343692', NULL, 2, 0, 36, 1, '2019-09-14', NULL, NULL, NULL, NULL, NULL, 'TE INCLUYE: \nâ€¢	VUELO LIBRE SOBRE EL VALLE DE TEOTIHUACÃN DE 45 A 60 MINUTOS \nâ€¢	BRINDIS CON VINO ESPUMOSO O JUGO DE FRUTA \nâ€¢	CERTIFICADO DE VUELO PERSONALIZADO \nâ€¢	SEGURO DE VIAJERO DURANTE LA ACTIVIDAD\nâ€¢	COFFE BREAK: CAFE, ', NULL, NULL, NULL, NULL, NULL, 0.00, 5600.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-09-12 13:09:31', 8),
 (1030, 16, NULL, 'BERENICE', 'LOPEZ', 'moon_sun44@hotmail.com', NULL, '5525245058', NULL, 2, 0, 36, 1, '2019-09-16', NULL, NULL, NULL, NULL, NULL, 'TE INCLUYE: \nâ€¢	VUELO LIBRE SOBRE EL VALLE DE TEOTIHUACÃN DE 45 A 60 MINUTOS \nâ€¢	BRINDIS CON VINO ESPUMOSO O JUGO DE FRUTA \nâ€¢	CERTIFICADO DE VUELO PERSONALIZADO \nâ€¢	SEGURO DE VIAJERO DURANTE LA ACTIVIDAD\nâ€¢	COFFE BREAK: CAFE, ', NULL, NULL, NULL, NULL, NULL, 0.00, 4600.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-09-12 13:41:53', 6),
 (1031, 16, '1030', 'BERENICE', 'LOPEZ', 'moon_sun44@hotmail.com', NULL, '5525245058', NULL, 2, 0, 36, 1, '2019-09-16', NULL, NULL, NULL, NULL, NULL, 'TE INCLUYE: \nâ€¢	VUELO LIBRE SOBRE EL VALLE DE TEOTIHUACÃN DE 45 A 60 MINUTOS \nâ€¢	BRINDIS CON VINO ESPUMOSO O JUGO DE FRUTA \nâ€¢	CERTIFICADO DE VUELO PERSONALIZADO \nâ€¢	SEGURO DE VIAJERO DURANTE LA ACTIVIDAD\nâ€¢	COFFE BREAK: CAFE, ', 'DESAYUNO 3 PAX', 420.00, NULL, NULL, NULL, 0.00, 5020.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-09-12 13:56:54', 8),
@@ -2071,7 +2310,7 @@ INSERT INTO `temp_volar` (`id_temp`, `idusu_temp`, `clave_temp`, `nombre_temp`, 
 (1034, 16, '1033', 'CINDY', 'OVIEDO', 'cindy.oviedoo@hotmail.com', NULL, '8123504916', NULL, 2, 0, 36, 4, '2019-09-14', NULL, NULL, NULL, NULL, NULL, 'â€¢	Vuelo en globo exclusivo\nâ€¢	Brindis en vuelo con vino espumoso Freixenet\nâ€¢	Certificado de vuelo\nâ€¢	Seguro viajero\nâ€¢	Desayuno tipo Buffet (Restaurante Gran Teocalli o Rancho Azteca)\nâ€¢	TransportaciÃ³n local durante la a', NULL, NULL, NULL, NULL, NULL, 0.00, 7000.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-09-13 14:42:13', 8),
 (1035, 16, NULL, 'ALEJANDRA', 'VACA', 'alejandra_vaca81@hotmail.com', NULL, '5530456145', NULL, 2, 0, 37, 1, '2019-09-20', NULL, NULL, NULL, NULL, NULL, 'TE INCLUYE: \nâ€¢	VUELO LIBRE SOBRE EL VALLE DE TEOTIHUACÃN DE 45 A 60 MINUTOS \nâ€¢	BRINDIS CON VINO ESPUMOSO O JUGO DE FRUTA \nâ€¢	CERTIFICADO DE VUELO PERSONALIZADO \nâ€¢	SEGURO DE VIAJERO DURANTE LA ACTIVIDAD\nâ€¢	COFFE BREAK: CAFE, ', NULL, NULL, NULL, NULL, NULL, 0.00, 4600.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-09-13 14:55:31', 6),
 (1036, 14, NULL, 'KARLA', 'MORALES', 'volarenglobo@yahoo.es', NULL, '50248731711', 35, 2, 0, 36, 1, '2019-10-11', NULL, NULL, NULL, NULL, NULL, 'VUELO COMPARTIDO PARA 2 PERSONAS, VUELO SOBRE EL VALLE DE TEOTIHUACAN DURANTE 45 MINS  APROX. INCLUYE COFFE BREAK (CAFE,TE,GALLETAS  Y PAN) SEGURO DE VIAJERO, BRINDIS CON VINO ESPUMOSO, CERTIFICADO PERSONALIZADO,TRANSP LOCAL , DESPLIEGUE DE LONA', 'DESAYUNOS', 198.00, NULL, NULL, NULL, 0.00, 5798.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-09-13 15:17:26', 4),
-(1037, 14, NULL, 'ARMANDO DE JESUS', 'ROJAS', 'volarenglobo@yahoo.es', NULL, '5613654574', 35, 2, 0, 38, 4, '2019-10-27', NULL, NULL, NULL, NULL, NULL, 'VUELO PRIVADO PARA 2 PERSONAS , VUELO SOBRE VALLE DE TEOTIHUACAN DURANTE 45 MINS APROX , COFFE BREAK INCLUIDO (CAFÃ‰,TE,CAFÃ‰,PAN) SEGURO DE VIAJERO,CERTIFICADO PERSONALIZADO,TRANSPORTE DURANTE LA ACTIVIDAD, BRINDIS CON VINO ESPUMOSO,DESPLIEGUE DE L', NULL, NULL, NULL, NULL, NULL, 0.00, 7000.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-09-13 15:22:08', 3),
+(1037, 14, NULL, 'ARMANDO DE JESUS', 'ROJAS', 'volarenglobo@yahoo.es', NULL, '5613654574', 35, 2, 0, 38, 4, '2019-10-27', NULL, NULL, NULL, NULL, NULL, 'VUELO PRIVADO PARA 2 PERSONAS , VUELO SOBRE VALLE DE TEOTIHUACAN DURANTE 45 MINS APROX , COFFE BREAK INCLUIDO (CAFÃ‰,TE,CAFÃ‰,PAN) SEGURO DE VIAJERO,CERTIFICADO PERSONALIZADO,TRANSPORTE DURANTE LA ACTIVIDAD, BRINDIS CON VINO ESPUMOSO,DESPLIEGUE DE L', NULL, NULL, NULL, NULL, NULL, 0.00, 7000.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-09-13 15:22:08', 0),
 (1038, 14, NULL, 'GUILLERMO', 'MARROQUIN', 'volarenglobo@yahoo.es', NULL, '573002515160', 35, 2, 0, 38, 1, '2019-09-16', NULL, NULL, NULL, NULL, NULL, 'VUELO COMPARTIDO PARA 2 PERSONAS, VUELO SOBRE EL VALLE DE TEOTIHUACAN, DURANTE 45 MINS APROX, INCLUYE COFFE BREAK (CAFÃ‰, TE, PAN GALLETAS) SEGURO DE VIAJERO, CERTIFICADO PERSONALIZADO, TRANSPORTE DURANTE LA ACTIVIDAD, BRINDIS CON VINO ESPUMOSO, DESPLI', NULL, NULL, NULL, NULL, 2, 600.00, 4280.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-09-13 17:07:00', 8),
 (1039, 11, NULL, 'IVAN', 'APARICIO SOLIS', 'sanvid90@gmail.com', NULL, '5540934897', 11, 2, 0, 36, 1, '2019-09-15', NULL, NULL, NULL, NULL, NULL, 'INCLUYE\nVUELO LIBRE SOBRE TEOTIHUACAN DE 45 A 60 MINUTOS\nCOFFE BREAK\nBRINDIS CON VINO ESPUMOSO PETILLANT DE FREIXENET\nCERTIFICADO DE VUELO\nSEGURO DE VIAJERO DURANTE LA ACTIVIDAD\n', NULL, NULL, NULL, NULL, 2, 1000.00, 3600.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-09-13 23:16:25', 7),
 (1040, 16, NULL, 'JOSE EDUARDO', 'RAMIREZ', 'ramieduardo97@gmail.com', NULL, '5547649558', NULL, 2, 0, 37, 4, '2019-09-29', NULL, NULL, NULL, NULL, NULL, 'â€¢	Vuelo en globo exclusivo\nâ€¢	Brindis en vuelo con vino espumoso Freixenet\nâ€¢	Certificado de vuelo\nâ€¢	Seguro viajero\nâ€¢	Desayuno tipo Buffet (Restaurante Gran Teocalli o Rancho Azteca)\nâ€¢	TransportaciÃ³n local durante la a', NULL, NULL, NULL, NULL, NULL, 0.00, 7000.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-09-14 11:38:38', 6),
@@ -2143,7 +2382,7 @@ INSERT INTO `temp_volar` (`id_temp`, `idusu_temp`, `clave_temp`, `nombre_temp`, 
 (1106, 9, NULL, 'KARINA ', 'YEBRA OLIVARES', 'turismo@volarenglobo.com.mx', NULL, '5575086041', 11, 2, 0, 36, 3, '2019-09-21', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, 3900.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-09-19 18:39:58', 4),
 (1107, 9, NULL, 'ALEJANDRA', 'FLORES', 'turismo@volarenglobo.com.mx', NULL, '50499624394', 11, 4, 0, 36, 3, '2019-09-27', NULL, NULL, NULL, NULL, NULL, '4 PAX BOOKING CON TRANSPORTE', NULL, NULL, NULL, NULL, 2, 406.00, 9394.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-09-19 18:46:57', 4),
 (1108, 14, '1056', 'CLAUDIA', 'PERDOMO', 'volarenglobo@yahoo.es', NULL, '573007386751', 11, 2, 0, 36, 1, '2019-10-18', NULL, NULL, NULL, NULL, NULL, 'VUELO COMPARTIDO PARA 2 PERSONAS, VUELO SOBRE EL VALLE DE TEOTIHUACAN, DURANTE 45 MINS APROX, INCLUYE COFFE BREAK (CAFÃ‰, TE, PAN GALLETAS) SEGURO DE VIAJERO, CERTIFICADO PERSONALIZADO, TRANSPORTE DURANTE LA ACTIVIDAD, BRINDIS CON VINO ESPUMOSO', NULL, NULL, NULL, NULL, 2, 600.00, 4280.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-09-20 11:05:16', 3),
-(1109, 14, NULL, 'JOSHUA DANIEL', 'GONZALEZ', 'volarenglobo@yahoo.es', NULL, '5543231239', 11, 2, 0, 38, 1, '2019-10-15', NULL, NULL, NULL, NULL, NULL, 'VUELO COMPARTIDO PARA 2 PERSONAS, VUELO SOBRE EL VALLE DE TEOTIHUACAN, DURANTE 45 MINS APROX, INCLUYE COFFE BREAK (CAFÃ‰, TE, PAN GALLETAS) SEGURO DE VIAJERO, CERTIFICADO PERSONALIZADO, TRANSPORTE DURANTE LA ACTIVIDAD, BRINDIS CON VINO ESPUMOSO, DESPLI', 'DESAYUNOS', 198.00, NULL, NULL, NULL, 0.00, 4798.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-09-20 12:10:15', 3),
+(1109, 14, NULL, 'JOSHUA DANIEL', 'GONZALEZ', 'volarenglobo@yahoo.es', NULL, '5543231239', 11, 2, 0, 38, 1, '2019-10-15', NULL, NULL, NULL, NULL, NULL, 'VUELO COMPARTIDO PARA 2 PERSONAS, VUELO SOBRE EL VALLE DE TEOTIHUACAN, DURANTE 45 MINS APROX, INCLUYE COFFE BREAK (CAFÃ‰, TE, PAN GALLETAS) SEGURO DE VIAJERO, CERTIFICADO PERSONALIZADO, TRANSPORTE DURANTE LA ACTIVIDAD, BRINDIS CON VINO ESPUMOSO, DESPLI', 'DESAYUNOS', 198.00, NULL, NULL, NULL, 0.00, 4798.00, 0, 138.00, 1, 0, NULL, 1, NULL, '2019-09-20 12:10:15', 7),
 (1110, 9, NULL, 'UEMURA', 'HORUKA', 'turismo@volarenglobo.com.mx', NULL, '5555335133', 35, 5, 0, 36, 3, '2019-10-28', NULL, NULL, NULL, NULL, NULL, 'VUELO COMPARTIDO 5 PAX DE 45 MINUTOS APROX SOBRE EL VALLE DE TEOTIHUACAN.\nTRANSPORTE REDONDO CDMX-TEOTIHUACAN.\nSEGURO DE VIAJERO.\nCOFFEE BREAK ANTES DEL VUELO.\nBRINDIS CON VINO ESPUMOSO.\nCERTIFICADO PERSONALIZADO.\nDESAYUNO BUFFET.', NULL, NULL, NULL, NULL, 2, 550.00, 12400.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-09-20 12:12:18', 4),
 (1111, 9, NULL, 'MARIA CRISTINA', 'ORJUELA GAMBA', 'turismo@volarenglobo.com.mx', NULL, '9981933660', 11, 1, 0, 36, 3, '2019-12-05', NULL, NULL, NULL, NULL, NULL, '1 PAX COMPARTIDO PRICE TRAVEL LOCATOR 12209035-1', NULL, NULL, NULL, NULL, 2, 250.00, 1700.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-09-20 12:24:11', 4),
 (1112, 14, NULL, 'ITZAYANA', 'NORIEGA', 'itzanoriega3005@gmail.com', NULL, '5536815845', 11, 2, 0, 36, 4, '2019-09-30', NULL, NULL, NULL, NULL, NULL, 'VUELO PRIVADO PARA 2 PERSONAS , VUELO SOBRE VALLE DE TEOTIHUACAN DURANTE 45 MINS APROX , COFFE BREAK INCLUIDO (CAFÃ‰,TE,CAFÃ‰,PAN) SEGURO DE VIAJERO,CERTIFICADO PERSONALIZADO,TRANSPORTE DURANTE LA ACTIVIDAD, BRINDIS CON VINO ESPUMOSO,DESAYUNO EN RES', NULL, NULL, NULL, NULL, NULL, 0.00, 7000.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-09-20 12:39:50', 3),
@@ -2169,7 +2408,7 @@ INSERT INTO `temp_volar` (`id_temp`, `idusu_temp`, `clave_temp`, `nombre_temp`, 
 (1131, 9, NULL, 'ADRIAN', 'CAMAYO', 'turismo@volarenglobo.com.mx', NULL, '5516123007', 11, 4, 0, 36, 3, '2019-09-22', NULL, NULL, NULL, NULL, NULL, '4 PAX COMPARTIDO WAYAK', NULL, NULL, NULL, NULL, 2, 600.00, 7200.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-09-21 13:22:59', 4),
 (1132, 14, NULL, 'GABY', 'VEGA', 'volarenglobo@yahoo.es', NULL, '5548702712', 11, 1, 1, 38, 1, '2019-09-29', NULL, NULL, NULL, NULL, NULL, 'VUELO COMPARTIDO PARA 1 ADULTO 1 MENOR, VUELO SOBRE EL VALLE DE TEOTIHUACAN, DURANTE 45 MINS APROX, INCLUYE COFFE BREAK (CAFÃ‰, TE, PAN GALLETAS) SEGURO DE VIAJERO, CERTIFICADO PERSONALIZADO, TRANSPORTE DURANTE LA ACTIVIDAD, BRINDIS CON VINO ESPUMOSO, DESPLIEGUE DE LONA \"FELIZ CUMPLE\" DESAYUNO Y PASTEL PARA CUMPLEAÃ‘ERO', 'DESAYUNOS', 198.00, NULL, NULL, NULL, 0.00, 4198.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-09-23 12:22:35', 8),
 (1133, 16, NULL, 'MARIA EMILIA', 'TERRAZAS', 'mterrazas9121@gmail.com', NULL, '9562256019', NULL, 2, 0, 38, 4, '2019-09-28', NULL, NULL, NULL, NULL, NULL, 'â€¢	Vuelo en globo exclusivo\nâ€¢	Brindis en vuelo con vino espumoso Freixenet\nâ€¢	Certificado de vuelo\nâ€¢	Seguro viajero\nâ€¢	Desayuno tipo Buffet (Restaurante Gran Teocalli o Rancho Azteca)\nâ€¢	TransportaciÃ³n local durante la actividad en TeotihuacÃ¡n\nâ€¢	Despliegue de lona FELIZ CUMPLE! \nâ€¢	Foto Impresa\nâ€¢	Coffee Break\n', NULL, NULL, NULL, NULL, NULL, 0.00, 7000.00, 0, 150.00, 1, 0, NULL, 1, NULL, '2019-09-23 12:42:44', 4),
-(1134, 9, NULL, 'JUAN MANUEL', 'BAUTISTA CORREA', 'turismo@volarenglobo.com.mx', NULL, '018002378329', 11, 1, 0, 36, 3, '2019-10-14', NULL, NULL, NULL, NULL, NULL, '1 PAX COMPARTIDO BESTDAY ID 73929099-1', NULL, NULL, NULL, NULL, 2, 310.00, 1640.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-09-23 13:14:00', 4),
+(1134, 9, NULL, 'JUAN MANUEL', 'BAUTISTA CORREA', 'turismo@volarenglobo.com.mx', NULL, '018002378329', 11, 1, 0, 36, 3, '2019-10-14', NULL, NULL, NULL, NULL, NULL, '1 PAX COMPARTIDO BESTDAY ID 73929099-1', NULL, NULL, NULL, NULL, 2, 310.00, 1640.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-09-23 13:14:00', 8),
 (1135, 9, NULL, 'EMILIO', 'AMARILLO', 'turismo@volarenglobo.com.mx', NULL, '018002378329', 11, 2, 0, 36, 3, '2019-10-27', NULL, NULL, NULL, NULL, NULL, '2 PAX COMPARTIDO BESTDAY ID 73929685-1', NULL, NULL, NULL, NULL, NULL, 0.00, 3900.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-09-23 13:25:55', 3),
 (1136, 9, NULL, 'RICHARD', 'TURISKY', 'turismo@volarenglobo.com.mx', NULL, '573202405215', 11, 2, 0, 36, 3, '2019-09-24', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 2, 800.00, 4100.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-09-23 13:50:38', 4),
 (1137, 14, NULL, 'HENRY', 'BULLA TORO', 'volarenglobo@yahoo.es', NULL, '05723286448015', 35, 2, 0, 37, 1, '2019-09-24', NULL, NULL, NULL, NULL, NULL, 'VUELO COMPARTIDO PARA 2 PERSONAS, VUELO SOBRE EL VALLE DE TEOTIHUACAN, DURANTE 45 MINS APROX, INCLUYE COFFE BREAK (CAFÃ‰, TE, PAN GALLETAS) SEGURO DE VIAJERO, CERTIFICADO PERSONALIZADO, TRANSPORTE DURANTE LA ACTIVIDAD, BRINDIS CON VINO ESPUMOSO, DESPLIEGUE DE LONA \"FELIZ ANIVERSARIO\" DESAYUNO BUFFET Y TRANSPORTE ZONA CENTRO CDMX-TEOTIHUACAN-CDMX', NULL, NULL, NULL, NULL, 2, 600.00, 5280.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-09-23 13:57:49', 4),
@@ -2179,7 +2418,7 @@ INSERT INTO `temp_volar` (`id_temp`, `idusu_temp`, `clave_temp`, `nombre_temp`, 
 (1141, 14, NULL, 'RUDY', 'HUAMAN', 'volarenglobo@yahoo.es', NULL, '511980314278', 35, 2, 0, 45, 1, '2019-11-05', NULL, NULL, NULL, NULL, NULL, 'VUELO COMPARTIDO PARA 2 PERSONAS, VUELO SOBRE EL VALLE DE TEOTIHUACAN, DURANTE 45 MINS APROX, INCLUYE COFFE BREAK (CAFÃ‰, TE, PAN GALLETAS) SEGURO DE VIAJERO, CERTIFICADO PERSONALIZADO, TRANSPORTE DURANTE LA ACTIVIDAD, BRINDIS CON VINO ESPUMOSO, DESPLIEGUE DE LONA DE \"TE AMO\" DESAYUNO BUFFET', 'DESAYUNOS', 198.00, NULL, NULL, NULL, 0.00, 0.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-09-23 18:16:33', 6),
 (1142, 14, '1141', 'RUDY', 'HUAMAN', 'volarenglobo@yahoo.es', NULL, '511980314278', 35, 2, 0, 45, 1, '2019-11-05', NULL, NULL, NULL, NULL, NULL, 'VUELO COMPARTIDO PARA 2 PERSONAS, VUELO SOBRE EL VALLE DE TEOTIHUACAN, DURANTE 45 MINS APROX, INCLUYE COFFE BREAK (CAFÃ‰, TE, PAN GALLETAS) SEGURO DE VIAJERO, CERTIFICADO PERSONALIZADO, TRANSPORTE DURANTE LA ACTIVIDAD, BRINDIS CON VINO ESPUMOSO, DESPLIEGUE DE LONA DE \"TE AMO\" DESAYUNO BUFFET', 'DESAYUNOS', 198.00, NULL, NULL, NULL, 0.00, 6848.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-09-23 18:38:48', 3),
 (1143, 16, NULL, 'ABRAHAM', 'ESPINOZA', 'urielurias@hotmail.com', NULL, '6671255249', NULL, 2, 0, 38, 4, '2019-11-29', NULL, NULL, NULL, NULL, NULL, 'â€¢	Vuelo en globo exclusivo\nâ€¢	Brindis en vuelo con vino espumoso Freixenet\nâ€¢	Certificado de vuelo\nâ€¢	Seguro viajero\nâ€¢	Desayuno tipo Buffet (Restaurante Gran Teocalli o Rancho Azteca)\nâ€¢	TransportaciÃ³n local durante la actividad en TeotihuacÃ¡n\nâ€¢	Despliegue de lona  Feliz Cumple!\nâ€¢	Foto Impresa\nâ€¢	Coffee Break\n', NULL, NULL, NULL, NULL, NULL, 0.00, 7000.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-09-23 18:38:50', 6),
-(1144, 14, NULL, 'SERGIO', 'COVALEDA', 'volarenglobo@yahoo.es', NULL, '573176568559', 35, 4, 0, 38, 1, '2019-12-31', NULL, NULL, NULL, NULL, NULL, 'VUELO COMPARTIDO PARA 4 PERSONAS, VUELO SOBRE EL VALLE DE TEOTIHUACAN, DURANTE 45 MINS APROX, INCLUYE COFFE BREAK (CAFÃ‰, TE, PAN GALLETAS) SEGURO DE VIAJERO, CERTIFICADO PERSONALIZADO, TRANSPORTE DURANTE LA ACTIVIDAD, BRINDIS CON VINO ESPUMOSO, DESPLIEGUE DE LONA \"FELIZ CUMPLEAÃ‘OS\" DESAYUNO BUFFET Y PASTEL PARA CUMPLEAÃ‘ERO', 'DESAYUNOS', 396.00, NULL, NULL, NULL, 0.00, 9596.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-09-23 18:54:06', 3),
+(1144, 14, NULL, 'SERGIO', 'COVALEDA', 'volarenglobo@yahoo.es', NULL, '573176568559', 35, 4, 0, 38, 1, '2019-12-31', NULL, NULL, NULL, NULL, NULL, 'VUELO COMPARTIDO PARA 4 PERSONAS, VUELO SOBRE EL VALLE DE TEOTIHUACAN, DURANTE 45 MINS APROX, INCLUYE COFFE BREAK (CAFÃ‰, TE, PAN GALLETAS) SEGURO DE VIAJERO, CERTIFICADO PERSONALIZADO, TRANSPORTE DURANTE LA ACTIVIDAD, BRINDIS CON VINO ESPUMOSO, DESPLIEGUE DE LONA \"FELIZ CUMPLEAÃ‘OS\" DESAYUNO BUFFET Y PASTEL PARA CUMPLEAÃ‘ERO', 'DESAYUNOS', 396.00, NULL, NULL, NULL, 0.00, 9596.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-09-23 18:54:06', 6),
 (1145, 14, NULL, 'ANDREA', 'MOLINA', 'volarenglobo@yahoo.es', NULL, '4431341252', 18, 2, 0, 36, 1, '2019-09-29', NULL, NULL, NULL, NULL, NULL, 'VUELO COMPARTIDO PARA 2 PERSONAS, VUELO SOBRE EL VALLE DE TEOTIHUACAN, DURANTE 45 MINS APROX, INCLUYE COFFE BREAK (CAFÃ‰, TE, PAN GALLETAS) SEGURO DE VIAJERO, CERTIFICADO PERSONALIZADO, TRANSPORTE DURANTE LA ACTIVIDAD, BRINDIS CON VINO ESPUMOSO, DESAYUNO BUFFET', 'DESAYUNOS', 198.00, 'TRANSPORTE ZONA ZOCA', 700.00, NULL, 0.00, 5498.00, 0, 187.00, 1, 0, NULL, 1, NULL, '2019-09-24 10:48:00', 4),
 (1146, 16, '1100', 'MONSE', 'ZAPATA', 'Zapata.montserrat@gmail.com', NULL, '7225126658', NULL, 5, 0, 38, 16, '2019-10-27', NULL, NULL, NULL, NULL, NULL, 'â€¢	Vuelo en globo exclusivo\nâ€¢	Brindis en vuelo con vino espumoso Freixenet\nâ€¢	Certificado de vuelo\nâ€¢	Seguro viajero\nâ€¢	Desayuno tipo Buffet (Restaurante Gran Teocalli o Rancho Azteca)\nâ€¢	TransportaciÃ³n local durante la a', NULL, NULL, NULL, NULL, NULL, 0.00, 15000.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-09-24 12:12:14', 8),
 (1147, 14, NULL, 'KATIA', 'AGUILAR', 'volarenglobo@yahoo.es', NULL, '5535133683', 11, 2, 0, 37, 4, '2019-10-09', NULL, NULL, NULL, NULL, NULL, 'VUELO PRIVADO PARA 2 PERSONAS , VUELO SOBRE VALLE DE TEOTIHUACAN DURANTE 45 MINS APROX , COFFE BREAK INCLUIDO (CAFÃ‰,TE,CAFÃ‰,PAN) SEGURO DE VIAJERO,CERTIFICADO PERSONALIZADO,TRANSPORTE DURANTE LA ACTIVIDAD, BRINDIS CON VINO ESPUMOSO,DESPLIEGUE DE LONA DE \"FELIZ ANIVERSARIO\" DESAYUNO EN RESTAURANTE GRAN TEOCALLI Y FOTOGRAFIA IMPRESA A ELEGIR.', NULL, NULL, NULL, NULL, NULL, 0.00, 7300.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-09-24 12:35:46', 3),
@@ -2211,7 +2450,7 @@ INSERT INTO `temp_volar` (`id_temp`, `idusu_temp`, `clave_temp`, `nombre_temp`, 
 (1173, 16, NULL, 'YUNUHE', 'QUIROZ', 'jasonquiroz74@gmail.com ', NULL, '5615100221', NULL, 2, 0, 39, 4, '2019-10-16', NULL, NULL, NULL, NULL, NULL, 'Vuelo en globo exclusivo/ Brindis en vuelo con vino espumoso Freixenet/ Certificado de vuelo/ Seguro viajero/ Desayuno tipo Buffet / TransportaciÃ³n local / Despliegue de lona Â¿Te quieres casar conmigo?/ Foto Impresa', NULL, NULL, NULL, NULL, NULL, 0.00, 7000.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-09-26 12:26:39', 6),
 (1174, 16, NULL, 'ORIETTA', 'VALDERRAMA', 'lissyolv_00@hotmail.com', NULL, '50769832014', 35, 2, 0, 36, 1, '2019-09-28', NULL, NULL, NULL, NULL, NULL, 'Vuelo compartido 45 a 60 minutos /brindis con vino espumoso/ certificado de vuelo/ seguro viajero/ coffe break (cafÃ©, TÃ©, pan , galletas, fruta)despliegue de lona', NULL, NULL, NULL, NULL, NULL, 0.00, 4600.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-09-26 12:31:42', 6),
 (1175, 16, '1174', 'ORIETTA', 'VALDERRAMA', 'lissyolv_00@hotmail.com', NULL, '50769832014', 35, 2, 0, 36, 1, '2019-09-29', NULL, NULL, NULL, NULL, NULL, 'Vuelo compartido 45 a 60 minutos /brindis con vino espumoso/ certificado de vuelo/ seguro viajero/ coffe break (cafÃ©, TÃ©, pan , galletas, fruta)despliegue de lona', NULL, NULL, NULL, NULL, NULL, 0.00, 4600.00, 0, 130.00, 1, 0, NULL, 1, NULL, '2019-09-26 12:46:26', 8),
-(1176, 18, '1172', 'ALBERTO', 'MEZA', 'volarenglobo@yahoo.es', NULL, '50688120525', 35, 8, 0, 43, 4, '2019-10-25', NULL, NULL, NULL, NULL, NULL, 'INCLUYE:\n- VUELO PANORAMICO SOBRE EL VALLE DE TEOTIHUACAN. \n- COFFEE BREAK. \n- BRINDIS CON VINO ESPUMOSO. \n- CERTIFICADO PERSONALIZADO. \n- SEGURO DE VIAJERO. \n- DESAYUNO TIPO BUFFET. \n- FOTO IMPRESA.', NULL, NULL, NULL, NULL, 2, 2600.00, 25600.00, 0, 590.00, 1, 0, NULL, 1, NULL, '2019-09-26 12:48:27', 4),
+(1176, 18, '1172', 'ALBERTO', 'MEZA', 'volarenglobo@yahoo.es', NULL, '50688120525', 35, 8, 0, 43, 4, '2019-10-25', NULL, NULL, NULL, NULL, NULL, 'INCLUYE:\n- VUELO PANORAMICO SOBRE EL VALLE DE TEOTIHUACAN. \n- COFFEE BREAK. \n- BRINDIS CON VINO ESPUMOSO. \n- CERTIFICADO PERSONALIZADO. \n- SEGURO DE VIAJERO. \n- DESAYUNO TIPO BUFFET. \n- FOTO IMPRESA.', NULL, NULL, NULL, NULL, 2, 2600.00, 25600.00, 0, 590.00, 1, 0, NULL, 1, NULL, '2019-09-26 12:48:27', 8),
 (1177, 16, '1173', 'CARLOS', 'CISNEROS', 'jasonquiroz74@gmail.com ', NULL, '5615100221', NULL, 2, 0, 39, 4, '2019-10-16', NULL, NULL, NULL, NULL, NULL, 'Vuelo en globo exclusivo/ Brindis en vuelo con vino espumoso Freixenet/ Certificado de vuelo/ Seguro viajero/ Desayuno tipo Buffet / TransportaciÃ³n local / Despliegue de lona Â¿Te quieres casar conmigo?/ Foto Impresa', NULL, NULL, NULL, NULL, NULL, 0.00, 7000.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-09-26 12:58:54', 6),
 (1178, 16, '1177', 'CARLOS', 'CISNEROS', 'jasonquiroz74@gmail.com ', NULL, '5615100221', NULL, 2, 0, 39, 4, '2019-10-16', NULL, NULL, NULL, NULL, NULL, 'Vuelo en globo exclusivo/ Brindis en vuelo con vino espumoso Freixenet/ Certificado de vuelo/ Seguro viajero/ Desayuno tipo Buffet / TransportaciÃ³n local / Despliegue de lona Â¿Te quieres casar conmigo?/ Foto Impresa', 'DESAYUNO 7 PAX', 980.00, NULL, NULL, NULL, 0.00, 7980.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-09-26 14:03:11', 8),
 (1179, 9, NULL, 'VERONICA', 'JIMENEZ', 'turismo@volarenglobo.com.mx', NULL, '5532401181', 11, 7, 0, 36, 3, '2019-09-29', NULL, NULL, NULL, NULL, NULL, '7 PAX COMPARTIDO FULL', NULL, NULL, NULL, NULL, 2, 162.25, 19392.75, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-09-26 15:05:15', 3),
@@ -2239,10 +2478,10 @@ INSERT INTO `temp_volar` (`id_temp`, `idusu_temp`, `clave_temp`, `nombre_temp`, 
 (1201, 14, '1200', 'HORACIO', 'OCHOA', 'volarenglobo@yahoo.es', NULL, '5216621437600', 35, 2, 0, 36, 1, '2019-09-28', NULL, NULL, NULL, NULL, NULL, 'VUELO COMPARTIDO PARA 2 PERSONAS, VUELO SOBRE EL VALLE DE TEOTIHUACAN, DURANTE 45 MINS APROX, INCLUYE COFFE BREAK (CAFÃ‰, TE, PAN GALLETAS) SEGURO DE VIAJERO, CERTIFICADO PERSONALIZADO, TRANSPORTE DURANTE LA ACTIVIDAD, BRINDIS CON VINO ESPUMOSO.', 'TRANSPORTE ZOCALO', 700.00, NULL, NULL, NULL, 0.00, 5300.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-09-27 11:43:50', 3),
 (1202, 14, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, 0.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-09-27 11:56:28', 6),
 (1203, 14, '1202', 'HORACIO', 'OCHOA', 'ventas@volarenglobo.com.mx', NULL, '5216621437600', 35, 2, 0, 36, 1, '2019-09-28', NULL, NULL, NULL, NULL, NULL, 'VUELO COMPARTIDO PARA 2 PERSONAS, VUELO SOBRE EL VALLE DE TEOTIHUACAN DURANTE 45 MINS APROX.INCLUYE COFFE BREAK (CAFE,TE , GALLETAS Y PAN)SEGURO DE VIAJERO,BRINDIS CON VINO ESPUMOSO,CERTIFICADO PERSONALIZADO,TRANSPORTE DURANTE LA ACTIVIDAD.', 'TRANSPORTE ZOCALO', 700.00, NULL, NULL, NULL, 0.00, 5300.00, 0, 188.00, 1, 0, NULL, 1, NULL, '2019-09-27 11:58:40', 6),
-(1204, 14, NULL, 'CARLA CRISTINA', 'DIXON', 'volarenglobo@yahoo.es', NULL, '50763284728', 35, 2, 0, 36, 1, '2019-10-19', NULL, NULL, NULL, NULL, NULL, 'VUELO COMPARTIDO PARA 2 PERSONAS, VUELO SOBRE EL VALLE DE TEOTIHUACAN, DURANTE 45 MINS APROX, INCLUYE COFFE BREAK (CAFÃ‰, TE, PAN GALLETAS) SEGURO DE VIAJERO, CERTIFICADO PERSONALIZADO, TRANSPORTE DURANTE LA ACTIVIDAD, BRINDIS CON VINO ESPUMOSO,DESAYUNO BUFFET EN RESTAURANTE GRAN TEOCALLI', 'DESAYUNOS', 198.00, NULL, NULL, NULL, 0.00, 4798.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-09-27 12:12:17', 4),
-(1205, 14, NULL, 'MARIA', 'LUJAN ANDREETTA', 'volarenglobo@yahoo.es', NULL, '541165152125', 35, 2, 0, 36, 4, '2019-11-21', NULL, NULL, NULL, NULL, NULL, 'VUELO PRIVADO PARA 2 PERSONAS , VUELO SOBRE VALLE DE TEOTIHUACAN DURANTE 45 MINS APROX , COFFE BREAK INCLUIDO (CAFÃ‰,TE,CAFÃ‰,PAN) SEGURO DE VIAJERO,CERTIFICADO PERSONALIZADO,TRANSPORTE DURANTE LA ACTIVIDAD, BRINDIS CON VINO ESPUMOSO, DESAYUNO EN RESTAURANTE GRAN TEOCALLI Y FOTOGRAFIA IMPRESA A ELEGIR.', 'TRANSPORTE RED COYOA', 1400.00, NULL, NULL, NULL, 0.00, 8400.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-09-27 12:31:09', 4),
+(1204, 14, NULL, 'CARLA CRISTINA', 'DIXON', 'volarenglobo@yahoo.es', NULL, '50763284728', 35, 2, 0, 36, 1, '2019-10-19', NULL, NULL, NULL, NULL, NULL, 'VUELO COMPARTIDO PARA 2 PERSONAS, VUELO SOBRE EL VALLE DE TEOTIHUACAN, DURANTE 45 MINS APROX, INCLUYE COFFE BREAK (CAFÃ‰, TE, PAN GALLETAS) SEGURO DE VIAJERO, CERTIFICADO PERSONALIZADO, TRANSPORTE DURANTE LA ACTIVIDAD, BRINDIS CON VINO ESPUMOSO,DESAYUNO BUFFET EN RESTAURANTE GRAN TEOCALLI', 'DESAYUNOS', 198.00, NULL, NULL, NULL, 0.00, 4798.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-09-27 12:12:17', 8),
+(1205, 14, NULL, 'MARIA', 'LUJAN ANDREETTA', 'volarenglobo@yahoo.es', NULL, '541165152125', 35, 2, 0, 36, 4, '2019-11-21', NULL, NULL, NULL, NULL, NULL, 'VUELO PRIVADO PARA 2 PERSONAS , VUELO SOBRE VALLE DE TEOTIHUACAN DURANTE 45 MINS APROX , COFFE BREAK INCLUIDO (CAFÃ‰,TE,CAFÃ‰,PAN) SEGURO DE VIAJERO,CERTIFICADO PERSONALIZADO,TRANSPORTE DURANTE LA ACTIVIDAD, BRINDIS CON VINO ESPUMOSO, DESAYUNO EN RESTAURANTE GRAN TEOCALLI Y FOTOGRAFIA IMPRESA A ELEGIR.', 'TRANSPORTE RED COYOA', 1400.00, NULL, NULL, NULL, 0.00, 8400.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-09-27 12:31:09', 8),
 (1206, 14, NULL, 'ANDREA', 'GUTIERREZ', 'volarenglobo@yahoo.es', NULL, '521987138394', 35, 2, 0, 36, 4, '2019-10-03', NULL, NULL, NULL, NULL, NULL, 'VUELO PRIVADO PARA 2 PERSONAS , VUELO SOBRE VALLE DE TEOTIHUACAN DURANTE 45 MINS APROX , COFFE BREAK INCLUIDO (CAFÃ‰,TE,CAFÃ‰,PAN) SEGURO DE VIAJERO,CERTIFICADO PERSONALIZADO,TRANSPORTE DURANTE LA ACTIVIDAD, BRINDIS CON VINO ESPUMOSO, DESAYUNO EN RESTAURANTE GRAN TEOCALLI Y FOTOGRAFIA IMPRESA A ELEGIR.', NULL, NULL, NULL, NULL, NULL, 0.00, 8000.00, 0, 122.00, 1, 0, NULL, 1, NULL, '2019-09-27 12:36:01', 8),
-(1207, 11, NULL, 'ADOLFO', 'BENITEZ OLEA', 'selenesanz@hotmail.com', '2227436631', '2481451498', 23, 2, 0, 38, 1, '2019-09-29', NULL, NULL, NULL, NULL, NULL, 'INCLUYE\nVUELO LIBRE SOBRE TEOTIHUACAN DE 45 A 60 MINUTOS\nCOFFEE BREAK\nBRINDIS CON VINO ESPUMOSO PETILLANT DE FREIXENET\nCERTIFICADO DE VUELO\nSEGURO DE VIAJERO DURANTE LA ACTIVIDAD\n', NULL, NULL, NULL, NULL, 2, 1000.00, 3600.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-09-27 12:46:58', 3),
+(1207, 11, NULL, 'ADOLFO', 'BENITEZ OLEA', 'selenesanz@hotmail.com', '2227436631', '2481451498', 23, 2, 0, 38, 1, '2019-10-13', NULL, NULL, NULL, NULL, NULL, 'INCLUYE\nVUELO LIBRE SOBRE TEOTIHUACAN DE 45 A 60 MINUTOS\nCOFFEE BREAK\nBRINDIS CON VINO ESPUMOSO PETILLANT DE FREIXENET\nCERTIFICADO DE VUELO\nSEGURO DE VIAJERO DURANTE LA ACTIVIDAD\n', NULL, NULL, NULL, NULL, 2, 1000.00, 3600.00, 0, 145.00, 1, 0, NULL, 1, NULL, '2019-09-27 12:46:58', 7),
 (1208, 14, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, 0.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-09-27 12:49:03', 0),
 (1209, 14, '1171', 'CATE', '.', 'sartoria2@gmail.com', NULL, '1281902276', 35, 7, 0, 73, 1, '2019-10-26', NULL, NULL, NULL, NULL, NULL, 'TRADITIONAL SHARED FLIGHT,  HOT AIRE BALLON 7 PAX FOR 45 MINUTES APROX, TOAST WITH SPARKLIN FREIXENET WINE,PERSONALIZED FLIGHT CERTIFICATE,TRANSPORTATION DURING THE ACTIVITY (CHECK IN AREA-TAKE OFF AREA AND LANDING SITE CHECK IN AREA) , TRAVEL INSURANCE, TRANSPORTATION HOTEL - TEOTIHUACAN- HOTEL , TRADITIONAL BREAKFAST IN RESTAURANT GRAN TEOCALLI (BUFFET SERVICE). ', NULL, NULL, NULL, NULL, 2, 2100.00, 18480.00, 0, 0.00, 1, 0, NULL, 2, NULL, '2019-09-27 12:49:56', 3),
 (1210, 16, NULL, 'LUIS', 'OLARTE', 'info@condesaamatlan.com.mx', NULL, '5540681630', NULL, 2, 0, 36, 2, '2019-09-28', NULL, NULL, NULL, NULL, NULL, 'Vuelo compartido sobre el Valle de TeotihuacÃ¡n, 45 min/ Certificado personalizado/ Brindis con vino blanco espumoso Freixenet o jugo de naranja/ Desayuno tipo Buffet (excepto bÃ¡sico)/ Seguro viajero/ Coffee break/transporte redondo ZÃ³calo', NULL, NULL, NULL, NULL, NULL, 0.00, 5000.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-09-27 13:04:15', 3),
@@ -2253,13 +2492,13 @@ INSERT INTO `temp_volar` (`id_temp`, `idusu_temp`, `clave_temp`, `nombre_temp`, 
 (1215, 9, NULL, 'GONZALO ALBERTO', 'SABOGAL MORENO', 'turismo@volarenglobo.com.mx', NULL, '3017114695', 11, 2, 0, NULL, 3, '2019-09-28', NULL, NULL, NULL, NULL, NULL, '2 PAX TU EXPERIENCIA', NULL, NULL, NULL, NULL, 2, 200.00, 4700.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-09-27 18:45:49', 4),
 (1216, 9, NULL, 'ERIKA ', 'MURILLO', 'turismo@volarenglobo.com.mx', NULL, '88587774', 11, 2, 0, 36, 3, '2019-09-28', NULL, NULL, NULL, NULL, NULL, '2 PAX TU EXPERIENCIA', NULL, NULL, NULL, NULL, 2, 200.00, 4700.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-09-27 18:54:08', 4),
 (1217, 9, NULL, 'FRANCIS', 'ESCURA', 'turismo@volarenglobo.com.mx', NULL, '33608040757', 35, 2, 0, 36, 3, '2019-09-28', NULL, NULL, NULL, NULL, NULL, '2 PAX FULL BOOKING', NULL, NULL, NULL, NULL, 2, 225.00, 6005.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-09-27 18:57:57', 4),
-(1218, 16, NULL, 'STEPHANNIE', 'GUTIERREZ', 'ann_star3@hotmail.com', NULL, '5530731480', NULL, 2, 0, 38, 1, '2019-10-11', NULL, NULL, NULL, NULL, NULL, 'Vuelo compartido sobre el Valle de TeotihuacÃ¡n, 45 min/ Certificado personalizado/ Brindis con vino blanco espumoso Freixenet o jugo de naranja/ Desayuno tipo Buffet / Seguro viajero/ Coffee break / Despliegue de lona FELIZ CUMPLE!', NULL, NULL, NULL, NULL, 2, 82.00, 4798.00, 0, 150.00, 1, 0, NULL, 1, NULL, '2019-09-27 19:02:23', 8),
+(1218, 16, NULL, 'STEPHANNIE', 'GUTIERREZ', 'ann_star3@hotmail.com', NULL, '5530731480', NULL, 2, 0, 38, 1, '2019-10-11', NULL, NULL, NULL, NULL, NULL, 'Vuelo compartido sobre el Valle de TeotihuacÃ¡n, 45 min/ Certificado personalizado/ Brindis con vino blanco espumoso Freixenet o jugo de naranja/ Desayuno tipo Buffet / Seguro viajero/ Coffee break / Despliegue de lona FELIZ CUMPLE!', NULL, NULL, NULL, NULL, 2, 82.00, 4798.00, 0, 150.00, 1, 0, NULL, 1, NULL, '2019-09-27 19:02:23', 7),
 (1219, 11, NULL, 'YERIKENDY', 'CORDOBA PIÃ‘ON', 'yericor@hotmail.com', '5543432304', '5526897235', 17, 2, 0, 36, 1, '2019-10-06', NULL, NULL, NULL, NULL, NULL, 'INCLUYE\nVUELO LIBRE SOBRE TEOTIHUACAN DE 45 A 60 MINUTOS\nCOFFE BREAK\nBRINDIS CON VINO ESPUMOSO PETILLANT DE FREIXENET\nCERTIFICADO DE VUELO\nSEGURO DE VIAJERO DURANTE LA ACTIVIDAD\nINCKUYE 1 CORTESIA SRG', NULL, NULL, NULL, NULL, 2, 2300.00, 2300.00, 0, 130.00, 1, 0, NULL, 1, NULL, '2019-09-29 19:54:32', 8),
-(1220, 14, NULL, 'GABRIELA', 'SEQUEIRA', 'volarenglobo@yahoo.es', NULL, '50685800714', 35, 2, 0, 38, 1, '2019-10-25', NULL, NULL, NULL, NULL, NULL, NULL, 'DESAYUNOS', 198.00, NULL, NULL, NULL, 0.00, 6848.00, 0, 130.00, 1, 0, NULL, 1, NULL, '2019-09-30 12:50:40', 4),
+(1220, 14, NULL, 'GABRIELA', 'SEQUEIRA', 'volarenglobo@yahoo.es', NULL, '50685800714', 35, 2, 0, 38, 1, '2019-10-25', NULL, NULL, NULL, NULL, NULL, NULL, 'DESAYUNOS', 198.00, NULL, NULL, NULL, 0.00, 6848.00, 0, 130.00, 1, 0, NULL, 1, NULL, '2019-09-30 12:50:40', 8),
 (1221, 14, NULL, 'DABEGY', 'NOVOA', 'volarenglobo@yahoo.es', NULL, '5528147078', 35, 1, 0, 36, 1, '2019-10-05', NULL, NULL, NULL, NULL, NULL, 'VUELO COMPARTIDO PARA 1 PERSONA, VUELO SOBRE EL VALLE DE TEOTIHUACAN DURANTE 45 MINS APROX. INCLUYE COFFE BREAK (CAFE,TE, GALLETAS Y PAN) SEGURO DE VIAJERO,BRINDIS CON VINO ESPUMOSO, CERTIFICADO PERSONALIZADO,TRANSPORTE DURANTE LA ACTIVIDAD,DESAYUNO BUFFET ', NULL, NULL, NULL, NULL, NULL, 0.00, 2300.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-09-30 12:52:35', 6),
 (1222, 16, NULL, 'JUAN', 'BUSTAMANTE', 'juan.bustamante@loreal.com', NULL, '5510998008', NULL, 62, 0, NULL, 2, '2019-10-14', NULL, NULL, NULL, NULL, NULL, 'Vuelo compartido sobre el Valle de TeotihuacÃ¡n, 45 min/ Certificado personalizado/ Brindis con vino blanco espumoso Freixenet o jugo de naranja/ Desayuno tipo Buffet/ Seguro viajero/ Coffee break / Despliegue de lona segÃºn la ocasiÃ³n ', NULL, NULL, NULL, NULL, NULL, 0.00, 132680.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-09-30 14:05:41', 3),
 (1223, 16, NULL, 'WILLIAMS', 'UGALDE', 'williams1098@hotmail.com', NULL, '50686182027', NULL, 4, 0, 36, 1, '2019-10-24', NULL, NULL, NULL, NULL, NULL, 'Vuelo compartido sobre el Valle de TeotihuacÃ¡n, 45 min/ Certificado personalizado/ Brindis con vino blanco espumoso Freixenet o jugo de naranja/ Desayuno tipo Buffet / Seguro viajero/ Coffee break / Despliegue de lona /', NULL, NULL, NULL, NULL, 2, 164.00, 11596.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-09-30 14:19:16', 6),
-(1224, 14, NULL, 'CECILIA', 'TREVIÃ‘O', 'volarenglobo@yahoo.es', NULL, '5543569704', 11, 3, 0, 36, 1, '0019-02-21', NULL, NULL, NULL, NULL, NULL, 'VUELO COMPARTIDO PARA 3 PERSONAS, VUELO SOBRE EL VALLE DE TEOTIHUACAN, DURANTE 45 MINS APROX, INCLUYE COFFE BREAK (CAFÃ‰, TE, PAN GALLETAS) SEGURO DE VIAJERO, CERTIFICADO PERSONALIZADO, TRANSPORTE DURANTE LA ACTIVIDAD, BRINDIS CON VINO ESPUMOSO, DESAYUNO BUFFET EN RESTAURANTE GRAN TEOCALLI', 'DESAYUNOS', 297.00, NULL, NULL, NULL, 0.00, 7197.00, 0, 190.00, 1, 0, NULL, 1, NULL, '2019-09-30 14:33:27', 4),
+(1224, 14, NULL, 'CECILIA', 'TREVIÃ‘O', 'volarenglobo@yahoo.es', NULL, '5543569704', 11, 3, 0, 36, 1, '0019-02-21', NULL, NULL, NULL, NULL, NULL, 'VUELO COMPARTIDO PARA 3 PERSONAS, VUELO SOBRE EL VALLE DE TEOTIHUACAN, DURANTE 45 MINS APROX, INCLUYE COFFE BREAK (CAFÃ‰, TE, PAN GALLETAS) SEGURO DE VIAJERO, CERTIFICADO PERSONALIZADO, TRANSPORTE DURANTE LA ACTIVIDAD, BRINDIS CON VINO ESPUMOSO, DESAYUNO BUFFET EN RESTAURANTE GRAN TEOCALLI', 'DESAYUNOS', 297.00, NULL, NULL, NULL, 0.00, 7197.00, 0, 190.00, 1, 0, NULL, 1, 'Ejemplo', '2019-09-30 14:33:27', 4),
 (1225, 16, NULL, 'BRENDA BEATRIZ', 'RODRIGUEZ', 'bren_rovergara@hotmail.com', NULL, '5569319660', NULL, 7, 0, 36, 1, '2019-10-06', NULL, NULL, NULL, NULL, NULL, 'Vuelo compartido sobre el Valle de TeotihuacÃ¡n, 45 min/ Certificado personalizado/ Brindis con vino blanco espumoso Freixenet o jugo de naranja/ Seguro viajero/ Coffee break / Despliegue de lona', NULL, NULL, NULL, NULL, NULL, 0.00, 16100.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-09-30 14:53:41', 6),
 (1226, 9, '1214', 'KEVIN', 'DOMINGUEZ', 'turismo@volarenglobo.com.mx', NULL, '5545037062', 11, 5, 0, 36, 3, '2019-09-29', NULL, NULL, NULL, NULL, NULL, '5 PAX FULL BOOKING', NULL, NULL, NULL, NULL, 2, 838.00, 13387.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-09-30 17:33:31', 0),
 (1227, 9, '1226', 'KEVIN', 'DOMINGUEZ', 'turismo@volarenglobo.com.mx', NULL, '5545037062', 11, 5, 0, 36, 3, '2019-10-10', NULL, NULL, NULL, NULL, NULL, '5 PAX FULL BOOKING', NULL, NULL, NULL, NULL, 2, 838.00, 13387.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-09-30 17:36:55', 0);
@@ -2284,7 +2523,7 @@ INSERT INTO `temp_volar` (`id_temp`, `idusu_temp`, `clave_temp`, `nombre_temp`, 
 (1245, 9, NULL, 'MARIA CRISTINA', 'FELICIANO APONTE', 'turismo@volarenglobo.com.mx', NULL, '018002378329', 11, 1, 0, 36, 3, '2019-10-03', NULL, NULL, NULL, NULL, NULL, '1 PAX COMPARTIDO BESTDAY ID 73915099-1', NULL, NULL, NULL, NULL, 2, 310.00, 1640.00, 0, 52.00, 1, 0, NULL, 1, NULL, '2019-10-02 18:34:48', 4),
 (1246, 9, NULL, 'DILAN DANIEL', 'ARIAS', 'turismo@volarenglobo.com.mx', NULL, '018002378329', 11, 3, 0, 36, 3, '2019-09-04', NULL, NULL, NULL, NULL, NULL, '3 PAX COMPARTIDO PRICE TRAVEL LOCATOR 12976634-1', NULL, NULL, NULL, NULL, 2, 750.00, 5100.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-10-02 18:49:27', 4),
 (1247, 11, '1244', 'ABRIL', 'ESTEBAN', 'abrilstefany@hotmail.com', NULL, '573002518298', 35, 4, 0, 36, 1, '2019-10-10', NULL, NULL, NULL, NULL, NULL, 'INCLUYE\nVUELO LIBRE SOBRE TEOTIHUACAN DE 45 A 60 MINUTOS\nCOFFEE BREAK\nBRINDIS CON VINO ESPUMOSO PETILLANT DE FREIXENET\nCERTIFICADO DE VUELO\nSEGURO DE VIAJERO DURANTE LA ACTIVIDAD', NULL, NULL, NULL, NULL, 2, 1200.00, 8000.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-10-02 21:58:19', 6),
-(1248, 11, '1238', 'CHRISTIN', 'WAGENHAUS', 'christin_wagenhaus@yahoo.de', '491743735003', '4499113679', 2, 6, 0, 38, 1, '2019-10-13', NULL, NULL, NULL, NULL, NULL, 'INCLUYE\nVUELO LIBRE SOBRE TEOTIHUACAN DE 45 A 60 MINUTOS\nCOFFE BREAK\nBRINDIS CON VINO ESPUMOSO PETILLANT DE FREIXENET\nCERTIFICADO DE VUELO\nSEGURO DE VIAJERO DURANTE LA ACTIVIDAD\nLONA DE FC \n', NULL, NULL, NULL, NULL, NULL, 0.00, 13800.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-10-02 22:30:04', 4),
+(1248, 11, '1238', 'CHRISTIN', 'WAGENHAUS', 'christin_wagenhaus@yahoo.de', '491743735003', '4499113679', 2, 6, 0, 38, 1, '2019-10-13', NULL, NULL, NULL, NULL, NULL, 'INCLUYE\nVUELO LIBRE SOBRE TEOTIHUACAN DE 45 A 60 MINUTOS\nCOFFE BREAK\nBRINDIS CON VINO ESPUMOSO PETILLANT DE FREIXENET\nCERTIFICADO DE VUELO\nSEGURO DE VIAJERO DURANTE LA ACTIVIDAD\nLONA DE FC \n', NULL, NULL, NULL, NULL, NULL, 0.00, 13800.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-10-02 22:30:04', 7),
 (1249, 14, NULL, 'ULISES', 'MARTINEZ', 'volarenglobo@yahoo.es', NULL, '5528902935', 11, 2, 0, 36, 1, '2019-10-03', NULL, NULL, NULL, NULL, NULL, 'VUELO COMPARTIDO PARA 2 PERSONAS, VUELO SOBRE EL VALLE DE TEOTIHUACAN, DURANTE 45 MINS APROX, INCLUYE COFFE BREAK (CAFÃ‰, TE, PAN GALLETAS) SEGURO DE VIAJERO, CERTIFICADO PERSONALIZADO, TRANSPORTE DURANTE LA ACTIVIDAD, BRINDIS CON VINO ESPUMOSO, DESAYUNO BUFFET EN RESTAURANTE GRAN TEOCALLI', NULL, NULL, NULL, NULL, 2, 600.00, 4280.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-10-03 11:24:23', 4),
 (1250, 9, NULL, 'SAMGNING', 'SUN', 'turismo@volarenglobo.com.mx', NULL, '16476756008', 11, 2, 0, NULL, 3, '2019-10-04', NULL, NULL, NULL, NULL, NULL, '2 PAX COMPARTIDO CON TRANSPORTE EXPEDIA', NULL, NULL, NULL, NULL, 2, 100.00, 4800.00, 0, 100.00, 1, 0, NULL, 1, NULL, '2019-10-03 13:36:19', 4),
 (1251, 14, NULL, 'ESTIVEN', 'ACUÃ‘A', 'volarenglobo@yahoo.es', NULL, '50686610890', 35, 3, 0, 36, 1, '2019-10-09', NULL, NULL, NULL, NULL, NULL, 'VUELO COMPARTIDO PARA 3 PERSONAS, VUELO SOBRE EL VALLE DE TEOTIHUACAN, DURANTE 45 MINS APROX, INCLUYE COFFE BREAK (CAFÃ‰, TE, PAN GALLETAS) SEGURO DE VIAJERO, CERTIFICADO PERSONALIZADO, TRANSPORTE DURANTE LA ACTIVIDAD, BRINDIS CON VINO ESPUMOSO, DESAYUNO BUFFET Y TRANSPORTE CDXM-TEOTIHUACAN-CDMX ', NULL, NULL, NULL, NULL, 2, 900.00, 7920.00, 0, 198.00, 1, 0, NULL, 1, NULL, '2019-10-03 13:38:38', 4),
@@ -2293,13 +2532,13 @@ INSERT INTO `temp_volar` (`id_temp`, `idusu_temp`, `clave_temp`, `nombre_temp`, 
 (1254, 16, NULL, 'MAGALI', 'BARVADILLO', 'magalibarvadillo@gmail.com', NULL, '5587861916', NULL, 2, 2, 43, 4, '2019-10-20', NULL, NULL, NULL, NULL, NULL, 'â€¢	Vuelo en globo exclusivo/ Brindis en vuelo con vino espumoso Freixenet y jugo para menores/ Certificado de vuelo/ Seguro viajero/ Desayuno tipo Buffet / TransportaciÃ³n local / Despliegue de lona FELIZ VUELO / Foto Impresa/ Coffee Break', NULL, NULL, NULL, NULL, NULL, 0.00, 10600.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-10-03 14:20:23', 3),
 (1255, 9, NULL, 'CLEIDE', 'NAKASHIMA', 'turismo@volarenglobo.com.mx', NULL, '5567913896', 35, 18, 0, 36, 3, '2019-10-04', NULL, NULL, NULL, NULL, NULL, '18 pax compartido universe travel con 20 desayunos', 'DESAYUNOS EXTRA', 260.00, NULL, NULL, 2, 180.00, 37700.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-10-03 14:31:04', 3),
 (1256, 14, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, 0.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-10-03 14:41:14', 6),
-(1257, 14, '1256', 'HANNALY', 'DROEGE', 'volarenglobo@yahoo.es', NULL, '50241055666', 35, 2, 0, 36, 1, '2019-10-20', NULL, NULL, NULL, NULL, NULL, 'VUELO COMPARTIDO PARA 2 PERSONAS, VUELO SOBRE EL VALLE DE TEOTIHUACAN DURANTE 45 MINS APROX.INCLUYE COFFE BREAK (CAFE,TE,GALLETAS Y PAN) SEGURO DE VIAJERO, BRINDIS CON VINO ESPUMOSO, CERTIFICADO PERSONALIZADO,TRANSPORTE DURANTE LA ACTIVIDAD,DESAYUNO BUFFET , TRANSPORTE CDMX-TEOTIHUACAN-CDMX ', 'DESAYUNOS', 198.00, NULL, NULL, NULL, 0.00, 5798.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-10-03 14:41:27', 4),
+(1257, 14, '1256', 'HANNALY', 'DROEGE', 'volarenglobo@yahoo.es', NULL, '50241055666', 35, 2, 0, 36, 1, '2019-10-20', NULL, NULL, NULL, NULL, NULL, 'VUELO COMPARTIDO PARA 2 PERSONAS, VUELO SOBRE EL VALLE DE TEOTIHUACAN DURANTE 45 MINS APROX.INCLUYE COFFE BREAK (CAFE,TE,GALLETAS Y PAN) SEGURO DE VIAJERO, BRINDIS CON VINO ESPUMOSO, CERTIFICADO PERSONALIZADO,TRANSPORTE DURANTE LA ACTIVIDAD,DESAYUNO BUFFET , TRANSPORTE CDMX-TEOTIHUACAN-CDMX ', 'DESAYUNOS', 198.00, NULL, NULL, NULL, 0.00, 5798.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-10-03 14:41:27', 8),
 (1258, 9, NULL, 'JIANG', 'ZHIMIN', 'turismo@volarenglobo.com.mx', NULL, '5582217356', 35, 2, 0, 36, 3, '2019-10-04', NULL, NULL, NULL, NULL, NULL, '2 PAX COMPARTIDO FULL KAYTRIP', NULL, NULL, NULL, NULL, 2, 230.00, 6000.00, 0, 130.00, 1, 0, NULL, 1, NULL, '2019-10-03 14:48:00', 4),
 (1259, 16, NULL, 'PAULA', 'VALLEJO', 'Paulavallejo@hotmail.com', NULL, '573167429304', NULL, 3, 0, NULL, 1, '2019-10-12', NULL, NULL, NULL, NULL, NULL, 'Vuelo compartido sobre el Valle de TeotihuacÃ¡n, 45 min/ Certificado personalizado/ Brindis con vino blanco espumoso Freixenet o jugo de naranja/ Desayuno tipo Buffet/ Seguro viajero/ Coffee break / Despliegue de lona ', NULL, NULL, NULL, NULL, 2, 123.00, 8697.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-10-03 14:55:28', 3),
 (1260, 11, NULL, 'ALEJANDRA', 'BOTERO', 'Alejandraboteromesa@gmail.com', '5568282913', '5522615862', 11, 5, 3, 43, 1, '2019-10-04', NULL, NULL, NULL, NULL, NULL, 'INCLUYE\nVUELO LIBRE SOBRE TEOTIHUACAN DE 45 A 60 MINUTOS\nCOFFEE BREAK\nBRINDIS CON VINO ESPUMOSO PETILLANT DE FREIXENET\nCERTIFICADO DE VUELO\nSEGURO DE VIAJERO DURANTE LA ACTIVIDAD\nDESCUENTO ESPECIAL AMIGA ALE BOTERO', NULL, NULL, NULL, NULL, 2, 6600.00, 10000.00, 0, 420.00, 1, 0, NULL, 1, NULL, '2019-10-03 14:57:26', 8),
 (1261, 16, '1239', 'GINA', 'ALVAREZ', 'ginalvarez@hotmail.com', NULL, '5540553688', NULL, 2, 0, 36, 1, '2019-10-05', NULL, NULL, NULL, NULL, NULL, 'Vuelo compartido sobre el Valle de TeotihuacÃ¡n, 45 min/ Certificado personalizado/ Brindis con vino blanco espumoso Freixenet o jugo de naranja/ Desayuno tipo Buffet / Seguro viajero/ Coffee break / Despliegue de lona segÃºn la ocasiÃ³n ', NULL, NULL, NULL, NULL, NULL, 0.00, 4600.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-10-04 09:26:45', 3),
-(1262, 14, NULL, 'ERIKA', 'MENDEZ', 'volarenglobo@yahoo.es', NULL, '573143228805', 35, 2, 0, 36, 1, '2019-10-26', NULL, NULL, NULL, NULL, NULL, 'VUELO COMPARTIDO PARA 2 PERSONAS, VUELO SOBRE EL VALLE DE TEOTIHUACAN, DURANTE 45 MINS APROX, INCLUYE COFFE BREAK (CAFÃ‰, TE, PAN GALLETAS) SEGURO DE VIAJERO, CERTIFICADO PERSONALIZADO, TRANSPORTE DURANTE LA ACTIVIDAD, BRINDIS CON VINO ESPUMOSO, DESAYUNO BUFFET, Y TRANSPORTE REDONDO', 'DESAYUNOS', 198.00, NULL, NULL, NULL, 0.00, 5798.00, 0, 130.00, 1, 0, NULL, 1, NULL, '2019-10-04 14:38:06', 4),
-(1263, 14, NULL, 'SHARON', 'SOLIS', 'volarenglobo@yahoo.es', NULL, '50683743212', 35, 4, 0, 38, 1, '2019-10-31', NULL, NULL, NULL, NULL, NULL, 'VUELO COMPARTIDO PARA 4 PERSONAS, VUELO SOBRE EL VALLE DE TEOTIHUACAN, DURANTE 45 MINS APROX, INCLUYE COFFE BREAK (CAFÃ‰, TE, PAN GALLETAS) SEGURO DE VIAJERO, CERTIFICADO PERSONALIZADO, TRANSPORTE DURANTE LA ACTIVIDAD, BRINDIS CON VINO ESPUMOSO, DESPLIEGUE DE LONA FELIZ CUMPLEAÃ‘OS, DESAYUNOS ,TRANSP REDONDO', 'DESAYUNOS', 396.00, NULL, NULL, NULL, 0.00, 11596.00, 0, 360.00, 1, 0, NULL, 1, NULL, '2019-10-04 14:51:42', 4),
+(1262, 14, NULL, 'ERIKA', 'MENDEZ', 'volarenglobo@yahoo.es', NULL, '573143228805', 35, 2, 0, 36, 1, '2019-10-26', NULL, NULL, NULL, NULL, NULL, 'VUELO COMPARTIDO PARA 2 PERSONAS, VUELO SOBRE EL VALLE DE TEOTIHUACAN, DURANTE 45 MINS APROX, INCLUYE COFFE BREAK (CAFÃ‰, TE, PAN GALLETAS) SEGURO DE VIAJERO, CERTIFICADO PERSONALIZADO, TRANSPORTE DURANTE LA ACTIVIDAD, BRINDIS CON VINO ESPUMOSO, DESAYUNO BUFFET, Y TRANSPORTE REDONDO', 'DESAYUNOS', 198.00, NULL, NULL, NULL, 0.00, 5798.00, 0, 130.00, 1, 0, NULL, 1, NULL, '2019-10-04 14:38:06', 8),
+(1263, 14, NULL, 'SHARON', 'SOLIS', 'volarenglobo@yahoo.es', NULL, '50683743212', 35, 4, 0, 38, 1, '2019-10-31', NULL, NULL, NULL, NULL, NULL, 'VUELO COMPARTIDO PARA 4 PERSONAS, VUELO SOBRE EL VALLE DE TEOTIHUACAN, DURANTE 45 MINS APROX, INCLUYE COFFE BREAK (CAFÃ‰, TE, PAN GALLETAS) SEGURO DE VIAJERO, CERTIFICADO PERSONALIZADO, TRANSPORTE DURANTE LA ACTIVIDAD, BRINDIS CON VINO ESPUMOSO, DESPLIEGUE DE LONA FELIZ CUMPLEAÃ‘OS, DESAYUNOS ,TRANSP REDONDO', 'DESAYUNOS', 396.00, NULL, NULL, NULL, 0.00, 11596.00, 0, 360.00, 1, 0, NULL, 1, NULL, '2019-10-04 14:51:42', 8),
 (1264, 14, '1221', 'DABEGY', 'NOVOA', 'volarenglobo@yahoo.es', NULL, '5528147078', 35, 2, 0, 36, 1, '2019-10-05', NULL, NULL, NULL, NULL, NULL, 'VUELO COMPARTIDO PARA 2 PERSONA, VUELO SOBRE EL VALLE DE TEOTIHUACAN DURANTE 45 MINS APROX. INCLUYE COFFE BREAK (CAFE,TE, GALLETAS Y PAN) SEGURO DE VIAJERO,BRINDIS CON VINO ESPUMOSO, CERTIFICADO PERSONALIZADO,TRANSPORTE DURANTE LA ACTIVIDAD,DESAYUNO BUFFET ', NULL, NULL, NULL, NULL, NULL, 0.00, 4600.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-10-04 18:13:50', 4),
 (1265, 9, NULL, 'SHU', 'XU', 'turismo@volarenglobo.com.mx', NULL, '8618501685586', 35, 2, 0, 36, 3, '2019-10-06', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 2, 100.00, 4800.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-10-05 15:21:29', 4),
 (1266, 9, NULL, 'FERNANDO ', 'MENDOZA', 'turismo@volarenglobo.com.mx', NULL, '018002378329', 11, 2, 0, 36, 3, '2019-10-07', NULL, NULL, NULL, NULL, NULL, '2 PAX BESTDAY ID 73970884-1', NULL, NULL, NULL, NULL, 2, 620.00, 3280.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-10-05 15:24:50', 4),
@@ -2309,9 +2548,88 @@ INSERT INTO `temp_volar` (`id_temp`, `idusu_temp`, `clave_temp`, `nombre_temp`, 
 (1270, 9, NULL, 'MA', 'ZEHUA', 'turismo@volarenglobo.com.mx', NULL, '5582217356', 35, 2, 0, 36, 3, '2019-10-06', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 2, 230.00, 6000.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-10-05 15:41:40', 4),
 (1271, 9, NULL, 'EUGENIA', 'ROMERO', 'turismo@volarenglobo.com.mx', NULL, '5951102285', 35, 8, 0, 36, 3, '2019-10-06', NULL, NULL, NULL, NULL, NULL, '8 PAX FULL BOOKING', NULL, NULL, NULL, NULL, 2, 265.00, 21955.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-10-05 15:44:42', 4),
 (1272, 9, NULL, 'HECTOR ', 'GIL', 'turismo@volarenglobo.com.mx', NULL, '5510411697', 11, 3, 0, 36, 3, '2019-10-07', NULL, NULL, NULL, NULL, NULL, 'GRAN TEOCALLI', NULL, NULL, NULL, NULL, 2, 600.00, 5250.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-10-05 15:48:23', 4),
-(1273, 11, NULL, 'DANIELA', 'GOMEZ', 'Dannygomez111@hotmail.com', NULL, '573017123918', 35, 2, 0, 36, 1, '2019-10-25', NULL, NULL, NULL, NULL, NULL, 'INCLUYE\nVUELO LIBRE SOBRE TEOTIHUACAN DE 45 A 60 MINUTOS\nCOFFE BREAK\nBRINDIS CON VINO ESPUMOSO PETILLANT DE FREIXENET\nCERTIFICADO DE VUELO\nSEGURO DE VIAJERO DURANTE LA ACTIVIDAD\nINCLUYE TRANSPORTE IDA Y VUELTA CDMX', NULL, NULL, NULL, NULL, 2, 600.00, 5000.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-10-06 22:07:11', 3),
-(1274, 11, '1247', 'ABRIL', 'ESTEBAN', 'abrilstefany@hotmail.com', NULL, '573002518298', 35, 4, 0, 36, 1, '2019-10-10', NULL, NULL, NULL, NULL, NULL, 'INCLUYE\nVUELO LIBRE SOBRE TEOTIHUACAN DE 45 A 60 MINUTOS\nCOFFEE BREAK\nBRINDIS CON VINO ESPUMOSO PETILLANT DE FREIXENET\nCERTIFICADO DE VUELO\nSEGURO DE VIAJERO DURANTE LA ACTIVIDAD\nDESAYUNOS BUFETTE EN RESTAURANTE GRAN TEOCALLI', NULL, NULL, NULL, NULL, 2, 1200.00, 8560.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-10-07 13:54:58', 3),
-(1275, 16, '1160', 'CARLOS', 'GAMA', 'carl_yop@yahoo.com.mx', NULL, '4434100433', NULL, 12, 2, NULL, 2, '2019-10-20', NULL, NULL, NULL, NULL, NULL, 'TE INCLUYE: \nâ€¢	VUELO LIBRE SOBRE EL VALLE DE TEOTIHUACÃN DE 45 A 60 MINUTOS \nâ€¢	BRINDIS CON VINO ESPUMOSO O JUGO DE FRUTA \nâ€¢	CERTIFICADO DE VUELO PERSONALIZADO \nâ€¢	SEGURO DE VIAJERO DURANTE LA ACTIVIDAD\nâ€¢	COFFE BREAK: CAFE, TE, GALLETAS, PAN.\nâ€¢	DESPLIEGUE DE LONA\nâ€¢	DESAYUNO BUFFETE EN RESTAURANTE GRAN TEOCALLI.\n', NULL, NULL, NULL, NULL, 2, 82.00, 29278.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-10-07 14:17:25', 4);
+(1273, 11, NULL, 'DANIELA', 'GOMEZ', 'Dannygomez111@hotmail.com', NULL, '573017123918', 35, 2, 0, 36, 1, '2019-10-25', NULL, NULL, NULL, NULL, NULL, 'INCLUYE\nVUELO LIBRE SOBRE TEOTIHUACAN DE 45 A 60 MINUTOS\nCOFFE BREAK\nBRINDIS CON VINO ESPUMOSO PETILLANT DE FREIXENET\nCERTIFICADO DE VUELO\nSEGURO DE VIAJERO DURANTE LA ACTIVIDAD\nINCLUYE TRANSPORTE IDA Y VUELTA CDMX', NULL, NULL, NULL, NULL, 2, 600.00, 5000.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-10-06 22:07:11', 6),
+(1274, 11, '1247', 'ABRIL', 'ESTEBAN', 'abrilstefany@hotmail.com', NULL, '573002518298', 35, 4, 0, 36, 1, '2019-10-10', NULL, NULL, NULL, NULL, NULL, 'INCLUYE\nVUELO LIBRE SOBRE TEOTIHUACAN DE 45 A 60 MINUTOS\nCOFFEE BREAK\nBRINDIS CON VINO ESPUMOSO PETILLANT DE FREIXENET\nCERTIFICADO DE VUELO\nSEGURO DE VIAJERO DURANTE LA ACTIVIDAD\nDESAYUNOS BUFETTE EN RESTAURANTE GRAN TEOCALLI', NULL, NULL, NULL, NULL, 2, 1200.00, 8560.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-10-07 13:54:58', 6),
+(1275, 16, '1160', 'CARLOS', 'GAMA', 'carl_yop@yahoo.com.mx', NULL, '4434100433', NULL, 12, 2, NULL, 2, '2019-10-20', NULL, NULL, NULL, NULL, NULL, 'TE INCLUYE: \nâ€¢	VUELO LIBRE SOBRE EL VALLE DE TEOTIHUACÃN DE 45 A 60 MINUTOS \nâ€¢	BRINDIS CON VINO ESPUMOSO O JUGO DE FRUTA \nâ€¢	CERTIFICADO DE VUELO PERSONALIZADO \nâ€¢	SEGURO DE VIAJERO DURANTE LA ACTIVIDAD\nâ€¢	COFFE BREAK: CAFE, TE, GALLETAS, PAN.\nâ€¢	DESPLIEGUE DE LONA\nâ€¢	DESAYUNO BUFFETE EN RESTAURANTE GRAN TEOCALLI.\n', NULL, NULL, NULL, NULL, 2, 82.00, 29278.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-10-07 14:17:25', 8),
+(1280, 14, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, 0.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-10-08 12:58:08', 0),
+(1281, 14, NULL, 'FLORA', 'MONTERO', 'volarenglobo@yahoo.es', NULL, '50683028841', 35, 2, 0, 38, 1, '2019-11-04', NULL, NULL, NULL, NULL, NULL, 'VUELO COMPARTIDO PARA 4 PERSONAS, VUELO SOBRE EL VALLE DE TEOTIHUACAN, DURANTE 45 MINS APROX, INCLUYE COFFE BREAK (CAFÃ‰, TE, PAN GALLETAS) SEGURO DE VIAJERO, CERTIFICADO PERSONALIZADO, TRANSPORTE DURANTE LA ACTIVIDAD, BRINDIS CON VINO ESPUMOSO, DESPLIEGUE DE LONA FELIZ CUMPLEAÃ‘OS , PASTEL CUMPLEÃ‘ERO,TRANSPORTE REDONDO', 'DESAYUNOS', 198.00, NULL, NULL, NULL, 0.00, 5798.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-10-08 13:20:33', 8),
+(1282, 14, NULL, 'ESTHER', 'SALAS', 'volarenglobo@yahoo.es', NULL, '50687634255', 35, 4, 0, 36, 1, '2019-10-11', NULL, NULL, NULL, NULL, NULL, 'VUELO COMPARTIDO PARA 4 PERSONAS, VUELO SOBRE EL VALLE DE TEOTIHUACAN, DURANTE 45 MINS APROX, INCLUYE COFFE BREAK (CAFÃ‰, TE, PAN GALLETAS) SEGURO DE VIAJERO, CERTIFICADO PERSONALIZADO, TRANSPORTE DURANTE LA ACTIVIDAD, BRINDIS CON VINO ESPUMOSO, DESAYUNO BUFFET ', NULL, NULL, NULL, NULL, NULL, 0.00, 0.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-10-08 13:24:31', 0),
+(1283, 11, '1274', 'ABRIL', 'ESTEBAN', 'abrilstefany@hotmail.com', '573002518298', '573002518298', 35, 4, 0, 36, 1, '2019-10-11', NULL, NULL, NULL, NULL, NULL, 'INCLUYE\nVUELO LIBRE SOBRE TEOTIHUACAN DE 45 A 60 MINUTOS\nCOFFEE BREAK\nBRINDIS CON VINO ESPUMOSO PETILLANT DE FREIXENET\nCERTIFICADO DE VUELO\nSEGURO DE VIAJERO DURANTE LA ACTIVIDAD\nDESAYUNOS BUFETTE EN RESTAURANTE GRAN TEOCALLI', NULL, NULL, NULL, NULL, 2, 1200.00, 8560.00, 0, 260.00, 1, 0, NULL, 1, NULL, '2019-10-08 14:10:26', 4),
+(1284, 14, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, 0.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-10-08 14:26:53', 0),
+(1285, 14, NULL, 'ESTHER', 'SALAS', 'volarenglobo@yahoo.es', NULL, '50687634255', 35, 4, 0, 36, 1, '2019-10-11', NULL, 1, 20, '2019-10-10', '2019-10-11', 'VUELO COMPARTIDO PARA 4 PERSONAS, VUELO SOBRE EL VALLE DE TEOTIHUACAN, DURANTE 45 MINS APROX, INCLUYE COFFE BREAK (CAFÃ‰, TE, PAN GALLETAS) SEGURO DE VIAJERO, CERTIFICADO PERSONALIZADO, TRANSPORTE DURANTE LA ACTIVIDAD, BRINDIS CON VINO ESPUMOSO, DESPLIEGUE DE LONA,DESAYUNO BUFFET ', 'DESAYUNOS', 396.00, NULL, NULL, NULL, 0.00, 9596.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-10-08 15:24:43', 6),
+(1286, 14, NULL, 'CAMILO', 'SIERRA', 'volarenglobo@yahoo.es', NULL, '5570991245', 35, 4, 0, 36, 4, '2019-10-12', NULL, NULL, NULL, NULL, NULL, 'VUELO PRIVADO PARA 4 PERSONAS , VUELO SOBRE VALLE DE TEOTIHUACAN DURANTE 45 MINS APROX , COFFE BREAK INCLUIDO (CAFÃ‰,TE,CAFÃ‰,PAN) SEGURO DE VIAJERO,CERTIFICADO PERSONALIZADO,TRANSPORTE DURANTE LA ACTIVIDAD, BRINDIS CON VINO ESPUMOSO, DESAYUNO EN RESTAURANTE GRAN TEOCALLI Y FOTOGRAFIA IMPRESA A ELEGIR.', NULL, NULL, NULL, NULL, 2, 1000.00, 15000.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-10-08 15:44:45', 8),
+(1287, 14, NULL, 'VIRGINIA', 'SANDOVAL', 'volarenglobo@yahoo.es', NULL, '5541823033', 35, 2, 0, 38, 1, '2019-11-09', NULL, NULL, NULL, '2019-11-08', '2019-11-09', 'VUELO COMPARTIDO PARA 2PERSONAS, VUELO SOBRE EL VALLE DE TEOTIHUACAN, DURANTE 45 MINS APROX, INCLUYE COFFE BREAK (CAFÃ‰, TE, PAN GALLETAS) SEGURO DE VIAJERO, CERTIFICADO PERSONALIZADO, TRANSPORTE DURANTE LA ACTIVIDAD, BRINDIS CON VINO ESPUMOSO, DESPLIEGUE DE LONA FELIZ CUMPLEAÃ‘OS,DESAYUNO BUFFET', 'DESAYUNOS', 198.00, NULL, NULL, NULL, 0.00, 4798.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-10-09 13:51:32', 6),
+(1288, 14, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, 0.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-10-09 14:01:28', 0),
+(1289, 14, '1287', 'VIRGINIA', 'SANDOVAL', 'volarenglobo@yahoo.es', NULL, '5541823033', 35, 2, 0, 38, 1, '2019-11-09', NULL, 1, 25, '2019-11-08', '2019-11-09', 'VUELO COMPARTIDO PARA 2PERSONAS, VUELO SOBRE EL VALLE DE TEOTIHUACAN, DURANTE 45 MINS APROX, INCLUYE COFFE BREAK (CAFÃ‰, TE, PAN GALLETAS) SEGURO DE VIAJERO, CERTIFICADO PERSONALIZADO, TRANSPORTE DURANTE LA ACTIVIDAD, BRINDIS CON VINO ESPUMOSO, DESPLIEGUE DE LONA FELIZ CUMPLEAÃ‘OS,DESAYUNO BUFFET', 'DESAYUNOS', 198.00, NULL, NULL, NULL, 0.00, 6098.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-10-09 14:23:33', 8),
+(1290, 1, NULL, 'ENRIQUE', 'DAMASCO', 'enriquealducin@outlook.com', NULL, '5529227672', 14, 2, 0, 39, 1, '2019-10-10', NULL, 1, 25, '2019-10-09', '2019-10-10', 'VUELO COMPARTIDO PARA 2PERSONAS, VUELO SOBRE EL VALLE DE TEOTIHUACAN, DURANTE 45 MINS APROX, INCLUYE COFFE BREAK (CAFÃ‰, TE, PAN GALLETAS) SEGURO DE VIAJERO, CERTIFICADO PERSONALIZADO, TRANSPORTE DURANTE LA ACTIVIDAD, BRINDIS CON VINO ESPUMOSO, DESPLIEGUE DE LONA FELIZ CUMPLEAÃ‘OS,DESAYUNO BUFFET', 'DESAYUNOS', 180.00, NULL, NULL, NULL, 0.00, 6080.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-10-09 23:16:36', 0),
+(1291, 16, NULL, 'FRANCISCO', 'ISAY', 'reserva@volarenglobo.com.mx', NULL, '9841200221', NULL, 4, 0, 39, 5, '2019-10-26', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, 13000.00, 0, 320.00, 1, 0, NULL, 1, 'â€¢	Vuelo en globo exclusivo/ Brindis en vuelo con vino espumoso Freixenet/ Certificado de vuelo/ Seguro viajero/ Desayuno tipo Buffet / TransportaciÃ³n local / Despliegue de lona Â¿Te quieres casar conmigo?/ Foto Impresa/ Coffee Break', '2019-10-10 11:16:01', 8),
+(1292, 14, NULL, 'CLARA ESTEFANIA', 'BRAVO', 'volarenglobo@yahoo.es', NULL, '5530396750', 35, 2, 0, 37, 4, '2019-10-13', NULL, NULL, NULL, NULL, NULL, 'VUELO PRIVADO PARA 2 PERSONAS , VUELO SOBRE VALLE DE TEOTIHUACAN DURANTE 45 MINS APROX , COFFE BREAK INCLUIDO (CAFÃ‰,TE,CAFÃ‰,PAN) SEGURO DE VIAJERO,CERTIFICADO PERSONALIZADO,TRANSPORTE DURANTE LA ACTIVIDAD, BRINDIS CON VINO ESPUMOSO,DESPLIEGUE DE LONA , DESAYUNO EN RESTAURANTE  Y FOTOGRAFIA IMPRESA A ELEGIR.', NULL, NULL, NULL, NULL, NULL, 0.00, 7000.00, 0, 144.00, 1, 0, NULL, 1, NULL, '2019-10-10 11:51:32', 7),
+(1293, 14, NULL, 'FERNANDO', 'RODRIGUEZ', 'volarenglobo@yahoo.es', NULL, '5560836026', 11, 2, 0, 38, 1, '2019-10-13', NULL, NULL, NULL, NULL, NULL, 'VUELO COMPARTIDO PARA 2 PERSONAS, VUELO SOBRE EL VALLE DE TEOTIHUACAN, DURANTE 45 MINS APROX, INCLUYE COFFE BREAK (CAFÃ‰, TE, PAN GALLETAS) SEGURO DE VIAJERO, CERTIFICADO PERSONALIZADO, TRANSPORTE DURANTE LA ACTIVIDAD, BRINDIS CON VINO ESPUMOSO, DESPLIEGUE DE LONA, DESAYUNO BUFFET', 'DESAYUNOS', 198.00, NULL, NULL, NULL, 0.00, 4798.00, 0, 118.00, 1, 0, NULL, 1, NULL, '2019-10-10 11:55:43', 7),
+(1294, 14, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, 0.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-10-10 12:05:52', 0),
+(1295, 14, '1285', 'ESTHER', 'SALAS', 'volarenglobo@yahoo.es', NULL, '50687634255', 35, 4, 0, 36, 1, '2019-10-11', NULL, 1, 20, '2019-10-10', '2019-10-11', 'VUELO COMPARTIDO PARA 4 PERSONAS, VUELO SOBRE EL VALLE DE TEOTIHUACAN, DURANTE 45 MINS APROX, INCLUYE COFFE BREAK (CAFÃ‰, TE, PAN GALLETAS) SEGURO DE VIAJERO, CERTIFICADO PERSONALIZADO, TRANSPORTE DURANTE LA ACTIVIDAD, BRINDIS CON VINO ESPUMOSO, DESPLIEGUE DE LONA,DESAYUNO BUFFET ', 'DESAYUNOS', 396.00, NULL, NULL, NULL, 0.00, 11246.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-10-10 12:12:43', 4),
+(1296, 16, NULL, 'JOHANA', 'HERNANDEZ', 'reserva@volarenglobo.com.mx', NULL, '59323824192', NULL, 3, 0, 38, 1, '2019-11-09', NULL, NULL, NULL, NULL, NULL, 'Vuelo compartido sobre el Valle de TeotihuacÃ¡n, 45 min/ Certificado personalizado/ Brindis con vino blanco espumoso Freixenet o jugo de naranja/ Desayuno tipo Buffet / Seguro viajero/ Coffee break / Despliegue de lona FELIZ CUMPLE!', NULL, NULL, NULL, NULL, NULL, 0.00, 9320.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-10-10 12:18:47', 4),
+(1297, 14, NULL, 'ROXANA', 'CHINCHILLA', 'volarenglobo@yahoo.es', NULL, '50670757527', 35, 2, 0, 36, 1, '2019-10-13', NULL, NULL, NULL, NULL, NULL, 'VUELO COMPARTIDO PARA 4 PERSONAS, VUELO SOBRE EL VALLE DE TEOTIHUACAN, DURANTE 45 MINS APROX, INCLUYE COFFE BREAK (CAFÃ‰, TE, PAN GALLETAS) SEGURO DE VIAJERO, CERTIFICADO PERSONALIZADO, TRANSPORTE DURANTE LA ACTIVIDAD, BRINDIS CON VINO ESPUMOSO, DESAYUNO BUFFET, TRANSPORTE REDONDO', 'DESAYUNOS', 198.00, NULL, NULL, NULL, 0.00, 5798.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-10-10 16:06:07', 8),
+(1298, 9, NULL, 'FRANKIE', 'PAEZ', 'turismo@volarenglobo.com.mx', NULL, '593960269088', 35, 2, 0, NULL, 3, '2019-10-11', NULL, NULL, NULL, NULL, NULL, '2 PAX COMPARTIDO TURISKY', NULL, NULL, NULL, NULL, 2, 800.00, 4100.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-10-10 18:13:28', 4),
+(1299, 9, NULL, 'AILYN', 'ECHEVERRY', 'turismo@volarenglobo.com.mx', NULL, '5510411697', 11, 5, 0, 36, 3, '2019-10-11', NULL, NULL, NULL, NULL, NULL, '5 PAX COMPARTIDO GRAN TEOCALLI', NULL, NULL, NULL, NULL, 2, 1000.00, 8750.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-10-10 18:21:06', 4),
+(1300, 9, NULL, 'SR', 'JINDAL', 'turismo@volarenglobo.com.mx', NULL, '5535258091', 35, 2, 0, 36, 16, '2019-10-11', NULL, NULL, NULL, NULL, NULL, '2 PAX PRIVADO NOMADIC', NULL, NULL, NULL, NULL, NULL, 0.00, 6000.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-10-10 18:27:11', 7),
+(1301, 9, NULL, 'ALIA ', 'HASBUN', 'turismo@volarenglobo.com.mx', NULL, '50377972228', 35, 2, 0, 36, 3, '2019-10-11', NULL, NULL, NULL, NULL, NULL, '2 PAX EXPEDIA SOLO VUELO', NULL, NULL, NULL, NULL, NULL, 0.00, 3900.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-10-10 18:38:23', 4),
+(1302, 9, NULL, 'PAOLA ', 'AGUDELO', 'turismo@volarenglobo.com.mx', NULL, '16464983609', 11, 3, 0, 36, 3, '2019-10-11', NULL, NULL, NULL, NULL, NULL, '3 PAX COMPARTIDO EXPEDIA', NULL, NULL, NULL, NULL, NULL, 0.00, 5850.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-10-10 18:42:05', 4),
+(1303, 16, NULL, 'JUAN DIEGO', 'ASTURIAS', 'reserva@volarenglobo.com.mx', NULL, '50254144387', NULL, 10, 0, 36, 2, '2019-10-12', NULL, NULL, NULL, NULL, NULL, 'Vuelo compartido sobre el Valle de TeotihuacÃ¡n, 45 min/ Certificado personalizado/ Brindis con vino blanco espumoso Freixenet o jugo de naranja/ Desayuno tipo Buffet / Seguro viajero/ Coffee break / Despliegue de lona FELIZ VUELO', 'TRANSPORTE REDONDO 1', 3500.00, 'CARGO POR PESO EXTRA', 2255.00, NULL, 0.00, 25755.00, 0, 877.00, 1, 0, NULL, 1, NULL, '2019-10-11 12:42:37', 7),
+(1304, 16, NULL, 'GERMAN ', 'RUA', 'reserva@volarenglobo.com.mx', NULL, '2225053140', NULL, 2, 0, 39, 4, '2019-10-12', NULL, NULL, NULL, NULL, NULL, 'â€¢	Vuelo en globo exclusivo/ Brindis en vuelo con vino espumoso Freixenet/ Certificado de vuelo/ Seguro viajero/ Desayuno tipo Buffet / TransportaciÃ³n local / Despliegue de lona Â¿Te quieres casar conmigo?/ Foto Impresa/ Coffee Break', NULL, NULL, NULL, NULL, NULL, 0.00, 7000.00, 0, 145.00, 1, 0, NULL, 1, NULL, '2019-10-11 12:54:36', 7),
+(1305, 16, NULL, 'CATALINA', 'REYES', 'reserva@volarenglobo.com.mx', NULL, '5579294275', NULL, 2, 2, 36, 4, '2019-10-12', NULL, NULL, NULL, NULL, NULL, 'â€¢	Vuelo en globo exclusivo/ Brindis en vuelo con vino espumoso Freixenet/ Certificado de vuelo/ Seguro viajero/ Desayuno tipo Buffet / TransportaciÃ³n local / Despliegue de lona FELIZ VUELO / Foto Impresa/ Coffee Break', NULL, NULL, NULL, NULL, 2, 2.00, 10598.00, 0, 175.00, 1, 0, NULL, 1, NULL, '2019-10-11 13:01:29', 7),
+(1306, 16, NULL, 'ANGEL', 'SANCHEZ', 'reserva@volarenglobo.com.mx', NULL, '5520982520', NULL, 2, 0, 38, 1, '2019-10-12', NULL, NULL, NULL, NULL, NULL, 'Vuelo compartido sobre el Valle de TeotihuacÃ¡n, 45 min/ Certificado personalizado/ Brindis con vino blanco espumoso Freixenet o jugo de naranja / Seguro viajero/ Coffee break / Despliegue de lona ', NULL, NULL, NULL, NULL, NULL, 0.00, 4600.00, 0, 125.00, 1, 0, NULL, 1, 'El pax lleva su propia lona y botella para brindar con su hija, favor de pedirla para el despliegue', '2019-10-11 13:11:01', 7),
+(1307, 14, NULL, 'MARTHA', 'FLORES', 'volarenglobo@yahoo.es', NULL, '5214425983335', 11, 2, 1, 36, 1, '2019-10-27', NULL, NULL, NULL, NULL, NULL, 'VUELO COMPARTIDO PARA 2 ADULTOS 1 MENOR , VUELO SOBRE EL VALLE DE TEOTIHUACAN, DURANTE 45 MINS APROX, INCLUYE COFFE BREAK (CAFÃ‰, TE, PAN GALLETAS) SEGURO DE VIAJERO, CERTIFICADO PERSONALIZADO, TRANSPORTE DURANTE LA ACTIVIDAD, BRINDIS CON VINO ESPUMOSO, DESAYUNO BUFFET Y TRANSPORTE REDONDO (CENTRO)', 'DESAYUNOS', 297.00, NULL, NULL, NULL, 0.00, 8097.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-10-11 13:24:30', 8),
+(1308, 14, NULL, 'FERNANDO', 'RODRIGUEZ', 'volarenglobo@yahoo.es', NULL, '5560836026', 11, 2, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, 0.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-10-11 13:30:23', 0),
+(1309, 16, NULL, 'MARTIN', 'MONTIEL', 'volarenglobo@yahoo.es', NULL, '5575110019', NULL, 2, 0, 38, 1, '2019-10-13', NULL, NULL, NULL, NULL, NULL, 'Vuelo compartido sobre el Valle de TeotihuacÃ¡n, 45 min/ Certificado personalizado/ Brindis con vino blanco espumoso Freixenet o jugo de naranja/ Desayuno tipo Buffet / Seguro viajero/ Coffee break / Despliegue de lona FELIZ CUMPLE', NULL, NULL, NULL, NULL, 2, 82.00, 5098.00, 0, 140.00, 1, 0, NULL, 1, 'INCLUYE RAMO DE ROSAS Y DESAYUNOS', '2019-10-11 13:34:27', 7),
+(1310, 14, NULL, 'LUZ ERIKA', 'GONZALEZ', 'volarenglobo@yahoo.es', NULL, '5513894679', 35, 2, 1, 36, 1, '2019-10-13', NULL, NULL, NULL, NULL, NULL, 'VUELO COMPARTIDO PARA 2 ADULTOS 1 MENOR , VUELO SOBRE EL VALLE DE TEOTIHUACAN, DURANTE 45 MINS APROX, INCLUYE COFFE BREAK (CAFÃ‰, TE, PAN GALLETAS) SEGURO DE VIAJERO, CERTIFICADO PERSONALIZADO, TRANSPORTE DURANTE LA ACTIVIDAD, BRINDIS CON VINO ESPUMOSO, DESAYUNO BUFFET ', 'DESAYUNOS', 297.00, NULL, NULL, NULL, 0.00, 7097.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-10-11 13:34:56', 7),
+(1311, 16, NULL, 'ARACELI', 'BRAVO', 'aracelibravoc93@gmail.com', NULL, '5536680941', NULL, 2, 0, 38, 4, '2019-10-13', NULL, NULL, NULL, NULL, NULL, 'â€¢	Vuelo en globo exclusivo/ Brindis en vuelo con vino espumoso Freixenet/ Certificado de vuelo/ Seguro viajero/ Desayuno tipo Buffet / TransportaciÃ³n local / Despliegue de lona FELIZ CUMPLE / Foto Impresa/ Coffbreak', 'TRANSPORTE REDONDO Z', 700.00, NULL, NULL, NULL, 0.00, 7700.00, 0, 135.00, 1, 0, NULL, 1, NULL, '2019-10-11 13:41:48', 7),
+(1312, 16, NULL, 'SEBASTIAN ', 'CORDERO', 'volarenglobo@yahoo.es', NULL, '50688820411', NULL, 2, 0, 36, 1, '2019-10-12', NULL, NULL, NULL, NULL, NULL, 'Vuelo compartido sobre el Valle de TeotihuacÃ¡n, 45 min/ Certificado personalizado/ Brindis con vino blanco espumoso Freixenet o jugo de naranja/ Desayuno tipo Buffet  / Seguro viajero/ Coffee break / Despliegue de lona', NULL, NULL, NULL, NULL, 2, 82.00, 5798.00, 0, 142.00, 1, 0, NULL, 1, NULL, '2019-10-11 13:53:15', 3),
+(1313, 16, NULL, 'ALFREDO', 'ACOSTA', 'volarenglobo@yahoo.es', NULL, '5528556005', NULL, 3, 1, 38, 1, '2019-10-13', NULL, NULL, NULL, NULL, NULL, 'Vuelo compartido sobre el Valle de TeotihuacÃ¡n, 45 min/ Certificado personalizado/ Brindis con vino blanco espumoso Freixenet o jugo de naranja/ Desayuno tipo Buffet / Seguro viajero/ Coffee break / Despliegue de lona FELIZ CUMPLE!', NULL, NULL, NULL, NULL, 2, 164.00, 8996.00, 0, 275.00, 1, 0, NULL, 1, NULL, '2019-10-11 14:37:29', 8),
+(1314, 14, NULL, 'OSCAR', 'GODINEZ', 'volarenglobo@yahoo.es', NULL, '5523270422', 35, 2, 0, 36, 1, '2019-10-12', NULL, NULL, NULL, NULL, NULL, 'VUELO COMPARTIDO PARA 2 PERSONAS, VUELO SOBRE EL VALLE DE TEOTIHUACAN, DURANTE 45 MINS APROX, INCLUYE COFFE BREAK (CAFÃ‰, TE, PAN GALLETAS) SEGURO DE VIAJERO, CERTIFICADO PERSONALIZADO, TRANSPORTE DURANTE LA ACTIVIDAD, BRINDIS CON VINO ESPUMOSO, DESAYUNO BUFFET ', 'DESAYUNOS', 198.00, NULL, NULL, NULL, 0.00, 4798.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-10-11 14:49:07', 7),
+(1315, 14, NULL, 'MARIBEL ', 'GONZALEZ', 'volarenglobo@yahoo.es', NULL, '15155200210', 35, 8, 0, NULL, 1, '2019-10-12', NULL, NULL, NULL, NULL, NULL, 'VUELO COMPARTIDO PARA 8 PERSONAS, VUELO SOBRE EL VALLE DE TEOTIHUACAN, DURANTE 45 MINS APROX, INCLUYE COFFE BREAK (CAFÃ‰, TE, PAN GALLETAS) SEGURO DE VIAJERO, CERTIFICADO PERSONALIZADO, TRANSPORTE DURANTE LA ACTIVIDAD, BRINDIS CON VINO ESPUMOSO, DESPLIEGUE DE LONA FELIZ CUMPLEAÃ‘OS , DESAYUNO Y PASTEL PARA CUMPLEAÃ‘ERO', 'DESAYUNOS', 792.00, NULL, NULL, 2, 2399.00, 16793.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-10-11 15:05:43', 7),
+(1316, 16, NULL, 'MONICA', 'MORENO', 'Monicamariamp@gmail.com', NULL, '573143608808', NULL, 11, 0, 36, 2, '2019-10-25', NULL, NULL, NULL, NULL, NULL, 'Vuelo compartido sobre el Valle de TeotihuacÃ¡n, 45 min/ Certificado personalizado/ Brindis con vino blanco espumoso Freixenet o jugo de naranja/ Desayuno tipo Buffet / Seguro viajero/ Coffee break / Despliegue de lona segÃºn la ocasiÃ³n ', 'TRANSPORTE REDONDO 1', 3500.00, NULL, NULL, NULL, 0.00, 27040.00, 0, 0.00, 1, 0, NULL, 1, 'va una persona en silla de ruedas ligera ', '2019-10-11 15:11:22', 8),
+(1317, 14, NULL, 'ALMA LORENA', 'GALAVIZ', 'volarenglobo@yahoo.es', NULL, '5513387379', 35, 2, 0, 38, 1, '2019-10-12', NULL, NULL, NULL, NULL, NULL, 'VUELO COMPARTIDO PARA 2 PERSONAS, VUELO SOBRE EL VALLE DE TEOTIHUACAN, DURANTE 45 MINS APROX, INCLUYE COFFE BREAK (CAFÃ‰, TE, PAN GALLETAS) SEGURO DE VIAJERO, CERTIFICADO PERSONALIZADO, TRANSPORTE DURANTE LA ACTIVIDAD, BRINDIS CON VINO ESPUMOSO, DESPLIEGUE DE LONA FELIZ CUMPLEAÃ‘OS, DESAYUNO BUFFET  Y PASTEL PARA CUMPLEAÃ‘ERO, GUIA, ENTRADAS A ZONA ARQUEOLOGICA ', 'DESAYUNOS ', 198.00, 'ENTRADA A ZONA ARQUE', 150.00, NULL, 0.00, 5848.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-10-11 15:19:26', 8),
+(1318, 14, NULL, 'JULIAN ', 'FERNANDEZ', 'volarenglobo@yahoo.es', NULL, '573204643252', 35, 2, 0, 36, 4, '2019-10-14', NULL, NULL, NULL, NULL, NULL, 'VUELO PRIVADO PARA 2 PERSONAS , VUELO SOBRE VALLE DE TEOTIHUACAN DURANTE 45 MINS APROX , COFFE BREAK INCLUIDO (CAFÃ‰,TE,CAFÃ‰,PAN) SEGURO DE VIAJERO,CERTIFICADO PERSONALIZADO,TRANSPORTE DURANTE LA ACTIVIDAD, BRINDIS CON VINO ESPUMOSO,DESAYUNO EN RESTAURANTE  Y FOTOGRAFIA IMPRESA A ELEGIR.', NULL, NULL, NULL, NULL, NULL, 0.00, 10000.00, 0, 138.00, 1, 0, NULL, 1, 'pago por error $10.500.00 por conekta, favor de regresar  $500.00 pesos en sitio', '2019-10-11 15:53:16', 7),
+(1319, 9, NULL, 'JESUS', 'REYES ROBLES', 'turismo@volarenglobo.com.mx', NULL, '5577108350', 17, 2, 1, NULL, 3, '2019-10-13', NULL, NULL, NULL, NULL, NULL, 'VUELO COMPARTIDO 3 PAX DE 45 MINUTOS APROX SOBRE EL VALLE DE TEOTIHUACAN. SEGURO DE VIAJERO. COFFEE BREAK ANTES DEL VUELO. BRINDIS CON VINO ESPUMOSO Y JUGO PARA EL MENOR. CERTIFICADO PERSONALIZADO. ', 'AJUSTE', 250.00, NULL, NULL, NULL, 0.00, 5850.00, 0, 159.00, 1, 0, NULL, 1, NULL, '2019-10-11 16:27:58', 4),
+(1320, 16, NULL, 'ALEJANDRO', 'LOPEZ', 'Alopezdelap@yahoo.com.mx', NULL, '5527373545', NULL, 2, 0, NULL, 4, '2019-10-13', NULL, NULL, NULL, NULL, NULL, 'â€¢	Vuelo en globo exclusivo sobre el valle de TeotihuacÃ¡n 45 a 60 minutos/ Brindis en vuelo con vino espumoso Freixenet/ Certificado Personalizado de vuelo/ Seguro viajero/ Desayuno tipo Buffet  (Restaurante Gran Teocalli o Rancho Azteca)/ TransportaciÃ³n local / Despliegue de lona / Foto Impresa/ Coffee Break antes del vuelo CafÃ©, TÃ©, galletas, pan, fruta.', NULL, NULL, NULL, NULL, NULL, 0.00, 7000.00, 0, 150.00, 1, 0, NULL, 1, 'INCLUYE DESAYUNOS Y FOTO IMPRESA/ FIRMAR CARTA DE PAGO POR CONEKTA PEDIDO 4135 /PEDIR TARJETA DE CREDITO  E IDENTIFICACIÃ“N', '2019-10-11 16:40:03', 7),
+(1321, 16, NULL, 'ANGELA', 'MARTINEZ', 'ange_la69@hotmail.com', NULL, '5544882746', NULL, 3, 0, NULL, 1, '2019-10-13', NULL, NULL, NULL, NULL, NULL, 'Vuelo compartido sobre el Valle de TeotihuacÃ¡n, 45 min/ Certificado personalizado/ Brindis con vino blanco espumoso Freixenet o jugo de naranja/ Desayuno tipo Buffet / Seguro viajero/ Coffee break / Despliegue de lona segÃºn la ocasiÃ³n ', NULL, NULL, NULL, NULL, 2, 123.00, 7197.00, 0, 160.00, 1, 0, NULL, 1, 'INCLUYE DESAYUNOS/ FIRMAR CARTA DE PAGO CON TC/ PEDIR ID/ PAGA CON TARJETA BANCOMER PUEDE SER A MESES SIN COMISION DEL 4%/ SE ENVIA TICKET DE PAGO EN TERMINAL DE OFICINA', '2019-10-11 16:54:43', 7),
+(1322, 9, NULL, 'MOLLY', 'BERNSTEIN', 'turismo@volarenglobo.com.mx', NULL, '4365444', 11, 2, 0, 36, 3, '2019-10-11', NULL, NULL, NULL, NULL, NULL, '2 PAX COMPARTIDO SOLO VUELO TRIPADVISOR', NULL, NULL, NULL, NULL, NULL, 0.00, 3900.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-10-11 17:07:15', 3),
+(1323, 9, NULL, 'MOLLY', 'BERNSTEIN', 'turismo@volarenglobo.com.mx', NULL, '4365444', 11, 2, 0, 36, 3, '2019-10-12', NULL, NULL, NULL, NULL, NULL, '2 PAX COMPARTIDO TRIPAVDISOR', NULL, NULL, NULL, NULL, NULL, 0.00, 3900.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-10-11 17:31:37', 7),
+(1324, 9, NULL, 'AMAPOLA', 'HERNANDEZ', 'turismo@volarenglobo.com.mx', NULL, '5951162669', 11, 8, 0, 36, 3, '2019-10-12', NULL, NULL, NULL, NULL, NULL, '8 PAX BOOKING FULL', NULL, NULL, NULL, NULL, 2, 265.00, 21955.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-10-11 17:40:34', 7),
+(1325, 9, NULL, 'EDWIN OSWALDO', 'GAMBOA', 'turismo@volarenglobo.com.mx', NULL, '5516123007', 11, 2, 0, NULL, 3, '2019-10-12', NULL, NULL, NULL, NULL, NULL, '2 PAX COMPARTIDO WAYAK', NULL, NULL, NULL, NULL, 2, 530.00, 5700.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-10-11 17:48:05', 8),
+(1326, 9, NULL, 'EZRA', 'FLORES', 'turismo@volarenglobo.com.mx', NULL, '5549107054', 11, 6, 0, 36, 3, '2019-10-12', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, 11700.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-10-11 17:55:03', 7),
+(1327, 9, NULL, 'HERNALDO', 'SALAZAR', 'turismo@volarenglobo.com.mx', NULL, '573155070810', 35, 2, 0, 36, 1, '2019-10-13', NULL, NULL, NULL, NULL, NULL, '2 PAX CONEKTA PED 3940', NULL, NULL, NULL, NULL, 2, 82.00, 6698.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-10-11 18:00:03', 7),
+(1328, 9, NULL, 'FATIMA', 'PEREZGALAN', 'turismo@volarenglobo.com.mx', NULL, '5575078771', 35, 10, 0, 36, 3, '2019-10-13', NULL, NULL, NULL, NULL, NULL, '10 PAX COMPARTIDO BOOKING', NULL, NULL, NULL, NULL, 2, 775.00, 26775.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-10-11 18:10:16', 8),
+(1329, 9, NULL, 'MABELY', 'SAUCEDO', 'turismo@volarenglobo.com.mx', NULL, '5541397659', 35, 8, 0, 36, 3, '2019-10-13', NULL, NULL, NULL, NULL, NULL, '/8 PAX FULL BOOKING', NULL, NULL, NULL, NULL, 2, 265.00, 21955.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-10-11 18:14:27', 8),
+(1330, 9, NULL, 'RODOLFO', 'DAVILA', 'turismo@volarenglobo.com.mx', NULL, '99999', NULL, 8, 0, NULL, 3, '2019-10-13', NULL, NULL, NULL, NULL, NULL, '8 PAX ESPIRITU AVENTURERO', NULL, NULL, NULL, NULL, NULL, 0.00, 15600.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-10-11 18:20:02', 7),
+(1331, 16, NULL, 'MISSAEL', 'OLMEDO', 'ricardo.olmedo@live.com.mx', NULL, '5544200675', NULL, 3, 0, 38, 2, '2019-10-12', NULL, NULL, NULL, NULL, NULL, 'Vuelo compartido sobre el Valle de TeotihuacÃ¡n, 45 min/ Certificado personalizado/ Brindis con vino blanco espumoso Freixenet o jugo de naranja/ Seguro viajero/ Coffee break / Despliegue de lona FELIZ CUMPLE!', NULL, NULL, NULL, NULL, NULL, 0.00, 6000.00, 0, 0.00, 1, 0, NULL, 1, 'vuelo bÃ¡sico, precio GuÃ­a Missael Olmedo', '2019-10-11 18:22:53', 6),
+(1332, 9, NULL, 'ZHENG', 'BOQING', 'turismo@volarenglobo.com.mx', NULL, '5582217356', 35, 4, 0, 36, 3, '2019-10-14', NULL, NULL, NULL, NULL, NULL, '4 PAX COMPARTIDO KAYTRIP', NULL, NULL, NULL, NULL, 2, 460.00, 11100.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-10-11 18:28:18', 7),
+(1333, 9, NULL, 'DANIEL', 'CIFUENTES', 'turismo@volarenglobo.com.mx', NULL, '5510411697', NULL, 2, 0, 36, 3, '2019-10-14', NULL, NULL, NULL, NULL, NULL, '2 PAX GRAN TEOCALLI', NULL, NULL, NULL, NULL, 2, 400.00, 3500.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-10-11 18:33:54', 8),
+(1334, 16, NULL, 'SANTIAGO', 'LECUE', 'esplecue@hotmail.com', NULL, '5549005820', NULL, 1, 0, NULL, 1, '2019-10-12', NULL, NULL, NULL, NULL, NULL, 'Vuelo compartido sobre el Valle de TeotihuacÃ¡n, 45 min/ Certificado personalizado/ Brindis con vino blanco espumoso Freixenet o jugo de naranja/ Desayuno tipo Buffet / Seguro viajero/ Coffee break / ', NULL, NULL, NULL, NULL, 2, 41.00, 2899.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-10-11 18:57:01', 6),
+(1335, 16, '1334', 'SANTIAGO', 'LECUE', 'eselecue@hotmail.com', NULL, '5549005820', NULL, 1, 0, NULL, 1, '2019-10-12', NULL, NULL, NULL, NULL, NULL, 'Vuelo compartido sobre el Valle de TeotihuacÃ¡n, 45 min/ Certificado personalizado/ Brindis con vino blanco espumoso Freixenet o jugo de naranja/ Desayuno tipo Buffet / Seguro viajero/ Coffee break / ', NULL, NULL, NULL, NULL, 2, 41.00, 2899.00, 0, 70.00, 1, 0, NULL, 1, NULL, '2019-10-11 19:02:27', 7),
+(1336, 16, NULL, 'CARMENZA', 'TARACHI', 'luisfeolarte@gmail.com', NULL, '573107833093', NULL, 4, 0, NULL, 1, '2019-10-14', NULL, NULL, NULL, NULL, NULL, 'Vuelo compartido 45 a 60 minutos\nBrindis con vino espumoso\nCertificado de vuelo\nSeguro viajero\nCoffe break\n', NULL, NULL, NULL, NULL, NULL, 0.00, 9200.00, 0, 280.00, 1, 0, NULL, 1, NULL, '2019-10-12 11:42:20', 8),
+(1337, 14, NULL, 'REBECA', 'SANTANCRUZ', 'volarenglobo@yahoo.es', NULL, '593997331443', 35, 2, 0, 37, 4, '2019-11-03', NULL, NULL, NULL, NULL, NULL, 'VUELO PRIVADO PARA 2 PERSONAS,VUELO SOBRE EL VALLE DE TEOTIHUACAN DURANTE 45 MINS APROX.INCLUYE COFFE BREAK (CAFE,TE,GALLETAS Y PAN) SEGURO DE VIAJERO,BRINDIS CON VINO ESPUMOSO,CERTIFICADO PERSONALIZADO,TRANSPORTE DURANTE LA ACTIVIDAD,DESPLIEGUE DE LONA, DESAYUNO BUFFET Y FOTO IMPRESA  , TRANSPORTE CDMX-TEOTIHUACAN-CDMX (CENTRO) ', NULL, NULL, NULL, NULL, NULL, 0.00, 8000.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-10-12 13:12:36', 3),
+(1338, 9, NULL, 'ERIC', 'KREUTZER', 'rosillo.vianey@hotmail.com', NULL, '5568868307', 35, 5, 0, NULL, 3, '2019-10-13', NULL, NULL, NULL, NULL, NULL, 'VUELO COMPARTIDO 5 PAX DE 45 MIN APROXIMADAMENTE SOBRE EL VALLE DE TEOTIHUACAN. TRANSPORTE REDONDO. CDMX. SEGURO DE VIAJERO. BRINDIS CON VINO ESPUMOSO. CERTIFICADO PERSONALIZADO', 'TRANSPORTE REDONDO $', 2000.00, NULL, NULL, NULL, 0.00, 11750.00, 0, 350.00, 1, 0, NULL, 1, 'TRANSPORTE REDONDO ÃMSTERDAM 188 Depto 602', '2019-10-12 13:46:24', 3),
+(1339, 14, NULL, 'CLAUDIA', 'GIL', 'volarenglobo@yahoo.es', NULL, '5521360972', 11, 1, 1, 38, 1, '2019-10-19', NULL, NULL, NULL, NULL, NULL, 'VUELO COMPARTIDO PARA 1 ADULTO 1 MENOR,  VUELO SOBRE EL VALLE DE TEOTIHUACAN DURANTE 45 MINS APROX.INCLUYE COFFE BREAK (CAFE,TE,GALLETAS Y PAN)SEGURO DE VIAJERO,BRINDIS CON VINO ESPUMOSO,CERTIFICADO PERSONALIZADO,TRANSPORTE EN TEOTIHUACAN, DESPLIEGUE DE LONA, DESAYUNO BUFFET ', 'DESAYUNOS', 198.00, NULL, NULL, NULL, 0.00, 4198.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-10-12 13:53:54', 3),
+(1340, 14, NULL, 'CLEMENTE', 'MANI', 'volarenglobo@yahoo.es', NULL, '2712077145', 35, 2, 0, 36, 4, '2019-10-13', NULL, NULL, NULL, NULL, NULL, 'VUELO PRIVADO PARA 2 PERSONAS,VUELO SOBRE EL VALLE DE TEOTIHUACAN DURANTE 45 MINS APROX.INCLUYE COFFE BREAK (CAFE, TE , GALLETAS Y PAN) SEGURO DE VIAJERO,BRINDIS CON VINO ESPUMOSO,CERTIFICADO PERSONALIZADO,TRANSPORTE LOCAL , DESAYUNO BUFFET Y FOTO IMPRESA.', 'TRANSPORTE RED CENTR', 700.00, NULL, NULL, NULL, 0.00, 7700.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-10-12 14:25:26', 4),
+(1341, 14, NULL, 'MAURICIO', 'FLORES', 'volarenglobo@yahoo.es', NULL, '5212215196430', 35, 2, 0, 36, 1, '2019-10-19', NULL, NULL, NULL, NULL, NULL, 'VUELO COMPARTIDO PARA 2 PERSONAS,VUELO SOBRE EL VALLE DE TEOTIHUACAN DURANTE 45 MINS APROX.INCLUYE COFFE BREAK (CAFE,TE,GALLETAS Y PAN)SEGURO DE VIAJERO,BRINDIS CON VINO ESPUMOSO,CERTIFICADO PERSONALIZADO, DESAYUNO BUFFET, DESPLIEGUE DE LONA', 'DESAYUNOS', 198.00, NULL, NULL, NULL, 0.00, 4798.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-10-12 14:45:29', 4),
+(1342, 14, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, 0.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-10-12 15:33:07', 0),
+(1343, 16, '1331', 'MISSAEL', 'OLMEDO', 'ricardo.olmedo@live.com.mx', NULL, '5544200675', NULL, 3, 0, 38, 2, '2019-10-14', NULL, NULL, NULL, NULL, NULL, 'Vuelo compartido sobre el Valle de TeotihuacÃ¡n, 45 min/ Certificado personalizado/ Brindis con vino blanco espumoso Freixenet o jugo de naranja/ Seguro viajero/ Coffee break / Despliegue de lona FELIZ CUMPLE!', NULL, NULL, NULL, NULL, NULL, 0.00, 6000.00, 0, 205.00, 1, 0, NULL, 1, 'vuelo bÃ¡sico, precio GuÃ­a Missael Olmedo', '2019-10-12 20:11:51', 7),
+(1344, 14, NULL, 'KAROLL', 'MUÃ‘OZ ', 'volarenglobo@gmail.es', NULL, '9991981302', 33, 2, 0, 38, 1, '2019-10-13', NULL, NULL, NULL, NULL, NULL, 'VUELO COMPARTIDO PARA 2 PERSONAS, VUELO SOBRE EL VALLE DE TEOTIHUACÃN DURANTE 45 MINUTOS APROX.INCLUYE COFFE BREAK CAFÃ‰ TÃ‰ GALLETAS Y PAN, SEGURO DE VIAJERO, BRINDIS CON VINO ESPUMOSO, CERTIFICADO PERSONALIZADO, TRANSPORTE LOCAL, DESAYUNO BUFFET EN RESTAURANTE GRAN TEOCALLI Y PASTEL PARA CUMPLEAÃ‘ERO, DESPLIEGUE DE LONA FELIZ CUMPLEAÃ‘OS ', 'DESAYUNOS ', 198.00, NULL, NULL, NULL, 0.00, 4798.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-10-12 21:23:33', 4),
+(1345, 9, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, 0.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-10-13 12:29:01', 0),
+(1346, 9, NULL, 'JOHANNA', 'VELARGA', 'turismo@volarenglobo.com.mx', NULL, '3104312608', NULL, 2, 0, NULL, 1, '2019-10-14', NULL, NULL, NULL, NULL, NULL, 'VUELO COMPARTIDO 2 PAX TURISKY L-V TRANSPORTE REDONDO ZOCALO', NULL, NULL, NULL, NULL, 2, 500.00, 4100.00, 0, 124.00, 1, 0, NULL, 1, NULL, '2019-10-13 12:30:30', 6),
+(1347, 14, NULL, 'SOKOLOV', 'SERGEI', '7djsokolov@mail.ru', NULL, NULL, 35, 2, 0, 36, 1, '2019-10-14', NULL, NULL, NULL, NULL, NULL, 'SHARED FLIGHT 2 PEOPLE, COFFE BREAK , ENSURANCE ', NULL, NULL, NULL, NULL, NULL, 0.00, 0.00, 0, 0.00, 1, 0, NULL, 2, NULL, '2019-10-13 13:14:59', 6),
+(1348, 14, '1347', 'SOKOLOV', 'SERGEI', '7djsokolov@mail.ru', NULL, NULL, 35, 2, 0, 36, 1, '2019-10-14', NULL, NULL, NULL, NULL, NULL, 'SHARED FLIGHT 2 PEOPLE, COFFE BREAK , TRAVEL ENSURANCE, TOAST WITH WINE , BREAKFAST BUFFET', 'BREAKFAST ', 198.00, NULL, NULL, NULL, 0.00, 4798.00, 0, 0.00, 1, 0, NULL, 2, NULL, '2019-10-13 13:22:03', 6),
+(1349, 14, '1348', 'SOKOLOV', 'SERGEI', '7djsokolov@mail.ru', NULL, '79210627198', 35, 2, 0, 36, 1, '2019-10-14', NULL, NULL, NULL, NULL, NULL, 'SHARED FLIGHT 2 PEOPLE, COFFE BREAK , TRAVEL ENSURANCE, TOAST WITH WINE , BREAKFAST BUFFET', 'BREAKFAST ', 198.00, NULL, NULL, NULL, 0.00, 4798.00, 0, 0.00, 1, 0, NULL, 2, NULL, '2019-10-13 13:26:03', 4);
+INSERT INTO `temp_volar` (`id_temp`, `idusu_temp`, `clave_temp`, `nombre_temp`, `apellidos_temp`, `mail_temp`, `telfijo_temp`, `telcelular_temp`, `procedencia_temp`, `pasajerosa_temp`, `pasajerosn_temp`, `motivo_temp`, `tipo_temp`, `fechavuelo_temp`, `tarifa_temp`, `hotel_temp`, `habitacion_temp`, `checkin_temp`, `checkout_temp`, `comentario_temp`, `otroscar1_temp`, `precio1_temp`, `otroscar2_temp`, `precio2_temp`, `tdescuento_temp`, `cantdescuento_temp`, `total_temp`, `piloto_temp`, `kg_temp`, `tipopeso_temp`, `globo_temp`, `hora_temp`, `idioma_temp`, `comentarioint_temp`, `register`, `status`) VALUES
+(1350, 11, '1273', 'DANIELA', 'GOMEZ', 'Dannygomez111@hotmail.com', NULL, '573017123918', 35, 2, 0, 36, 1, '2019-10-24', NULL, NULL, NULL, NULL, NULL, 'INCLUYE\nVUELO LIBRE SOBRE TEOTIHUACAN DE 45 A 60 MINUTOS\nCOFFE BREAK\nBRINDIS CON VINO ESPUMOSO PETILLANT DE FREIXENET\nCERTIFICADO DE VUELO\nSEGURO DE VIAJERO DURANTE LA ACTIVIDAD\nINCLUYE TRANSPORTE IDA Y VUELTA CDMX\nDESAYUNOS BUFET RESTAURANTE GRAN TEOCALLI ', NULL, NULL, NULL, NULL, 2, 600.00, 5280.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-10-13 14:56:53', 3),
+(1351, 11, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, 0.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-10-13 14:59:31', 2),
+(1352, 9, NULL, 'SELENE', 'L', 'turismo@volarenglobo.com.mx', NULL, '5573487852', NULL, 2, 0, NULL, 1, '2019-10-14', NULL, NULL, NULL, NULL, NULL, 'VUELO COMPARTIDO 2 PAX DE 45 MIN SOBRE EL VALLE DE TEOTIHUACAN, COFFEE BREAK ANTES DE VUELO, SEGURO DE VIAJERO, BRINDIS CON VINO ESOUMOSO, CERTIFICADO PERSONALIZADO', NULL, NULL, NULL, NULL, NULL, 0.00, 4600.00, 0, 127.00, 1, 0, NULL, 1, 'DAR A GUIA COMISION DE $300 POR PAX CUANDO VUELEN', '2019-10-13 18:16:19', 4),
+(1353, 9, '1346', 'JOHANNA', 'VELARGA', 'turismo@volarenglobo.com.mx', NULL, '3104312608', NULL, 2, 0, NULL, 1, '2019-10-14', NULL, NULL, NULL, NULL, NULL, 'VUELO COMPARTIDO 2 PAX TURISKY L-V TRANSPORTE REDONDO ZOCALO', NULL, NULL, NULL, NULL, 2, 500.00, 4100.00, 0, 124.00, 1, 0, NULL, 1, NULL, '2019-10-13 18:33:49', 4),
+(1354, 16, NULL, 'KRISTIAN', 'SANCHEZ', 'reserva@volarenglobo.com.mx', NULL, '4426482006', 19, 2, 0, 38, 2, '2019-10-14', NULL, NULL, NULL, NULL, NULL, 'Vuelo compartido 45 a 60 minutos\nBrindis con vino espumoso\nCertificado de vuelo\nSeguro viajero\nCoffe break\nDespliegue de lona', NULL, NULL, NULL, NULL, NULL, 0.00, 4280.00, 0, 125.00, 1, 0, NULL, 1, NULL, '2019-10-13 21:10:19', 8),
+(1355, 14, NULL, 'SARAH', 'CABRAL', 'volarenglobo@yahoo.es', NULL, '18098385286', 35, 2, 0, 36, 1, '2019-10-21', NULL, NULL, NULL, NULL, NULL, 'VUELO COMPARTIDO PARA 2 PERSONAS, VUELO SOBRE EL VALLE DE TEOTIHUACAN DURANTE 45 MINS APROX. INCLUYE COFFE BREAK (CAFE,TE,GALLETAS Y PAN)SEGURO DE VIAJERO,BRINDIS CON VINO ESPUMOSO,CERTIFICADO PERSONALIZADO,TRANSPORTE DURANTE LA ACTIVIDAD, DESPLIEGUE DE LONA, DESAYUNO BUFFET EN RESTAURANTE GRAN TEOCALLI, TRANSPORTE CDMX-TEOTIHUACAN-CDMX ', 'DESAYUNOS', 198.00, NULL, NULL, NULL, 0.00, 5798.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-10-14 10:48:30', 4),
+(1356, 14, '1144', 'SERGIO', 'COVALEDA', 'volarenglobo@yahoo.es', NULL, '573176568559', 35, 4, 0, 38, 1, '2019-11-03', NULL, NULL, NULL, NULL, NULL, 'VUELO COMPARTIDO PARA 4 PERSONAS, VUELO SOBRE EL VALLE DE TEOTIHUACAN, DURANTE 45 MINS APROX, INCLUYE COFFE BREAK (CAFÃ‰, TE, PAN GALLETAS) SEGURO DE VIAJERO, CERTIFICADO PERSONALIZADO, TRANSPORTE DURANTE LA ACTIVIDAD, BRINDIS CON VINO ESPUMOSO, DESPLIEGUE DE LONA \"FELIZ CUMPLEAÃ‘OS\" DESAYUNO BUFFET Y PASTEL PARA CUMPLEAÃ‘ERO', 'DESAYUNOS', 396.00, NULL, NULL, NULL, 0.00, 9596.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-10-14 10:55:45', 3),
+(1357, 9, NULL, 'LUCA', 'FIASCHI', 'turismo@volarenglobo.com.mx', NULL, '19173622490', 35, 2, 0, 36, 3, '2019-11-29', NULL, NULL, NULL, NULL, NULL, '**** 2019-11-29 ****\nâ€ƒâ€ƒTicket Type: Traveler: 2 ()\nâ€ƒâ€ƒPrimary Redeemer: Luca Fiaschi, 19173622490, luca.fiaschi@gmail.com\nâ€ƒâ€ƒValid Day: Nov 29, 2019\nâ€ƒâ€ƒItem: Teotihuacan Pyramids Hot-Air Balloon Flight / 5:00 AM, Flight with Transportation / 529019\nâ€ƒâ€ƒVoucher: 80466112, 80466113\nâ€ƒâ€ƒItinerary: 7484615307776\n', NULL, NULL, NULL, NULL, 2, 100.00, 4800.00, 0, 0.00, 1, 0, NULL, 1, NULL, '2019-10-14 11:00:55', 4);
 
 -- --------------------------------------------------------
 
@@ -2324,7 +2642,7 @@ CREATE TABLE `ventasserv_volar` (
   `idserv_vsv` int(11) DEFAULT NULL COMMENT 'Servicio',
   `idventa_vsv` int(11) DEFAULT NULL COMMENT 'Venta',
   `cantidad_vsv` int(11) DEFAULT NULL COMMENT 'Cantidad',
-  `register` datetime NOT NULL DEFAULT current_timestamp() COMMENT 'Registro',
+  `register` datetime DEFAULT current_timestamp() COMMENT 'Register',
   `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT 'Status'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
@@ -2333,58 +2651,107 @@ CREATE TABLE `ventasserv_volar` (
 --
 
 INSERT INTO `ventasserv_volar` (`id_vsv`, `idserv_vsv`, `idventa_vsv`, `cantidad_vsv`, `register`, `status`) VALUES
-(1, 1, 9, 4, '2019-08-06 21:59:22', 1),
-(2, 2, 9, 2, '2019-08-06 21:59:22', 1),
-(3, 1, 10, 3, '2019-08-06 22:16:35', 1),
-(4, 2, 10, 2, '2019-08-06 22:16:35', 1),
-(5, 1, 11, 5, '2019-08-06 22:24:33', 1),
-(6, 2, 11, 3, '2019-08-06 22:24:33', 1),
-(7, 3, 11, 2, '2019-08-06 22:24:34', 1),
-(8, 4, 11, 2, '2019-08-06 22:24:34', 1),
-(9, 5, 11, 2, '2019-08-06 22:24:34', 1),
-(10, 11, 11, 2, '2019-08-06 22:24:34', 1),
-(11, 38, 12, 1, '2019-09-26 13:09:11', 1),
-(12, 38, 13, 2, '2019-09-26 13:10:22', 1),
-(13, 7, 14, 2, '2019-09-26 13:12:16', 1),
-(14, 8, 14, 2, '2019-09-26 13:12:16', 1),
-(15, 7, 15, 7, '2019-09-27 12:33:20', 1),
-(16, 8, 15, 1, '2019-09-27 12:33:20', 1),
-(17, 16, 16, 5, '2019-09-27 12:36:32', 1),
-(18, 38, 17, 7, '2019-09-27 12:44:36', 1),
-(19, 38, 18, 1, '2019-09-28 17:05:46', 1),
-(20, 38, 19, 1, '2019-09-28 17:06:35', 1),
-(21, 38, 20, 1, '2019-09-28 17:07:22', 1),
-(22, 38, 21, 1, '2019-09-28 17:07:58', 1),
-(23, 38, 22, 1, '2019-09-28 17:09:40', 1),
-(24, 7, 23, 1, '2019-09-28 17:10:31', 1),
-(25, 16, 24, 1, '2019-09-28 17:11:12', 1),
-(26, 16, 25, 1, '2019-09-28 17:11:49', 1),
-(27, 7, 26, 1, '2019-09-28 17:13:36', 1),
-(28, 16, 26, 1, '2019-09-28 17:13:36', 1),
-(29, 7, 27, 1, '2019-09-28 17:14:54', 1),
-(30, 16, 27, 1, '2019-09-28 17:14:54', 1),
-(31, 7, 28, 1, '2019-09-28 17:16:23', 1),
-(32, 16, 28, 1, '2019-09-28 17:16:23', 1),
-(33, 38, 29, 1, '2019-09-28 17:17:10', 1),
-(34, 38, 30, 1, '2019-09-28 17:17:43', 1),
-(35, 38, 31, 2, '2019-09-28 17:18:30', 1),
-(36, 16, 32, 1, '2019-09-28 17:19:13', 1),
-(37, 16, 33, 1, '2019-09-28 17:19:53', 1),
-(38, 7, 34, 1, '2019-09-28 17:20:44', 1),
-(39, 16, 35, 1, '2019-09-28 17:21:17', 1),
-(40, 38, 36, 1, '2019-09-28 17:21:41', 1),
-(41, 16, 37, 2, '2019-09-28 17:22:35', 1),
-(42, 7, 38, 1, '2019-09-28 17:23:31', 1),
-(43, 16, 38, 1, '2019-09-28 17:23:31', 1),
-(44, 7, 39, 1, '2019-10-01 10:35:39', 1),
-(45, 7, 40, 1, '2019-10-02 15:41:50', 1),
-(46, 16, 40, 1, '2019-10-02 15:41:50', 1),
-(47, 7, 41, 1, '2019-10-02 15:42:31', 1),
-(48, 16, 41, 1, '2019-10-02 15:42:31', 1),
-(49, 7, 42, 1, '2019-10-02 15:43:41', 1),
-(50, 16, 43, 1, '2019-10-02 15:44:42', 1),
-(51, 38, 44, 2, '2019-10-02 15:46:33', 1),
-(52, 38, 45, 1, '2019-10-02 15:49:43', 1);
+(1, 1, 9, 4, '2019-08-06 00:00:00', 1),
+(2, 2, 9, 2, '2019-08-06 00:00:00', 1),
+(3, 1, 10, 3, '2019-08-06 00:00:00', 1),
+(4, 2, 10, 2, '2019-08-06 00:00:00', 1),
+(5, 1, 11, 5, '2019-08-06 00:00:00', 1),
+(6, 2, 11, 3, '2019-08-06 00:00:00', 1),
+(7, 3, 11, 2, '2019-08-06 00:00:00', 1),
+(8, 4, 11, 2, '2019-08-06 00:00:00', 1),
+(9, 5, 11, 2, '2019-08-06 00:00:00', 1),
+(10, 11, 11, 2, '2019-08-06 00:00:00', 1),
+(11, 38, 12, 1, '2019-09-26 00:00:00', 1),
+(12, 38, 13, 2, '2019-09-26 00:00:00', 1),
+(13, 7, 14, 2, '2019-09-26 00:00:00', 1),
+(14, 8, 14, 2, '2019-09-26 00:00:00', 1),
+(15, 7, 15, 7, '2019-09-27 00:00:00', 1),
+(16, 8, 15, 1, '2019-09-27 00:00:00', 1),
+(17, 16, 16, 5, '2019-09-27 00:00:00', 1),
+(18, 38, 17, 7, '2019-09-27 00:00:00', 1),
+(19, 38, 18, 1, '2019-09-28 00:00:00', 1),
+(20, 38, 19, 1, '2019-09-28 00:00:00', 1),
+(21, 38, 20, 1, '2019-09-28 00:00:00', 1),
+(22, 38, 21, 1, '2019-09-28 00:00:00', 1),
+(23, 38, 22, 1, '2019-09-28 00:00:00', 1),
+(24, 7, 23, 1, '2019-09-28 00:00:00', 1),
+(25, 16, 24, 1, '2019-09-28 00:00:00', 1),
+(26, 16, 25, 1, '2019-09-28 00:00:00', 1),
+(27, 7, 26, 1, '2019-09-28 00:00:00', 1),
+(28, 16, 26, 1, '2019-09-28 00:00:00', 1),
+(29, 7, 27, 1, '2019-09-28 00:00:00', 1),
+(30, 16, 27, 1, '2019-09-28 00:00:00', 1),
+(31, 7, 28, 1, '2019-09-28 00:00:00', 1),
+(32, 16, 28, 1, '2019-09-28 00:00:00', 1),
+(33, 38, 29, 1, '2019-09-28 00:00:00', 1),
+(34, 38, 30, 1, '2019-09-28 00:00:00', 1),
+(35, 38, 31, 2, '2019-09-28 00:00:00', 1),
+(36, 16, 32, 1, '2019-09-28 00:00:00', 1),
+(37, 16, 33, 1, '2019-09-28 00:00:00', 1),
+(38, 7, 34, 1, '2019-09-28 00:00:00', 1),
+(39, 16, 35, 1, '2019-09-28 00:00:00', 1),
+(40, 38, 36, 1, '2019-09-28 00:00:00', 1),
+(41, 16, 37, 2, '2019-09-28 00:00:00', 1),
+(42, 7, 38, 1, '2019-09-28 00:00:00', 1),
+(43, 16, 38, 1, '2019-09-28 00:00:00', 1),
+(44, 7, 39, 1, '2019-10-01 00:00:00', 1),
+(45, 7, 40, 1, '2019-10-02 00:00:00', 1),
+(46, 16, 40, 1, '2019-10-02 00:00:00', 1),
+(47, 7, 41, 1, '2019-10-02 00:00:00', 1),
+(48, 16, 41, 1, '2019-10-02 00:00:00', 1),
+(49, 7, 42, 1, '2019-10-02 00:00:00', 1),
+(50, 16, 43, 1, '2019-10-02 00:00:00', 1),
+(51, 38, 44, 2, '2019-10-02 00:00:00', 1),
+(52, 38, 45, 1, '2019-10-02 00:00:00', 1),
+(53, 7, 46, 1, '2019-10-08 00:00:00', 1),
+(54, 8, 46, 1, '2019-10-08 00:00:00', 1),
+(55, 16, 46, 1, '2019-10-08 00:00:00', 1),
+(56, 7, 47, 1, '2019-10-08 00:00:00', 1),
+(57, 38, 48, 2, '2019-10-08 00:00:00', 1),
+(58, 7, 49, 1, '2019-10-08 00:00:00', 1),
+(59, 16, 49, 1, '2019-10-08 00:00:00', 1),
+(60, 38, 50, 1, '2019-10-09 12:39:01', 1),
+(61, 7, 51, 1, '2019-10-09 12:56:54', 1),
+(62, 8, 51, 1, '2019-10-09 12:56:54', 1),
+(63, 16, 52, 1, '2019-10-09 12:57:41', 1),
+(64, 7, 53, 1, '2019-10-09 12:58:26', 1),
+(65, 7, 54, 1, '2019-10-11 12:40:38', 1),
+(66, 7, 55, 1, '2019-10-11 12:41:46', 1),
+(67, 16, 55, 1, '2019-10-11 12:41:46', 1),
+(68, 7, 56, 1, '2019-10-11 12:43:15', 1),
+(69, 16, 57, 2, '2019-10-11 12:43:51', 1),
+(70, 7, 58, 1, '2019-10-11 12:44:29', 1),
+(71, 16, 58, 1, '2019-10-11 12:44:29', 1),
+(72, 7, 59, 1, '2019-10-11 12:45:23', 1),
+(73, 7, 60, 1, '2019-10-11 12:46:08', 1),
+(74, 16, 60, 1, '2019-10-11 12:46:08', 1),
+(75, 38, 61, 1, '2019-10-11 12:47:09', 1),
+(76, 38, 62, 2, '2019-10-11 12:49:08', 1),
+(77, 38, 63, 1, '2019-10-11 12:50:12', 1),
+(78, 38, 64, 2, '2019-10-11 12:51:26', 1),
+(79, 38, 65, 1, '2019-10-12 13:18:14', 1),
+(80, 7, 66, 1, '2019-10-12 13:19:10', 1),
+(81, 16, 66, 2, '2019-10-12 13:19:10', 1),
+(82, 16, 67, 1, '2019-10-13 10:43:58', 1),
+(83, 7, 68, 1, '2019-10-13 10:58:52', 1),
+(84, 16, 68, 2, '2019-10-13 10:58:52', 1),
+(85, 7, 69, 1, '2019-10-13 10:59:51', 1),
+(86, 16, 69, 1, '2019-10-13 10:59:51', 1),
+(87, 38, 70, 2, '2019-10-13 11:03:22', 1),
+(88, 7, 71, 1, '2019-10-13 11:40:54', 1),
+(89, 8, 71, 1, '2019-10-13 11:40:54', 1),
+(90, 16, 71, 1, '2019-10-13 11:40:54', 1),
+(91, 7, 72, 1, '2019-10-13 11:42:25', 1),
+(92, 8, 72, 1, '2019-10-13 11:42:25', 1),
+(93, 16, 72, 1, '2019-10-13 11:42:25', 1),
+(94, 7, 73, 1, '2019-10-13 11:43:40', 1),
+(95, 38, 74, 3, '2019-10-13 11:44:58', 1),
+(96, 7, 75, 1, '2019-10-13 12:06:00', 1),
+(97, 8, 75, 1, '2019-10-13 12:06:00', 1),
+(98, 16, 75, 1, '2019-10-13 12:06:00', 1),
+(99, 7, 76, 1, '2019-10-13 12:06:44', 1),
+(100, 16, 76, 1, '2019-10-13 12:06:44', 1),
+(101, 16, 77, 1, '2019-10-13 12:07:31', 1);
 
 -- --------------------------------------------------------
 
@@ -2405,7 +2772,8 @@ CREATE TABLE `ventas_volar` (
   `pagoefectivo_venta` double(10,2) DEFAULT NULL COMMENT 'Efectivo',
   `pagotarjeta_venta` double(10,2) DEFAULT NULL COMMENT 'Tarjeta',
   `total_venta` double(10,2) DEFAULT NULL COMMENT 'Total',
-  `register` datetime NOT NULL DEFAULT current_timestamp() COMMENT 'Registro',
+  `fechavta_venta` date DEFAULT NULL COMMENT 'Fecha de Venta',
+  `register` datetime NOT NULL DEFAULT current_timestamp() COMMENT 'Register',
   `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT 'Status'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci COMMENT='Ventas de CItio';
 
@@ -2413,43 +2781,75 @@ CREATE TABLE `ventas_volar` (
 -- Volcado de datos para la tabla `ventas_volar`
 --
 
-INSERT INTO `ventas_volar` (`id_venta`, `idusu_venta`, `comentario_venta`, `otroscar1_venta`, `precio1_venta`, `otroscar2_venta`, `precio2_venta`, `tipodesc_venta`, `cantdesc_venta`, `pagoefectivo_venta`, `pagotarjeta_venta`, `total_venta`, `register`, `status`) VALUES
-(10, 1, 'prueba servicios', NULL, NULL, NULL, NULL, NULL, NULL, 300.00, 3000.00, 3300.00, '2019-08-06 22:16:35', 1),
-(11, 1, 'Aqui va un comentario muy grande para poner la descripciÃ³n de la venta qeu se acaba de realiazar desde el sitio por alguien que se encuentre por ahi ', NULL, NULL, NULL, NULL, NULL, NULL, 500.00, 11230.00, 11730.00, '2019-08-06 22:24:33', 1),
-(12, 18, '2  126 IMAN MADERA 150\n1 138 LLAVERO FIBRA 100', NULL, NULL, NULL, NULL, 1, 100.00, 400.00, NULL, 400.00, '2019-09-26 13:09:11', 1),
-(13, 18, '2 149 FOTOS TIERRA', NULL, NULL, NULL, NULL, 1, 400.00, NULL, 600.00, 600.00, '2019-09-26 13:10:22', 1),
-(14, 18, '2 158 FOTO Y VIDEO 1,000', NULL, NULL, NULL, NULL, NULL, NULL, 2000.00, NULL, 2000.00, '2019-09-26 13:12:16', 1),
-(15, 18, '6 140 FOTOS MICRO SD\n1 158 FOTOS Y VIDEO EN MICRO SD', NULL, NULL, NULL, NULL, NULL, NULL, 3500.00, 500.00, 4000.00, '2019-09-27 12:33:20', 1),
-(16, 18, '9 145 FOTO IMPRESA POSTAL', NULL, NULL, NULL, NULL, 1, 100.00, 700.00, 200.00, 900.00, '2019-09-27 12:36:32', 1),
-(17, 18, '2 056 GORRA 150\n2 056 GORRA 200\n4 138 LLAVERO FIBRA 100\n7 126 IMÃN MADERA 150\n4 127 IMÃN MADERA CH 100\n1 007 BARRO GLOBO 100\n2 124 BOLSA VINIL 200', NULL, NULL, NULL, NULL, 1, 450.00, 2600.00, 450.00, 3050.00, '2019-09-27 12:44:36', 1),
-(18, 18, '1 138 LAVERO FIBRA 100\n1 127 IMAN MADERA CH 100', NULL, NULL, NULL, NULL, 1, 300.00, 200.00, NULL, 200.00, '2019-09-28 17:05:46', 1),
-(19, 18, '1 047 TENDEDERO CH 250', NULL, NULL, NULL, NULL, 1, 250.00, NULL, 250.00, 250.00, '2019-09-28 17:06:35', 1),
-(20, 18, '1 065 GLOBO VGAP 300', NULL, NULL, NULL, NULL, 1, 200.00, 300.00, NULL, 300.00, '2019-09-28 17:07:22', 1),
-(21, 18, '1 065 GLOBO VGAP 300', NULL, NULL, NULL, NULL, 1, 200.00, NULL, 300.00, 300.00, '2019-09-28 17:07:58', 1),
-(22, 18, '1 127 IMAN CH 100', NULL, NULL, NULL, NULL, 1, 400.00, NULL, 100.00, 100.00, '2019-09-28 17:09:40', 1),
-(23, 18, '1 140 FOROS MICRO SD', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 500.00, 500.00, '2019-09-28 17:10:31', 1),
-(24, 18, '1 145 FOTO POSTAL 100', NULL, NULL, NULL, NULL, 1, 100.00, NULL, 100.00, 100.00, '2019-09-28 17:11:12', 1),
-(25, 18, '1 155 FOTO IMPRESA INCLUIDA', NULL, NULL, NULL, NULL, 1, 200.00, NULL, NULL, 0.00, '2019-09-28 17:11:49', 1),
-(26, 18, '1 140 FOTOS MICRO SD \n1 145 FOTO POSTAL 100', NULL, NULL, NULL, NULL, 1, 100.00, NULL, 600.00, 600.00, '2019-09-28 17:13:36', 1),
-(27, 18, '1 145 FOTO POSTAL \n1 140 FOTOS MICRO SD ', NULL, NULL, NULL, NULL, 1, 100.00, 600.00, NULL, 600.00, '2019-09-28 17:14:54', 1),
-(28, 18, '1 140 FOTOS MICRO SD\n2 145 FOTO POSTAL ', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 700.00, 700.00, '2019-09-28 17:16:23', 1),
-(29, 18, '1 149 FOROS MICRO SD', NULL, NULL, NULL, NULL, 1, 200.00, NULL, 300.00, 300.00, '2019-09-28 17:17:10', 1),
-(30, 18, '1 147 FOTO DIGITAL', NULL, NULL, NULL, NULL, 1, 400.00, 100.00, NULL, 100.00, '2019-09-28 17:17:43', 1),
-(31, 18, '2 140 FOTOS MICRO SD ', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1000.00, 1000.00, '2019-09-28 17:18:30', 1),
-(32, 18, '2 145 FOTO POSTAL', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 200.00, 200.00, '2019-09-28 17:19:13', 1),
-(33, 18, '1 155 FOTO IMPRESA INCLUIDA', NULL, NULL, NULL, NULL, 1, 200.00, NULL, NULL, 0.00, '2019-09-28 17:19:53', 1),
-(34, 18, '1 140 FOTOS MICRO SD', NULL, NULL, NULL, NULL, NULL, NULL, 500.00, NULL, 500.00, '2019-09-28 17:20:44', 1),
-(35, 18, '1 145 FOTO POSTAL ', NULL, NULL, NULL, NULL, 1, 100.00, 100.00, NULL, 100.00, '2019-09-28 17:21:17', 1),
-(36, 18, '2 014 ARETES ', NULL, NULL, NULL, NULL, 1, 400.00, 100.00, NULL, 100.00, '2019-09-28 17:21:41', 1),
-(37, 18, '2 146 FOTOS ENMARCADAS ', NULL, NULL, NULL, NULL, 1, 100.00, 300.00, NULL, 300.00, '2019-09-28 17:22:35', 1),
-(38, 18, '1 140 FOTOS MICRO SD\n1 145 FOTO POSTAL', NULL, NULL, NULL, NULL, 1, 100.00, 600.00, NULL, 600.00, '2019-09-28 17:23:31', 1),
-(39, 18, '1 149 FOTOS TIERRA\n1 155 FOTO IMPRESA INCLUIDA', NULL, NULL, NULL, NULL, 1, 200.00, 300.00, NULL, 300.00, '2019-10-01 10:35:39', 1),
-(40, 18, '1 140 FOTOSMICRO SD\n1 145 FOTO POSTAL', NULL, NULL, NULL, NULL, 1, 100.00, 600.00, NULL, 600.00, '2019-10-02 15:41:50', 1),
-(41, 18, '1 140 FOTOS MICRO SD\n1 145 FOTO POSTAL', NULL, NULL, NULL, NULL, 1, 100.00, NULL, 600.00, 600.00, '2019-10-02 15:42:31', 1),
-(42, 18, '1 149 FOTOS TIERRA', NULL, NULL, NULL, NULL, 1, 200.00, NULL, 300.00, 300.00, '2019-10-02 15:43:41', 1),
-(43, 18, '1 155 FOTO IMPRESA INCLUIDA', NULL, NULL, NULL, NULL, 1, 200.00, NULL, NULL, 0.00, '2019-10-02 15:44:42', 1),
-(44, 18, '1 007 BARRO GLOBO\n2 127 IMAN MADERA CH\n2 138 LLAVERO FRIBRA\n2 072 LLAVERO KEY', NULL, NULL, NULL, NULL, 1, 400.00, 600.00, NULL, 600.00, '2019-10-02 15:46:33', 1),
-(45, 18, '1 091 PORTARETRATO LIZ\n1 037 ALAJERO', NULL, NULL, NULL, NULL, 1, 100.00, NULL, 400.00, 400.00, '2019-10-02 15:49:43', 1);
+INSERT INTO `ventas_volar` (`id_venta`, `idusu_venta`, `comentario_venta`, `otroscar1_venta`, `precio1_venta`, `otroscar2_venta`, `precio2_venta`, `tipodesc_venta`, `cantdesc_venta`, `pagoefectivo_venta`, `pagotarjeta_venta`, `total_venta`, `fechavta_venta`, `register`, `status`) VALUES
+(10, 1, 'prueba servicios', NULL, NULL, NULL, NULL, NULL, NULL, 300.00, 3000.00, 3300.00, '2019-08-06', '2019-10-08 20:03:06', 0),
+(11, 1, 'Aqui va un comentario muy grande para poner la descripciÃ³n de la venta qeu se acaba de realiazar desde el sitio por alguien que se encuentre por ahi ', NULL, NULL, NULL, NULL, NULL, NULL, 500.00, 11230.00, 11730.00, '2019-08-06', '2019-10-08 20:03:06', 0),
+(12, 18, '2  126 IMAN MADERA 150\n1 138 LLAVERO FIBRA 100', NULL, NULL, NULL, NULL, 1, 100.00, 400.00, NULL, 400.00, '2019-09-26', '2019-10-08 20:03:06', 1),
+(13, 18, '2 149 FOTOS TIERRA', NULL, NULL, NULL, NULL, 1, 400.00, NULL, 600.00, 600.00, '2019-09-26', '2019-10-08 20:03:06', 1),
+(14, 18, '2 158 FOTO Y VIDEO 1,000', NULL, NULL, NULL, NULL, NULL, NULL, 2000.00, NULL, 2000.00, '2019-09-26', '2019-10-08 20:03:06', 1),
+(15, 18, '6 140 FOTOS MICRO SD\n1 158 FOTOS Y VIDEO EN MICRO SD', NULL, NULL, NULL, NULL, NULL, NULL, 3500.00, 500.00, 4000.00, '2019-09-27', '2019-10-08 20:03:06', 1),
+(16, 18, '9 145 FOTO IMPRESA POSTAL', NULL, NULL, NULL, NULL, 1, 100.00, 700.00, 200.00, 900.00, '2019-09-27', '2019-10-08 20:03:06', 1),
+(17, 18, '2 056 GORRA 150\n2 056 GORRA 200\n4 138 LLAVERO FIBRA 100\n7 126 IMÃN MADERA 150\n4 127 IMÃN MADERA CH 100\n1 007 BARRO GLOBO 100\n2 124 BOLSA VINIL 200', NULL, NULL, NULL, NULL, 1, 450.00, 2600.00, 450.00, 3050.00, '2019-09-27', '2019-10-08 20:03:06', 1),
+(18, 18, '1 138 LAVERO FIBRA 100\n1 127 IMAN MADERA CH 100', NULL, NULL, NULL, NULL, 1, 300.00, 200.00, NULL, 200.00, '2019-09-28', '2019-10-08 20:03:06', 1),
+(19, 18, '1 047 TENDEDERO CH 250', NULL, NULL, NULL, NULL, 1, 250.00, NULL, 250.00, 250.00, '2019-09-28', '2019-10-08 20:03:06', 1),
+(20, 18, '1 065 GLOBO VGAP 300', NULL, NULL, NULL, NULL, 1, 200.00, 300.00, NULL, 300.00, '2019-09-28', '2019-10-08 20:03:06', 1),
+(21, 18, '1 065 GLOBO VGAP 300', NULL, NULL, NULL, NULL, 1, 200.00, NULL, 300.00, 300.00, '2019-09-28', '2019-10-08 20:03:06', 1),
+(22, 18, '1 127 IMAN CH 100', NULL, NULL, NULL, NULL, 1, 400.00, NULL, 100.00, 100.00, '2019-09-28', '2019-10-08 20:03:06', 1),
+(23, 18, '1 140 FOROS MICRO SD', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 500.00, 500.00, '2019-09-28', '2019-10-08 20:03:06', 1),
+(24, 18, '1 145 FOTO POSTAL 100', NULL, NULL, NULL, NULL, 1, 100.00, NULL, 100.00, 100.00, '2019-09-28', '2019-10-08 20:03:06', 1),
+(25, 18, '1 155 FOTO IMPRESA INCLUIDA', NULL, NULL, NULL, NULL, 1, 200.00, NULL, NULL, 0.00, '2019-09-28', '2019-10-08 20:03:06', 1),
+(26, 18, '1 140 FOTOS MICRO SD \n1 145 FOTO POSTAL 100', NULL, NULL, NULL, NULL, 1, 100.00, NULL, 600.00, 600.00, '2019-09-28', '2019-10-08 20:03:06', 1),
+(27, 18, '1 145 FOTO POSTAL \n1 140 FOTOS MICRO SD ', NULL, NULL, NULL, NULL, 1, 100.00, 600.00, NULL, 600.00, '2019-09-28', '2019-10-08 20:03:06', 1),
+(28, 18, '1 140 FOTOS MICRO SD\n2 145 FOTO POSTAL ', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 700.00, 700.00, '2019-09-28', '2019-10-08 20:03:06', 1),
+(29, 18, '1 149 FOROS MICRO SD', NULL, NULL, NULL, NULL, 1, 200.00, NULL, 300.00, 300.00, '2019-09-28', '2019-10-08 20:03:06', 1),
+(30, 18, '1 147 FOTO DIGITAL', NULL, NULL, NULL, NULL, 1, 400.00, 100.00, NULL, 100.00, '2019-09-28', '2019-10-08 20:03:06', 1),
+(31, 18, '2 140 FOTOS MICRO SD ', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1000.00, 1000.00, '2019-09-28', '2019-10-08 20:03:06', 1),
+(32, 18, '2 145 FOTO POSTAL', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 200.00, 200.00, '2019-09-28', '2019-10-08 20:03:06', 1),
+(33, 18, '1 155 FOTO IMPRESA INCLUIDA', NULL, NULL, NULL, NULL, 1, 200.00, NULL, NULL, 0.00, '2019-09-28', '2019-10-08 20:03:06', 1),
+(34, 18, '1 140 FOTOS MICRO SD', NULL, NULL, NULL, NULL, NULL, NULL, 500.00, NULL, 500.00, '2019-09-28', '2019-10-08 20:03:06', 1),
+(35, 18, '1 145 FOTO POSTAL ', NULL, NULL, NULL, NULL, 1, 100.00, 100.00, NULL, 100.00, '2019-09-28', '2019-10-08 20:03:06', 1),
+(36, 18, '2 014 ARETES ', NULL, NULL, NULL, NULL, 1, 400.00, 100.00, NULL, 100.00, '2019-09-28', '2019-10-08 20:03:06', 1),
+(37, 18, '2 146 FOTOS ENMARCADAS ', NULL, NULL, NULL, NULL, 1, 100.00, 300.00, NULL, 300.00, '2019-09-28', '2019-10-08 20:03:06', 1),
+(38, 18, '1 140 FOTOS MICRO SD\n1 145 FOTO POSTAL', NULL, NULL, NULL, NULL, 1, 100.00, 600.00, NULL, 600.00, '2019-09-28', '2019-10-08 20:03:06', 1),
+(39, 18, '1 149 FOTOS TIERRA\n1 155 FOTO IMPRESA INCLUIDA', NULL, NULL, NULL, NULL, 1, 200.00, 300.00, NULL, 300.00, '2019-10-01', '2019-10-08 20:03:06', 1),
+(40, 18, '1 140 FOTOSMICRO SD\n1 145 FOTO POSTAL', NULL, NULL, NULL, NULL, 1, 100.00, 600.00, NULL, 600.00, '2019-10-02', '2019-10-08 20:03:06', 1),
+(41, 18, '1 140 FOTOS MICRO SD\n1 145 FOTO POSTAL', NULL, NULL, NULL, NULL, 1, 100.00, NULL, 600.00, 600.00, '2019-10-02', '2019-10-08 20:03:06', 1),
+(42, 18, '1 149 FOTOS TIERRA', NULL, NULL, NULL, NULL, 1, 200.00, NULL, 300.00, 300.00, '2019-10-02', '2019-10-08 20:03:06', 1),
+(43, 18, '1 155 FOTO IMPRESA INCLUIDA', NULL, NULL, NULL, NULL, 1, 200.00, NULL, NULL, 0.00, '2019-10-02', '2019-10-08 20:03:06', 1),
+(44, 18, '1 007 BARRO GLOBO\n2 127 IMAN MADERA CH\n2 138 LLAVERO FRIBRA\n2 072 LLAVERO KEY', NULL, NULL, NULL, NULL, 1, 400.00, 600.00, NULL, 600.00, '2019-10-02', '2019-10-08 20:03:06', 1),
+(45, 18, '1 091 PORTARETRATO LIZ\n1 037 ALAJERO', NULL, NULL, NULL, NULL, 1, 100.00, NULL, 400.00, 400.00, '2019-10-02', '2019-10-08 20:03:06', 1),
+(46, 18, '1 158 FOTO Y VIDEO 1,000\n1 155 FOTO IMPRESA INCLUIDA', NULL, NULL, NULL, NULL, 1, 200.00, 1000.00, NULL, 1000.00, '2019-10-08', '2019-10-08 20:03:06', 1),
+(47, 18, '1 149 FOTOS TIERRA ', NULL, NULL, NULL, NULL, 1, 200.00, 300.00, NULL, 300.00, '2019-10-08', '2019-10-08 20:03:06', 1),
+(48, 18, '1 171 SOMBRERO 700\n1 127 IMAN MADERA CH 100', NULL, NULL, NULL, NULL, 1, 200.00, 800.00, NULL, 800.00, '2019-10-08', '2019-10-08 20:03:06', 1),
+(49, 18, '1 149 FOTOS TIERRA 300\n1 142 FOTO IMPRESA 200', NULL, NULL, NULL, NULL, 1, 200.00, 500.00, NULL, 500.00, '2019-10-08', '2019-10-08 20:03:06', 1),
+(50, 18, '1 014 ARETES 50', NULL, NULL, NULL, NULL, 1, 450.00, 50.00, NULL, 50.00, NULL, '2019-10-09 12:39:01', 1),
+(51, 18, '1 158 FOTOS Y VIDEO', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1000.00, 1000.00, NULL, '2019-10-09 12:56:54', 1),
+(52, 18, '2 145 FOTO POSTAL', NULL, NULL, NULL, NULL, NULL, NULL, 200.00, NULL, 200.00, NULL, '2019-10-09 12:57:41', 1),
+(53, 18, '1 149 FOTOS TIERRA', NULL, NULL, NULL, NULL, 1, 200.00, 300.00, NULL, 300.00, NULL, '2019-10-09 12:58:26', 1),
+(54, 18, '1 140 FOTOS MICRO SD ', NULL, NULL, NULL, NULL, 1, NULL, NULL, 500.00, 500.00, NULL, '2019-10-11 12:40:38', 1),
+(55, 18, '1 149 FOTOS TIERRA 300 \n1 145 FOTO POSTAL 100', NULL, NULL, NULL, NULL, 1, 300.00, 400.00, NULL, 400.00, NULL, '2019-10-11 12:41:46', 1),
+(56, 18, '2 147 FOTOS DIGITAL', NULL, NULL, NULL, NULL, 1, 300.00, 200.00, NULL, 200.00, NULL, '2019-10-11 12:43:15', 1),
+(57, 18, '4 145 FOTOS POSTAL', NULL, NULL, NULL, NULL, NULL, NULL, 400.00, NULL, 400.00, NULL, '2019-10-11 12:43:51', 1),
+(58, 18, '1 140 FOTOS MICRO SD \n1 145 FOTO POSTAL', NULL, NULL, NULL, NULL, 1, 100.00, 600.00, NULL, 600.00, NULL, '2019-10-11 12:44:29', 1),
+(59, 18, '1 140 FOTOS MICRO SD', NULL, NULL, NULL, NULL, NULL, NULL, 500.00, NULL, 500.00, NULL, '2019-10-11 12:45:23', 1),
+(60, 18, '1 140 FOTOS MICRO SD\n1 145 FOTO POSTAL', NULL, NULL, NULL, NULL, 1, 100.00, NULL, 600.00, 600.00, NULL, '2019-10-11 12:46:08', 1),
+(61, 18, '1 127 IMAN MADERA CH 100\n1 014 ARETES 50 \n1 027 COLLAR 100', NULL, NULL, NULL, NULL, 1, 250.00, 250.00, NULL, 250.00, NULL, '2019-10-11 12:47:09', 1),
+(62, 18, '1 137 PORTARETRATO JOEL \n2 126 IMAN MADERA\n1 052 GLOBO TEXTIL CH', NULL, NULL, NULL, NULL, 1, 350.00, NULL, 650.00, 650.00, NULL, '2019-10-11 12:49:08', 1),
+(63, 18, '1 104 TAZA', NULL, NULL, NULL, NULL, 1, 400.00, 100.00, NULL, 100.00, NULL, '2019-10-11 12:50:12', 1),
+(64, 18, '1 137 PORTA RETRATO JOEL\n1 140 FOTOS MICRO SD\n1 145 FOTO POSTAL', NULL, NULL, NULL, NULL, 1, 150.00, NULL, 850.00, 850.00, NULL, '2019-10-11 12:51:26', 1),
+(65, 18, '2 126 IMAN MADERA ', NULL, NULL, NULL, NULL, 1, 200.00, NULL, 300.00, 300.00, NULL, '2019-10-12 13:18:14', 1),
+(66, 18, '1 140 FOTOS MICRO SD\n3 145 FOTO POSTAL', NULL, NULL, NULL, NULL, 1, 100.00, 800.00, NULL, 800.00, NULL, '2019-10-12 13:19:10', 1),
+(67, 1, '2 145 FOTO POSTAL 100', NULL, NULL, NULL, NULL, NULL, NULL, 200.00, NULL, 200.00, NULL, '2019-10-13 10:43:58', 1),
+(68, 1, '1 140 FOTOS MICRO SD 500\n1 146 FOTO ENMARCADA 150\n1 147 FOTO DIGITAL 100', NULL, NULL, NULL, NULL, 1, 150.00, 750.00, NULL, 750.00, NULL, '2019-10-13 10:58:52', 1),
+(69, 1, '1 147 FOTO DIGITAL\n1 140 FOTOS MICRO SD\n1 145 FOTO POSTAL\n', NULL, NULL, NULL, NULL, NULL, NULL, 600.00, 100.00, 700.00, NULL, '2019-10-13 10:59:51', 1),
+(70, 1, '1  052 GLOBO TEXTIL CH 150\n2 126 IMAN MADERA 150\n1 099 SEPARADOR ANIMALITOS\n1 137 PORTA RETRATO JOEL', NULL, NULL, NULL, NULL, 1, 285.00, 450.00, 265.00, 715.00, NULL, '2019-10-13 11:03:22', 1),
+(71, 18, '1 158 FOTO Y VIDEO 1000\n1 145 FOTO POSTAL 100', NULL, NULL, NULL, NULL, 1, 100.00, NULL, 1100.00, 1100.00, NULL, '2019-10-13 11:40:54', 1),
+(72, 18, '1 158 FOTOS Y VIDEO\n1 155 FOTO IMPRESA INCLUIDA \n1 145 FOTO POSTAL', NULL, NULL, NULL, NULL, 1, 100.00, 1100.00, NULL, 1100.00, NULL, '2019-10-13 11:42:25', 1),
+(73, 18, '1 140 FOTOS MICRO SD', NULL, NULL, NULL, NULL, 1, 50.00, 450.00, NULL, 450.00, NULL, '2019-10-13 11:43:39', 1),
+(74, 18, '1 137 PORTA RETRATO JOEL 250\n1 005 IMAN AZUCAR 120\n1 171 SOBRERO 700', NULL, NULL, NULL, NULL, 1, 430.00, NULL, 1070.00, 1070.00, NULL, '2019-10-13 11:44:58', 1),
+(75, 18, '1 158 FOTOS Y VIDEO 1000\n1 145 FOTO POSTAL', NULL, NULL, NULL, NULL, 1, 100.00, NULL, 1100.00, 1100.00, NULL, '2019-10-13 12:06:00', 1),
+(76, 18, '1 140 FOTOS MICRO SD 500\n1 145 FOTO POSTAL 100', NULL, NULL, NULL, NULL, 1, 100.00, NULL, 600.00, 600.00, NULL, '2019-10-13 12:06:44', 1),
+(77, 18, '1 147 FOTO DIGITAL 100', NULL, NULL, NULL, NULL, 1, 100.00, 100.00, NULL, 100.00, NULL, '2019-10-13 12:07:31', 1);
 
 -- --------------------------------------------------------
 
@@ -2494,13 +2894,14 @@ INSERT INTO `volar_usuarios` (`id_usu`, `nombre_usu`, `apellidop_usu`, `apellido
 (3, 'SONIA', 'ALDUCIN', 'GUAJARDO', 3, 3, 'contabilidad@volarenglobo.com.mx', '5568177013', '86cd30166d3e74003ae788951843b8cd', 'sony', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-04-10 09:27:49', 1),
 (8, 'RICARDO', 'CRUZ', 'ROCHA', 7, 17, 'ricardo@volarenglobo.com.mx', '5551068115', 'c899a91880ee511c03f5810cf9eaa022', 'Ricardo', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-05-21 16:34:09', 1),
 (9, 'ALEJANDRA', 'RAMIREZ', 'SERRANO', 5, 15, 'turismo@volarenglobo.com.mx', '5530704317', '746034988c74912ec9ca4b11cebfa5c4', 'turismo', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-05-21 16:35:26', 1),
-(11, 'SERGIO', 'RAMIREZ', 'GARCIA', 5, 7, 'sergio@volarenglobo.com.mx', '5555023615', '202cb962ac59075b964b07152d234b70', 'Sergio', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-06-25 07:52:34', 1),
+(11, 'SERGIO', 'RAMIREZ', 'GARCIA', 5, 7, 'sergio@volarenglobo.com.mx', '5555023615', 'bd0552744e0fe89e995c367ee4acc101', 'checolate', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-06-25 07:52:34', 1),
 (14, 'ALEJANDRA', 'MONTES DE OCA', 'FEREGRINO', 8, 13, 'ventas@volarenglobo.com.mx', '5524900000', '9c779f56f336b3c812343434f57b6a0e', 'alemonts', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-08-22 18:14:20', 1),
-(15, 'CHRSITOFFER MICHELLE', 'OLIVIA', 'HERNANDEZ', 7, 17, 'auxiliar@volarenglobo.com.mx', '5545935376', '944facfeb153b4f01916a0f166fcc315', 'Chris', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-08-22 18:54:31', 1),
+(15, 'CHRSITOFFER MICHELLE', 'OLIVIA', 'HERNANDEZ', 7, 17, 'auxiliar@volarenglobo.com.mx', '5545935376', 'af4481c642771f7196660028b2e019a7', 'Chris', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-08-22 18:54:31', 1),
 (16, 'SUSANA', 'SALAZAR', 'VIQUEZ', 8, 13, 'reserva@volarenglobo.com.mx', '5510998008', '8ef747720bc83aed6640295831a32d83', 'reserva', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-09-02 14:39:09', 1),
 (17, 'ANA MARIA', 'ROCHA', 'MUÃ‘OZ', 3, 21, 'contabilidad@volarenglobo.com.mx', '5539773436', '807b9be210ec6018b61f32498bd5abab', 'anny', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-09-04 12:34:03', 1),
 (18, 'MARIA DE JESUS', 'SORIANO', 'AGUILAR', 4, 12, 'admonteoti@volarenglobo.com.mx', '5560233534', 'c6e04c6343a907c961108fef4a8199dd', 'marichuy', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-09-18 19:02:11', 1),
-(19, 'SERGIO', 'RAMIREZ', 'SERRANO', 4, 12, 'zergio@volarenglobo.com.mx', '5530203538', 'dbf2f270d829e1e31e59a8e39ca6b24a', 'zergioram', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-09-19 07:48:32', 1);
+(19, 'SERGIO', 'RAMIREZ', 'SERRANO', 4, 12, 'zergio@volarenglobo.com.mx', '5530203538', 'dbf2f270d829e1e31e59a8e39ca6b24a', 'zergioram', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-09-19 07:48:32', 1),
+(20, 'TEMPORAL', 'VOLAR', 'GLOBO', 2, 6, 'volarenglobo@yahoo.es', '5558706611', 'e34c64a05273012b2868d8b04b812089', 'tempo', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-10-11 14:52:57', 1);
 
 -- --------------------------------------------------------
 
@@ -2712,13 +3113,13 @@ ALTER TABLE `bitacora_actualizaciones_volar`
 -- AUTO_INCREMENT de la tabla `bitcomentarios_volar`
 --
 ALTER TABLE `bitcomentarios_volar`
-  MODIFY `id_bc` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave Primaria', AUTO_INCREMENT=10;
+  MODIFY `id_bc` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave Primaria', AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de la tabla `bitpagos_volar`
 --
 ALTER TABLE `bitpagos_volar`
-  MODIFY `id_bp` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave Primaria', AUTO_INCREMENT=179;
+  MODIFY `id_bp` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave Primaria', AUTO_INCREMENT=263;
 
 --
 -- AUTO_INCREMENT de la tabla `cat_servicios_volar`
@@ -2754,7 +3155,7 @@ ALTER TABLE `globos_volar`
 -- AUTO_INCREMENT de la tabla `habitaciones_volar`
 --
 ALTER TABLE `habitaciones_volar`
-  MODIFY `id_habitacion` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave Primaria', AUTO_INCREMENT=25;
+  MODIFY `id_habitacion` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave Primaria', AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT de la tabla `hoteles_volar`
@@ -2772,7 +3173,7 @@ ALTER TABLE `imghoteles_volar`
 -- AUTO_INCREMENT de la tabla `permisosusuarios_volar`
 --
 ALTER TABLE `permisosusuarios_volar`
-  MODIFY `id_puv` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave Primaria', AUTO_INCREMENT=444;
+  MODIFY `id_puv` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave Primaria', AUTO_INCREMENT=512;
 
 --
 -- AUTO_INCREMENT de la tabla `permisos_volar`
@@ -2802,7 +3203,7 @@ ALTER TABLE `rel_catvuelos_volar`
 -- AUTO_INCREMENT de la tabla `reprogramaciones_volar`
 --
 ALTER TABLE `reprogramaciones_volar`
-  MODIFY `id_rep` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave Primaria', AUTO_INCREMENT=7;
+  MODIFY `id_rep` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave Primaria', AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `restaurantes_volar`
@@ -2820,7 +3221,7 @@ ALTER TABLE `servicios_volar`
 -- AUTO_INCREMENT de la tabla `servicios_vuelo_temp`
 --
 ALTER TABLE `servicios_vuelo_temp`
-  MODIFY `id_sv` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave Primaria', AUTO_INCREMENT=2790;
+  MODIFY `id_sv` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave Primaria', AUTO_INCREMENT=2869;
 
 --
 -- AUTO_INCREMENT de la tabla `subpermisos_volar`
@@ -2832,25 +3233,25 @@ ALTER TABLE `subpermisos_volar`
 -- AUTO_INCREMENT de la tabla `temp_volar`
 --
 ALTER TABLE `temp_volar`
-  MODIFY `id_temp` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave Primaria', AUTO_INCREMENT=1276;
+  MODIFY `id_temp` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave Primaria', AUTO_INCREMENT=1358;
 
 --
 -- AUTO_INCREMENT de la tabla `ventasserv_volar`
 --
 ALTER TABLE `ventasserv_volar`
-  MODIFY `id_vsv` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave Primaria', AUTO_INCREMENT=53;
+  MODIFY `id_vsv` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave Primaria', AUTO_INCREMENT=102;
 
 --
 -- AUTO_INCREMENT de la tabla `ventas_volar`
 --
 ALTER TABLE `ventas_volar`
-  MODIFY `id_venta` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave Primaria', AUTO_INCREMENT=46;
+  MODIFY `id_venta` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Llave Primaria', AUTO_INCREMENT=78;
 
 --
 -- AUTO_INCREMENT de la tabla `volar_usuarios`
 --
 ALTER TABLE `volar_usuarios`
-  MODIFY `id_usu` int(4) NOT NULL AUTO_INCREMENT COMMENT 'Llave Primaria', AUTO_INCREMENT=20;
+  MODIFY `id_usu` int(4) NOT NULL AUTO_INCREMENT COMMENT 'Llave Primaria', AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT de la tabla `vueloscat_volar`
