@@ -8,7 +8,6 @@
 	$metodos = $con->consulta("nombre_extra as text, id_extra as value","extras_volar","status<>0 and clasificacion_extra='metodopago' ");
 	$cuentas = $con->consulta("nombre_extra as text, id_extra as value","extras_volar","status<>0 and clasificacion_extra='cuentasvolar' and id_extra=83");
 	$total = $con->consulta(" SUM(cantidad_bp) as pagado, total_temp as cotizado","bitpagos_volar bitp INNER JOIN temp_volar t on idres_bp = id_temp"," bitp.status in (1,2) and idres_bp=".$reserva);
-	$pagos = $con->consulta("CONCAT(nombre_usu,' ',apellidop_usu) as usuario, referencia_bp as referencia, cantidad_bp as cantidad,fecha_bp as fecha, bp.status as stat,id_bp as id","bitpagos_volar bp INNER JOIN volar_usuarios vu  ON bp.idreg_bp=vu.id_usu","bp.status<>0 and idres_bp=".$reserva);
 ?>
 <div class="row">
   <div class="col-sm-6 col-lg-6 col-md-6 col-6 col-xl-6 ">
@@ -23,7 +22,7 @@
 		</div>
 </div>
 <div class="row">
-	<div class="col-sm-6 col-lg-6 col-md-6 col-6 col-xl-6 ">
+	<div class="col-sm-4 col-lg-4 col-md-4 col-4 col-xl-4 ">
 		<div class="form-group">
 			<label for="metodo">Metodo</label>
 			<select class="selectpicker form-control" id="metodo" name="metodo" data-live-search="true">
@@ -36,7 +35,7 @@
 			</select>
 		</div>
 	</div>
-	<div class="col-sm-6 col-lg-6 col-md-6 col-6 col-xl-6 ">
+	<div class="col-sm-4 col-lg-4 col-md-4 col-4 col-xl-4 ">
 		<div class="form-group">
 			<label for="banco">Banco</label>
 			<select class="selectpicker form-control" id="banco" name="banco" data-live-search="true">
@@ -50,70 +49,74 @@
 		</div>
 	</div>
 
-	<div class="col-sm-6 col-lg-6 col-md-6 col-6 col-xl-6 " style="display:none">
+	<div class="col-sm-4 col-lg-4 col-md-4 col-4 col-xl-4 " style="display:none">
 		<div class="form-group">
 			<label for="referencia">Referencia</label>
 			<input type="hidden"  class="form-control" id="referencia" placeholder="Referencia" value="Pago en Sitio">
 		</div>
 	</div>
-	<div class="col-sm-6 col-lg-6 col-md-6 col-6 col-xl-6 ">
+	<div class="col-sm-4 col-lg-4 col-md-4 col-4 col-xl-4 ">
 		<div class="form-group">
 			<label for="cantidad">Cantidad</label>
 			<input type="number" class="form-control" id="cantidad" onchange="modificarPrecio()" placeholder="Cantidad" value="<?php echo 	$total[0]->cotizado -  $total[0]->pagado  ;?>">
 		</div>
 	</div>
-	<div class="col-sm-6 col-lg-6 col-md-6 col-6 col-xl-6 ">
+	<div class="col-sm-4 col-lg-4 col-md-4 col-4 col-xl-4 " style="display:none" id="divComision">
 		<div class="form-group">
 			<label for="comision">Comisión %</label>
 			<input type="number" class="form-control" onchange="modificarPrecio()" id="comision" placeholder="%" value="0">
 		</div>
 	</div>
-	<div class="col-sm-6 col-lg-6 col-md-6 col-6 col-xl-6 " style="display:none">
+
+	<div class="col-sm-4 col-lg-4 col-md-4 col-4 col-xl-4 " style="display:none">
 		<div class="form-group">
 			<label for="fecha">Fecha de Pago</label>
 			<input type="date" readonly class="form-control" id="fecha" placeholder="Fecha de Pago">
+		</div>
+	</div>
+	<div class="col-sm-4 col-lg-4 col-md-4 col-4 col-xl-4 " >
+		<div class="form-group">
+			<label for="fecha">Aplica Cupón?</label>
+			<select class="form-control" name="cupon" id="cupon">
+				<option value="">No</option>
+				<option value="1">5% en Efectivo</option>
+				<option value="2">10% en Souvenirs</option>
+			</select>
+		</div>
+	</div>
+	<div class="col-sm-4 col-lg-4 col-md-4 col-4 col-xl-4 " >
+		<div class="form-group">
+			<label for="fecha">Precio por Peso Extra</label>
+			<input type="number" min="0"  class="form-control" id="pesoextra" placeholder="Precio Total">
 		</div>
 	</div>
 	<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
 		<label >Total  por Pagar: <span id="spanCant">$ <?php echo 	number_format($total[0]->cotizado -  $total[0]->pagado  , 2, '.', ',') ;?></span></label>
 	</div>
 </div>
-<?php if(sizeof($pagos)>0){ ?>
-
-	<script type="text/javascript">
-		function accionesPagos(pago,accion,reserva){
-			$.ajax({
-			url:'controladores/pagosController.php',
-			method: "POST",
-	  		data: {
-	  			reserva:reserva,
-	  			pago:pago,
-	  			accion:accion
-	  		},
-	  		success:function(response){
-	  			if(response.includes("ERROR"))
-	  				abrir_gritter(response, "No puedes agregar mas pagos" ,"info");
-	  			else
-	  				abrir_gritter("Correcto", response ,"info");
-
-	  			agregarPago(reserva,cliente);
-
-	  		},
-	  		error:function(){
-
-	          abrir_gritter("Error","Error desconocido" ,"danger");
-	  		},
-	  		statusCode: {
-			    404: function() {
-
-	          abrir_gritter("Error","URL NO encontrada" ,"danger");
-			    }
-			  }
-		});
-		}
-	</script>
-<?php } ?>
 <script type="text/javascript">
+	var precioRestante  =  <?php echo ($total[0]->cotizado -  $total[0]->pagado ) ?>;
+	$("#cupon").on("change",function(){
+		if($(this).val()==""){
+			$("#cantidad").val(precioRestante).prop("disabled",false);
+		}else if($(this).val()==1){
+				regreso = (precioRestante*.05);
+					$("#cantidad").val(precioRestante-regreso).prop("disabled","disabled");
+				$("#spanCant").html("$ "+new Intl.NumberFormat().format(precioRestante )+".<br>Regresar $ "+new Intl.NumberFormat().format(regreso ) +"<br> Cobrar:  $ "+new Intl.NumberFormat().format(precioRestante-regreso ));
+		}else if($(this).val()==2){
+				$("#cantidad").val(precioRestante).prop("disabled","disabled");
+				regreso = (precioRestante*.1);
+				$("#spanCant").html("$ "+new Intl.NumberFormat().format(precioRestante )+".<br>Vale por  $ "+new Intl.NumberFormat().format(regreso ));
+		}
+	});
+
+	$("#metodo").on("change",function(){
+		$("#comision").val(0);
+		if($(this).val()==98)
+			$("#divComision").show();
+		else
+			$("#divComision").hide();
+	});
 	function modificarPrecio(){
 		var comision = $("#comision").val();
 		if(comision==''){

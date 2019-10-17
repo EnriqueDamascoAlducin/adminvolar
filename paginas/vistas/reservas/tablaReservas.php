@@ -165,7 +165,7 @@
 						<i class="fa fa-street-view fa-lg" style="color:#311b92 " title="Confirmar Asistencia" data-toggle="modal" data-target="#modalReservas"  onclick="checkAsistencia(<?php echo $reserva->id_temp; ?>,'<?php echo $reserva->nombre; ?>')"></i>&nbsp;
 					<?php } ?>
 					<!--========       Eliminar     ========= -->
-					<?php if( (($idUsu==$reserva->idusu && in_array("ELIMINAR",$permisos)) || in_array("ELIMINAR GRL",$permisos))  && ($reserva->status!=1 && $reserva->status!=7) ) { ?>
+					<?php if( (($idUsu==$reserva->idusu && in_array("ELIMINAR",$permisos)) || in_array("ELIMINAR GRL",$permisos)) || ($reserva->status==1 && $reserva->status!=7) ) { ?>
 						<i class="fa fa-trash-o fa-lg" style="color:#ff4444" title="Eliminar" data-toggle="modal" data-target="#modalReservas"  onclick="eliminarReserva('vistas/reservas/', <?php echo $reserva->id_temp; ?>, <?php echo $modulo; ?>)" ></i>&nbsp;
 					<?php } ?>
 					<!--========       Comentario     ========= -->

@@ -210,7 +210,7 @@ function agregarPago(reserva,cliente){
 
 function agregarPagoSitio(reserva,cliente){
 
-	cambiarTamanoModal("modalSize","lg",'resetear');
+	cambiarTamanoModal("modalSize","lg",'agregar');
 	$("button[id^='btn']").remove();
 	$("#cuerpoModalReservas").html("Agregar Pago para "+ cliente);
 	$("#tituloModalReservas").html("Agregar Pago para "+ cliente);
@@ -283,6 +283,8 @@ function confirmaragregarPagoSitio(reserva,cliente){
 			}
 		}
 	});
+
+		cambiarTamanoModal("modalSize","lg",'resetear');
 }
 function conciliarPago(reserva,cliente){
 	$("button[id^='btn']").remove();

@@ -32,22 +32,22 @@ function validarSesion(e){
   				abrir_gritter("Bienvenido",response,"success");
   				setTimeout(function(){
 		  				window.location.replace("paginas/");
-  				},2500);
+  				},1500);
   			}else{
   				abrir_gritter("Error","Usuario y/o Contraseña Incorrecto "  ,"danger");
   				$("#user").focus();
   			}
-  			
+
   		},
   		error:function(){
-  		
+
   		},
   		statusCode: {
 		    404: function() {
-		     
+
           abrir_gritter("Error","URL NO encontrada" ,"danger");
 		    }
 		  }
 	  });
   	e.preventDefault();
-} 
+}
