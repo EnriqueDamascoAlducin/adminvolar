@@ -11,9 +11,9 @@
 		require  $_SESSION['ruta'].'paginas/modelos/login.php';
 		$_SESSION['usuario']=base64_encode(serialize(crearUsuarioBean($usuario)));
 		echo "Bienvenido ".$usuario[0]->nombre_usu;//900 segundos de timepo ==15min
-		$_SESSION['max-tiempo']=60*15;
+		$_SESSION['max-tiempo']=60*30;
 		$_SESSION[ 'ULTIMA_ACTIVIDAD' ] = time();
-		
+
 	}else{
 		echo "falla";
 	}

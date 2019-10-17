@@ -21,17 +21,7 @@
 	if(isset($_POST['fechaF']) && $_POST['fechaF']!='' ){
 		$filtro.= " and fechavuelo_temp <='".$_POST['fechaF']."'";
 	}
-	/*
-	if(isset($_POST['cliente']) && $_POST['cliente']!='0' ){
-		$cliente = explode("-", $_POST['cliente']);
 
-		$filtro.= " and nombre_temp like '%".$cliente[0]."%'";
-		if(isset($cliente[1]) && $cliente[1]!="" && !empty($cliente[1])){
-
-			$filtro.= " and apellidos_temp like '%".$cliente[0]."%'";
-		}
-	}
-	*/
 	if(isset($_POST['status']) && $_POST['status']!='0' ){
 		$filtro.= " and tv.status = ".$_POST['status'];
 	}
@@ -41,13 +31,13 @@
 	if(isset($_POST['reserva']) && $_POST['reserva']!='' ){
 		$filtro.= " and id_temp = ".$_POST['reserva'];
 	}
-	if(!in_array("GENERAL", $permisos)){
+	if(in_array("GENERAL", $permisos) && (isset($_POST['empleado']) && $_POST['empleado']=='0' ) ){
 		$filtro.= " and idusu_temp=".$idUsu;
 	}
 	if($_POST['fechaI']=='' &&  $_POST['fechaF']=='' && $_POST['reserva']=='' ){
 		$filtro .= " and fechavuelo_temp >= CURRENT_TIMESTAMP ";
 	}
-//	echo "SELECT $campos FROM $tabla WHERE $filtro";
+	//echo "SELECT $campos FROM $tabla WHERE $filtro";
 	$filtro .= " ORDER BY id_temp DESC limit 300";
 	$reservas=$con->consulta($campos,$tabla,$filtro);
 	$cancelarSinCot= $con->query("UPDATE temp_volar set status= 0 where  register <=  CURRENT_TIMESTAMP - INTERVAL 1 DAY and status=2");
@@ -76,7 +66,7 @@
 		?>
 			<tr>
 				<td><?php echo $reserva->id_temp; ?></td>
-				<td><?php echo explode(' ',$reserva->nombre)[0]; ?></td>
+				<td><?php echo $reserva->nombre; ?></td>
 				<?php if(in_array("GENERAL",$permisos)){ ?>
 						<?php $nombre = explode(' ',$reserva->empleado)[0]; ?>
 					<td><?php echo $nombre .' '. substr(explode(' ',$reserva->empleado)[1],0,1) ; ?></td>
