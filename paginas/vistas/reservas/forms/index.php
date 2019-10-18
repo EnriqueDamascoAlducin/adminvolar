@@ -54,6 +54,9 @@
 			.btn{
 				display: none;
 			}
+			input{
+
+			}
 	<?php
 		}
 	?>
@@ -450,16 +453,15 @@
 <script type="text/javascript">
 	var idAct = <?php echo $actId ?>;
 	var habitacion = "<?php echo $reserva->getHabitacionTemp(); ?>";
-
-
 </script>
+
 <script type="text/javascript" src="vistas/reservas/js/form1.js"></script>
 <script type="text/javascript">
-	<?php
-		if($reserva->getHotelTemp()!=""){
-	?>
+	<?php	if($reserva->getHotelTemp()!=""){ ?>
 		cargarHabitaciones();
-	<?php
-		}
-	?>
+	<?php 	} 	?>
+
+	<?php if($bloqueado=="bloqueado"){ ?>
+		$("input").prop("disabled","disabled");
+	<?php } ?>
 </script>

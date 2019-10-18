@@ -1,6 +1,7 @@
 <?php
 	$empleados = $con->consulta("CONCAT( IFNULL(nombre_usu,''),' ',IFNULL(apellidop_usu,''),' ',IFNULL(apellidom_usu,'')) as text, id_usu as value","volar_usuarios","id_usu in (Select DISTINCT(idusu_temp) from temp_volar where status<>0) and status<>0 ");
 	$reservas = $con->consulta("DISTINCT(status) as status","temp_volar","status<>0");
+
 ?>
 <div class="row">
 	<div class="col-sm-3 col-lg-3 col-md-3 col-6 col-xl-2 ">
@@ -15,17 +16,6 @@
 			<input type="date" class="form-control" id="fechaF" placeholder="Fecha Final">
 		</div>
 	</div>
-	<!--
-	<div class="col-sm-3 col-lg-3 col-md-3 col-6 col-xl-2 ">
-		<div class="form-group">
-			<label for="cliente">Cliente</label>
-			<select class="selectpicker form-control" id="cliente" name="cliente" data-live-search="true">
-				<option value='0'>Todos...</option>
-
-			</select>
-		</div>
-	</div>
-	-->
 	<div class="col-sm-3 col-lg-3 col-md-3 col-6 col-xl-2 ">
 		<div class="form-group">
 			<label for="status">Estatus</label>
@@ -81,7 +71,11 @@
 				<option value='0'>Todos...</option>
 				<?php
 					foreach ($empleados as $empleado) {
-						echo "<option value='".$empleado->value."'>".$empleado->text."</option>";
+						$sel="";
+						if($empleado->value==$idUsu){
+							$sel = "selected";
+						}
+						echo "<option value='".$empleado->value."' ". $sel .">".$empleado->text."</option>";
 					}
 				?>
 

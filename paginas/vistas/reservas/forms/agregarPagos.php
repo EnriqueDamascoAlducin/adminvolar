@@ -23,192 +23,254 @@
 		}
 	}
 </style>
+<ul class="nav nav-tabs" role="tablist">
+    <li class="nav-item" onclick="cambiarOpcion(1)">
+      <a class="nav-link active" data-toggle="tab" href="#registro">Registrar Pago</a>
+    </li>
+    <li class="nav-item" onclick="cambiarOpcion(2)">
+      <a class="nav-link" data-toggle="tab" href="#retorno">Descontar de Cotización</a>
+    </li>
+  </ul>
 
-<div class="row">
-  <div class="col-sm-4 col-lg-4 col-md-4 col-4 col-xl-4 ">
-		<div class="form-group">
-			<label for="referencia">Total Pagado: <?php echo '$ '.number_format($total[0]->pagado, 2, '.', ','); ?></label>
-		</div>
-	</div>
-  <div class="col-sm-4 col-lg-4 col-md-4 col-4 col-xl-4 ">
-		<div class="form-group">
-			<label for="referencia">Cotizado: <?php echo '$ '.number_format($total[0]->cotizado, 2, '.', ','); ?></label>
-		</div>
-	</div>
-		<div class="col-sm-4 col-lg-4 col-md-4 col-4 col-xl-4 ">
-			<div class="form-group">
-				<label for="referencia">Por Pagar: <?php echo '$ '.number_format( $total[0]->cotizado -$total[0]->pagado, 2, '.', ',');  ?></label>
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <div id="registro" class="container tab-pane active"><br>
+			<div class="row">
+			  <div class="col-sm-4 col-lg-4 col-md-4 col-4 col-xl-4 ">
+					<div class="form-group">
+						<label for="referencia">Total Pagado: <?php echo '$ '.number_format($total[0]->pagado, 2, '.', ','); ?></label>
+					</div>
+				</div>
+			  <div class="col-sm-4 col-lg-4 col-md-4 col-4 col-xl-4 ">
+					<div class="form-group">
+						<label for="referencia">Cotizado: <?php echo '$ '.number_format($total[0]->cotizado, 2, '.', ','); ?></label>
+					</div>
+				</div>
+					<div class="col-sm-4 col-lg-4 col-md-4 col-4 col-xl-4 ">
+						<div class="form-group">
+							<label for="referencia">Por Pagar: <?php echo '$ '.number_format( $total[0]->cotizado -$total[0]->pagado, 2, '.', ',');  ?></label>
+						</div>
+					</div>
 			</div>
-		</div>
-</div>
-<div class="row">
-	<div class="col-sm-3 col-lg-3 col-md-3 col-6 col-xl-3 ">
-		<div class="form-group">
-			<label for="metodo">Método</label>
-			<select class="selectpicker form-control" id="metodo" name="metodo" data-live-search="true">
-				<option value='0'>Todos...</option>
-				<?php
-					foreach ($metodos as $metodo) {
-						echo "<option value='".$metodo->value."'>".$metodo->text."</option>";
+			<div class="row">
+				<div class="col-sm-3 col-lg-3 col-md-3 col-6 col-xl-3 ">
+					<div class="form-group">
+						<label for="metodo">Método</label>
+						<select class="selectpicker form-control" id="metodo" name="metodo" data-live-search="true">
+							<option value='0'>Todos...</option>
+							<?php
+								foreach ($metodos as $metodo) {
+									echo "<option value='".$metodo->value."'>".$metodo->text."</option>";
+								}
+							?>
+
+						</select>
+					</div>
+				</div>
+				<div class="col-sm-3 col-lg-3 col-md-3 col-6 col-xl-3 ">
+					<div class="form-group">
+						<label for="banco">Banco</label>
+						<select class="selectpicker form-control" id="banco" name="banco" data-live-search="true">
+							<option value='0'>Todos...</option>
+							<?php
+								foreach ($cuentas as $cuenta) {
+									echo "<option value='".$cuenta->value."'>".$cuenta->text."</option>";
+								}
+							?>
+
+						</select>
+					</div>
+				</div>
+
+				<div class="col-sm-3 col-lg-3 col-md-3 col-6 col-xl-3 ">
+					<div class="form-group">
+						<label for="referencia">Referencia</label>
+						<input type="text" class="form-control" id="referencia" placeholder="Referencia">
+					</div>
+				</div>
+				<div class="col-sm-3 col-lg-3 col-md-3 col-6 col-xl-3 ">
+					<div class="form-group">
+						<label for="cantidad">Cantidad</label>
+						<input type="number" class="form-control" id="cantidad" placeholder="Cantidad">
+					</div>
+				</div>
+				<div class="col-sm-3 col-lg-3 col-md-3 col-6 col-xl-3 ">
+					<div class="form-group">
+						<label for="fecha">Fecha de Pago</label>
+						<input type="date" class="form-control" id="fecha" placeholder="Fecha de Pago">
+					</div>
+				</div>
+				<div class="col-sm-3 col-lg-3 col-md-3 col-6 col-xl-3 ">
+					<div class="form-group">
+						<label for="peso">Peso</label>
+						<input type="number" class="form-control" id="peso" name="peso" min="0" placeholder="Peso" value="<?php echo $peso[0]->kg_temp; ?>">
+					</div>
+				</div>
+
+				<div class="col-sm-3 col-lg-3 col-md-3 col-6 col-xl-3 ">
+					<div class="form-group">
+						<label for="tipopeso">Peso en</label>
+						<select class="selectpicker form-control" id="tipopeso" name="tipopeso" data-live-search="true">
+							<?php
+								$kg="";$lbs="";
+								if($peso[0]->tipopeso_temp==1){$kg="selected";}else{$lbs="selected";} ?>
+								<option value='1' <?php echo $kg; ?>  >Kilogramos</option>
+								<option value='2' <?php echo $lbs; ?>  >Libras</option>
+						</select>
+					</div>
+				</div>
+
+			</div>
+			<div class="col-12 col-md-12 col-sm-12 col-md-12 col-xl-12">
+				<?php if(sizeof($pagos)>0){ ?>
+				<table class="table "  id="DataTable" style="max-width: 100%;width: 100%;" >
+					<thead>
+						<!--<th>Usuario</th>-->
+						<th  class="tableTh">Referencia</th>
+						<th class="tableTh">Cantidad</th>
+						<th class="tableTh">Fecha</th>
+						<th class="tableTh">Acciones</th>
+					</thead>
+					<tbody>
+						<?php
+							foreach ($pagos as $pago) {
+						?>
+							<tr>
+								<!--<td>
+									<?php echo $pago->usuario; ?>
+								</td>-->
+								<td  class="tableTd">
+									<?php echo $pago->referencia; ?>
+								</td>
+								<td  class="tableTd">
+									<?php echo $pago->cantidad; ?>
+								</td>
+								<td  class="tableTd">
+									<?php echo $pago->fecha; ?>
+								</td>
+								<td  class="tableTd">
+									<!-- 4 es cuando solo se ha agregado el pago y no ha sido conciliado -->
+									<!-- 3 ya ha sido conciliado -->
+									<!-- 2 enviado al cliente sin cupon -->
+									<!-- 1 enviado al cliente con cupon -->
+
+									<?php if($pago->stat == 4){ ?>
+										<i class="fa fa-trash fa-lg"  style="color:red" onclick="accionesPagos(<?php echo $pago->id ?>,'cancelar',<?php echo $reserva; ?>);" title="Enviar con Regalo"  ></i>
+									<?php }else if($pago->stat == 3){  ?>
+										<i class="fa fa-envelope-o fa-lg" data-toggle="modal" onclick="accionesPagos(<?php echo $pago->id ?>,'simple',<?php echo $reserva; ?>);" data-target="#modalReservas1" ></i>
+
+									<?php }else if($pago->stat == 2){  ?>
+											<?php if($pago->referencia=='Pago en Sitio'){ ?>
+												<i class="fa fa-home fa-lg" title="Pagado en Sitio" ></i>
+											<?php }else{ ?>
+												<i class="fa fa-gift fa-lg" title="Enviar con Regalo" data-toggle="modal" style="color:#33b5e5" onclick="accionesPagos(<?php echo $pago->id ?>,'regalo',<?php echo $reserva; ?>);" data-target="#modalReservas1" ></i>
+											<?php } ?>
+									<?php }else if($pago->stat == 1){  ?>
+												<i class="fa fa-gift fa-lg" title="Enviado con Regalo" ></i>
+									<?php } ?>
+
+								</td>
+							</tr>
+
+						<?php
+							}
+						?>
+					</tbody>
+				</table>
+				<script type="text/javascript">
+					$("#DataTable").DataTable({
+						"columnDefs": [
+						    { "width": "5%", "targets": 0 }
+						],
+						"paging": false
+					});
+
+					function accionesPagos(pago,accion,reserva){
+						$.ajax({
+						url:'controladores/pagosController.php',
+						method: "POST",
+				  		data: {
+				  			reserva:reserva,
+				  			pago:pago,
+				  			accion:accion
+				  		},
+				  		success:function(response){
+				  			if(response.includes("ERROR"))
+				  				abrir_gritter(response, "No puedes agregar mas pagos" ,"info");
+				  			else
+				  				abrir_gritter("Correcto", response ,"info");
+
+				  			agregarPago(reserva,cliente);
+
+				  		},
+				  		error:function(){
+
+				          abrir_gritter("Error","Error desconocido" ,"danger");
+				  		},
+				  		statusCode: {
+						    404: function() {
+
+				          abrir_gritter("Error","URL NO encontrada" ,"danger");
+						    }
+						  }
+					});
 					}
-				?>
+				</script>
+			<?php } ?>
+			</div>
+  	</div>
+	<!-- Retorno de Efectivo -->
+	  <div id="retorno" class="container tab-pane fade"><br>
+			<div class="row">
+				<div class="col-sm-3 col-lg-3 col-md-3 col-6 col-xl-3 ">
+					<div class="form-group">
+						<label for="metodo">Método</label>
+						<select class="selectpicker form-control" id="metodo" name="metodo" data-live-search="true">
+							<option value='0'>Todos...</option>
+							<?php
+								foreach ($metodos as $metodo) {
+									echo "<option value='".$metodo->value."'>".$metodo->text."</option>";
+								}
+							?>
 
-			</select>
-		</div>
-	</div>
-	<div class="col-sm-3 col-lg-3 col-md-3 col-6 col-xl-3 ">
-		<div class="form-group">
-			<label for="banco">Banco</label>
-			<select class="selectpicker form-control" id="banco" name="banco" data-live-search="true">
-				<option value='0'>Todos...</option>
-				<?php
-					foreach ($cuentas as $cuenta) {
-						echo "<option value='".$cuenta->value."'>".$cuenta->text."</option>";
-					}
-				?>
+						</select>
+					</div>
+				</div>
+				<div class="col-sm-3 col-lg-3 col-md-3 col-6 col-xl-3 ">
+					<div class="form-group">
+						<label for="banco">Banco</label>
+						<select class="selectpicker form-control" id="banco" name="banco" data-live-search="true">
+							<option value='0'>Todos...</option>
+							<?php
+								foreach ($cuentas as $cuenta) {
+									echo "<option value='".$cuenta->value."'>".$cuenta->text."</option>";
+								}
+							?>
 
-			</select>
-		</div>
+						</select>
+					</div>
+				</div>
+			<div class="col-sm-3 col-lg-3 col-md-3 col-6 col-xl-3 ">
+				<div class="form-group">
+					<label for="motivo">Motivo</label>
+					<input type="text" class="form-control" id="motivo" placeholder="Motivo">
+				</div>
+			</div>
+			<div class="col-sm-3 col-lg-3 col-md-3 col-6 col-xl-3 ">
+				<div class="form-group">
+					<label for="descuento">Descuento</label>
+					<input type="number" onkeypress="return isNumber(event)" class="form-control" id="descuento" placeholder="Descuento">
+				</div>
+			</div>
+	  </div>
 	</div>
-
-	<div class="col-sm-3 col-lg-3 col-md-3 col-6 col-xl-3 ">
-		<div class="form-group">
-			<label for="referencia">Referencia</label>
-			<input type="text" class="form-control" id="referencia" placeholder="Referencia">
-		</div>
-	</div>
-	<div class="col-sm-3 col-lg-3 col-md-3 col-6 col-xl-3 ">
-		<div class="form-group">
-			<label for="cantidad">Cantidad</label>
-			<input type="number" class="form-control" id="cantidad" placeholder="Cantidad">
-		</div>
-	</div>
-	<div class="col-sm-3 col-lg-3 col-md-3 col-6 col-xl-3 ">
-		<div class="form-group">
-			<label for="fecha">Fecha de Pago</label>
-			<input type="date" class="form-control" id="fecha" placeholder="Fecha de Pago">
-		</div>
-	</div>
-	<div class="col-sm-3 col-lg-3 col-md-3 col-6 col-xl-3 ">
-		<div class="form-group">
-			<label for="peso">Peso</label>
-			<input type="number" class="form-control" id="peso" name="peso" min="0" placeholder="Peso" value="<?php echo $peso[0]->kg_temp; ?>">
-		</div>
-	</div>
-
-	<div class="col-sm-3 col-lg-3 col-md-3 col-6 col-xl-3 ">
-		<div class="form-group">
-			<label for="tipopeso">Peso en</label>
-			<select class="selectpicker form-control" id="tipopeso" name="tipopeso" data-live-search="true">
-				<?php
-					$kg="";$lbs="";
-					if($peso[0]->tipopeso_temp==1){$kg="selected";}else{$lbs="selected";} ?>
-					<option value='1' <?php echo $kg; ?>  >Kilogramos</option>
-					<option value='2' <?php echo $lbs; ?>  >Libras</option>
-			</select>
-		</div>
-	</div>
-
 </div>
+<input id="opcion" value="1" type="hidden">
 
-<div class="col-12 col-md-12 col-sm-12 col-md-12 col-xl-12">
-<?php if(sizeof($pagos)>0){ ?>
-	<table class="table "  id="DataTable" style="max-width: 100%;width: 100%;" >
-		<thead>
-			<!--<th>Usuario</th>-->
-			<th  class="tableTh">Referencia</th>
-			<th class="tableTh">Cantidad</th>
-			<th class="tableTh">Fecha</th>
-			<th class="tableTh">Acciones</th>
-		</thead>
-		<tbody>
-			<?php
-				foreach ($pagos as $pago) {
-			?>
-				<tr>
-					<!--<td>
-						<?php echo $pago->usuario; ?>
-					</td>-->
-					<td  class="tableTd">
-						<?php echo $pago->referencia; ?>
-					</td>
-					<td  class="tableTd">
-						<?php echo $pago->cantidad; ?>
-					</td>
-					<td  class="tableTd">
-						<?php echo $pago->fecha; ?>
-					</td>
-					<td  class="tableTd">
-						<!-- 4 es cuando solo se ha agregado el pago y no ha sido conciliado -->
-						<!-- 3 ya ha sido conciliado -->
-						<!-- 2 enviado al cliente sin cupon -->
-						<!-- 1 enviado al cliente con cupon -->
-
-						<?php if($pago->stat == 4){ ?>
-							<i class="fa fa-trash fa-lg"  style="color:red" onclick="accionesPagos(<?php echo $pago->id ?>,'cancelar',<?php echo $reserva; ?>);" title="Enviar con Regalo"  ></i>
-						<?php }else if($pago->stat == 3){  ?>
-							<i class="fa fa-envelope-o fa-lg" data-toggle="modal" onclick="accionesPagos(<?php echo $pago->id ?>,'simple',<?php echo $reserva; ?>);" data-target="#modalReservas1" ></i>
-
-						<?php }else if($pago->stat == 2){  ?>
-								<?php if($pago->referencia=='Pago en Sitio'){ ?>
-									<i class="fa fa-home fa-lg" title="Pagado en Sitio" ></i>
-								<?php }else{ ?>
-									<i class="fa fa-gift fa-lg" title="Enviar con Regalo" data-toggle="modal" style="color:#33b5e5" onclick="accionesPagos(<?php echo $pago->id ?>,'regalo',<?php echo $reserva; ?>);" data-target="#modalReservas1" ></i>
-								<?php } ?>
-						<?php }else if($pago->stat == 1){  ?>
-									<i class="fa fa-gift fa-lg" title="Enviado con Regalo" ></i>
-						<?php } ?>
-
-					</td>
-				</tr>
-
-			<?php
-				}
-			?>
-		</tbody>
-	</table>
-	<script type="text/javascript">
-		$("#DataTable").DataTable({
-			"columnDefs": [
-			    { "width": "5%", "targets": 0 }
-			],
-			"paging": false
-		});
-
-		function accionesPagos(pago,accion,reserva){
-			$.ajax({
-			url:'controladores/pagosController.php',
-			method: "POST",
-	  		data: {
-	  			reserva:reserva,
-	  			pago:pago,
-	  			accion:accion
-	  		},
-	  		success:function(response){
-	  			if(response.includes("ERROR"))
-	  				abrir_gritter(response, "No puedes agregar mas pagos" ,"info");
-	  			else
-	  				abrir_gritter("Correcto", response ,"info");
-
-	  			agregarPago(reserva,cliente);
-
-	  		},
-	  		error:function(){
-
-	          abrir_gritter("Error","Error desconocido" ,"danger");
-	  		},
-	  		statusCode: {
-			    404: function() {
-
-	          abrir_gritter("Error","URL NO encontrada" ,"danger");
-			    }
-			  }
-		});
-		}
-	</script>
-<?php } ?>
-</div>
 <script type="text/javascript">
+	function cambiarOpcion(valor){
+		$("#opcion").val(valor);
+	}
 		date = new Date();
 		var primerDia = new Date(date.getFullYear(), date.getMonth(), 1);
 		var ultimoDia = new Date(date.getFullYear(), date.getMonth() + 1, 0);
