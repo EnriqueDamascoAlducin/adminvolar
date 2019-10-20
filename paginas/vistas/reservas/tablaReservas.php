@@ -31,9 +31,9 @@
 	if(isset($_POST['reserva']) && $_POST['reserva']!='' ){
 		$filtro.= " and id_temp = ".$_POST['reserva'];
 	}
-	if(in_array("GENERAL", $permisos) && (isset($_POST['empleado']) && $_POST['empleado']=='0' ) ){
+/*	if(in_array("GENERAL", $permisos) && (isset($_POST['empleado']) && $_POST['empleado']=='0' ) ){
 		$filtro.= " and idusu_temp=".$idUsu;
-	}
+	}*/
 	if($_POST['fechaI']=='' &&  $_POST['fechaF']=='' && $_POST['reserva']=='' ){
 		$filtro .= " and fechavuelo_temp >= CURRENT_TIMESTAMP ";
 	}

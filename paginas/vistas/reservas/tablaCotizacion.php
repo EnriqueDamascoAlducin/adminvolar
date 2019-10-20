@@ -316,7 +316,7 @@
 		$accion = $con->actualizar("temp_volar","total_temp=".$totalReserva,"id_temp=".$reserva);
 
 	}
-	if($totalReserva<=0){
+	if($totalReserva<0){
 ?>
 	<script type="text/javascript">
 		$("#divCot").html("El total de la reserva no puede ser menor $ 0.00");
