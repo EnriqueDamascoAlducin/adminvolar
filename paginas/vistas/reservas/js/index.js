@@ -99,55 +99,92 @@ function confirmarEliminar(reserva,url,idModulo){
 }
 
 function confirmarAgregarPago(reserva,cliente){
-	metodo=$("#metodo").val().trim();
-	banco=$("#banco").val().trim();
-	referencia=$("#referencia").val().trim();
-	cantidad=$("#cantidad").val().trim();
-	fecha=$("#fecha").val().trim();
-	peso=$("#peso").val();
-	tipopeso=$("#tipopeso").val();
 	error = 0;
-	if(metodo!=0 ){
-		if(metodo=="0"){
+	opcion=$("#opcion").val();
+	if(opcion==1){
+		metodo=$("#metodo").val().trim();
+		banco=$("#banco").val().trim();
+		referencia=$("#referencia").val().trim();
+		cantidad=$("#cantidad").val().trim();
+		fecha=$("#fecha").val().trim();
+		peso=$("#peso").val();
+		tipopeso=$("#tipopeso").val();
+		if(metodo!=0 ){
+			if(metodo=="0"){
+				abrir_gritter("Advertencia","Debe Capturar un metodo","warning");
+				error++;
+			}
+			if(banco=="0"){
+				abrir_gritter("Advertencia","Debe Capturar un banco","warning");
+				error++;
+			}
+			if(referencia==""){
+				abrir_gritter("Advertencia","Debe Capturar una referencia","warning");
+				error++;
+			}
+			if(cantidad==""){
+				abrir_gritter("Advertencia","Debe Capturar una cantidad","warning");
+				error++;
+			}
+			if(fecha==""){
+				abrir_gritter("Advertencia","Debe Capturar una fecha","warning");
+				error++;
+			}
+			datos={
+	  			reserva:reserva,
+	  			metodo:metodo,
+					banco:banco,
+					referencia:referencia,
+					cantidad:cantidad,
+					fecha:fecha,
+					peso:peso,
+					tipopeso:tipopeso,
+	  			accion:'registrarPago'
+			};
+		}else{
+			abrir_gritter("Advertencia","Solo se modificará el peso.","info");
+			datos={
+					peso:peso,
+	  			reserva:reserva,
+					tipopeso:tipopeso,
+					accion:'registrarPago'
+			};
+		}
+	}else{
+		metodoDes=$("#metodoDes").val().trim();
+		bancoDes=$("#bancoDes").val().trim();
+		motivoDes=$("#motivoDes").val().trim();
+		descuento=$("#descuento").val().trim();
+		comentario = $("#comentario").val().trim();
+		if(metodoDes=="0"){
 			abrir_gritter("Advertencia","Debe Capturar un metodo","warning");
 			error++;
 		}
-		if(banco=="0"){
+		if(bancoDes=="0"){
 			abrir_gritter("Advertencia","Debe Capturar un banco","warning");
 			error++;
 		}
-		if(referencia==""){
-			abrir_gritter("Advertencia","Debe Capturar una referencia","warning");
+		if(motivoDes==""){
+			abrir_gritter("Advertencia","Debe Capturar un Motivo","warning");
 			error++;
 		}
-		if(cantidad==""){
-			abrir_gritter("Advertencia","Debe Capturar una cantidad","warning");
+		if(descuento==0 || descuento == '' ){
+			abrir_gritter("Advertencia","Debe agregar un Descuento","warning");
 			error++;
 		}
-		if(fecha==""){
-			abrir_gritter("Advertencia","Debe Capturar una fecha","warning");
+		if(comentario==""){
+			abrir_gritter("Advertencia","Debe Capturar un Comentario","warning");
 			error++;
 		}
 		datos={
-  			reserva:reserva,
-  			metodo:metodo,
-				banco:banco,
-				referencia:referencia,
-				cantidad:cantidad,
-				fecha:fecha,
-				peso:peso,
-				tipopeso:tipopeso,
-  			accion:'registrarPago'
+				reserva:reserva,
+				metodoDes:metodoDes,
+				bancoDes:bancoDes,
+				motivoDes:motivoDes,
+				descuento:descuento,
+				comentario:comentario,
+				accion:'registrarDescuento'
 		};
-	}else{
-		abrir_gritter("Advertencia","Solo se modificará el peso.","info");
-		datos={
-			peso:peso,
-  			reserva:reserva,
-				tipopeso:tipopeso,
-				accion:'registrarPago'
-		};
-
 	}
 	if (error>0)
 		return false;
@@ -157,7 +194,7 @@ function confirmarAgregarPago(reserva,cliente){
   		data: datos,
   		success:function(response){
   			if(response.includes("ERROR"))
-  				abrir_gritter(response, "No puedes agregar mas pagos" ,"warning");
+  				abrir_gritter(response, "No se puede realizar esta acción" ,"warning");
   			else
   				abrir_gritter("Correcto", response ,"info");
 

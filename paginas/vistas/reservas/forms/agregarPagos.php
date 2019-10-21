@@ -224,8 +224,8 @@
 			<div class="row">
 				<div class="col-sm-3 col-lg-3 col-md-3 col-6 col-xl-3 ">
 					<div class="form-group">
-						<label for="metodo">Método</label>
-						<select class="selectpicker form-control" id="metodo" name="metodo" data-live-search="true">
+						<label for="metodoDes">Método</label>
+						<select class="selectpicker form-control" id="metodoDes" name="metodoDes" data-live-search="true">
 							<option value='0'>Todos...</option>
 							<?php
 								foreach ($metodos as $metodo) {
@@ -238,8 +238,8 @@
 				</div>
 				<div class="col-sm-3 col-lg-3 col-md-3 col-6 col-xl-3 ">
 					<div class="form-group">
-						<label for="banco">Banco</label>
-						<select class="selectpicker form-control" id="banco" name="banco" data-live-search="true">
+						<label for="bancoDes">Banco</label>
+						<select class="selectpicker form-control" id="bancoDes" name="bancoDes" data-live-search="true">
 							<option value='0'>Todos...</option>
 							<?php
 								foreach ($cuentas as $cuenta) {
@@ -252,14 +252,20 @@
 				</div>
 			<div class="col-sm-3 col-lg-3 col-md-3 col-6 col-xl-3 ">
 				<div class="form-group">
-					<label for="motivo">Motivo</label>
-					<input type="text" class="form-control" id="motivo" placeholder="Motivo">
+					<label for="motivoDes">Motivo</label>
+					<input type="text" class="form-control" id="motivoDes" name="motivoDes" placeholder="Motivo">
 				</div>
 			</div>
 			<div class="col-sm-3 col-lg-3 col-md-3 col-6 col-xl-3 ">
 				<div class="form-group">
 					<label for="descuento">Descuento</label>
 					<input type="number" onkeypress="return isNumber(event)" class="form-control" id="descuento" placeholder="Descuento">
+				</div>
+			</div>
+			<div class="col-sm-12 col-lg-12 col-md-12 col-12 col-xl-12 ">
+				<div class="form-group">
+					<label for="comentario">Comentario</label>
+					<textarea name="comentario" id="comentario" rows="3" style="resize:none;border-style:double;width:100% ;max-width:100%"></textarea>
 				</div>
 			</div>
 	  </div>

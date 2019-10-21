@@ -104,6 +104,23 @@
 			$pago = $respuesta[1];
 
 		}
+	}elseif (isset($_POST['accion']) && $_POST['accion']=='registrarDescuento'  ) {
+		require  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/modelos/login.php';
+		$usuario= unserialize((base64_decode($_SESSION['usuario'])));
+		$idUsu=$usuario->getIdUsu();
+		$reserva=$_POST['reserva'];
+		$metodoDes=$_POST['metodoDes'];
+		$motivoDes=$_POST['motivoDes'];
+		$bancoDes=$_POST['bancoDes'];
+		$descuento=$_POST['descuento'];
+		$comentario=$_POST['comentario'];
+		$valores = $idUsu.",".$reserva.",".$metodoDes.",".$bancoDes.",'".$motivoDes."',".$descuento.",'".$comentario."'";
+		$descuento = $con->insertar("descuentos_volar","idusu_desc,reserva_desc,metodo_desc,banco_desc,motivo_desc,descuento_desc,comentario_desc",$valores);
+		if( $descuento=='ok'){
+			echo "Descuento hecho";
+		}else{
+			echo "ERROR";
+		}
 	}
 
 ?>
