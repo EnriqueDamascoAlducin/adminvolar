@@ -12,7 +12,7 @@
 	foreach ($subPermisos as $subPermiso) {
 		$permisos[] = $subPermiso->nombre_sp;
 	}
-	$campos= "id_temp,CONCAT(ifnull(nombre_temp,''),' ',ifnull(apellidos_temp,'')) as nombre, mail_temp,CONCAT(ifnull(telfijo_temp,''),' / ',ifnull(telcelular_temp,'')) as telefonos, tv.status,CONCAT(nombre_usu, ' ', IFNULL(apellidop_usu,''),' ',IFNULL(apellidom_usu,'')) as empleado,idusu_temp as idusu ,fechavuelo_temp,tipo_temp as tipo";
+	$campos= "id_temp,CONCAT(ifnull(nombre_temp,''),' ',ifnull(apellidos_temp,'')) as nombre, mail_temp,CONCAT(ifnull(telfijo_temp,''),' / ',ifnull(telcelular_temp,'')) as telefonos, tv.status,CONCAT(nombre_usu, ' ', IFNULL(apellidop_usu,''),' ',IFNULL(apellidom_usu,'')) as empleado,idusu_temp as idusu ,fechavuelo_temp,tipo_temp as tipo,  IFNULL(pasajerosa_temp,0) as pasajerosa, IFNULL(pasajerosn_temp, 0) as pasajerosn,total_temp";
 	$tabla = "temp_volar tv INNER JOIN volar_usuarios ve on tv.idusu_temp = ve.id_usu";
 	$filtro = "tv.status<>0 ";
 	if(isset($_POST['fechaI']) && $_POST['fechaI']!='' ){
@@ -53,9 +53,10 @@
 				<th style="text-align: center;vertical-align: middle;max-width: 1%;width: 1%;">Empleado</th>
 			<?php } ?>
 			<th style="text-align: center;vertical-align: middle;max-width: 1%;width: 1%;">Correo</th>
-			<th style="text-align: center;vertical-align: middle;max-width: 1%;width: 1%;">Telefonos Fijo/Celular</th>
 			<th style="text-align: center;vertical-align: middle;max-width: 1%;width: 1%;">Fecha de Vuelo</th>
 			<th style="text-align: center;vertical-align: middle;max-width: 1%;width: 1%;">Tipo de Vuelo</th>
+			<th style="text-align: center;vertical-align: middle;max-width: 1%;width: 1%;">PAX</th>
+			<th style="text-align: center;vertical-align: middle;max-width: 1%;width: 1%;">Total</th>
 			<th style="text-align: center;vertical-align: middle;max-width: 1%;width: 1%;">Status</th>
 			<th style="text-align: center;vertical-align: middle;max-width: 4%;width: 4% !important;">Acciones</th>
 		</tr>
@@ -72,10 +73,11 @@
 					<td><?php echo $nombre .' '. substr(explode(' ',$reserva->empleado)[1],0,1) ; ?></td>
 				<?php } ?>
 				<td><?php echo $reserva->mail_temp; ?></td>
-				<td><?php echo $reserva->telefonos; ?></td>
 				<td><?php echo $reserva->fechavuelo_temp; ?></td>
 				<?php $tipoVuelo = $con->consulta("nombre_extra","extras_volar INNER JOIN vueloscat_volar on id_extra=tipo_vc","id_vc = ".$reserva->tipo); ?>
 				<td><?php echo $tipoVuelo[0]->nombre_extra; ?></td>
+				<td><?php echo ($reserva->pasajerosa + $reserva->pasajerosn); ?></td>
+				<td><?php echo '$ '.number_format(  $reserva->total_temp, 2, '.', ','); ?></td>
 				<?php
 					$color="";
 					if( $reserva->status ==4){
