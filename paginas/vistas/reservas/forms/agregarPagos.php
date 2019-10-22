@@ -27,9 +27,11 @@
     <li class="nav-item" onclick="cambiarOpcion(1)">
       <a class="nav-link active" data-toggle="tab" href="#registro">Registrar Pago</a>
     </li>
+		<!--
     <li class="nav-item" onclick="cambiarOpcion(2)">
       <a class="nav-link" data-toggle="tab" href="#retorno">Descontar de Cotización</a>
     </li>
+	-->
   </ul>
 
   <!-- Tab panes -->
