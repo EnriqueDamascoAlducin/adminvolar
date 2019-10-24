@@ -35,6 +35,7 @@
 			</select>
 		</div>
 	</div>
+
 	<div class="col-sm-4 col-lg-4 col-md-4 col-4 col-xl-4 ">
 		<div class="form-group">
 			<label for="banco">Banco</label>
@@ -49,6 +50,23 @@
 		</div>
 	</div>
 
+	<div class="col-sm-4 col-lg-4 col-md-4 col-4 col-xl-4 " style="display:none" id="divComision">
+		<div class="form-group">
+			<label for="comision">Comisión %</label>
+			<input type="number" class="form-control" onchange="modificarPrecio()" id="comision" placeholder="%" value="0">
+		</div>
+	</div>
+
+	<div class="col-sm-4 col-lg-4 col-md-4 col-4 col-xl-4 " id="divCupon" style="display:none" >
+		<div class="form-group">
+			<label for="cupon">Aplica Cupón?</label>
+			<select class="form-control" name="cupon" id="cupon">
+				<option value="">No</option>
+				<option value="1">5% en Efectivo</option>
+				<option value="2">10% en Souvenirs</option>
+			</select>
+		</div>
+	</div>
 	<div class="col-sm-4 col-lg-4 col-md-4 col-4 col-xl-4 " style="display:none">
 		<div class="form-group">
 			<label for="referencia">Referencia</label>
@@ -61,12 +79,6 @@
 			<input type="number" class="form-control" id="cantidad" onchange="modificarPrecio()" placeholder="Cantidad" value="<?php echo 	$total[0]->cotizado -  $total[0]->pagado  ;?>">
 		</div>
 	</div>
-	<div class="col-sm-4 col-lg-4 col-md-4 col-4 col-xl-4 " style="display:none" id="divComision">
-		<div class="form-group">
-			<label for="comision">Comisión %</label>
-			<input type="number" class="form-control" onchange="modificarPrecio()" id="comision" placeholder="%" value="0">
-		</div>
-	</div>
 
 	<div class="col-sm-4 col-lg-4 col-md-4 col-4 col-xl-4 " style="display:none">
 		<div class="form-group">
@@ -76,18 +88,8 @@
 	</div>
 	<div class="col-sm-4 col-lg-4 col-md-4 col-4 col-xl-4 " >
 		<div class="form-group">
-			<label for="fecha">Aplica Cupón?</label>
-			<select class="form-control" name="cupon" id="cupon">
-				<option value="">No</option>
-				<option value="1">5% en Efectivo</option>
-				<option value="2">10% en Souvenirs</option>
-			</select>
-		</div>
-	</div>
-	<div class="col-sm-4 col-lg-4 col-md-4 col-4 col-xl-4 " >
-		<div class="form-group">
-			<label for="fecha">Precio por Peso Extra</label>
-			<input type="number" min="0"  class="form-control" id="pesoextra" placeholder="Precio Total">
+			<label for="pesoextra">Precio por Peso Extra</label>
+			<input type="number" min="0"  class="form-control" id="pesoextra" placeholder="Precio Total" value='0'>
 		</div>
 	</div>
 	<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
@@ -97,39 +99,62 @@
 <script type="text/javascript">
 	var precioRestante  =  <?php echo ($total[0]->cotizado -  $total[0]->pagado ) ?>;
 	$("#cupon").on("change",function(){
-		if($(this).val()==""){
-			$("#cantidad").val(precioRestante).prop("disabled",false);
-		}else if($(this).val()==1){
-				regreso = (precioRestante*.05);
-					$("#cantidad").val(precioRestante-regreso).prop("disabled","disabled");
-				$("#spanCant").html("$ "+new Intl.NumberFormat().format(precioRestante )+".<br>Regresar $ "+new Intl.NumberFormat().format(regreso ) +"<br> Cobrar:  $ "+new Intl.NumberFormat().format(precioRestante-regreso ));
-		}else if($(this).val()==2){
-				$("#cantidad").val(precioRestante).prop("disabled","disabled");
-				regreso = (precioRestante*.1);
-				$("#spanCant").html("$ "+new Intl.NumberFormat().format(precioRestante )+".<br>Vale por  $ "+new Intl.NumberFormat().format(regreso ));
-		}
+
+		modificarPrecio();
 	});
 
+	$("#comision").on("change",function(){
+				modificarPrecio();
+	});
 	$("#metodo").on("change",function(){
 		$("#comision").val(0);
-		if($(this).val()==98)
+		$("#divComision").hide();
+		$("#cupon").val('');
+		$("#divCupon").hide();
+		if($(this).val()==98){
 			$("#divComision").show();
-		else
-			$("#divComision").hide();
+			$("#comision").val(4);
+		}else if($(this).val()==60){
+			$("#divCupon").show();
+		}
+				modificarPrecio();
+	});
+	$("#pesoextra").on("change",function(){
+		if($(this).val()=='')
+			$(this).val(0);
+		modificarPrecio();
 	});
 	function modificarPrecio(){
-		var comision = $("#comision").val();
-		if(comision==''){
-			comision=0;
+		metodo = $("#metodo").val();
+		pesoextra = $("#pesoextra").val();
+		cupon = 	$("#cupon").val();
+		$("#spanCant").html(" $ "+new Intl.NumberFormat().format(precioRestante + parseInt(pesoextra) ));
+		if(metodo==98){
+			var comision = $("#comision").val();
+			if(comision==''){
+				comision=0;
+			}
+			var cantidad = $("#cantidad").val();
+			if(cantidad==''){
+				cantidad = 0;
+			}
+			nuevoValor = parseInt(cantidad) + ((parseInt(cantidad) * parseInt(comision))/100);
+			$("#spanCant").html("$ "+new Intl.NumberFormat().format(nuevoValor + parseInt(pesoextra) ));
+		}else if(metodo==60){
+			if(cupon==""){
+				$("#cantidad").val(precioRestante).prop("disabled",false);
+			}else if(cupon==1){
+					regreso = (precioRestante*.05);
+						$("#cantidad").val(precioRestante-regreso).prop("disabled","disabled");
+					$("#spanCant").html("$ "+new Intl.NumberFormat().format(precioRestante  )+".<br>Regresar $ "+new Intl.NumberFormat().format(regreso ) +"<br> Cobrar:  $ "+new Intl.NumberFormat().format(precioRestante-regreso + parseInt(pesoextra) ));
+			}else if(cupon==2){
+					$("#cantidad").val(precioRestante).prop("disabled","disabled");
+					regreso = (precioRestante*.1);
+					$("#spanCant").html("$ "+new Intl.NumberFormat().format(precioRestante + parseInt(pesoextra))+".<br>Vale por  $ "+new Intl.NumberFormat().format(regreso ));
+			}
 		}
-		var cantidad = $("#cantidad").val();
-		if(cantidad==''){
-			cantidad = 0;
-		}
-
-		nuevoValor = parseInt(cantidad) + ((parseInt(cantidad) * parseInt(comision))/100);
-		$("#spanCant").html("$ "+new Intl.NumberFormat().format(nuevoValor ));
 	}
+
 		date = new Date();
 		var primerDia = new Date(date.getFullYear(), date.getMonth(), 1);
 		var ultimoDia = new Date(date.getFullYear(), date.getMonth() + 1, 0);

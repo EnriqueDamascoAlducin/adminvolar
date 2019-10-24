@@ -90,7 +90,10 @@
 		$cantidad=$_POST['cantidad'];
 		$fecha=$_POST['fecha'];
 		$comision=$_POST['comision'];
+		$cupon=$_POST['cupon'];
+		$pesoextra=$_POST['pesoextra'];
 		//Registra Pagos
+		$totalReserva = $con->consulta("total_temp","temp_volar","id_temp=".$reserva);
 		$parametros = '0,'. $reserva.','.$idUsu.','.$metodo.','.$banco.',"'.$referencia.'",'.$cantidad.',"'.$fecha.'",0,'.$comision;
 		$sql="CALL registrarPago(". $parametros .",@respuesta)";
 		//echo $sql;

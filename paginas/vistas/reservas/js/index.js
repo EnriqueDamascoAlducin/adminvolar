@@ -277,12 +277,14 @@ function agregarPagoSitio(reserva,cliente){
 }
 
 function confirmaragregarPagoSitio(reserva,cliente){
-	metodo=$("#metodo").val().trim();
-	banco=$("#banco").val().trim();
+	metodo=$("#metodo").val();
+	banco=$("#banco").val();
 	referencia=$("#referencia").val().trim();
 	cantidad=$("#cantidad").val().trim();
 	fecha=$("#fecha").val().trim();
 	comision=$("#comision").val().trim();
+	cupon=$("#cupon").val();
+	pesoextra=$("#pesoextra").val();
 	if(cantidad=="" ){
 		abrir_gritter("Advertencia","Debe Capturar una cantidad","warning");
 		return false;
@@ -295,6 +297,8 @@ function confirmaragregarPagoSitio(reserva,cliente){
 			cantidad:cantidad,
 			comision:comision,
 			fecha:fecha,
+			cupon:cupon,
+			pesoextra:pesoextra,
 			accion:'registrarPagoSitio'
 	};
 	$.ajax({
