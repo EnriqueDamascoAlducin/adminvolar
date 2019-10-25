@@ -134,7 +134,7 @@
 					<?php } ?>
 					<!--========       REPROGRAMACIONES     ========= -->
 					<?php if(($idUsu==$reserva->idusu && in_array("REPROGRAMAR",$permisos)) || in_array("REPROGRAMAR GRAL",$permisos)) { ?>
-						<i class="fa fa-clock-o fa-lg" style="color:#311b92 " data-toggle="modal" data-target="#modalReservas"  title="Reprogramar" onclick="reprogramar( <?php echo $reserva->id_temp; ?>,'<?php echo $reserva->nombre; ?>')" ></i>&nbsp;
+						<i class="fa fa-calendar fa-lg" style="color:#311b92 " data-toggle="modal" data-target="#modalReservas"  title="Reprogramar" onclick="reprogramar( <?php echo $reserva->id_temp; ?>,'<?php echo $reserva->nombre; ?>')" ></i>&nbsp;
 					<?php } ?>
 
 								<!--========       PAGOS     ========= -->
