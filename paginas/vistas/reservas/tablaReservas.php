@@ -14,7 +14,7 @@
 	}
 	$campos= "id_temp,CONCAT(ifnull(nombre_temp,''),' ',ifnull(apellidos_temp,'')) as nombre, mail_temp,CONCAT(ifnull(telfijo_temp,''),' / ',ifnull(telcelular_temp,'')) as telefonos, tv.status,CONCAT(nombre_usu, ' ', IFNULL(apellidop_usu,''),' ',IFNULL(apellidom_usu,'')) as empleado,idusu_temp as idusu ,fechavuelo_temp,tipo_temp as tipo,  IFNULL(pasajerosa_temp,0) as pasajerosa, IFNULL(pasajerosn_temp, 0) as pasajerosn,total_temp";
 	$tabla = "temp_volar tv INNER JOIN volar_usuarios ve on tv.idusu_temp = ve.id_usu";
-	$filtro = "tv.status<>0 ";
+	$filtro = "tv.status not in (0,6) ";
 	if(isset($_POST['fechaI']) && $_POST['fechaI']!='' ){
 		$filtro.= " and fechavuelo_temp >='".$_POST['fechaI']."'";
 	}
@@ -133,16 +133,16 @@
 						<i class="fa fa-eye fa-lg" style="color:#311b92 " title="Ver" onclick="accionReserva('ver', <?php echo $reserva->id_temp; ?>)" ></i>&nbsp;
 					<?php } ?>
 					<!--========       REPROGRAMACIONES     ========= -->
-					<?php if(($idUsu==$reserva->idusu && in_array("REPROGRAMAR",$permisos)) || in_array("REPROGRAMAR GRAL",$permisos)) { ?>
+					<?php if(($idUsu==$reserva->idusu && in_array("REPROGRAMAR",$permisos)) || in_array("REPROGRAMAR GRAL",$permisos)  && ($reserva->status!=1  && $reserva->status!=6 )) { ?>
 						<i class="fa fa-clock-o fa-lg" style="color:#311b92 " data-toggle="modal" data-target="#modalReservas"  title="Reprogramar" onclick="reprogramar( <?php echo $reserva->id_temp; ?>,'<?php echo $reserva->nombre; ?>')" ></i>&nbsp;
 					<?php } ?>
 
 								<!--========       PAGOS     ========= -->
-					<?php if(in_array("AGREGAR PAGO",$permisos) && $reserva->status!=6 && $reserva->status!=2){ ?>
+					<?php if(in_array("AGREGAR PAGO",$permisos) && $reserva->status!=6 && $reserva->status!=2 && $reserva->status!=1){ ?>
 						<i class="fa fa-money fa-lg" style="color:#00C851" title="Agregar Pago" data-toggle="modal" data-target="#modalReservas" onclick="agregarPago(<?php echo $reserva->id_temp; ?>,'<?php echo $reserva->nombre; ?>')"> </i>&nbsp;
 					<?php } ?>
 					<!--========       CONCILIAR     ========= -->
-					<?php if( in_array("CONCILIAR",$permisos) && $reserva->status!=6 && $reserva->status!=2){ ?>
+					<?php if( in_array("CONCILIAR",$permisos) && $reserva->status!=6 && $reserva->status!=2 && $reserva->status!=1){ ?>
 						<i class="fa fa-check-square-o fa-lg" style="color:#aa66cc" title="Conciliar" data-toggle="modal" data-target="#modalReservas"    onclick="conciliarPago(<?php echo $reserva->id_temp; ?>,'<?php echo $reserva->nombre; ?>')"></i>&nbsp;
 					<?php } ?>
 					<!--========       BITACORA     ========= -->
@@ -154,8 +154,16 @@
 						<i class="fa fa-expand fa-lg" style="color:#311b92 " title="Cotización" data-toggle="modal" data-target="#modalReservas"  onclick="mostrarCotizacion(<?php echo $reserva->id_temp; ?>, 'ver')" ></i>&nbsp;
 					<?php } ?>
 					<!--========       Pago en SItio     ========= -->
-					<?php if(in_array("PAGO SITIO",$permisos) && $reserva->status!=6 && $reserva->status!=2){ ?>
+					<?php if(in_array("PAGO SITIO",$permisos) && $reserva->status!=6 && $reserva->status!=2 && $reserva->status!=1){ ?>
 						<i class="fa fa-dollar fa-lg" style="color:#00C851" title="Agregar Pago" data-toggle="modal" data-target="#modalReservas"  onclick="agregarPagoSitio(<?php echo $reserva->id_temp; ?>,'<?php echo $reserva->nombre; ?>')"></i>&nbsp;
+					<?php } ?>
+					<!--========       Agregar Cargos extras o Descuentos     ========= -->
+					<?php if((in_array("CARGOS",$permisos) && in_array("DESCUENTOS",$permisos)) && $reserva->status!=6 && $reserva->status!=2){ ?>
+							<i class="fa fa-percent fa-lg" style="color:#00C851" title="Agregar Cargos y Descuentos" data-toggle="modal" data-target="#modalReservas"  onclick="agregarExtras(<?php echo $reserva->id_temp; ?>,'<?php echo $reserva->nombre; ?>',1)"></i>&nbsp;
+					<?php } else if( in_array("DESCUENTOS",$permisos) && $reserva->status!=6 && $reserva->status!=2){ ?>
+								<i class="fa fa-percent fa-lg" style="color:#00C851" title="Agregar Descuentos" data-toggle="modal" data-target="#modalReservas"  onclick="agregarExtras(<?php echo $reserva->id_temp; ?>,'<?php echo $reserva->nombre; ?>',2)"></i>&nbsp;
+					<?php }else if(in_array("CARGOS",$permisos)  && $reserva->status!=6 && $reserva->status!=2){  ?>
+								<i class="fa fa-percent fa-lg" style="color:#00C851" title="Agregar Cargos" data-toggle="modal" data-target="#modalReservas"  onclick="agregarExtras(<?php echo $reserva->id_temp; ?>,'<?php echo $reserva->nombre; ?>',3)"></i>&nbsp;
 					<?php } ?>
 
 					<!--========       PILOTOS     ========= -->
@@ -167,7 +175,7 @@
 						<i class="fa fa-street-view fa-lg" style="color:#311b92 " title="Confirmar Asistencia" data-toggle="modal" data-target="#modalReservas"  onclick="checkAsistencia(<?php echo $reserva->id_temp; ?>,'<?php echo $reserva->nombre; ?>')"></i>&nbsp;
 					<?php } ?>
 					<!--========       Eliminar     ========= -->
-					<?php if( (($idUsu==$reserva->idusu && in_array("ELIMINAR",$permisos)) || in_array("ELIMINAR GRL",$permisos)) || ($reserva->status==1 && $reserva->status!=7) ) { ?>
+					<?php if( (($idUsu==$reserva->idusu && in_array("ELIMINAR",$permisos)) || in_array("ELIMINAR GRL",$permisos)) && ($reserva->status!=1) ) { ?>
 						<i class="fa fa-trash-o fa-lg" style="color:#ff4444" title="Eliminar" data-toggle="modal" data-target="#modalReservas"  onclick="eliminarReserva('vistas/reservas/', <?php echo $reserva->id_temp; ?>, <?php echo $modulo; ?>)" ></i>&nbsp;
 					<?php } ?>
 					<!--========       Comentario     ========= -->
