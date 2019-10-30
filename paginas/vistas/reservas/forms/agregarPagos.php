@@ -32,7 +32,7 @@
       <a class="nav-link" data-toggle="tab" href="#retorno">Descontar de Cotización</a>
     </li>
 	-->
-  </ul>
+</ul>
 
   <!-- Tab panes -->
   <div class="tab-content">

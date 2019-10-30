@@ -691,6 +691,45 @@ function confirmarComentar(reserva){
 	});
 }
 
+
+
+function agregarExtras(reserva,nombre,acciones){
+	$("button[id^='btn']").remove();
+	if(acciones==1)
+		titulo = "Descuentos y Cargos";
+	else if(acciones==2)
+		titulo = "Descuentos";
+	else
+		titulo = "Cargos Extras ";
+	$("#tituloModalReservas").html("Agregar "+ titulo);
+	cambiarTamanoModal("modalSize","lg",'agregar');
+	$("#divBtnModalReservas").append('<button autofocus type="button"  data-dismiss="modal" id="btnComentar'+reserva+'" class="btn btn-success" onclick="confirmarAgregarExtras('+reserva+', \''+nombre+'\','+acciones+');" >Confirmar</button>');
+	url="vistas/reservas/forms/cargosExtras.php";
+	$.ajax({
+			url:url,
+			method: "POST",
+			data: {reserva:reserva,nombre:nombre,acciones:acciones},
+			success:function(response){
+			 $("#cuerpoModalReservas").html(response)
+			},
+			error:function(){
+
+					abrir_gritter("Error","Error desconocido" ,"danger");
+			},
+			statusCode: {
+				404: function() {
+
+					abrir_gritter("Error","URL NO encontrada" ,"danger");
+				}
+			}
+	});
+}
+
+
+
+
+
+
 function tables(){
 	$(".DataTable").DataTable().destroy();
 		$(".DataTable").dataTable( {
