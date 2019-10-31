@@ -95,7 +95,6 @@
 		//Registra Pagos
 		$totalReserva = $con->consulta("total_temp","temp_volar","id_temp=".$reserva);
 		$nuevoTotal = $totalReserva[0]->total_temp + $pesoextra;
-		$actializarTotal = $con->actualizar("temp_volar","total_temp=".$nuevoTotal  )
 		$parametros = '0,'. $reserva.','.$idUsu.','.$metodo.','.$banco.',"'.$referencia.'",'.$cantidad.',"'.$fecha.'",0,'.$comision;
 		$sql="CALL registrarPago(". $parametros .",@respuesta)";
 		//echo $sql;
@@ -109,23 +108,35 @@
 			$pago = $respuesta[1];
 
 		}
-	}elseif (isset($_POST['accion']) && $_POST['accion']=='registrarDescuento'  ) {
-		require  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/modelos/login.php';
-		$usuario= unserialize((base64_decode($_SESSION['usuario'])));
-		$idUsu=$usuario->getIdUsu();
-		$reserva=$_POST['reserva'];
-		$metodoDes=$_POST['metodoDes'];
-		$motivoDes=$_POST['motivoDes'];
-		$bancoDes=$_POST['bancoDes'];
-		$descuento=$_POST['descuento'];
-		$comentario=$_POST['comentario'];
-		$valores = $idUsu.",".$reserva.",".$metodoDes.",".$bancoDes.",'".$motivoDes."',".$descuento.",'".$comentario."'";
-		$descuento = $con->insertar("descuentos_volar","idusu_desc,reserva_desc,metodo_desc,banco_desc,motivo_desc,descuento_desc,comentario_desc",$valores);
-		if( $descuento=='ok'){
-			echo "Descuento hecho";
-		}else{
-			echo "ERROR";
-		}
-	}
+	}elseif (isset($_POST['accion']) && $_POST['accion']=='cargosExtras'  ) {
+			require  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/modelos/login.php';
+			$usuario= unserialize((base64_decode($_SESSION['usuario'])));
+			$idUsu=$usuario->getIdUsu();
+			$motivoCar = $_POST['motivoCar'];
+			$cantidadCar = $_POST['cantidadCar'];
+			$comentarioCar = $_POST['comentarioCar'];
+			$reserva = $_POST['reserva'];
+			$valores = $reserva.','.$idUsu.',"'.$motivoCar.'","'.$cantidadCar.'","'.$comentarioCar.'",1';
+			$registrarCargo = $con->insertar("cargosextras_volar", "reserva_ce,usuario_ce,motivo_ce,cantidad_ce,comentario_ce,tipo_ce", $valores);
+			echo $registrarCargo;
 
+			$totalReserva = $con->consulta("total_temp","temp_volar","id_temp=".$reserva);
+			$nuevoTotal = $totalReserva[0]->total_temp + $cantidadCar;
+			$nuevoTotal = $con->actualizar("temp_volar","total_temp=".$nuevoTotal,"id_temp=".$reserva);
+	}elseif (isset($_POST['accion']) && $_POST['accion']=='descuentos'  ) {
+			require  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/modelos/login.php';
+			$usuario= unserialize((base64_decode($_SESSION['usuario'])));
+			$idUsu=$usuario->getIdUsu();
+			$motivoCar = $_POST['motivoCar'];
+			$cantidadCar = $_POST['cantidadCar'];
+			$comentarioCar = $_POST['comentarioCar'];
+			$reserva = $_POST['reserva'];
+			$valores = $reserva.','.$idUsu.',"'.$motivoCar.'","'.$cantidadCar.'","'.$comentarioCar.'",2';
+			$registrarCargo = $con->insertar("cargosextras_volar", "reserva_ce,usuario_ce,motivo_ce,cantidad_ce,comentario_ce,tipo_ce", $valores);
+			echo $registrarCargo;
+
+			$totalReserva = $con->consulta("total_temp","temp_volar","id_temp=".$reserva);
+			$nuevoTotal = $totalReserva[0]->total_temp - $cantidadCar;
+			$nuevoTotal = $con->actualizar("temp_volar","total_temp=".$nuevoTotal,"id_temp=".$reserva);
+	}
 ?>

@@ -703,7 +703,6 @@ function agregarExtras(reserva,nombre,acciones){
 		titulo = "Cargos Extras ";
 	$("#tituloModalReservas").html("Agregar "+ titulo);
 	cambiarTamanoModal("modalSize","lg",'agregar');
-	$("#divBtnModalReservas").append('<button autofocus type="button"  data-dismiss="modal" id="btnComentar'+reserva+'" class="btn btn-success" onclick="confirmarAgregarExtras('+reserva+', \''+nombre+'\','+acciones+');" >Confirmar</button>');
 	url="vistas/reservas/forms/cargosExtras.php";
 	$.ajax({
 			url:url,
@@ -726,9 +725,123 @@ function agregarExtras(reserva,nombre,acciones){
 }
 
 
+function confirmarAgregarExtras(){
+	motivoCar = $("#motivoCar").val();
+	cantidadCar = $("#cantidadCar").val();
+	comentarioCar = $("#comentarioCar").val();
+	reserva = $("#reservaCar").val();
+	nombre = $("#nombre").val();
+	alert(reserva);
+	acciones = $("#acciones").val();
+	if(motivoCar.trim()==""){
+		$("#motivoCar").focus();
+		abrir_gritter("Advertencia","Agrega un Motivo","warning");
+		return false;
+	}
+	if(cantidadCar.trim()=="" || cantidadCar == 0){
+		$("#cantidadCar").focus();
+		abrir_gritter("Advertencia","Agrega una cantidad","warning");
+		return false;
+	}
+	if(comentarioCar.trim()==""){
+		$("#comentarioCar").focus();
+		abrir_gritter("Advertencia","Agrega un Comentario","warning");
+		return false;
+	}
+	url = 'controladores/pagosController.php';
+	datos = {
+		motivoCar:motivoCar,
+		cantidadCar:cantidadCar,
+		comentarioCar:comentarioCar,
+		reserva:reserva,
+		accion:'cargosExtras'
+	};
+	$.ajax({
+			url:url,
+			method: "POST",
+			data: datos,
+			success:function(response){
+				if(response=="ok"){
+						abrir_gritter("Ok!","Cargo registrado" ,"info");
+				}else{
+						abrir_gritter("Error",response ,"danger");
+				}
+
+			},
+			error:function(){
+
+					abrir_gritter("Error","Error desconocido" ,"danger");
+			},
+			statusCode: {
+				404: function() {
+
+					abrir_gritter("Error","URL NO encontrada" ,"danger");
+				}
+			}
+	});
+	alert(reserva);
+	agregarExtras(reserva,nombre,acciones);
+	cargarTablaReservas();
+}
 
 
 
+function confirmarDescuento(){
+	motivoCar = $("#motivoDesc").val();
+	cantidadCar = $("#cantidadDesc").val();
+	comentarioCar = $("#comentarioDesc").val();
+	reserva = $("#reservaCar").val();
+	nombre = $("#nombre").val();
+	acciones = $("#acciones").val();
+	if(motivoCar.trim()==""){
+		$("#motivoDesc").focus();
+		abrir_gritter("Advertencia","Agrega un Motivo","warning");
+		return false;
+	}
+	if(cantidadCar.trim()=="" || cantidadCar == 0){
+		$("#cantidadDesc").focus();
+		abrir_gritter("Advertencia","Agrega una cantidad","warning");
+		return false;
+	}
+	if(comentarioCar.trim()==""){
+		$("#comentarioDesc").focus();
+		abrir_gritter("Advertencia","Agrega un Comentario","warning");
+		return false;
+	}
+	url = 'controladores/pagosController.php';
+	datos = {
+		motivoCar:motivoCar,
+		cantidadCar:cantidadCar,
+		comentarioCar:comentarioCar,
+		reserva:reserva,
+		accion:'descuentos'
+	};
+	$.ajax({
+			url:url,
+			method: "POST",
+			data: datos,
+			success:function(response){
+				if(response=="ok"){
+						abrir_gritter("Ok!","Cargo registrado" ,"info");
+				}else{
+						abrir_gritter("Error",response ,"danger");
+				}
+
+			},
+			error:function(){
+
+					abrir_gritter("Error","Error desconocido" ,"danger");
+			},
+			statusCode: {
+				404: function() {
+
+					abrir_gritter("Error","URL NO encontrada" ,"danger");
+				}
+			}
+	});
+	agregarExtras(reserva,nombre,acciones);
+	cargarTablaReservas();
+}
 
 function tables(){
 	$(".DataTable").DataTable().destroy();
