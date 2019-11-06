@@ -729,7 +729,6 @@ function confirmarAgregarExtras(){
 	comentarioCar = $("#comentarioCar").val();
 	reserva = $("#reservaCar").val();
 	nombre = $("#nombre").val();
-	alert(reserva);
 	acciones = $("#acciones").val();
 	if(motivoCar.trim()==""){
 		$("#motivoCar").focus();
@@ -777,7 +776,6 @@ function confirmarAgregarExtras(){
 				}
 			}
 	});
-	alert(reserva);
 	agregarExtras(reserva,nombre,acciones);
 	cargarTablaReservas();
 }

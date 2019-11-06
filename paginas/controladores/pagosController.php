@@ -91,11 +91,12 @@
 		$fecha=$_POST['fecha'];
 		$comision=$_POST['comision'];
 		$cupon=$_POST['cupon'];
-		//$pesoextra=$_POST['pesoextra'];
+		if($cupon==''){
+			$cupon=0;
+		}
 		//Registra Pagos
 		$totalReserva = $con->consulta("total_temp","temp_volar","id_temp=".$reserva);
-		$nuevoTotal = $totalReserva[0]->total_temp + $pesoextra;
-		$parametros = '0,'. $reserva.','.$idUsu.','.$metodo.','.$banco.',"'.$referencia.'",'.$cantidad.',"'.$fecha.'",0,'.$comision;
+		$parametros = '0,'. $reserva.','.$idUsu.','.$metodo.','.$banco.',"'.$referencia.'",'.$cantidad.',"'.$fecha.'",0,'.$comision.','.$cupon;
 		$sql="CALL registrarPago(". $parametros .",@respuesta)";
 		//echo $sql;
 		$registrarPago = $con->query($sql);
@@ -105,8 +106,16 @@
 			echo $registrarPago[0]->respuesta;
 		}else{
 			$respuesta=explode("|", $registrarPago[0]->respuesta);
+			//print_r( $respuesta);
 			$pago = $respuesta[1];
 			echo $respuesta[0];
+		}
+		if($cupon==1){
+			$desc = $totalReserva[0]->total_temp * .05;
+			$nuevoTotal = $totalReserva[0]->total_temp - $desc;
+			$valores = $reserva.",".$idUsu.",'Aplica Cupón de 5%',".$desc.",'Se aplicó cupón por pago en efectivo',2";
+			$registrarCargo = $con->insertar("cargosextras_volar", "reserva_ce,usuario_ce,motivo_ce,cantidad_ce,comentario_ce,tipo_ce", $valores);
+			$nuevoTotal = $con->actualizar("temp_volar","total_temp=".$nuevoTotal,"id_temp=".$reserva);
 		}
 	}elseif (isset($_POST['accion']) && $_POST['accion']=='cargosExtras'  ) {
 			require  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/modelos/login.php';

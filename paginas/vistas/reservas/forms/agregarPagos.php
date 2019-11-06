@@ -27,11 +27,7 @@
     <li class="nav-item" onclick="cambiarOpcion(1)">
       <a class="nav-link active" data-toggle="tab" href="#registro">Registrar Pago</a>
     </li>
-		<!--
-    <li class="nav-item" onclick="cambiarOpcion(2)">
-      <a class="nav-link" data-toggle="tab" href="#retorno">Descontar de Cotización</a>
-    </li>
-	-->
+		
 </ul>
 
   <!-- Tab panes -->
@@ -221,57 +217,7 @@
 			<?php } ?>
 			</div>
   	</div>
-	<!-- Retorno de Efectivo -->
-	  <div id="retorno" class="container tab-pane fade"><br>
-			<div class="row">
-				<div class="col-sm-3 col-lg-3 col-md-3 col-6 col-xl-3 ">
-					<div class="form-group">
-						<label for="metodoDes">Método</label>
-						<select class="selectpicker form-control" id="metodoDes" name="metodoDes" data-live-search="true">
-							<option value='0'>Todos...</option>
-							<?php
-								foreach ($metodos as $metodo) {
-									echo "<option value='".$metodo->value."'>".$metodo->text."</option>";
-								}
-							?>
-
-						</select>
-					</div>
-				</div>
-				<div class="col-sm-3 col-lg-3 col-md-3 col-6 col-xl-3 ">
-					<div class="form-group">
-						<label for="bancoDes">Banco</label>
-						<select class="selectpicker form-control" id="bancoDes" name="bancoDes" data-live-search="true">
-							<option value='0'>Todos...</option>
-							<?php
-								foreach ($cuentas as $cuenta) {
-									echo "<option value='".$cuenta->value."'>".$cuenta->text."</option>";
-								}
-							?>
-
-						</select>
-					</div>
-				</div>
-			<div class="col-sm-3 col-lg-3 col-md-3 col-6 col-xl-3 ">
-				<div class="form-group">
-					<label for="motivoDes">Motivo</label>
-					<input type="text" class="form-control" id="motivoDes" name="motivoDes" placeholder="Motivo">
-				</div>
-			</div>
-			<div class="col-sm-3 col-lg-3 col-md-3 col-6 col-xl-3 ">
-				<div class="form-group">
-					<label for="descuento">Descuento</label>
-					<input type="number" onkeypress="return isNumber(event)" class="form-control" id="descuento" placeholder="Descuento">
-				</div>
-			</div>
-			<div class="col-sm-12 col-lg-12 col-md-12 col-12 col-xl-12 ">
-				<div class="form-group">
-					<label for="comentario">Comentario</label>
-					<textarea name="comentario" id="comentario" rows="3" style="resize:none;border-style:double;width:100% ;max-width:100%"></textarea>
-				</div>
-			</div>
-	  </div>
-	</div>
+	
 </div>
 <input id="opcion" value="1" type="hidden">
 

@@ -93,18 +93,18 @@
 <script type="text/javascript">
 	var precioRestante  =  <?php echo ($total[0]->cotizado -  $total[0]->pagado ) ?>;
 	$("#cupon").on("change",function(){
-
 		modificarPrecio();
 	});
 
 	$("#comision").on("change",function(){
-				modificarPrecio();
+		modificarPrecio();
 	});
 	$("#metodo").on("change",function(){
 		$("#comision").val(0);
 		$("#divComision").hide();
 		$("#cupon").val('');
 		$("#divCupon").hide();
+		$("#cantidad").removeAttr("disabled").val(precioRestante);
 		if($(this).val()==98){
 			$("#divComision").show();
 			$("#comision").val(4);
@@ -113,38 +113,34 @@
 		}
 				modificarPrecio();
 	});
-	$("#pesoextra").on("change",function(){
-		if($(this).val()=='')
-			$(this).val(0);
-		modificarPrecio();
-	});
 	function modificarPrecio(){
 		metodo = $("#metodo").val();
-		pesoextra = $("#pesoextra").val();
 		cupon = 	$("#cupon").val();
-		$("#spanCant").html(" $ "+new Intl.NumberFormat().format(precioRestante + parseInt(pesoextra) ));
-		if(metodo==98){
-			var comision = $("#comision").val();
-			if(comision==''){
-				comision=0;
-			}
-			var cantidad = $("#cantidad").val();
-			if(cantidad==''){
-				cantidad = 0;
-			}
-			nuevoValor = parseInt(cantidad) + ((parseInt(cantidad) * parseInt(comision))/100);
-			$("#spanCant").html("$ "+new Intl.NumberFormat().format(nuevoValor + parseInt(pesoextra) ));
-		}else if(metodo==60){
-			if(cupon==""){
-				$("#cantidad").val(precioRestante).prop("disabled",false);
-			}else if(cupon==1){
-					regreso = (precioRestante*.05);
+		if(cupon!=''){
+			$("#spanCant").html(" $ "+new Intl.NumberFormat().format(precioRestante ));
+			if(metodo==98){
+				var comision = $("#comision").val();
+				if(comision==''){
+					comision=0;
+				}
+				var cantidad = $("#cantidad").val();
+				if(cantidad==''){
+					cantidad = 0;
+				}
+				nuevoValor = parseInt(cantidad) + ((parseInt(cantidad) * parseInt(comision))/100);
+				$("#spanCant").html("$ "+new Intl.NumberFormat().format(nuevoValor  ));
+			}else if(metodo==60){
+				if(cupon==""){
+					$("#cantidad").val(precioRestante).prop("disabled",false);
+				}else if(cupon==1){
+						regreso = (precioRestante*.05);
 						$("#cantidad").val(precioRestante-regreso).prop("disabled","disabled");
-					$("#spanCant").html("$ "+new Intl.NumberFormat().format(precioRestante  )+".<br>Regresar $ "+new Intl.NumberFormat().format(regreso ) +"<br> Cobrar:  $ "+new Intl.NumberFormat().format(precioRestante-regreso + parseInt(pesoextra) ));
-			}else if(cupon==2){
-					$("#cantidad").val(precioRestante).prop("disabled","disabled");
-					regreso = (precioRestante*.1);
-					$("#spanCant").html("$ "+new Intl.NumberFormat().format(precioRestante + parseInt(pesoextra))+".<br>Vale por  $ "+new Intl.NumberFormat().format(regreso ));
+						$("#spanCant").html("$ "+new Intl.NumberFormat().format(precioRestante  )+".<br>Regresar $ "+new Intl.NumberFormat().format(parseInt(regreso) ) +"<br> Cobrar:  $ "+new Intl.NumberFormat().format(precioRestante-regreso  ));
+				}else if(cupon==2){
+						$("#cantidad").val(precioRestante).prop("disabled","disabled");
+						regreso = (precioRestante*.1);
+						$("#spanCant").html("$ "+new Intl.NumberFormat().format(precioRestante )+".<br>Vale por  $ "+new Intl.NumberFormat().format(regreso ));
+				}
 			}
 		}
 	}
