@@ -17,7 +17,7 @@ $campos =" id_temp as reserva,CONCAT(ifnull(nombre_usu,''),' ', ifnull(apellidop
     ifnull(total_temp,'0') as cotizado,
     ifnull((SELECT CONCAT(ifnull(nombre_usu,''),' ', ifnull(apellidop_usu,''),' ',ifnull(apellidom_usu,'')) from volar_usuarios where id_usu=piloto_temp),'') as piloto,
     ifnull((SELECT nombre_globo from globos_volar where id_globo=globo_temp),'') as globo,
-    ifnull(kg_temp,'NA') as peso, tv.status,ifnull(total_temp,0) as total, IFNULL((SELECT SUM(cantidad_bp) from bitpagos_volar where idres_bp = id_temp and status in (1,3)  ),0) as pagos";
+    ifnull(kg_temp,'NA') as peso, tv.status,ifnull(total_temp,0) as total, IFNULL((SELECT SUM(cantidad_bp) from bitpagos_volar where idres_bp = id_temp and status in (1,2)  ),0) as pagos";
 if(isset($_GET['fechaI']) && $_GET['fechaI']!='' ){
 	$filtro.= " and fechavuelo_temp >='".$_GET['fechaI']."'";
 }
