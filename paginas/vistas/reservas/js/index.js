@@ -284,7 +284,6 @@ function confirmaragregarPagoSitio(reserva,cliente){
 	fecha=$("#fecha").val().trim();
 	comision=$("#comision").val().trim();
 	cupon=$("#cupon").val();
-	pesoextra=$("#pesoextra").val();
 	if(cantidad=="" ){
 		abrir_gritter("Advertencia","Debe Capturar una cantidad","warning");
 		return false;
@@ -298,7 +297,6 @@ function confirmaragregarPagoSitio(reserva,cliente){
 			comision:comision,
 			fecha:fecha,
 			cupon:cupon,
-			pesoextra:pesoextra,
 			accion:'registrarPagoSitio'
 	};
 	$.ajax({

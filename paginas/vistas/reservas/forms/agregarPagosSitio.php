@@ -86,12 +86,6 @@
 			<input type="date" readonly class="form-control" id="fecha" placeholder="Fecha de Pago">
 		</div>
 	</div>
-	<div class="col-sm-4 col-lg-4 col-md-4 col-4 col-xl-4 " >
-		<div class="form-group">
-			<label for="pesoextra">Precio por Peso Extra</label>
-			<input type="number" min="0"  class="form-control" id="pesoextra" placeholder="Precio Total" value='0'>
-		</div>
-	</div>
 	<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
 		<label >Total  por Pagar: <span id="spanCant">$ <?php echo 	number_format($total[0]->cotizado -  $total[0]->pagado  , 2, '.', ',') ;?></span></label>
 	</div>

@@ -91,7 +91,7 @@
 		$fecha=$_POST['fecha'];
 		$comision=$_POST['comision'];
 		$cupon=$_POST['cupon'];
-		$pesoextra=$_POST['pesoextra'];
+		//$pesoextra=$_POST['pesoextra'];
 		//Registra Pagos
 		$totalReserva = $con->consulta("total_temp","temp_volar","id_temp=".$reserva);
 		$nuevoTotal = $totalReserva[0]->total_temp + $pesoextra;
@@ -106,7 +106,7 @@
 		}else{
 			$respuesta=explode("|", $registrarPago[0]->respuesta);
 			$pago = $respuesta[1];
-
+			echo $respuesta[0];
 		}
 	}elseif (isset($_POST['accion']) && $_POST['accion']=='cargosExtras'  ) {
 			require  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/modelos/login.php';
