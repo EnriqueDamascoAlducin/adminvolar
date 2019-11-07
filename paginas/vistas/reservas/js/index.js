@@ -572,22 +572,22 @@ function reprogramar(reserva, cliente){
 	$("#divBtnModalReservas").append('<button autofocus type="button"  data-dismiss="modal" id="btnReprograma'+reserva+'" class="btn btn-success" onclick="confirmarReprogramacion('+reserva+');" >Confirmar</button>');
 	url="vistas/reservas/forms/reprogramacion.php";
 	$.ajax({
-			url:url,
-			method: "POST",
-			data: {reserva:reserva},
-			success:function(response){
-			 $("#cuerpoModalReservas").html(response)
-			},
-			error:function(){
+		url:url,
+		method: "POST",
+		data: {reserva:reserva},
+		success:function(response){
+		 $("#cuerpoModalReservas").html(response)
+		},
+		error:function(){
 
-					abrir_gritter("Error","Error desconocido" ,"danger");
-			},
-			statusCode: {
-				404: function() {
+				abrir_gritter("Error","Error desconocido" ,"danger");
+		},
+		statusCode: {
+			404: function() {
 
-					abrir_gritter("Error","URL NO encontrada" ,"danger");
-				}
+				abrir_gritter("Error","URL NO encontrada" ,"danger");
 			}
+		}
 	});
 }
 function confirmarReprogramacion(reserva){
@@ -605,27 +605,28 @@ function confirmarReprogramacion(reserva){
 		accion:'reprogramar'
 	};
 	$.ajax({
-			url:url,
-			method: "POST",
-			data: datos,
-			success:function(response){
-				if(response=="Reprogramado"){
-						abrir_gritter("Ok!",response ,"info");
-				}else{
-						abrir_gritter("Error",response ,"danger");
-				}
-
-			},
-			error:function(){
-
-					abrir_gritter("Error","Error desconocido" ,"danger");
-			},
-			statusCode: {
-				404: function() {
-
-					abrir_gritter("Error","URL NO encontrada" ,"danger");
-				}
+		url:url,
+		method: "POST",
+		data: datos,
+		success:function(response){
+			if(response=="Reprogramado"){
+				abrir_gritter("Ok!",response ,"info");
+				cargarTablaReservas();
+			}else{
+				abrir_gritter("Error",response ,"danger");
 			}
+
+		},
+		error:function(){
+
+				abrir_gritter("Error","Error desconocido" ,"danger");
+		},
+		statusCode: {
+			404: function() {
+
+				abrir_gritter("Error","URL NO encontrada" ,"danger");
+			}
+		}
 	});
 }
 

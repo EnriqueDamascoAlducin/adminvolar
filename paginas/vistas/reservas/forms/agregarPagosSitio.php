@@ -116,8 +116,9 @@
 	function modificarPrecio(){
 		metodo = $("#metodo").val();
 		cupon = 	$("#cupon").val();
-		if(cupon!=''){
-			$("#spanCant").html(" $ "+new Intl.NumberFormat().format(precioRestante ));
+		cantidad = 	$("#cantidad").val();
+		
+			$("#spanCant").html(" $ "+new Intl.NumberFormat().format(cantidad ));
 			if(metodo==98){
 				var comision = $("#comision").val();
 				if(comision==''){
@@ -131,7 +132,7 @@
 				$("#spanCant").html("$ "+new Intl.NumberFormat().format(nuevoValor  ));
 			}else if(metodo==60){
 				if(cupon==""){
-					$("#cantidad").val(precioRestante).prop("disabled",false);
+					$("#cantidad").prop("disabled",false);
 				}else if(cupon==1){
 						regreso = (precioRestante*.05);
 						$("#cantidad").val(precioRestante-regreso).prop("disabled","disabled");
@@ -142,7 +143,7 @@
 						$("#spanCant").html("$ "+new Intl.NumberFormat().format(precioRestante )+".<br>Vale por  $ "+new Intl.NumberFormat().format(regreso ));
 				}
 			}
-		}
+		
 	}
 
 		date = new Date();

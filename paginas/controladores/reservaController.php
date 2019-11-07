@@ -53,6 +53,17 @@
 		$sql = "CALL reprogramarReserva(". $reserva .",". $idUsu .",'". $fechavuelo ."','".$comentario."','". $motivo ."',". $cargo .", @res)";
 		$reprogramar = $con->query($sql);
 		$reprogramar = $con->query("Select @res as rep ")->fetchALL (PDO::FETCH_OBJ);
+		//Registra Pagos
+		if($cargo>0){
+			$totalReserva = $con->consulta("total_temp","temp_volar","id_temp=".$reserva);
+			$totalReserva = $totalReserva[0]->total_temp;
+			$extra        = (($totalReserva * $cargo)/100); 
+			$nuevoTotal   = $totalReserva + $extra;
+			$valores = $reserva.",".$idUsu.",'Cargo por Reprogramación',".$extra.",'".$comentario."',1";
+			$registrarCargo = $con->insertar("cargosextras_volar", "reserva_ce,usuario_ce,motivo_ce,cantidad_ce,comentario_ce,tipo_ce", $valores);
+			$nuevoTotal = $con->actualizar("temp_volar","total_temp=".$nuevoTotal,"id_temp=".$reserva);
+		}
+
 		echo $reprogramar[0]->rep;
 	}elseif(isset($_POST['accion']) && $_POST['accion']=='comentar'){
 		require  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/modelos/login.php';

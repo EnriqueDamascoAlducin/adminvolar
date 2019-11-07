@@ -41,7 +41,6 @@
 			<div class="form-group">
 				<label for="cargo">Aplica Cargo Adicional?</label>
 				<select class="selectpicker form-control" id="cargo" name="cargo" data-live-search="true">
-						<option value='0'   >0</option>
 					<?php for ($i=0; $i <=35 ; $i=$i+5) { ?>
 						<option value='<?php echo $i; ?>'   ><?php echo $i .'%'; ?></option>
 				 <?php	} ?>
