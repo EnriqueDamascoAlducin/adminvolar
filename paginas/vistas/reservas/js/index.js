@@ -100,92 +100,62 @@ function confirmarEliminar(reserva,url,idModulo){
 
 function confirmarAgregarPago(reserva,cliente){
 	error = 0;
-	opcion=$("#opcion").val();
-	if(opcion==1){
-		metodo=$("#metodo").val().trim();
-		banco=$("#banco").val().trim();
-		referencia=$("#referencia").val().trim();
-		cantidad=$("#cantidad").val().trim();
-		fecha=$("#fecha").val().trim();
-		peso=$("#peso").val();
-		tipopeso=$("#tipopeso").val();
-		if(metodo!=0 ){
-			if(metodo=="0"){
-				abrir_gritter("Advertencia","Debe Capturar un metodo","warning");
-				error++;
-			}
-			if(banco=="0"){
-				abrir_gritter("Advertencia","Debe Capturar un banco","warning");
-				error++;
-			}
-			if(referencia==""){
-				abrir_gritter("Advertencia","Debe Capturar una referencia","warning");
-				error++;
-			}
-			if(cantidad==""){
-				abrir_gritter("Advertencia","Debe Capturar una cantidad","warning");
-				error++;
-			}
-			if(fecha==""){
-				abrir_gritter("Advertencia","Debe Capturar una fecha","warning");
-				error++;
-			}
-			datos={
-	  			reserva:reserva,
-	  			metodo:metodo,
-					banco:banco,
-					referencia:referencia,
-					cantidad:cantidad,
-					fecha:fecha,
-					peso:peso,
-					tipopeso:tipopeso,
-	  			accion:'registrarPago'
-			};
-		}else{
-			abrir_gritter("Advertencia","Solo se modificará el peso.","info");
-			datos={
-					peso:peso,
-	  			reserva:reserva,
-					tipopeso:tipopeso,
-					accion:'registrarPago'
-			};
-		}
-	}else{
-		metodoDes=$("#metodoDes").val().trim();
-		bancoDes=$("#bancoDes").val().trim();
-		motivoDes=$("#motivoDes").val().trim();
-		descuento=$("#descuento").val().trim();
-		comentario = $("#comentario").val().trim();
-		if(metodoDes=="0"){
+	metodo=$("#metodo").val().trim();
+	banco=$("#banco").val().trim();
+	referencia=$("#referencia").val().trim();
+	cantidad=$("#cantidad").val().trim();
+	fecha=$("#fecha").val().trim();
+	peso=$("#peso").val();
+	tipopeso=$("#tipopeso").val();
+	moneda=$("#moneda").val();
+	var monedaInfo = $("#moneda	option:selected").text().split("$");
+	monedaPrecio =  parseFloat(monedaInfo[1]).toFixed(2);
+	cantidad = parseFloat(cantidad * monedaPrecio).toFixed(2);
+
+	if(metodo!=0 ){
+		if(metodo=="0"){
 			abrir_gritter("Advertencia","Debe Capturar un metodo","warning");
 			error++;
 		}
-		if(bancoDes=="0"){
+		if(banco=="0"){
 			abrir_gritter("Advertencia","Debe Capturar un banco","warning");
 			error++;
 		}
-		if(motivoDes==""){
-			abrir_gritter("Advertencia","Debe Capturar un Motivo","warning");
+		if(referencia==""){
+			abrir_gritter("Advertencia","Debe Capturar una referencia","warning");
 			error++;
 		}
-		if(descuento==0 || descuento == '' ){
-			abrir_gritter("Advertencia","Debe agregar un Descuento","warning");
+		if(cantidad=="" ){
+			abrir_gritter("Advertencia","Debe Capturar una cantidad","warning");
 			error++;
 		}
-		if(comentario==""){
-			abrir_gritter("Advertencia","Debe Capturar un Comentario","warning");
+		if(fecha==""){
+			abrir_gritter("Advertencia","Debe Capturar una fecha","warning");
 			error++;
 		}
 		datos={
-				reserva:reserva,
-				metodoDes:metodoDes,
-				bancoDes:bancoDes,
-				motivoDes:motivoDes,
-				descuento:descuento,
-				comentario:comentario,
-				accion:'registrarDescuento'
+  			reserva:reserva,
+  			metodo:metodo,
+				banco:banco,
+				referencia:referencia,
+				cantidad:cantidad,
+				fecha:fecha,
+				peso:peso,
+				tipopeso:tipopeso,
+				moneda:moneda,
+				monedaPrecio:monedaPrecio,
+  			accion:'registrarPago'
+		};
+	}else{
+		abrir_gritter("Advertencia","Solo se modificará el peso.","info");
+		datos={
+				peso:peso,
+  			reserva:reserva,
+				tipopeso:tipopeso,
+				accion:'registrarPago'
 		};
 	}
+
 	if (error>0)
 		return false;
 	$.ajax({
@@ -284,10 +254,14 @@ function confirmaragregarPagoSitio(reserva,cliente){
 	fecha=$("#fecha").val().trim();
 	comision=$("#comision").val().trim();
 	cupon=$("#cupon").val();
+	moneda=$("#moneda").val();
+	var monedaInfo = $("#moneda	option:selected").text().split("$");
+	monedaPrecio =  parseFloat(monedaInfo[1]).toFixed(2);
 	if(cantidad=="" ){
 		abrir_gritter("Advertencia","Debe Capturar una cantidad","warning");
 		return false;
 	}
+	cantidad = parseFloat(cantidad * monedaPrecio).toFixed(2);
 	datos={
 			reserva:reserva,
 			metodo:metodo,
@@ -297,6 +271,8 @@ function confirmaragregarPagoSitio(reserva,cliente){
 			comision:comision,
 			fecha:fecha,
 			cupon:cupon,
+			moneda:moneda,
+			monedaPrecio:monedaPrecio,
 			accion:'registrarPagoSitio'
 	};
 	$.ajax({

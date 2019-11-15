@@ -54,11 +54,14 @@
 			$referencia=$_POST['referencia'];
 			$cantidad=$_POST['cantidad'];
 			$fecha=$_POST['fecha'];
+			$moneda=$_POST['moneda'];
+			$monedaPrecio=$_POST['monedaPrecio'];
 			//Actualiza peso
 			$actualizarPeso=$con->actualizar("temp_volar","kg_temp='".$peso."',tipopeso_temp=".$tipopeso,"id_temp=".$reserva);
 			//Registra Pagos
-			$parametros = '0,'. $reserva.','.$idUsu.','.$metodo.','.$banco.',"'.$referencia.'",'.$cantidad.',"'.$fecha.'",0,0,0';
+			$parametros = '0,'. $reserva.','.$idUsu.','.$metodo.','.$banco.',"'.$referencia.'",'.$cantidad.',"'.$fecha.'",0,0,0,'.$moneda.',"'. $monedaPrecio .'"';
 			$sql="CALL registrarPago(". $parametros .",@respuesta)";
+			echo $sql;
 			$registrarPago = $con->query($sql);
 			$registrarPago = $con->query("Select @respuesta as respuesta")->fetchALL (PDO::FETCH_OBJ);
 			if($registrarPago[0]->respuesta=="ERROR EN PAGO"){
@@ -67,7 +70,6 @@
 				$respuesta=explode("|", $registrarPago[0]->respuesta);
 				$pago = $respuesta[1];
 				require  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/vistas/reservas/correo/correoSolicitudConciliacion.php';
-
 			}
 		}else{
 			//Actualiza Peso
@@ -90,12 +92,14 @@
 		$fecha=$_POST['fecha'];
 		$comision=$_POST['comision'];
 		$cupon=$_POST['cupon'];
+		$moneda=$_POST['moneda'];
+		$monedaPrecio=$_POST['monedaPrecio'];
 		if($cupon==''){
 			$cupon=0;
 		}
 		//Registra Pagos
 		$totalReserva = $con->consulta("total_temp","temp_volar","id_temp=".$reserva);
-		$parametros = '0,'. $reserva.','.$idUsu.','.$metodo.','.$banco.',"'.$referencia.'",'.$cantidad.',"'.$fecha.'",0,'.$comision.','.$cupon;
+		$parametros = '0,'. $reserva.','.$idUsu.','.$metodo.','.$banco.',"'.$referencia.'",'.$cantidad.',"'.$fecha.'",0,'.$comision.','.$cupon.','.$moneda.'"'. $monedaPrecio .'"';
 		$sql="CALL registrarPago(". $parametros .",@respuesta)";
 		//echo $sql;
 		$registrarPago = $con->query($sql);

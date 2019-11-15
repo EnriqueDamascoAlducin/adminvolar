@@ -1,4 +1,4 @@
-<?php 
+<?php
 	require  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/modelos/login.php';
 	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/controladores/conexion.php';
 	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/controladores/fin_session.php';
@@ -12,14 +12,14 @@
 	foreach ($subPermisos as $subPermiso) {
 		$permisos[] = $subPermiso->nombre_sp;
 	}
-	$extras=$con->consulta($campos,$tabla,$filtro);	
+	$extras=$con->consulta($campos,$tabla,$filtro);
 ?>
 <table class="DataTable table table-striped table-bordered table-hover">
 	<thead>
 		<tr>
 			<th style="text-align: center;vertical-align: middle;max-width: 1%;width: 1%;">Nombre</th>
 			<th style="text-align: center;vertical-align: middle;max-width: 1%;width: 1%;">Clasificación</th>
-			
+
 			<th style="text-align: center;vertical-align: middle;max-width: 1%;width: 1% !important;">Acciones</th>
 		</tr>
 	</thead>
@@ -41,6 +41,8 @@
 					$clasificacion='Cuentas de Banco';
 				}elseif($extra->clasificacion=='tipogastos'){
 					$clasificacion='Tipos de Gastos';
+				}elseif($extra->clasificacion=='monedas'){
+					$clasificacion='Monedas';
 				}
 		?>
 			<tr>

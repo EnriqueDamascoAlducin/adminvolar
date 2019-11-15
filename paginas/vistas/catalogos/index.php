@@ -1,7 +1,7 @@
 <?php
 	require  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/modelos/login.php';
 	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/controladores/conexion.php';
-	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/controladores/fin_session.php';	
+	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/controladores/fin_session.php';
 	$permisos=[];
 	$modulo=$_POST['id'];
 
@@ -15,7 +15,7 @@
 	foreach ($subPermisos as $subPermiso) {
 		$permisos[] = $subPermiso->nombre_sp;
 	}
-?>	
+?>
 <div class="row">
 <?php if(in_array("ESTADOS", $permisos)){ ?>
   <div class="col-6 col-sm-3 col-md-3 col-lg-3 col-xl-3">
@@ -66,6 +66,13 @@
     </div>
   </div>
 <?php } ?>
+<?php if(in_array("MONEDAS", $permisos)){ ?>
+  <div class="col-6 col-sm-3 col-md-3 col-lg-3 col-xl-3">
+    <div class="alert alert-info" data-toggle="modal" data-target="#modal" data-info="tipogastos" onclick="accionExtras('agregar', <?php echo $usuario->getIdUsu(); ?>,'monedas')">
+      <strong><i class="fa fa-plus fa-md"></i></strong> Agregar Monedas
+    </div>
+  </div>
+<?php } ?>
 </div>
 
 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" id="tablaUsuarios">
@@ -82,12 +89,12 @@
         </button>
       </div>
       <div class="modal-body" id="cuerpoModal">
-      	
+
       </div>
       <div class="modal-footer">
       	<div id="DivBtnModal">
 	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-	        
+
         </div>
       </div>
     </div>

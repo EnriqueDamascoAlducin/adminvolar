@@ -8,6 +8,8 @@
 	$metodos = $con->consulta("nombre_extra as text, id_extra as value","extras_volar","status<>0 and clasificacion_extra='metodopago' ");
 	$cuentas = $con->consulta("nombre_extra as text, id_extra as value","extras_volar","status<>0 and clasificacion_extra='cuentasvolar' and id_extra=83");
 	$total = $con->consulta(" SUM(cantidad_bp) as pagado, total_temp as cotizado","bitpagos_volar bitp INNER JOIN temp_volar t on idres_bp = id_temp"," bitp.status in (1,2) and idres_bp=".$reserva);
+
+	$monedas = $con->consulta("nombre_extra as nombre, abrev_extra as cantidad, id_extra as id","extras_volar","clasificacion_extra ='monedas' and status<>0");
 ?>
 <div class="row">
   <div class="col-sm-6 col-lg-6 col-md-6 col-6 col-xl-6 ">
@@ -15,14 +17,26 @@
 			<label for="referencia">Total Pagado: <?php echo '$ '.number_format($total[0]->pagado, 2, '.', ','); ?></label>
 		</div>
 	</div>
-	  <div class="col-sm-6 col-lg-6 col-md-6 col-6 col-xl-6 ">
-			<div class="form-group">
-				<label for="referencia">Cotizado: <?php echo '$ '.number_format($total[0]->cotizado, 2, '.', ','); ?></label>
-			</div>
+  <div class="col-sm-6 col-lg-6 col-md-6 col-6 col-xl-6 ">
+		<div class="form-group">
+			<label for="referencia">Cotizado: <?php echo '$ '.number_format($total[0]->cotizado, 2, '.', ','); ?></label>
 		</div>
+	</div>
 </div>
 <div class="row">
-	<div class="col-sm-4 col-lg-4 col-md-4 col-4 col-xl-4 ">
+	<div class="col-sm-3 col-lg-3 col-md-3 col-6 col-xl-3 ">
+		<div class="form-group">
+			<label for="moneda">Moneda</label>
+			<select class="selectpicker form-control" id="moneda" name="moneda" data-live-search="true">
+				<?php
+					foreach ($monedas as $moneda) {
+						echo "<option value='".$moneda->id."'>".$moneda->nombre."($ ".number_format(  $moneda->cantidad, 2, '.', ',').")</option>";
+					}
+				?>
+			</select>
+		</div>
+	</div>
+	<div class="col-sm-3 col-lg-3 col-md-3 col-6 col-xl-3 ">
 		<div class="form-group">
 			<label for="metodo">Metodo</label>
 			<select class="selectpicker form-control" id="metodo" name="metodo" data-live-search="true">
@@ -35,8 +49,7 @@
 			</select>
 		</div>
 	</div>
-
-	<div class="col-sm-4 col-lg-4 col-md-4 col-4 col-xl-4 ">
+	<div class="col-sm-3 col-lg-3 col-md-3 col-6 col-xl-3 ">
 		<div class="form-group">
 			<label for="banco">Banco</label>
 			<select class="selectpicker form-control" id="banco" name="banco" data-live-search="true">
@@ -50,14 +63,13 @@
 		</div>
 	</div>
 
-	<div class="col-sm-4 col-lg-4 col-md-4 col-4 col-xl-4 " style="display:none" id="divComision">
+	<div class="col-sm-3 col-lg-3 col-md-3 col-6 col-xl-3 " style="display:none" id="divComision">
 		<div class="form-group">
 			<label for="comision">Comisión %</label>
 			<input type="number" class="form-control" onchange="modificarPrecio()" id="comision" placeholder="%" value="0">
 		</div>
 	</div>
-
-	<div class="col-sm-4 col-lg-4 col-md-4 col-4 col-xl-4 " id="divCupon" style="display:none" >
+	<div class="col-sm-3 col-lg-3 col-md-3 col-6 col-xl-3 " id="divCupon" style="display:none" >
 		<div class="form-group">
 			<label for="cupon">Aplica Cupón?</label>
 			<select class="form-control" name="cupon" id="cupon">
@@ -67,19 +79,18 @@
 			</select>
 		</div>
 	</div>
-	<div class="col-sm-4 col-lg-4 col-md-4 col-4 col-xl-4 " style="display:none">
+	<div class="col-sm-3 col-lg-3 col-md-3 col-6 col-xl-3 " style="display:none">
 		<div class="form-group">
 			<label for="referencia">Referencia</label>
 			<input type="hidden"  class="form-control" id="referencia" placeholder="Referencia" value="Pago en Sitio">
 		</div>
 	</div>
-	<div class="col-sm-4 col-lg-4 col-md-4 col-4 col-xl-4 ">
+	<div class="col-sm-3 col-lg-3 col-md-3 col-6 col-xl-3 ">
 		<div class="form-group">
 			<label for="cantidad">Cantidad</label>
 			<input type="number" class="form-control" id="cantidad" onchange="modificarPrecio()" placeholder="Cantidad" value="<?php echo 	$total[0]->cotizado -  $total[0]->pagado  ;?>">
 		</div>
 	</div>
-
 	<div class="col-sm-4 col-lg-4 col-md-4 col-4 col-xl-4 " style="display:none">
 		<div class="form-group">
 			<label for="fecha">Fecha de Pago</label>
@@ -90,7 +101,27 @@
 		<label >Total  por Pagar: <span id="spanCant">$ <?php echo 	number_format($total[0]->cotizado -  $total[0]->pagado  , 2, '.', ',') ;?></span></label>
 	</div>
 </div>
+<div class="col-sm-12 col-lg-12 col-md-12 col-12 col-xl-12 ">
+	<div class="form-group">
+		<label id="conversion">Peso Mexicano</label>
+	</div>
+</div>
 <script type="text/javascript">
+$("#moneda").change(function(){
+		var valor = $("#moneda	option:selected").text().split("$");
+		var nombre = valor[0];
+		var valor = valor[1];
+		$("#conversion").html(" " + parseFloat(valor)+ " Pesos Mexicanos equivale a 1 " + nombre.replace('(',"") );
+});
+$("#cantidad").change(function(){
+	var moneda = $("#moneda	option:selected").text().split("$");
+	var nombre = moneda[0];
+	var valor = parseFloat(moneda[1]).toFixed(2);
+	var cantidad =parseFloat(this.value).toFixed(2);
+	var nuevoValor = 0;
+	nuevoValor = ( cantidad*  valor);
+	$("#conversion").html(cantidad + " "+ nombre.replace("(","") + " equivale a " +parseFloat(nuevoValor).toFixed(2)  +" Pesos Mexicanos ");
+});
 	var precioRestante  =  <?php echo ($total[0]->cotizado -  $total[0]->pagado ) ?>;
 	$("#cupon").on("change",function(){
 		modificarPrecio();
@@ -117,7 +148,7 @@
 		metodo = $("#metodo").val();
 		cupon = 	$("#cupon").val();
 		cantidad = 	$("#cantidad").val();
-		
+
 			$("#spanCant").html(" $ "+new Intl.NumberFormat().format(cantidad ));
 			if(metodo==98){
 				var comision = $("#comision").val();
@@ -143,7 +174,7 @@
 						$("#spanCant").html("$ "+new Intl.NumberFormat().format(precioRestante )+".<br>Vale por  $ "+new Intl.NumberFormat().format(regreso ));
 				}
 			}
-		
+
 	}
 
 		date = new Date();

@@ -1,8 +1,8 @@
-<?php 
-	
+<?php
+
 	require  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/modelos/login.php';
 	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/controladores/conexion.php';
-	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/controladores/fin_session.php';	
+	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/controladores/fin_session.php';
 	if($_POST['id']!=''){
 		$catalogo= $con->consulta("nombre_extra as nombre, id_extra as id,abrev_extra as abrev","extras_volar","status<>0 and id_extra=". $_POST['id']);
 	}
@@ -21,7 +21,7 @@
 		echo "<input type='hidden' name='accion' id='accion' value='agregar'>";
 	}
 	?>
-	<div class="row"> 
+	<div class="row">
 		<div class="col-sm-6 col-lg-6 col-md-6 col-6 col-xl-6 ">
 			<div class="form-group">
 				<label for="nombre">Nombre</label>
@@ -32,11 +32,16 @@
 			<div class="form-group">
 				<label for="abrev">
 				    <?php $lab = "Abreviaci&oacute;n";
-				        if($_POST['tipo']=='cuentasvolar' || $_POST['tipo']=='metodopago'){ $lab = "Cuenta"; }  echo utf8_decode($lab); ?>
-				        </label>
+				        if($_POST['tipo']=='cuentasvolar' || $_POST['tipo']=='metodopago'){
+									$lab = "Cuenta";
+								}  elseif($_POST['tipo']=='monedas'){
+									$lab = "Equivalencia a Peso";
+								}
+								echo utf8_decode($lab);
+						?>
+					</label>
 				<input type="text" class="form-control" id="abrev" name="abrev" placeholder="<?php echo utf8_decode($lab); ?>"  value="<?php if(isset($catalogo)){ echo $catalogo[0]->abrev; } ?>">
 			</div>
 		</div>
 	</div>
 </form>
-

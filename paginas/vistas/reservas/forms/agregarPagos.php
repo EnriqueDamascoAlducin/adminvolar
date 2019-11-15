@@ -8,9 +8,10 @@
 	$metodos = $con->consulta("nombre_extra as text, id_extra as value","extras_volar","status<>0 and clasificacion_extra='metodopago'");
 	$cuentas = $con->consulta("nombre_extra as text, id_extra as value","extras_volar","status<>0 and clasificacion_extra='cuentasvolar'");
 
-	$pagos = $con->consulta("CONCAT(nombre_usu,' ',apellidop_usu) as usuario, referencia_bp as referencia, cantidad_bp as cantidad,fecha_bp as fecha, bp.status as stat,id_bp as id","bitpagos_volar bp INNER JOIN volar_usuarios vu  ON bp.idreg_bp=vu.id_usu","bp.status<>0 and idres_bp=".$reserva);
+	$pagos = $con->consulta("CONCAT(nombre_usu,' ',apellidop_usu) as usuario, referencia_bp as referencia, cantidad_bp as cantidad,fecha_bp as fecha, bp.status as stat,id_bp as id,banco_bp","bitpagos_volar bp INNER JOIN volar_usuarios vu  ON bp.idreg_bp=vu.id_usu","bp.status<>0 and idres_bp=".$reserva);
 	$peso = $con->consulta("kg_temp,tipopeso_temp","temp_volar","id_temp=".$reserva);
-		$total = $con->consulta(" SUM(cantidad_bp) as pagado, total_temp as cotizado","bitpagos_volar bitp INNER JOIN temp_volar t on idres_bp = id_temp"," bitp.status in (1,2) and idres_bp=".$reserva);
+	$total = $con->consulta(" SUM(cantidad_bp) as pagado, total_temp as cotizado","bitpagos_volar bitp INNER JOIN temp_volar t on idres_bp = id_temp"," bitp.status in (1,2) and idres_bp=".$reserva);
+	$monedas = $con->consulta("nombre_extra as nombre, abrev_extra as cantidad, id_extra as id","extras_volar","clasificacion_extra ='monedas' and status<>0");
 ?>
 <style type="text/css">
 
@@ -27,7 +28,6 @@
     <li class="nav-item" onclick="cambiarOpcion(1)">
       <a class="nav-link active" data-toggle="tab" href="#registro">Registrar Pago</a>
     </li>
-		
 </ul>
 
   <!-- Tab panes -->
@@ -53,6 +53,18 @@
 			<div class="row">
 				<div class="col-sm-3 col-lg-3 col-md-3 col-6 col-xl-3 ">
 					<div class="form-group">
+						<label for="moneda">Moneda</label>
+						<select class="selectpicker form-control" id="moneda" name="moneda" data-live-search="true">
+							<?php
+								foreach ($monedas as $moneda) {
+									echo "<option value='".$moneda->id."'>".$moneda->nombre."($ ".number_format(  $moneda->cantidad, 2, '.', ',').")</option>";
+								}
+							?>
+						</select>
+					</div>
+				</div>
+				<div class="col-sm-3 col-lg-3 col-md-3 col-6 col-xl-3 ">
+					<div class="form-group">
 						<label for="metodo">Método</label>
 						<select class="selectpicker form-control" id="metodo" name="metodo" data-live-search="true">
 							<option value='0'>Todos...</option>
@@ -75,11 +87,9 @@
 									echo "<option value='".$cuenta->value."'>".$cuenta->text."</option>";
 								}
 							?>
-
 						</select>
 					</div>
 				</div>
-
 				<div class="col-sm-3 col-lg-3 col-md-3 col-6 col-xl-3 ">
 					<div class="form-group">
 						<label for="referencia">Referencia</label>
@@ -89,7 +99,7 @@
 				<div class="col-sm-3 col-lg-3 col-md-3 col-6 col-xl-3 ">
 					<div class="form-group">
 						<label for="cantidad">Cantidad</label>
-						<input type="number" class="form-control" id="cantidad" placeholder="Cantidad">
+						<input type="number" class="form-control" id="cantidad" placeholder="Cantidad" value="0">
 					</div>
 				</div>
 				<div class="col-sm-3 col-lg-3 col-md-3 col-6 col-xl-3 ">
@@ -118,6 +128,12 @@
 					</div>
 				</div>
 
+			</div>
+
+			<div class="col-sm-12 col-lg-12 col-md-12 col-12 col-xl-12 ">
+				<div class="form-group">
+					<label id="conversion">Peso Mexicano</label>
+				</div>
 			</div>
 			<div class="col-12 col-md-12 col-sm-12 col-md-12 col-xl-12">
 				<?php if(sizeof($pagos)>0){ ?>
@@ -158,8 +174,10 @@
 										<i class="fa fa-envelope-o fa-lg" data-toggle="modal" onclick="accionesPagos(<?php echo $pago->id ?>,'simple',<?php echo $reserva; ?>);" data-target="#modalReservas1" ></i>
 
 									<?php }else if($pago->stat == 2){  ?>
-											<?php if($pago->referencia=='Pago en Sitio'){ ?>
+											<?php if($pago->banco_bp==83){ ?>
 												<i class="fa fa-home fa-lg" title="Pagado en Sitio" ></i>
+												<i class="fa fa-envelope-o fa-lg" data-toggle="modal" onclick="accionesPagos(<?php echo $pago->id ?>,'simple',<?php echo $reserva; ?>);" data-target="#modalReservas1" ></i>
+
 											<?php }else{ ?>
 												<i class="fa fa-gift fa-lg" title="Enviar con Regalo" data-toggle="modal" style="color:#33b5e5" onclick="accionesPagos(<?php echo $pago->id ?>,'regalo',<?php echo $reserva; ?>);" data-target="#modalReservas1" ></i>
 											<?php } ?>
@@ -217,7 +235,7 @@
 			<?php } ?>
 			</div>
   	</div>
-	
+
 </div>
 <input id="opcion" value="1" type="hidden">
 
@@ -225,23 +243,39 @@
 	function cambiarOpcion(valor){
 		$("#opcion").val(valor);
 	}
-		date = new Date();
-		var primerDia = new Date(date.getFullYear(), date.getMonth(), 1);
-		var ultimoDia = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+	$("#moneda").change(function(){
+			var valor = $("#moneda	option:selected").text().split("$");
+			var nombre = valor[0];
+			var valor = valor[1];
+			$("#cantidad").val('');
+			$("#conversion").html(" " + parseFloat(valor)+ " Pesos Mexicanos equivale a 1 " + nombre.replace('(',"") );
+	});
+	$("#cantidad").change(function(){
+		var moneda = $("#moneda	option:selected").text().split("$");
+		var nombre = moneda[0];
+		var valor = parseFloat(moneda[1]).toFixed(2);
+		var cantidad =parseFloat(this.value).toFixed(2);
+		var nuevoValor = 0;
+		nuevoValor = ( cantidad*  valor);
+		$("#conversion").html(cantidad + " "+ nombre.replace("(","") + " equivale a " +parseFloat(nuevoValor).toFixed(2)  +" Pesos Mexicanos ");
+	});
+	date = new Date();
+	var primerDia = new Date(date.getFullYear(), date.getMonth(), 1);
+	var ultimoDia = new Date(date.getFullYear(), date.getMonth() + 1, 0);
 
-		var currentDate = new Date();
-		var wrong="";
-		var dia = currentDate.getDate();
-		var mes = currentDate.getMonth()+1; //Be careful! January is 0 not 1
-		var year = currentDate.getFullYear();
+	var currentDate = new Date();
+	var wrong="";
+	var dia = currentDate.getDate();
+	var mes = currentDate.getMonth()+1; //Be careful! January is 0 not 1
+	var year = currentDate.getFullYear();
 
-		if(dia < 10){
-			dia = "0"+dia;
-		}
+	if(dia < 10){
+		dia = "0"+dia;
+	}
 
-		if(mes < 10){
-			mes = "0"+mes;
-		}
-		var fecha = year + "-" + (mes) + "-" + (dia);
-		$("#fecha").attr("max",fecha)
+	if(mes < 10){
+		mes = "0"+mes;
+	}
+	var fecha = year + "-" + (mes) + "-" + (dia);
+	$("#fecha").attr("max",fecha)
 </script>
