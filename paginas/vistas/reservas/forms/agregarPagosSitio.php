@@ -107,22 +107,27 @@
 	</div>
 </div>
 <script type="text/javascript">
-$("#moneda").change(function(){
-		var valor = $("#moneda	option:selected").text().split("$");
-		var nombre = valor[0];
-		var valor = valor[1];
-		$("#conversion").html(" " + parseFloat(valor)+ " Pesos Mexicanos equivale a 1 " + nombre.replace('(',"") );
-});
-$("#cantidad").change(function(){
-	var moneda = $("#moneda	option:selected").text().split("$");
-	var nombre = moneda[0];
-	var valor = parseFloat(moneda[1]).toFixed(2);
-	var cantidad =parseFloat(this.value).toFixed(2);
-	var nuevoValor = 0;
-	nuevoValor = ( cantidad*  valor);
-	$("#conversion").html(cantidad + " "+ nombre.replace("(","") + " equivale a " +parseFloat(nuevoValor).toFixed(2)  +" Pesos Mexicanos ");
-});
 	var precioRestante  =  <?php echo ($total[0]->cotizado -  $total[0]->pagado ) ?>;
+	var precioRestanteOriginal  =  <?php echo ($total[0]->cotizado -  $total[0]->pagado ) ?>;
+	$("#moneda").change(function(){
+			var valor = $("#moneda	option:selected").text().split("$");
+			var nombre = valor[0];
+			var valor = valor[1];
+			$("#conversion").html(" " + parseFloat(valor)+ " Pesos Mexicanos equivale a 1 " + nombre.replace('(',"") );
+			precioRestante =parseFloat(precioRestanteOriginal / parseFloat(valor).toFixed(3)).toFixed(3) ;
+			$("#cantidad").val(precioRestante).removeAttr("disabled");
+			$("#cupon").val('');
+	});
+	$("#cantidad").change(function(){
+		var moneda = $("#moneda	option:selected").text().split("$");
+		var nombre = moneda[0];
+		var valor = parseFloat(moneda[1]).toFixed(2);
+		var cantidad =parseFloat(this.value).toFixed(2);
+		var nuevoValor = 0;
+		nuevoValor = ( cantidad*  valor);
+		$("#conversion").html(cantidad + " "+ nombre.replace("(","") + " equivale a " +parseFloat(nuevoValor).toFixed(2)  +" Pesos Mexicanos ");
+	});
+
 	$("#cupon").on("change",function(){
 		modificarPrecio();
 	});
@@ -131,6 +136,7 @@ $("#cantidad").change(function(){
 		modificarPrecio();
 	});
 	$("#metodo").on("change",function(){
+		$("#conversion").html("");
 		$("#comision").val(0);
 		$("#divComision").hide();
 		$("#cupon").val('');
@@ -142,7 +148,7 @@ $("#cantidad").change(function(){
 		}else if($(this).val()==60){
 			$("#divCupon").show();
 		}
-				modificarPrecio();
+		modificarPrecio();
 	});
 	function modificarPrecio(){
 		metodo = $("#metodo").val();

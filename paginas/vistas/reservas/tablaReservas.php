@@ -14,7 +14,7 @@
 	}
 	$campos= "id_temp,CONCAT(ifnull(nombre_temp,''),' ',ifnull(apellidos_temp,'')) as nombre, mail_temp,CONCAT(ifnull(telfijo_temp,''),' / ',ifnull(telcelular_temp,'')) as telefonos, tv.status,CONCAT(nombre_usu, ' ', IFNULL(apellidop_usu,''),' ',IFNULL(apellidom_usu,'')) as empleado,idusu_temp as idusu ,fechavuelo_temp,tipo_temp as tipo,  IFNULL(pasajerosa_temp,0) as pasajerosa, IFNULL(pasajerosn_temp, 0) as pasajerosn,total_temp";
 	$tabla = "temp_volar tv INNER JOIN volar_usuarios ve on tv.idusu_temp = ve.id_usu";
-	$filtro = "tv.status not in (0,6) ";
+	$filtro = "tv.status not in (0,6) and tipo_temp is not null and fechavuelo_temp is not null ";
 	if(isset($_POST['fechaI']) && $_POST['fechaI']!='' ){
 		$filtro.= " and fechavuelo_temp >='".$_POST['fechaI']."'";
 	}

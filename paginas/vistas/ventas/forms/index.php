@@ -1,12 +1,12 @@
-<?php 
-	
+<?php
+
 	require  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/modelos/login.php';
 	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/controladores/conexion.php';
-	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/controladores/fin_session.php';	
+	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/controladores/fin_session.php';
 	$opc1 ="";
 	$opc2="";
 	if($_POST['id']!=''){
-		$ventas= $con->consulta("comentario_venta, otroscar1_venta, precio1_venta,otroscar2_venta,precio2_venta,tipodesc_venta,cantdesc_venta,pagotarjeta_venta,pagoefectivo_venta,total_venta","ventas_volar","status<>0 and id_venta=". $_POST['id']);
+		$ventas= $con->consulta("comentario_venta, otroscar1_venta, precio1_venta,otroscar2_venta,precio2_venta,tipodesc_venta,cantdesc_venta,pagotarjeta_venta,pagoefectivo_venta,total_venta,pagocupon_venta,tipomoneda_venta","ventas_volar","status<>0 and id_venta=". $_POST['id']);
 		if($ventas[0]->tipodesc_venta==1){
 			$opc1="selected";
 		}else if($ventas[0]->tipodesc_venta==2){
@@ -15,6 +15,7 @@
 	}
 	$usuario= unserialize((base64_decode($_SESSION['usuario'])));
 	$idAct = $usuario->getIdUsu();
+	$monedas = $con->consulta("nombre_extra as nombre, abrev_extra as cantidad, id_extra as id","extras_volar","clasificacion_extra ='monedas' and status<>0");
 
 ?>
 <?php
@@ -31,7 +32,7 @@
 <form id="formulario" name="formulario" enctype="multipart/form-data" method="post"  accept="image/*">
 
 <hr>
-	<?php 
+	<?php
 	if(isset($_POST['id']) &&  $_POST['id'] !=''){
 		echo "<input type='hidden' name='id' id='id' value='".$_POST['id']."'>";
 		echo "<input type='hidden' name='accion' id='accion' value='editar'>";
@@ -39,7 +40,7 @@
 		echo "<input type='hidden' name='accion' id='accion' value='agregar'>";
 	}
 	?>
-	<div class="row"> 
+	<div class="row">
 		<div class="col-sm-12 col-lg-12 col-md-12 col-12 col-xl-12 ">
 			<div class="form-group">
 			    <label for="comentario">Comentario</label>
@@ -70,14 +71,14 @@
 				<input type="number"  onkeypress="return isNumber(event);" min="0" class="form-control" id="precio2" name="precio2" placeholder="Precio"  value="<?php if(isset($ventas)){ echo $ventas[0]->precio2_venta; } ?>">
 			</div>
 		</div>
-		
-		<div class="col-sm-3 col-lg-3 col-md-3 col-6 col-xl-3 ">			
+
+		<div class="col-sm-3 col-lg-3 col-md-3 col-6 col-xl-3 ">
 			<div class="form-group">
 				<label for="tipodesc">Tipo de Descuento</label>
 				<select class="selectpicker form-control" id="tipodesc" name="tipodesc" data-live-search="true">
 					<option value=''>Ninguno</option>
 					<option value="1" <?php echo $opc1; ?>>Pesos</option>
-					<option value="2" <?php echo $opc2; ?>>Porciento</option>				
+					<option value="2" <?php echo $opc2; ?>>Porciento</option>
 				</select>
 			</div>
 		</div>
@@ -85,6 +86,23 @@
 			<div class="form-group">
 				<label for="cantdesc">Cantidad de descuento</label>
 				<input type="number"  onkeypress="return isNumber(event);" min="0" class="form-control" id="cantdesc" name="cantdesc" placeholder="Precio"  value="<?php if(isset($ventas)){ echo $ventas[0]->cantdesc_venta; } ?>">
+			</div>
+		</div>
+
+		<div class="col-sm-3 col-lg-3 col-md-3 col-6 col-xl-3 ">
+			<div class="form-group">
+				<label for="moneda">Moneda</label>
+				<select class="selectpicker form-control" id="moneda" name="moneda" data-live-search="true">
+					<?php
+						foreach ($monedas as $moneda) {
+							$sel="";
+							if(isset($ventas) && $ventas[0]->tipomoneda_venta == $moneda->id){
+								$sel = "selected";
+							}
+							echo "<option  value='".$moneda->id."'  ".$sel.">".$moneda->nombre."($ ".number_format(  $moneda->cantidad, 2, '.', ',').")</option>";
+						}
+					?>
+				</select>
 			</div>
 		</div>
 		<div class="col-sm-3 col-lg-3 col-md-3 col-6 col-xl-3 ">
@@ -99,6 +117,12 @@
 				<input type="number"  onkeypress="return isNumber(event);" min="0" class="form-control" id="pagotarjeta" name="pagotarjeta" placeholder="Tarjeta"  value="<?php if(isset($ventas)){ echo $ventas[0]->pagotarjeta_venta; } ?>">
 			</div>
 		</div>
+		<div class="col-sm-3 col-lg-3 col-md-3 col-6 col-xl-3 ">
+			<div class="form-group">
+				<label for="cupon">Cupón</label>
+				<input type="number"  onkeypress="return isNumber(event);" min="0" class="form-control" id="cupon" name="cupon" placeholder="Cupón valido por"  value="<?php if(isset($ventas)){ echo $ventas[0]->pagocupon_venta; } ?>">
+			</div>
+		</div>
 	</div>
 <hr>
 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" id="divBtn" >
@@ -111,7 +135,7 @@
 
 </form>
 
-	
+
 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" id="totalVta" style="color: white;background-color: #0099CC"><?php if(!isset($ventas) ){  echo "Total"; }else{ echo 'Total $'.$ventas[0]->total_venta; } ?></div>
 <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-md" id="modalSize" role="dialog">
@@ -123,7 +147,7 @@
         </button>
       </div>
       <div class="modal-body" id="cuerpoModal">
-      	
+
       </div>
       <div class="modal-footer">
       	<div id="DivBtnModal">
@@ -131,12 +155,21 @@
 				<button class="btn btn-success" onclick="cotizar('confirmar')" id="btnConfirmar" data-dismiss="modal" >Confirmar</button>
 			<?php } ?>
 	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-	        
+
         </div>
       </div>
     </div>
   </div>
 </div>
+<?php
+	if(isset($ventas)){
+?>
+<script type="text/javascript">
+	$("input,select,textarea").attr("disabled","disabled");
+</script>
+<?php
+	}
+?>
 
 
 <script type="text/javascript" src="vistas/ventas/js/form1.js"></script>

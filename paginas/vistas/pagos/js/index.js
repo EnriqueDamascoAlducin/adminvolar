@@ -24,15 +24,15 @@ function cargarTabla(){
   		},
   		success:function(response){
 
-			$("#tablaUsuarios").html(response);	
+			$("#tablaUsuarios").html(response);
   		},
   		error:function(){
-  		
+
           abrir_gritter("Error","Error desconocido" ,"danger");
   		},
   		statusCode: {
 		    404: function() {
-		     
+
           abrir_gritter("Error","URL NO encontrada" ,"danger");
 		    }
 		  }
@@ -91,12 +91,12 @@ function confirmarAgregar(id,accion){
   			}
   		},
   		error:function(){
-  		
+
           abrir_gritter("Error","Error desconocido" ,"danger");
   		},
   		statusCode: {
 		    404: function() {
-		     
+
           abrir_gritter("Error","URL NO encontrada" ,"danger");
 		    }
 		  }
@@ -115,9 +115,9 @@ function agregar(id,accion){
 	$("#cuerpoModal").html("");
 	if(idA==0)
 		$("#DivBtnModal").append('<button autofocus   type="button" id="btnAgregar" class="btn btn-success" onclick=\'confirmarAgregar('+idA+',"'+accion+'")\' >Agregar</button>');
-	//else	
+	//else
 		//$("#DivBtnModal").append('<button autofocus   type="button" id="btnAgregar" class="btn btn-info" onclick=\'confirmarAgregar('+idA+',"'+accion+'")\' >Actualizar</button>');
-	
+
 	$("#btnAgregar"+idA).focus();
 	url="vistas/pagos/forms/";
 	parametros={id:id};
@@ -126,17 +126,29 @@ function agregar(id,accion){
 		method: "POST",
   		data: parametros,
   		success:function(response){
-			$("#cuerpoModal").html(response);	
+			$("#cuerpoModal").html(response);
   		},
   		error:function(){
-  		
+
           abrir_gritter("Error","Error desconocido" ,"danger");
   		},
   		statusCode: {
 		    404: function() {
-		     
+
           abrir_gritter("Error","URL NO encontrada" ,"danger");
 		    }
 		  }
+	});
+}
+
+function tables(filas,forma){
+	$(".DataTable").DataTable().destroy();
+	$(".DataTable").DataTable({
+		"autoWidth": true,
+		"scrollX": true,
+		"searching": true,
+		"lengthChange":true,
+        "order": [[ filas, forma ]]
+
 	});
 }

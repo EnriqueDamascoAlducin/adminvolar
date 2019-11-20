@@ -27,15 +27,15 @@ function cargarTabla(){
   		},
   		success:function(response){
 
-			$("#tablaUsuarios").html(response);	
+			$("#tablaUsuarios").html(response);
   		},
   		error:function(){
-  		
+
           abrir_gritter("Error","Error desconocido" ,"danger");
   		},
   		statusCode: {
 		    404: function() {
-		     
+
           abrir_gritter("Error","URL NO encontrada" ,"danger");
 		    }
 		  }
@@ -51,7 +51,7 @@ function imprimirReporte(){
 
 	url= "vistas/usuarios/reporteexcel.php" ;
 	parametros="?fechaI="+fechaI+"&fechaF="+fechaF+"&empleado="+empleado+"&nombre="+nombre;
-	
+
 	direcion = url+parametros;
 	$("#imprimirReporte").attr("href",direcion);
 	$("#imprimirReporte").click();
@@ -80,12 +80,12 @@ function confirmarEliminar(usuario,nombre){
   			}
   		},
   		error:function(){
-  		
+
           abrir_gritter("Error","Error desconocido" ,"danger");
   		},
   		statusCode: {
 		    404: function() {
-		     
+
           abrir_gritter("Error","URL NO encontrada" ,"danger");
 		    }
 		  }
@@ -102,15 +102,15 @@ function agregar(id,accion){
 		method: "POST",
   		data: parametros,
   		success:function(response){
-			$("#contenedor").html(response);	
+			$("#contenedor").html(response);
   		},
   		error:function(){
-  		
+
           abrir_gritter("Error","Error desconocido" ,"danger");
   		},
   		statusCode: {
 		    404: function() {
-		     
+
           abrir_gritter("Error","URL NO encontrada" ,"danger");
 		    }
 		  }
@@ -124,17 +124,29 @@ function asignarPermisos(id){
 		method: "POST",
   		data: parametros,
   		success:function(response){
-			$("#contenedor").html(response);	
+			$("#contenedor").html(response);
   		},
   		error:function(){
-  		
+
           abrir_gritter("Error","Error desconocido" ,"danger");
   		},
   		statusCode: {
 		    404: function() {
-		     
+
           abrir_gritter("Error","URL NO encontrada" ,"danger");
 		    }
 		  }
+	});
+}
+
+function tables(filas,forma){
+	$(".DataTable").DataTable().destroy();
+	$(".DataTable").DataTable({
+		"autoWidth": true,
+		"scrollX": true,
+		"searching": true,
+		"lengthChange":true,
+        "order": [[ filas, forma ]]
+
 	});
 }

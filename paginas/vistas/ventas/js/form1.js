@@ -48,11 +48,13 @@ function cotizar(accion){
 	cantdesc=$("#cantdesc").val();
 	pagoefectivo=$("#pagoefectivo").val();
 	pagotarjeta=$("#pagotarjeta").val();
+	cupon=$("#cupon").val();
+	moneda=$("#moneda").val();
 	if(comentario.trim()==''){
 		abrir_gritter("Advertencia","Agrega un comentario","warning");
 		return false;
 	}
-	if(pagoefectivo.trim()=='' && pagotarjeta.trim()=='' && accion!='calcular' && accion!='cotizar'){
+	if(pagoefectivo.trim()=='' && pagotarjeta.trim()=='' && cupon.trim()=='' && accion!='calcular' && accion!='cotizar'){
 		abrir_gritter("Advertencia","Agrega un pago","warning");
 		return false;
 	}
@@ -66,22 +68,24 @@ function cotizar(accion){
   		serviciosId:serviciosId,
   		serviciosValor:serviciosValor,
   		comentario:comentario,
-		otroscar1:otroscar1,
-		precio1:precio1,
-		otroscar2:otroscar2,
-		precio2:precio2,
-		tipodesc:tipodesc,
-		cantdesc:cantdesc,
-		pagoefectivo:pagoefectivo,
-		accion:accion,
-		pagotarjeta:pagotarjeta
+			otroscar1:otroscar1,
+			precio1:precio1,
+			otroscar2:otroscar2,
+			precio2:precio2,
+			tipodesc:tipodesc,
+			cantdesc:cantdesc,
+			pagoefectivo:pagoefectivo,
+			cupon:cupon,
+			moneda:moneda,
+			accion:accion,
+			pagotarjeta:pagotarjeta
   	};
   	if(accion=='cotizar'){
   		url="vistas/ventas/forms/resumenVta.php";
   	}else if(accion=='calcular'){
   		url="vistas/ventas/forms/calcularVta.php";
   	}else{
-		url="controladores/ventasController.php";
+			url="controladores/ventasController.php";
   	}
 
   	$.ajax({

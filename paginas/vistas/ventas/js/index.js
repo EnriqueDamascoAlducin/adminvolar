@@ -85,3 +85,15 @@ function imprimirReporteVentas(){
 	$("#imprimirReporteVtas").attr("href",direcion);
 	$("#imprimirReporteVtas").click();
 }
+
+function tables(filas,forma){
+	$(".DataTable").DataTable().destroy();
+	$(".DataTable").DataTable({
+		"autoWidth": true,
+		"scrollX": true,
+		"searching": true,
+		"lengthChange":true,
+        "order": [[ filas, forma ]]
+
+	});
+}

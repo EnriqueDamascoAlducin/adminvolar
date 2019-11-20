@@ -50,7 +50,18 @@
 	}else{
 		$pagoefectivo=$_POST['pagoefectivo'];
 	}
-	$totalPagado = $pagotarjeta+$pagoefectivo;
+
+	$cupon = $_POST['cupon'];
+	$moneda = $con->consulta("nombre_extra,abrev_extra","extras_volar","id_extra = ".$_POST['moneda']);
+	$monedaNombre = $moneda[0]->nombre_extra;
+	$monedaPrecio = $moneda[0]->abrev_extra;
+	$moneda = $_POST['moneda'];
+	if($cupon==''){
+		$cupon=0;
+	}
+	$total = $total / $monedaPrecio;
+	$total=number_format($total, 2, '.', ',');
+	$totalPagado = $pagotarjeta+$pagoefectivo + $cupon;
 	if($totalPagado>$total){
 		echo 'No puedes agregar un pago mayor';
 	}else if($totalPagado<$total){
@@ -93,7 +104,7 @@
 		if($pagotarjeta=='' || $pagotarjeta==0){
 			$pagotarjeta="null";
 		}
-		$valores = $idAct.','.$comentario.','.$otroscar1.','.$precio1.','.$otroscar2.','.$precio2.','.$tipodesc.','.$cantdesc.','.$pagoefectivo.','.$pagotarjeta.','.$total;
+		$valores = $idAct.','.$comentario.','.$otroscar1.','.$precio1.','.$otroscar2.','.$precio2.','.$tipodesc.','.$cantdesc.','.$pagoefectivo.','.$pagotarjeta.','.$total.',"'.$cupon.'",'.$moneda.',"'. $monedaPrecio .'"';
 		$registroPago = $con->query("CALL registroVenta(".$valores.",@LID)");
 		$respuesta = $con->query("SELECT @LID as lid")->fetchALL (PDO::FETCH_OBJ);
 		$venta = $respuesta[0]->lid;
@@ -109,6 +120,10 @@
 
 			}
 				echo $respuesta[0]->respuesta;
+		}else{
+			if($venta>0){
+				echo "Registrada";
+			}
 		}
 	}
 	?>
