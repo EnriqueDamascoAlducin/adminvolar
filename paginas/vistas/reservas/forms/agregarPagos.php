@@ -111,7 +111,12 @@
 				<div class="col-sm-3 col-lg-3 col-md-3 col-6 col-xl-3 ">
 					<div class="form-group">
 						<label for="peso">Peso</label>
-						<input type="number" class="form-control" id="peso" name="peso" min="0" placeholder="Peso" value="<?php echo $peso[0]->kg_temp; ?>">
+						<?php if($peso[0]->kg_temp>=0){
+							<input type="number" class="form-control" id="peso" name="peso" min="0" placeholder="Peso" value="<?php echo $peso[0]->kg_temp; ?>">
+						} else{ ?>
+							<input type="number" class="form-control" id="peso" name="peso" min="0" placeholder="Peso" value="">
+						<?php ?>
+
 					</div>
 				</div>
 
