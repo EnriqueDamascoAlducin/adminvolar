@@ -13,7 +13,7 @@
 		require  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/modelos/login.php';
 		$usuario= unserialize((base64_decode($_SESSION['usuario'])));
 		$idUsu=$usuario->getIdUsu();
-		$parametros = $_POST['pago'].',0,0,0,0,"",0,"0",'.$idUsu.',0,0';
+		$parametros = $_POST['pago'].',0,0,0,0,"",0,"0",'.$idUsu.',0,0,0,0';
 		$sql="CALL registrarPago(". $parametros .",@respuesta)";
 		$registrarPago = $con->query($sql);
 		$registrarPago = $con->query("Select @respuesta as respuesta")->fetchALL (PDO::FETCH_OBJ);
@@ -61,7 +61,7 @@
 			//Registra Pagos
 			$parametros = '0,'. $reserva.','.$idUsu.','.$metodo.','.$banco.',"'.$referencia.'",'.$cantidad.',"'.$fecha.'",0,0,0,'.$moneda.',"'. $monedaPrecio .'"';
 			$sql="CALL registrarPago(". $parametros .",@respuesta)";
-			echo $sql;
+			//echo $sql;
 			$registrarPago = $con->query($sql);
 			$registrarPago = $con->query("Select @respuesta as respuesta")->fetchALL (PDO::FETCH_OBJ);
 			if($registrarPago[0]->respuesta=="ERROR EN PAGO"){
