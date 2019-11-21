@@ -1,6 +1,6 @@
 *{
 	padding: 0;
-	margin: 0;
+	margin: 0;			
 }
 input{
 	background-color: transparent!important ;
@@ -74,8 +74,8 @@ body{
 }
 #menuIzq{
 	box-sizing:  border-box;
-	width: 15%;
-	max-width: 15%;
+	width: 20%;
+	max-width: 20%;
 	height: 92%;
 	max-height: 92%;
 	left: 0;
@@ -89,18 +89,18 @@ body{
 
 #menuDer{
 	box-sizing:  border-box;
-
-	width: 85%;
-	max-width: 85%;
+	
+	width: 80%;
+	max-width: 80%;
 	height: 92%;
 	max-height: 92%;
 	bottom: 4%;
-	left: 15%;
+	left: 20%;
 	position: absolute;
 	border-style:  dashed;
 	border-color: rgba(0,0,254,0.5);
 	text-align: center;
-	overflow-y: auto;
+	overflow-y: auto;	
 
 }
 
