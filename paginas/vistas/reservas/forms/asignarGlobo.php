@@ -23,7 +23,6 @@
 	 }else{
 			$pesoTotal=($datoReserva[0]->kg * 0.453592);
 	 }
-
 	 if($tVuelo[0]->tipo_vc==47){
 		 /*Compartido*/
 		 $campos = "CONCAT (nombre_globo,'(',peso_globo,' kg)') as text, id_globo as value,peso_globo";
@@ -179,24 +178,17 @@
 				var1 = "COUNT(id_temp) as exitePiloto";
 				var2 = "temp_volar";
 				var3 = "globo_temp = "+globo+" AND hora_temp BETWEEN '"+dehora+"' AND '"+ahora+"' AND fechavuelo_temp='"+fecha+"'";
-		    parametros={var1:var1,var2:var2,var3:var3};
+		    parametros={var1:var1,var2:var2,var3:var3};//abrir_gritter("a","select " + var1 + " from "+ var2+ " where " + var3, "info");
 				$.ajax({
 					data: parametros,
 					dataType:"json",
 					url:'controladores/query_json.php',
 					type:"POST",
 					success: function(data){
-						$.each( data, function( key, value ) {
-							exitePiloto=value.exitePiloto;
-							if(exitePiloto==0){
-								cargarTodosPilotos(globo,dehora,ahora,fecha,piloto);
-							}else{
-								cargarPilotoActual(globo,dehora,ahora,fecha,piloto);
-							}
-						});
+						
 					},
 					error:function(){
-						alert("Error al cargar habitación");
+						alert("Error al cargar Pilotos");
 					}
 				});
 		});
@@ -205,7 +197,7 @@
 			var2 = "volar_usuarios";
 			var3 = "status<>0 and puesto_usu = 4 AND  id_usu not in(";
 			var3 += "SELECT piloto_temp from  temp_volar tv INNER JOIN vueloscat_volar vv on tipo_temp = id_vc WHERE tipo_vc = 46 and vv.status<>0 and tv.status=8 AND  fechavuelo_temp ='"+fecha+"' AND hora_temp BETWEEN '"+dehora+"' AND '" + ahora+"'  and piloto_temp is not null and piloto_temp <> 0 ";
-			var3 +=")";abrir_gritter("a","select " + var1 + " from "+ var2+ " where " + var3, "info");
+			var3 +=")";//abrir_gritter("a","select " + var1 + " from "+ var2+ " where " + var3, "info");
 			parametros={var1:var1,var2:var2,var3:var3};
 	  	$("#piloto").empty().append("<option value=''>Selecciona un Piloto </option>");
 			$.ajax({
