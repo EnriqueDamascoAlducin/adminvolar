@@ -484,7 +484,7 @@ function asignarGlobo(reserva){
 	$("#tituloModalReservas").html("Bitacora de Reserva "+ reserva);
 			$("button[id^='btn']").remove();
 	cambiarTamanoModal("modalSize","lg",'agregar');
-	$("#divBtnModalReservas").append('<button autofocus type="button" id="btnAgregarPago'+reserva+'" class="btn btn-success" onclick="confirmarAsignarGlobo('+reserva+');" >Confirmar</button>');
+	$("#divBtnModalReservas").append('<button autofocus type="button" id="btnAsignarGlobo'+reserva+'" class="btn btn-success" onclick="confirmarAsignarGlobo('+reserva+');" >Confirmar</button>');
 	$("#btnPago"+reserva).focus();
 	url="vistas/reservas/forms/asignarGlobo.php";
 	parametros={reserva:reserva};
