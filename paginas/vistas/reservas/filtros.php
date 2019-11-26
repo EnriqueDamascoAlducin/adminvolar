@@ -1,6 +1,6 @@
 <?php
 	$empleados = $con->consulta("CONCAT( IFNULL(nombre_usu,''),' ',IFNULL(apellidop_usu,''),' ',IFNULL(apellidom_usu,'')) as text, id_usu as value","volar_usuarios","id_usu in (Select DISTINCT(idusu_temp) from temp_volar where status<>0) and status<>0 ");
-	$reservas = $con->consulta("DISTINCT(status) as status","temp_volar","status<>0");
+	$reservas = $con->consulta("DISTINCT(status) as status","temp_volar","status not in (0,6)");
 
 ?>
 <div class="row">

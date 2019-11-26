@@ -42,6 +42,12 @@
 
 		$asignarVuelo = $con->insertar("globosasignados_volar",	"reserva_ga,version_ga,globo_ga,peso_ga,piloto_ga" ,$reserva.",".$version.",".$globo.",".$peso.",".$piloto);
 		echo $asignarVuelo;
+	}elseif(isset($_POST['accion']) && $_POST['accion']=='eliminarGlobos'){
+	$version=$_POST['version'];
+	$reserva=$_POST['reserva'];
+
+	$asignarVuelo = $con->actualizar("globosasignados_volar",	"status=0" ,"reserva_ga = ".$reserva . " and version_ga =".$version);
+	echo $asignarVuelo;
 	}elseif(isset($_POST['accion']) && $_POST['accion']=='reprogramar'){
 		require  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/modelos/login.php';
 		$usuario= unserialize((base64_decode($_SESSION['usuario'])));

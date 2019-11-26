@@ -1,9 +1,9 @@
 <?php
 	require  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/modelos/login.php';
 	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/controladores/conexion.php';
-	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/controladores/fin_session.php';	
+	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/controladores/fin_session.php';
 
-	
+
 	$permisos=[];
 	$modulo=$_POST['id'];
 	  if(!isset($_SESSION['modulo']) || $_SESSION['modulo']!=$modulo){
@@ -16,7 +16,7 @@
 	foreach ($subPermisos as $subPermiso) {
 		$permisos[] = $subPermiso->nombre_sp;
 	}
-?>	
+?>
 <?php if(in_array("AGREGAR", $permisos)){ ?>
 	<div class="alert alert-info" onclick="accionReserva('agregar', <?php echo $idUsu; ?>)">
 	  <strong><i class="fa fa-plus fa-md"></i></strong> Agregar.
@@ -39,15 +39,21 @@
         </button>
       </div>
       <div class="modal-body" id="cuerpoModalReservas">
-      	
+
       </div>
       <div class="modal-footer">
       	<div id="divBtnModalReservas">
 	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-	        
+
         </div>
       </div>
     </div>
   </div>
 </div>
 <script type="text/javascript" src="vistas/reservas/js/index.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	cargarTablaReservas();
+});
+
+</script>

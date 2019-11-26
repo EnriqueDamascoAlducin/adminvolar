@@ -1,4 +1,4 @@
-cargarTablaReservas();
+
 function accionReserva(accion, id) {
 	if(accion=="agregar"){
 		agregarReserva("",accion);
@@ -860,7 +860,37 @@ function guardaGlobo() {
 
 }
 
+function eliminarGlobo(reserva,version){
+datos	=	{
+		reserva:reserva,
+		version:version,
+		accion:'eliminarGlobos'
+};
+	$.ajax({
+			url:'controladores/reservaController.php',
+			type: "POST",
+			data: datos,
+			success:function(response){
+				if(response=="ok")
+					abrir_gritter("Correcto", "Datos Correctos." ,"info");
+				else
+					abrir_gritter("Error", "No se pudo registrar estos datos." + response,"warning");
 
+				asignarGlobo(reserva);
+			},
+			error:function(){
+
+					abrir_gritter("Error","Error desconocido" ,"danger");
+			},
+			statusCode: {
+				404: function() {
+
+					abrir_gritter("Error","URL NO encontrada" ,"danger");
+				}
+			}
+	});
+
+}
 
 
 
