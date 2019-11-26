@@ -19,17 +19,9 @@
 	}elseif (isset($_POST['accion']) && $_POST['accion']=='cpc'  ) {
 		$confirmarAsistencia = $con->actualizar("temp_volar","status=9","id_temp=".$_POST['reserva']);
 		echo $confirmarAsistencia;
-	}elseif(isset($_POST['accion']) && $_POST['accion']=='globos'){
-		$globo=$_POST['globo'];
+	}elseif(isset($_POST['accion']) && $_POST['accion']=='horario'){
 		$hora=$_POST['hora'];
-		$piloto=$_POST['piloto'];
 		$reserva=$_POST['reserva'];
-		if($globo==""){
-			$globo="null";
-		}
-		if($piloto==""){
-			$piloto="null";
-		}
 		if($reserva==""){
 			$reserva="null";
 		}
@@ -38,8 +30,17 @@
 		}else{
 			$hora="'".$hora."'";
 		}
-		$upd="globo_temp=".$globo.",hora_temp=".$hora .",piloto_temp=".$piloto;
+		$upd="hora_temp=".$hora ;
 		$asignarVuelo = $con->actualizar("temp_volar",	$upd ," id_temp=".$reserva);
+		echo $asignarVuelo;
+	}elseif(isset($_POST['accion']) && $_POST['accion']=='globos'){
+		$piloto=$_POST['piloto'];
+		$globo=$_POST['globo'];
+		$reserva=$_POST['reserva'];
+		$version=$_POST['version'];
+		$peso=$_POST['peso'];
+
+		$asignarVuelo = $con->insertar("globosasignados_volar",	"reserva_ga,version_ga,globo_ga,peso_ga,piloto_ga" ,$reserva.",".$version.",".$globo.",".$peso.",".$piloto);
 		echo $asignarVuelo;
 	}elseif(isset($_POST['accion']) && $_POST['accion']=='reprogramar'){
 		require  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/modelos/login.php';
@@ -57,7 +58,7 @@
 		if($cargo>0){
 			$totalReserva = $con->consulta("total_temp","temp_volar","id_temp=".$reserva);
 			$totalReserva = $totalReserva[0]->total_temp;
-			$extra        = (($totalReserva * $cargo)/100); 
+			$extra        = (($totalReserva * $cargo)/100);
 			$nuevoTotal   = $totalReserva + $extra;
 			$valores = $reserva.",".$idUsu.",'Cargo por Reprogramación',".$extra.",'".$comentario."',1";
 			$registrarCargo = $con->insertar("cargosextras_volar", "reserva_ce,usuario_ce,motivo_ce,cantidad_ce,comentario_ce,tipo_ce", $valores);

@@ -484,16 +484,17 @@ function asignarGlobo(reserva){
 	$("#tituloModalReservas").html("Bitacora de Reserva "+ reserva);
 			$("button[id^='btn']").remove();
 	cambiarTamanoModal("modalSize","lg",'agregar');
-	$("#divBtnModalReservas").append('<button autofocus type="button" id="btnAsignarGlobo'+reserva+'" class="btn btn-success" onclick="confirmarAsignarGlobo('+reserva+');" >Confirmar</button>');
+	$("#divBtnModalReservas").append('<button autofocus type="button" id="btnAsignarGlobo'+reserva+'" class="btn btn-success" onclick="confirmarAsignarGlobo('+reserva+');" style="display:none">Confirmar</button>');
 	$("#btnPago"+reserva).focus();
-	url="vistas/reservas/forms/asignarGlobo.php";
+	url="vistas/reservas/forms/asignGlobo.php";
 	parametros={reserva:reserva};
 	$.ajax({
 	url:url,
 	method: "POST",
 		data: parametros,
 		success:function(response){
-		$("#cuerpoModalReservas").html(response);
+				$("#contenedor").html(response);
+	//	$("#cuerpoModalReservas").html(response);
 		},
 		error:function(){
 				abrir_gritter("Error","Error desconocido" ,"danger");
@@ -507,14 +508,10 @@ function asignarGlobo(reserva){
 }
 function confirmarAsignarGlobo(reserva){
 	hora = $("#hora").val();
-	piloto = $("#piloto").val();
-	globo = $("#globo").val();
 	datos	=	{
 			hora:hora,
-			piloto:piloto,
-			globo:globo,
 			reserva:reserva,
-			accion:'globos'
+			accion:'horario'
 	};
 	$.ajax({
 			url:'controladores/reservaController.php',
@@ -815,6 +812,57 @@ function confirmarDescuento(){
 	agregarExtras(reserva,nombre,acciones);
 	cargarTablaReservas();
 }
+function guardaGlobo() {
+	reserva = $("#reservaG").val();
+	piloto = $("#piloto").val();
+	globo = $("#globo").val();
+	version = $("#version").val();
+	peso = $("#peso").val().trim();
+	datos	=	{
+			piloto:piloto,
+			globo:globo,
+			reserva:reserva,
+			version:version,
+			peso:peso,
+			accion:'globos'
+	};
+	if(globo=="0"){
+		abrir_gritter("Advertencia","Debe elegir un globo","warning");
+		return false;
+	}
+	if(peso==""){
+		abrir_gritter("Advertencia","Debe elegir un peso","warning");
+		return false;
+	}
+	$.ajax({
+			url:'controladores/reservaController.php',
+			type: "POST",
+  		data: datos,
+  		success:function(response){
+  			if(response=="ok")
+  				abrir_gritter("Correcto", "Datos Correctos." ,"info");
+  			else
+					abrir_gritter("Error", "No se pudo registrar estos datos." + response,"warning");
+
+				asignarGlobo(reserva);
+  		},
+  		error:function(){
+
+          abrir_gritter("Error","Error desconocido" ,"danger");
+  		},
+  		statusCode: {
+		    404: function() {
+
+          abrir_gritter("Error","URL NO encontrada" ,"danger");
+		    }
+		  }
+	});
+
+}
+
+
+
+
 
 function tables(){
 	$(".DataTable").DataTable().destroy();
