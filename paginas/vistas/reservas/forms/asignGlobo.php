@@ -11,7 +11,7 @@
 	$pesoOcupado = $con->consulta("IFNULL(sum(peso_ga),0) as ocupado","globosasignados_volar","status<>0 and reserva_ga =".$_POST['reserva']);
 	$version = $con->consulta("IFNULL(max(version_ga),0) as version","globosasignados_volar","status<>0 and reserva_ga =".$_POST['reserva']);
 	echo "<h3>". $datoReserva[0]->nombre ."</h3>";
-	echo "(".$tVuelo[0]->nombre_extra.")";
+	echo "(".$_POST['reserva'].'-' .$tVuelo[0]->nombre_extra.")";
 
 	/* Establecer rango de horario en que se usa el filtro */
 	$horaVuelo = $datoReserva[0]->hora;
@@ -39,7 +39,7 @@
 		 	$globos = $con->consulta("CONCAT (nombre_globo,'(',peso_globo,' kg)') as text, id_globo as value","globos_volar","status<>0 and peso_globo>=".$pesoTotal. "  order by peso_globo asc");
 	 }
 
-	 	$globosAsignados = $con->consulta("peso_ga,nombre_globo,CONCAT(IFNULL(nombre_usu,''), ' ', IFNULL(apellidop_usu,'')) as piloto","globosasignados_volar ga INNER JOIN volar_usuarios on piloto_ga=id_usu INNER JOIN globos_volar on globo_ga = id_globo","ga.status<>0 AND reserva_ga =".$_POST['reserva']);
+	 	$globosAsignados = $con->consulta("tipo_temp as tipo,fechavuelo_temp as fecha, hora_temp as hora ,reserva_ga,peso_ga, nombre_globo, CONCAT(IFNULL(nombre_usu,''), ' ', IFNULL(apellidop_usu,'')) as piloto","globosasignados_volar ga INNER JOIN volar_usuarios on piloto_ga=id_usu INNER JOIN globos_volar on globo_ga = id_globo INNER JOIN temp_volar tv on tv.id_temp = ga.reserva_ga","ga.status<>0 and tv.status<>0 and  fechavuelo_temp = '". $datoReserva[0]->fecha ."' AND hora_temp BETWEEN '". $deHora ."' AND  '". $aHora ."'");
 	 	$pilotos = $con->consulta("CONCAT(nombre_usu, ' ', IFNULL(apellidop_usu,''),' ',IFNULL(apellidom_usu,'')) as text, id_usu as value","volar_usuarios","status<>0 and puesto_usu = 4 and id_usu  in(SELECT piloto_temp from temp_volar WHERE id_temp=". $_POST['reserva'] .")");
 
 ?>
@@ -88,7 +88,7 @@
 				<option value='0'>Ninguno...</option>
 				<?php
 					foreach ($globos as $globo) {
-
+						$sel ="";
 						if($tVuelo[0]->tipo_vc==46){
 							$tot = $con->consulta("count(id_temp) as total","temp_volar tv INNER JOIN globosasignados_volar ga ON ga.reserva_ga = tv.id_temp"," fechavuelo_temp = '". $datoReserva[0]->fecha ."' AND hora_temp BETWEEN '". $deHora ."' AND  '". $aHora ."'  and globo_ga=".$globo->value );
 							if($tot[0]->total>0){
@@ -98,18 +98,18 @@
 							$pesoAguanta = $globo->peso_globo;
 
 							/*Peso en Libras*/
-							$pesoActualLib = $con->consulta("sum(kg_temp) as peso","temp_volar","status=8 and tipopeso_temp=2 and globo_temp = ".$globo->value . " and fechavuelo_temp ='".$datoReserva[0]->fecha."' AND hora_temp BETWEEN '".$deHora."' AND '".$aHora."'");
-							$pesoActualLib=($pesoActualLib[0]->peso* 0.453592);
+							$pesoActual= $con->consulta("sum(peso_ga) as peso","temp_volar tv INNER JOIN globosasignados_volar ga ON ga.reserva_ga = tv.id_temp ","tv.status=8 and ga.status<>0 and globo_ga = ".$globo->value . " and fechavuelo_temp ='".$datoReserva[0]->fecha."' AND hora_temp BETWEEN '".$deHora."' AND '".$aHora."'");
+							//$pesoActualLib=($pesoActualLib[0]->peso* 0.453592);
 
 							/*Peso en Kg*/
-							$pesoActualKg = $con->consulta("sum(kg_temp) as peso","temp_volar","status=8 and tipopeso_temp=1 and globo_temp = ".$globo->value . " and fechavuelo_temp ='".$datoReserva[0]->fecha."' AND hora_temp BETWEEN '".$deHora."' AND '".$aHora."'");
-							$pesoActualKg=$pesoActualKg[0]->peso;
-							$sumaPeso = $pesoActualKg + $pesoActualLib +$pesoTotal;
+						/*	$pesoActualKg = $con->consulta("sum(kg_temp) as peso","temp_volar","status=8 and tipopeso_temp=1 and globo_temp = ".$globo->value . " and fechavuelo_temp ='".$datoReserva[0]->fecha."' AND hora_temp BETWEEN '".$deHora."' AND '".$aHora."'");*/
+							$pesoActual=$pesoActual[0]->peso;
+							$sumaPeso = $pesoActual + $pesoOcupado[0]->ocupado;
 							if($sumaPeso>$pesoAguanta){
 								$sel = "disabled";
 								$globo->text.="(Sobre pasa el Peso)";
 							}else{
-								$aunSoporta =($pesoAguanta+$pesoTotal-$sumaPeso);
+								$aunSoporta =($pesoAguanta+ $pesoOcupado[0]->ocupado-$sumaPeso);
 								$globo->text.="->(Aun soporta ". $aunSoporta ." kg)";
 
 							}
@@ -137,20 +137,29 @@
 	</div>
 </div>
 
-<table class="table">
+<table class="table DataTable">
 	<thead>
 		<tr>
+			<th>Reserva</th>
 			<th>Globo</th>
 			<th>Peso</th>
 			<th>Piloto</th>
+			<th>Fecha</th>
+			<th>Hora</th>
+			<th>Tipo de Vuelo</th>
 		</tr>
 	</thead>
 	<tbody>
 		<?php foreach ($globosAsignados as $globosAsignado) { ?>
 			<tr>
+				<td><?php echo $globosAsignado->reserva_ga ; 	?></td>
 				<td><?php echo $globosAsignado->nombre_globo ; 	?></td>
 				<td><?php echo $globosAsignado->peso_ga ; 	?></td>
 				<td><?php echo $globosAsignado->piloto ; 	?></td>
+				<td><?php echo $globosAsignado->fecha ; 	?></td>
+				<td><?php echo $globosAsignado->hora ; 	?></td>
+				<?php $tipoV = $con->consulta("nombre_extra","extras_volar ev INNER JOIN vueloscat_volar vv on id_extra=tipo_vc","id_vc=".$globosAsignado->tipo); ?>
+				<td><?php echo $tipoV[0]->nombre_extra ; 	?></td>
 			</tr>
 		<?php } ?>
 	</tbody>
@@ -169,6 +178,6 @@
 			$("#peso").val(limitePeso);
 		}
 	}
-
+	tables();
 
 </script>
