@@ -8,16 +8,14 @@
 	/* Consulta de tipo de vuelo */
 	$tVuelo = $con->consulta("nombre_extra,tipo_vc","vueloscat_volar INNER JOIN extras_volar on tipo_vc = id_extra"," id_vc =" . $datoReserva[0]->vuelo);
 	/* Consulta de peso ocupado */
-	$pesoOcupado = $con->consulta("IFNULL(sum(peso_ga),0) as ocupado","globosasignados_volar","status<>0 and reserva_ga =".$_POST['reserva']);
-	$version = $con->consulta("IFNULL(max(version_ga),0) as version","globosasignados_volar","status<>0 and reserva_ga =".$_POST['reserva']);
+	$pesoOcupado_Version = $con->consulta("IFNULL(sum(peso_ga),0) as ocupado,IFNULL(max(version_ga),0) as version","globosasignados_volar","status<>0 and reserva_ga =".$_POST['reserva']);
 	echo "<h3>". $datoReserva[0]->nombre ."</h3>";
-	echo "(".$_POST['reserva'].'-' .$tVuelo[0]->nombre_extra.")";
-
+	echo "(".$_POST['reserva'].'-' .utf8_decode($tVuelo[0]->nombre_extra).")";
 	/* Establecer rango de horario en que se usa el filtro */
 	$horaVuelo = $datoReserva[0]->hora;
-  $deHora = strtotime($horaVuelo.' - 15 minute');
+  	$deHora = strtotime($horaVuelo.' - 15 minute');
 	$deHora= date('H:i:s', $deHora);
-  $aHora = strtotime($horaVuelo.' + 15 minute');
+  	$aHora = strtotime($horaVuelo.' + 15 minute');
 	$aHora= date('H:i:s', $aHora);
 
 	 if($datoReserva[0]->tipopeso=='1'){
@@ -25,7 +23,7 @@
 	 }else{
 		 $pesoTotal=($datoReserva[0]->kg * 0.453592);
 	 }
-	 $pesoLibre = $pesoTotal - $pesoOcupado[0]->ocupado;
+	 $pesoLibre = $pesoTotal - $pesoOcupado_Version[0]->ocupado;
 	 /*Consulta de Globos Dependiendo del tipo de vuelo */
 	 if($tVuelo[0]->tipo_vc==47){
 		 /*Compartido*/
@@ -40,7 +38,7 @@
 	 }
 
 	 	$globosAsignados = $con->consulta("tipo_temp as tipo,fechavuelo_temp as fecha, hora_temp as hora ,reserva_ga,peso_ga, nombre_globo, CONCAT(IFNULL(nombre_usu,''), ' ', IFNULL(apellidop_usu,'')) as piloto","globosasignados_volar ga INNER JOIN volar_usuarios on piloto_ga=id_usu INNER JOIN globos_volar on globo_ga = id_globo INNER JOIN temp_volar tv on tv.id_temp = ga.reserva_ga","ga.status<>0 and tv.status<>0 and  fechavuelo_temp = '". $datoReserva[0]->fecha ."' AND hora_temp BETWEEN '". $deHora ."' AND  '". $aHora ."'");
-	 	$pilotos = $con->consulta("CONCAT(nombre_usu, ' ', IFNULL(apellidop_usu,''),' ',IFNULL(apellidom_usu,'')) as text, id_usu as value","volar_usuarios","status<>0 and puesto_usu = 4 and id_usu  in(SELECT piloto_temp from temp_volar WHERE id_temp=". $_POST['reserva'] .")");
+	 	
 
 ?>
 <div class="row">
@@ -67,11 +65,12 @@
 	</div>
 	<div class="col-sm-12 col-lg-4 col-md-4 col-12 col-xl-3 " style="margin-top:25px" >
 		<div class="form-group">
-				<label >Peso Ocupado: <?php echo $pesoOcupado[0]->ocupado; ?> Kg </label>
+				<label >Peso Ocupado: <?php echo $pesoOcupado_Version[0]->ocupado; ?> Kg </label>
 		</div>
 	</div>
 		<input type="hidden" id="reservaG" value="<?php echo $_POST['reserva']; ?>">
-		<input type="hidden" id="version" value="<?php echo $version[0]->version + 1; ?>">
+		<input type="hidden" id="version" value="<?php echo $pesoOcupado_Version[0]->version + 1; ?>">
+		<input type="hidden" id="tipovuelo" value="<?php echo $tVuelo[0]->tipo_vc; ?>">
 </div>
 
 <div class="row">
@@ -176,7 +175,64 @@
 			$("#peso").focus();
 			abrir_gritter("Advertencia","Sobrepasaste el peso","warning");
 			$("#peso").val(limitePeso);
+		}else{
+			tipovuelo = "<?php  echo $tVuelo[0]->tipo_vc ?>";
+			deHora = "<?php echo $deHora ?>";
+			aHora = "<?php echo $aHora ?>";
+			fecha = "<?php echo $datoReserva[0]->fecha  ?>";
+			reserva = "<?php  echo $_POST['reserva'] ?>";
+			if(47==tipovuelo){
+				//Compartido
+				var1 = "CONCAT (nombre_globo,'(',peso_globo,' kg)') as text, id_globo as value,peso_globo";
+				var2 = "globos_volar";
+				var3 = "status<>0 AND id_globo not  in(SELECT globo_temp from temp_volar tv INNER JOIN vueloscat_volar vv on tipo_temp = id_vc WHERE tipo_vc = 46 and vv.status<>0 and tv.status=8 AND  fechavuelo_temp = '"+fecha+"' AND hora_temp BETWEEN '"+ deHora +"' AND  '"+ aHora +"') and peso_globo>=" + valor;
+				getGlobosCompartido(var1,var2,var3);
+			}else{
+				var1 = ""
+			}
 		}
+	}
+	function getGlobosCompartido(var1,var2,var3){
+		parametros = {var1:var1,var2:var2,var3:var3};
+		$("#globo").empty().append("<option value=''>Selecciona un Globo </option>");
+		$.ajax({
+	      data: parametros,
+	      dataType:"json",
+	      url:'controladores/query_json.php',
+	      type:"POST",
+	      success: function(data){
+	        $.each( data, function( key, value ) {
+			  text=value.text;
+			  val=value.value;
+			  $("#globo").append("<option value='"+val+"'>"+text+"</option>");
+			});
+	      },
+	      error:function(){
+	      	alert("Error al cargar Globos");
+	      }
+	    });
+	}
+
+	
+	function getGlobosPrivado(var1,var2,var3){
+		parametros = {var1:var1,var2:var2,var3:var3};
+		$("#globo").empty().append("<option value=''>Selecciona un Globo </option>");
+		$.ajax({
+	      data: parametros,
+	      dataType:"json",
+	      url:'controladores/query_json.php',
+	      type:"POST",
+	      success: function(data){
+	        $.each( data, function( key, value ) {
+			  text=value.text;
+			  val=value.value;
+			  $("#globo").append("<option value='"+val+"'>"+text+"</option>");
+			});
+	      },
+	      error:function(){
+	      	alert("Error al cargar Globos");
+	      }
+	    });
 	}
 	tables();
 

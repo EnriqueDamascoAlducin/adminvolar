@@ -143,30 +143,30 @@
 			var2="volar_usuarios";
 			var3="status<>0 and puesto_usu = 4 and id_usu not in ";
 			var4 = "selecciona piloto_temp from temp_volar WHERE hora_temp BETWEEN '"+dehora+"' and '"+ ahora +"' and status=8 and fechavuelo_temp ='"+fecha+"'  and piloto_temp is not null and piloto_temp<>0 ";
-	    parametros={var1:var1,var2:var2,var3:var3,var4:var4};
-		//	$("#piloto").load("vistas/reservas/forms/pilotos.php",parametros);
+		    parametros={var1:var1,var2:var2,var3:var3,var4:var4};
+			//	$("#piloto").load("vistas/reservas/forms/pilotos.php",parametros);
 
-	  	$("#piloto").empty().append("<option value=''>Selecciona un Piloto </option>");
+		  	$("#piloto").empty().append("<option value=''>Selecciona un Piloto </option>");
 			$.ajax({
-	      data: parametros,
-	      dataType:"json",
-	      url:'controladores/query_json2.php',
-	      type:"POST",
-	      success: function(data){
-	        $.each( data, function( key, value ) {
-					  text=value.text;
-					  val=value.value;
-					  attr="";
-					  if(val==piloto){
-					  	attr="selected";
-					  }
-					  $("#piloto").append("<option value='"+val+"' "+attr+">"+text+"</option>");
-					});
-	      },
-	      error:function(){
-	      	alert("Error al cargar habitación");
-	      }
-	    });
+		      data: parametros,
+		      dataType:"json",
+		      url:'controladores/query_json2.php',
+		      type:"POST",
+		      success: function(data){
+		        $.each( data, function( key, value ) {
+						  text=value.text;
+						  val=value.value;
+						  attr="";
+						  if(val==piloto){
+						  	attr="selected";
+						  }
+						  $("#piloto").append("<option value='"+val+"' "+attr+">"+text+"</option>");
+						});
+		      },
+		      error:function(){
+		      	alert("Error al cargar habitación");
+		      }
+		    });
 		});
 	<?php } else{ ?>
 		$("#globo").change(function(){
