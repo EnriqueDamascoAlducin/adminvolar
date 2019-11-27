@@ -5,10 +5,14 @@
 	$permisos=[];
 	$modulo=$_POST['id'];
 
+	if($_SESSION['modulo']!=$modulo ){
+		unset($_SESSION['filtros']);
+	}
   if(!isset($_SESSION['modulo']) || $_SESSION['modulo']!=$modulo){
     $_SESSION['modulo']=$modulo;
     $_SESSION['url']="vistas/catalogos/";
   }
+	$_SESSION['modulo'] = $modulo;
 	$usuario= unserialize((base64_decode($_SESSION['usuario'])));
 	$idUsu=$usuario->getIdUsu();
 	$subPermisos = $con->query("CALL permisosSubModulos($idUsu,$modulo)")->fetchALL (PDO::FETCH_OBJ);

@@ -18,19 +18,27 @@
 	if(isset($_POST['fechaI']) && $_POST['fechaI']!='' ){
 		$filtro.= " and fechavuelo_temp >='".$_POST['fechaI']."'";
 	}
+	$_SESSION['filtros']['fechaI'] = $_POST['fechaI'];
+	//////
 	if(isset($_POST['fechaF']) && $_POST['fechaF']!='' ){
 		$filtro.= " and fechavuelo_temp <='".$_POST['fechaF']."'";
 	}
-
+	$_SESSION['filtros']['fechaF'] = $_POST['fechaF'];
+	//////////
 	if(isset($_POST['status']) && $_POST['status']!='0' ){
 		$filtro.= " and tv.status = ".$_POST['status'];
 	}
+	$_SESSION['filtros']['status'] = $_POST['status'];
+	///
 	if(isset($_POST['empleado']) && $_POST['empleado']!='0' ){
 		$filtro.= " and idusu_temp = ".$_POST['empleado'];
 	}
+	$_SESSION['filtros']['empleado'] = $_POST['empleado'];
+	/////////
 	if(isset($_POST['reserva']) && $_POST['reserva']!='' ){
 		$filtro.= " and id_temp = ".$_POST['reserva'];
 	}
+	$_SESSION['filtros']['reserva'] = $_POST['reserva'];//////
 /*	if(in_array("GENERAL", $permisos) && (isset($_POST['empleado']) && $_POST['empleado']=='0' ) ){
 		$filtro.= " and idusu_temp=".$idUsu;
 	}*/

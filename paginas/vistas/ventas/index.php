@@ -4,6 +4,9 @@
 	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/controladores/fin_session.php';
 	$permisos=[];
 	$modulo=$_POST['id'];
+	if($_SESSION['modulo']!=$modulo ){
+		unset($_SESSION['filtros']);
+	}
   if(!isset($_SESSION['modulo']) || $_SESSION['modulo']!=$modulo){
     $_SESSION['modulo']=$modulo;
     $_SESSION['url']="vistas/ventas/";

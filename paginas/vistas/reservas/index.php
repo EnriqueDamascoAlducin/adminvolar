@@ -10,6 +10,11 @@
 	    $_SESSION['modulo']=$modulo;
 	    $_SESSION['url']="vistas/reservas/";
 	  }
+
+	if($_SESSION['modulo']!=$modulo && isset($_SESSION['filtros'])){
+		unset($_SESSION['filtros']);
+	}
+	$_SESSION['modulo'] = $modulo;
 	$usuario= unserialize((base64_decode($_SESSION['usuario'])));
 	$idUsu=$usuario->getIdUsu();
 	$subPermisos = $con->query("CALL permisosSubModulos($idUsu,$modulo)")->fetchALL (PDO::FETCH_OBJ);

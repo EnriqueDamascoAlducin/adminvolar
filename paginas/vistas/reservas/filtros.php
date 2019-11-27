@@ -7,13 +7,13 @@
 	<div class="col-sm-3 col-lg-3 col-md-3 col-6 col-xl-2 ">
 		<div class="form-group">
 			<label for="fechaI">Fecha de Inicio</label>
-			<input type="date" class="form-control" id="fechaI" placeholder="Fecha de Inicio">
+			<input type="date" class="form-control" id="fechaI" placeholder="Fecha de Inicio" value="<?php if(isset($_SESSION['filtros']['fechaI'])){echo $_SESSION['filtros']['fechaI']  ;} ?>">
 		</div>
 	</div>
 	<div class="col-sm-3 col-lg-3 col-md-3 col-6 col-xl-2 ">
 		<div class="form-group">
 			<label for="fechaF">Fecha de Final</label>
-			<input type="date" class="form-control" id="fechaF" placeholder="Fecha Final">
+			<input type="date" class="form-control" id="fechaF" placeholder="Fecha Final" value="<?php if(isset($_SESSION['filtros']['fechaF'])){echo $_SESSION['filtros']['fechaF']  ;} ?>">
 		</div>
 	</div>
 	<div class="col-sm-3 col-lg-3 col-md-3 col-6 col-xl-2 ">
@@ -56,7 +56,11 @@
 							$text="Otro";
 							$class="#ff4444";
 						}
-						echo "<option value='".$reserva->status."' style='color:".$class."' > <label class='badge badge-warning'>".$text."</label></option>";
+						$sel = "";
+						if(isset($_SESSION['filtros']['status']) && $_SESSION['filtros']['status'] == $reserva->status ){
+							$sel = "selected";
+						}
+						echo "<option value='".$reserva->status."' style='color:".$class."' ".$sel."> <label class='badge badge-warning'>".$text."</label></option>";
 					}
 				?>
 
@@ -75,6 +79,9 @@
 						if($empleado->value==$idUsu){
 							$sel = "selected";
 						}
+						if(isset($_SESSION['filtros']['empleado']) && $_SESSION['filtros']['empleado'] == $empleado->value ){
+							$sel = "selected";
+						}
 						echo "<option value='".$empleado->value."' ". $sel .">".$empleado->text."</option>";
 					}
 				?>
@@ -86,7 +93,7 @@
 	<div class="col-sm-3 col-lg-3 col-md-3 col-6 col-xl-2 ">
 		<div class="form-group">
 			<label for="reserva"># de Reserva</label>
-			<input type="number" class="form-control" id="reserva" placeholder="# de Reserva">
+			<input type="number" class="form-control" id="reserva" placeholder="# de Reserva" value="<?php if(isset($_SESSION['filtros']['reserva'])){echo $_SESSION['filtros']['reserva']  ;} ?>">
 		</div>
 	</div>
 
