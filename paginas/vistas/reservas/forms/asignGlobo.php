@@ -237,11 +237,7 @@ function getPilotosPrivado(reserva,deHora,aHora,fecha,globo){
 function getTodosPilotos(reserva,deHora,aHora,fecha,globo){
 		var1 = "id_usu as value,concatenar(nombre_usu, ' ', esvacio(apellidop_usu,''),' ',esvacio(apellidom_usu,'')) as text";
 		var2 = "volar_usuarios";
-		var3 = "status<>0 YYY puesto_usu = 4 YYY  id_usu not in ";
-		var4 =" selecciona piloto_ga from globosasignados_volar ga unir temp_volar tv  unir vueloscat_volar vv on tipo_temp = id_vc WHERE tipo_vc = 46 YYY vv.status<>0 YYY tv.status=8 YYY  fechavuelo_temp ='"+fecha+"' YYY hora_temp entre '"+deHora+"' YYY '" + aHora+"'  YYY piloto_ga is not null YYY piloto_ga <> 0 YYY ga.status<>0  ";
-
-		var5 = " YYY id_usu not in ";
-		var6 = "selecciona piloto_temp detabla  temp_volar tv unir vueloscat_volar vv on tipo_temp = id_vc WHERE tipo_vc = 47 YYY vv.status<>0 YYY tv.status=8 YYY  fechavuelo_temp ='"+fecha+"' YYY hora_temp entre '"+deHora+"' YYY '" + aHora+"'  YYY piloto_temp is not null and piloto_temp <> 0  and globo_temp<>"+globo;
+		var3 = "status<>0 YYY puesto_usu = 4 YYY  id_usu not in ( selecciona piloto_ga from globosasignados_volar ga unir temp_volar tv  unir vueloscat_volar vv on tipo_temp = id_vc WHERE tipo_vc = 46 YYY vv.status<>0 YYY tv.status=8 YYY  fechavuelo_temp ='"+fecha+"' YYY hora_temp entre '"+deHora+"' YYY '" + aHora+"'  YYY piloto_ga is not null YYY piloto_ga <> 0 YYY ga.status<>0)  YYY id_usu not in (selecciona piloto_ga detabla  temp_volar tv unir vueloscat_volar vv on tipo_temp = id_vc INNER JOIN globosasignados_volar ga ON id_temp=reserva_ga WHERE tipo_vc = 47 YYY vv.status<>0 YYY tv.status=8 YYY  ga.status<>0 YYY fechavuelo_temp ='"+fecha+"' YYY hora_temp entre '"+deHora+"' YYY '" + aHora+"'  YYY piloto_temp is not null and piloto_temp <> 0  and globo_ga<>"+globo+")";
 		parametros = {var1:var1,var2:var2,var3:var3};
 		$("#piloto").empty().append("<option value='0'>Selecciona un piloto</option>");
 		$.ajax({
