@@ -175,7 +175,7 @@
 					<?php } ?>
 
 					<!--========       PILOTOS     ========= -->
-					<?php if(in_array("PILOTOS",$permisos)){ ?>
+					<?php if(in_array("PILOTOS",$permisos) && $reserva->status==8){ ?>
 						<i class="fa fa-user-o fa-lg" style="color:rgba(0, 150, 136, 0.7) " title="Asignar Globos y Pilotos"  onclick="asignarGlobo(<?php echo $reserva->id_temp; ?>)"  ></i>&nbsp;
 					<?php } ?>
 					<!--========       Confirmar Asistencia     ========= -->

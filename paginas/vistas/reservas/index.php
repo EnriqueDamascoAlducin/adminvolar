@@ -60,5 +60,9 @@
 $(document).ready(function(){
 	cargarTablaReservas();
 });
-
+$("#reserva").on('keyup', function (e) {
+    if (e.keyCode === 13) {
+        cargarTablaReservas();
+    }
+});
 </script>

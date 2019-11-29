@@ -481,11 +481,6 @@ function verBitacora(reserva){
 }
 function asignarGlobo(reserva){
 
-	$("#tituloModalReservas").html("Bitacora de Reserva "+ reserva);
-			$("button[id^='btn']").remove();
-	cambiarTamanoModal("modalSize","lg",'agregar');
-	$("#divBtnModalReservas").append('<button autofocus type="button" id="btnAsignarGlobo'+reserva+'" class="btn btn-success" onclick="confirmarAsignarGlobo('+reserva+');" style="display:none">Confirmar</button>');
-	$("#btnPago"+reserva).focus();
 	url="vistas/reservas/forms/asignGlobo.php";
 	parametros={reserva:reserva};
 	$.ajax({
@@ -892,6 +887,29 @@ datos	=	{
 
 }
 
+function asignarGlobos(){
+	fechaI = $("#fechaI").val();
+
+		url="vistas/reservas/forms/asignGlobo.php";
+		parametros={fechaI:fechaI};
+		$.ajax({
+		url:url,
+		method: "POST",
+			data: parametros,
+			success:function(response){
+					$("#contenedor").html(response);
+		//	$("#cuerpoModalReservas").html(response);
+			},
+			error:function(){
+					abrir_gritter("Error","Error desconocido" ,"danger");
+			},
+			statusCode: {
+				404: function() {
+					abrir_gritter("Error","URL NO encontrada" ,"danger");
+				}
+			}
+		});
+	}
 
 
 function tables(){
