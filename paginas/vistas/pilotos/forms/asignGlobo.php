@@ -33,10 +33,9 @@
 			 /*Compartido*/
 			 $campos = "CONCAT (nombre_globo,'(',peso_globo,' kg)') as text, id_globo as value,peso_globo";
 			 $tabla  = "globos_volar ";
-			 $filtro = "status<>0  and  id_globo not  in(SELECT globo_ga from temp_volar tv INNER JOIN vueloscat_volar vv on tipo_temp = id_vc INNER JOIN globosasignados_volar ga ON ga.reserva_ga = tv.id_temp WHERE tipo_vc = 46 and ga.status<>0 and vv.status<>0 and tv.status=8 AND  fechavuelo_temp = '". $fecha ."' AND hora_temp BETWEEN '". $deHora ."' AND  '". $aHora ."') and peso_globo>=".$pesoLibre ;
+			 $filtro = "status<>0 AND id_globo not  in(SELECT globo_ga from temp_volar tv INNER JOIN vueloscat_volar vv on tipo_temp = id_vc INNER JOIN globosasignados_volar ga ON ga.reserva_ga = tv.id_temp WHERE tipo_vc = 46 and ga.status<>0 and vv.status<>0 and tv.status=8 AND  fechavuelo_temp = '". $fecha ."' AND hora_temp BETWEEN '". $deHora ."' AND  '". $aHora ."') and peso_globo>=".$pesoTotal ;
 			 $globos = $con->consulta($campos,$tabla,$filtro);
 			 //echo  "SELECT $campos from $tabla WHERE $filtro";
-
 		 }else{
 			 /*46 privado*/
 			 	$globos = $con->consulta("CONCAT (nombre_globo,'(',peso_globo,' kg)') as text, id_globo as value","globos_volar","status<>0 and peso_globo>=".$pesoLibre. "  order by peso_globo asc");
@@ -200,194 +199,249 @@
 </table>
 
 <script type="text/javascript" src="vistas/reservas/js/index.js"></script>
-<?php if(isset($_POST['reserva'])){ ?>
-	<script type="text/javascript">
-	function validaGlobo(globo){
+<script type="text/javascript">
+function validaGlobo(globo){
+	tipovuelo = "<?php  echo $tVuelo[0]->tipo_vc ?>";
+	deHora = "<?php echo $deHora ?>";
+	aHora = "<?php echo $aHora ?>";
+	fecha = "<?php echo $fecha  ?>";
+	reserva = "<?php  echo $_POST['reserva'] ?>";
+	if(tipovuelo==47){
+		//47 compartido
+		var1 = "contar(id_ga) as total";
+		var2 = "globosasignados_volar ga unir temp_volar tv on id_temp = reserva_ga";
+		var3 = "ga.status<>0 and tv.status<>0 YYY globo_ga="+globo+" YYY hora_temp entre '" + deHora + "' YYY '"+aHora+"' YYY fechavuelo_temp='"+fecha+"'";
+		parametros = {var1:var1,var2:var2,var3:var3};
+		$.ajax({
+			data: parametros,
+			dataType:"json",
+			async:false,
+			url:'controladores/query_json2.php',
+			type:"POST",
+			success: function(data){
+				$.each( data, function( key, value ) {
+					total=value.total;
+				});
+			},
+			error:function(){
+				alert("Error al validar Globos");
+			}
+		});
+		if(total==0){
+			getTodosPilotos(reserva,deHora,aHora,fecha,globo);
+		}else{
+			getUnicoPiloto(reserva,deHora,aHora,fecha,globo);
+		}
+	}else{
+		// 46 es privado
+			getPilotosPrivado(reserva,deHora,aHora,fecha,globo);
+	}
+}
+function getPilotosPrivado(reserva,deHora,aHora,fecha,globo){
+	var1 ="id_usu as value,concatenar(nombre_usu, ' ', esvacio(apellidop_usu,''),' ',esvacio(apellidom_usu,'')) as text";
+	var2 ="volar_usuarios";
+	var3 ="status<>0 YYY puesto_usu = 4 YYY id_usu not in ";
+	var4 = "selecciona piloto_ga detabla temp_volar tv unir globosasignados_volar ga on id_temp=reserva_ga WHERE hora_temp entre '"+deHora+"' YYY '"+ aHora +"' YYY tv.status=8 YYY fechavuelo_temp ='"+fecha+"'  YYY piloto_ga is not null YYY piloto_ga<>0 YYY ga.status<>0";
+		parametros={var1:var1,var2:var2,var3:var3,var4:var4};
+	//	$("#piloto").load("vistas/reservas/forms/pilotos.php",parametros);
+
+	$("#piloto").empty().append("<option value=''>Selecciona un Piloto </option>");
+	$.ajax({
+			data: parametros,
+			dataType:"json",
+			url:'controladores/query_json2.php',
+			type:"POST",
+			success: function(data){
+				$.each( data, function( key, value ) {
+					text=value.text;
+					val=value.value;
+					$("#piloto").append("<option value='"+val+"' >"+text+"</option>");
+				});
+			},
+			error:function(){
+				alert("Error al cargar Pilotos PrivadoSSS");
+			}
+		});
+}
+function getTodosPilotos(reserva,deHora,aHora,fecha,globo){
+		var1 = "id_usu as value,concatenar(nombre_usu, ' ', esvacio(apellidop_usu,''),' ',esvacio(apellidom_usu,'')) as text";
+		var2 = "volar_usuarios";
+		var3 = "status<>0 YYY puesto_usu = 4 YYY  id_usu not in ( selecciona piloto_ga from globosasignados_volar ga unir temp_volar tv  unir vueloscat_volar vv on tipo_temp = id_vc WHERE tipo_vc = 46 YYY vv.status<>0 YYY tv.status=8 YYY  fechavuelo_temp ='"+fecha+"' YYY hora_temp entre '"+deHora+"' YYY '" + aHora+"'  YYY piloto_ga is not null YYY piloto_ga <> 0 YYY ga.status<>0)  YYY id_usu not in (selecciona piloto_ga detabla  temp_volar tv unir vueloscat_volar vv on tipo_temp = id_vc INNER JOIN globosasignados_volar ga ON id_temp=reserva_ga WHERE tipo_vc = 47 YYY vv.status<>0 YYY tv.status=8 YYY  ga.status<>0 YYY fechavuelo_temp ='"+fecha+"' YYY hora_temp entre '"+deHora+"' YYY '" + aHora+"'  YYY piloto_temp is not null and piloto_temp <> 0  and globo_ga<>"+globo+")";
+		parametros = {var1:var1,var2:var2,var3:var3};
+		$("#piloto").empty().append("<option value='0'>Selecciona un piloto</option>");
+		$.ajax({
+			data: parametros,
+			dataType:"json",
+			url:'controladores/query_json2.php',
+			type:"POST",
+			success: function(data){
+				$.each( data, function( key, value ) {
+					text 	= value.text;
+					val 	= value.value;
+
+					$("#piloto").append("<option value='"+val+"' >"+text +"</option>");
+				});
+			},
+			error:function(){
+				alert("Error al cargar todos los Pilotos");
+			}
+		});
+}
+function getUnicoPiloto(reserva,deHora,aHora,fecha,globo){
+	var1 = "id_usu as value,concatenar(nombre_usu, ' ', esvacio(apellidop_usu,''),' ',esvacio(apellidom_usu,'')) as text";
+	var2 = "volar_usuarios";
+	var3 = "status<>0  YYY puesto_usu = 4 YYY id_usu in(selecciona piloto_ga from globosasignados_volar ga unir  temp_volar tv on id_temp=reserva_ga Where globo_ga =" + globo + " YYY hora_temp entre '" + deHora + "' AND '"+aHora+"' and fechavuelo_temp='"+fecha+"' and ga.status<>0)";
+	parametros = {var1:var1,var2:var2,var3:var3};
+	$("#piloto").empty().append("<option value='0'>Selecciona un piloto</option>");
+	$.ajax({
+			data: parametros,
+			dataType:"json",
+			url:'controladores/query_json2.php',
+			type:"POST",
+			success: function(data){
+				$.each( data, function( key, value ) {
+					text 	= value.text;
+					val 	= value.value;
+
+					$("#piloto").append("<option value='"+val+"' selected>"+text +"</option>");
+				});
+			},
+			error:function(){
+				alert("Error al cargar unico Piloto");
+			}
+		});
+}
+
+	function cambiarhora(){
+		$("button[id^='btnAsignarGlobo']").trigger("click");
+	}
+	var limitePeso = <?php echo $pesoLibre ?>;
+	function validaPeso(valor){
+		if(valor>limitePeso){
+			$("#peso").focus();
+			abrir_gritter("Advertencia","Sobrepasaste el peso","warning");
+			$("#peso").val(limitePeso);
+		}else{
+			tipovuelo = "<?php  echo $tVuelo[0]->tipo_vc ?>";
+			deHora = "<?php echo $deHora ?>";
+			aHora = "<?php echo $aHora ?>";
+			fecha = "<?php echo $fecha  ?>";
+			reserva = "<?php  echo $_POST['reserva'] ?>";
+			if(47==tipovuelo){
+				//Compartido
+				var1 = "concatenar (nombre_globo,'(',peso_globo,' kg)') as text, id_globo as value,peso_globo";
+				var2 = "globos_volar";
+				var3 = "status<>0  and peso_globo>=" + valor + " AND id_globo not  in";
+				var4 = "selecciona globo_ga from temp_volar tv unir vueloscat_volar vv on tipo_temp = id_vc unir globosasignados_volar ga ON ga.reserva_ga = tv.id_temp WHERE tipo_vc = 46 and vv.status<>0 and tv.status=8 AND  fechavuelo_temp = '"+fecha+"' and ga.status<>0 AND hora_temp entre '"+ deHora +"' AND  '"+ aHora +"'";
+				getGlobosCompartido(var1,var2,var3,var4,valor);
+			}else{
+				/*Privados*/
+				var1 = "concatenar (nombre_globo,'(',peso_globo,' kg)') as text, id_globo as value";
+				var2 = "globos_volar";
+				var3 = "status<>0 and peso_globo>="+valor+ "  order by peso_globo asc";
+				getGlobosPrivado(var1,var2,var3);
+			}
+		}
+	}
+	function getGlobosCompartido(var1,var2,var3,var4,valor){
+		parametros = {var1:var1,var2:var2,var3:var3,var4:var4};
+		$("#globo").empty().append("<option value=''>Selecciona un Globo </option>");
+		$.ajax({
+	      data: parametros,
+	      dataType:"json",
+	      url:'controladores/query_json2.php',
+	      type:"POST",
+	      success: function(data){
+	        $.each( data, function( key, value ) {
+					  text 	= value.text;
+					  val 	= value.value;
+						peso 	= value.peso_globo; // peso aguanta
+						pesoOcupado = validaStatCompartidos(val); // peso ocupado
+						pesoDisponible = peso- pesoOcupado - parseFloat(valor); //
+						if(pesoDisponible<=0){
+							sel = "disabled";
+							textoDisponible = "Sin espacio ";
+						}else{
+							textoDisponible = "Disponible "+ (pesoDisponible + parseFloat(valor));
+							sel ="";
+						}
+
+					  $("#globo").append("<option value='"+val+"' "+sel+">"+text+"("+ textoDisponible +")</option>");
+					});
+	      },
+	      error:function(){
+	      	alert("Error al cargar Globos Compartidos");
+	      }
+	    });
+	}
+
+
+	function validaStatCompartidos(globo){
 		tipovuelo = "<?php  echo $tVuelo[0]->tipo_vc ?>";
 		deHora = "<?php echo $deHora ?>";
 		aHora = "<?php echo $aHora ?>";
 		fecha = "<?php echo $fecha  ?>";
 		reserva = "<?php  echo $_POST['reserva'] ?>";
-		if(tipovuelo==47){
-			//47 compartido
-			var1 = "contar(id_ga) as total";
-			var2 = "globosasignados_volar ga unir temp_volar tv on id_temp = reserva_ga";
-			var3 = "ga.status<>0 and tv.status<>0 YYY globo_ga="+globo+" YYY hora_temp entre '" + deHora + "' YYY '"+aHora+"' YYY fechavuelo_temp='"+fecha+"'";
-			parametros = {var1:var1,var2:var2,var3:var3};
-			$.ajax({
-				data: parametros,
-				dataType:"json",
-				async:false,
-				url:'controladores/query_json2.php',
-				type:"POST",
-				success: function(data){
-					$.each( data, function( key, value ) {
-						total=value.total;
-					});
-				},
-				error:function(){
-					alert("Error al validar Globos");
-				}
-			});
-			if(total==0){
-				getTodosPilotos(reserva,deHora,aHora,fecha,globo);
-			}else{
-				getUnicoPiloto(reserva,deHora,aHora,fecha,globo);
-			}
-		}else{
-			// 46 es privado
-				getPilotosPrivado(reserva,deHora,aHora,fecha,globo);
-		}
-	}
-	function getPilotosPrivado(reserva,deHora,aHora,fecha,globo){
-		var1 ="id_usu as value,concatenar(nombre_usu, ' ', esvacio(apellidop_usu,''),' ',esvacio(apellidom_usu,'')) as text";
-		var2 ="volar_usuarios";
-		var3 ="status<>0 YYY puesto_usu = 4 YYY id_usu not in ";
-		var4 = "selecciona piloto_ga detabla temp_volar tv unir globosasignados_volar ga on id_temp=reserva_ga WHERE hora_temp entre '"+deHora+"' YYY '"+ aHora +"' YYY tv.status=8 YYY fechavuelo_temp ='"+fecha+"'  YYY piloto_ga is not null YYY piloto_ga<>0 YYY ga.status<>0";
-			parametros={var1:var1,var2:var2,var3:var3,var4:var4};
-		//	$("#piloto").load("vistas/reservas/forms/pilotos.php",parametros);
-
-		$("#piloto").empty().append("<option value=''>Selecciona un Piloto </option>");
-		$.ajax({
-				data: parametros,
-				dataType:"json",
-				url:'controladores/query_json2.php',
-				type:"POST",
-				success: function(data){
-					$.each( data, function( key, value ) {
-						text=value.text;
-						val=value.value;
-						$("#piloto").append("<option value='"+val+"' >"+text+"</option>");
-					});
-				},
-				error:function(){
-					alert("Error al cargar Pilotos PrivadoSSS");
-				}
-			});
-	}
-	function getTodosPilotos(reserva,deHora,aHora,fecha,globo){
-			var1 = "id_usu as value,concatenar(nombre_usu, ' ', esvacio(apellidop_usu,''),' ',esvacio(apellidom_usu,'')) as text";
-			var2 = "volar_usuarios";
-			var3 = "status<>0 YYY puesto_usu = 4 YYY  id_usu not in ( selecciona piloto_ga from globosasignados_volar ga unir temp_volar tv  unir vueloscat_volar vv on tipo_temp = id_vc WHERE tipo_vc = 46 YYY vv.status<>0 YYY tv.status=8 YYY  fechavuelo_temp ='"+fecha+"' YYY hora_temp entre '"+deHora+"' YYY '" + aHora+"'  YYY piloto_ga is not null YYY piloto_ga <> 0 YYY ga.status<>0)  YYY id_usu not in (selecciona piloto_ga detabla  temp_volar tv unir vueloscat_volar vv on tipo_temp = id_vc INNER JOIN globosasignados_volar ga ON id_temp=reserva_ga WHERE tipo_vc = 47 YYY vv.status<>0 YYY tv.status=8 YYY  ga.status<>0 YYY fechavuelo_temp ='"+fecha+"' YYY hora_temp entre '"+deHora+"' YYY '" + aHora+"'  YYY piloto_temp is not null and piloto_temp <> 0  and globo_ga<>"+globo+")";
-			parametros = {var1:var1,var2:var2,var3:var3};
-			$("#piloto").empty().append("<option value='0'>Selecciona un piloto</option>");
-			$.ajax({
-				data: parametros,
-				dataType:"json",
-				url:'controladores/query_json2.php',
-				type:"POST",
-				success: function(data){
-					$.each( data, function( key, value ) {
-						text 	= value.text;
-						val 	= value.value;
-
-						$("#piloto").append("<option value='"+val+"' >"+text +"</option>");
-					});
-				},
-				error:function(){
-					alert("Error al cargar todos los Pilotos");
-				}
-			});
-	}
-	function getUnicoPiloto(reserva,deHora,aHora,fecha,globo){
-		var1 = "id_usu as value,concatenar(nombre_usu, ' ', esvacio(apellidop_usu,''),' ',esvacio(apellidom_usu,'')) as text";
-		var2 = "volar_usuarios";
-		var3 = "status<>0  YYY puesto_usu = 4 YYY id_usu in(selecciona piloto_ga from globosasignados_volar ga unir  temp_volar tv on id_temp=reserva_ga Where globo_ga =" + globo + " YYY hora_temp entre '" + deHora + "' AND '"+aHora+"' and fechavuelo_temp='"+fecha+"' and ga.status<>0)";
+		sel = "";
+		var1 = "esvacio(sumar(peso_ga),0) as peso";
+		var2 = "temp_volar tv unir globosasignados_volar ga ON ga.reserva_ga = tv.id_temp ";
+		var3 = "tv.status=8 YYY ga.status<>0 YYY globo_ga = " +globo+" YYY fechavuelo_temp ='"+fecha+"' YYY hora_temp entre '"+deHora+"' YYY '"+ aHora +"'";
 		parametros = {var1:var1,var2:var2,var3:var3};
-		$("#piloto").empty().append("<option value='0'>Selecciona un piloto</option>");
 		$.ajax({
-				data: parametros,
-				dataType:"json",
-				url:'controladores/query_json2.php',
-				type:"POST",
-				success: function(data){
-					$.each( data, function( key, value ) {
-						text 	= value.text;
-						val 	= value.value;
-
-						$("#piloto").append("<option value='"+val+"' selected>"+text +"</option>");
+	      data: parametros,
+	      dataType:"json",
+				async:false,
+	      url:'controladores/query_json2.php',
+	      type:"POST",
+	      success: function(data){
+	        $.each( data, function( key, value ) {
+					  total=value.peso;
+						return total;
 					});
-				},
-				error:function(){
-					alert("Error al cargar unico Piloto");
-				}
-			});
+	      },
+	      error:function(){
+	      	alert("Error al validar Globos");
+	      }
+	    });
+			return total;
 	}
 
-		function cambiarhora(){
-			$("button[id^='btnAsignarGlobo']").trigger("click");
-		}
-		var limitePeso = <?php echo $pesoLibre ?>;
-		function validaPeso(valor){
-			if(valor>limitePeso){
-				$("#peso").focus();
-				abrir_gritter("Advertencia","Sobrepasaste el peso","warning");
-				$("#peso").val(limitePeso);
-			}else{
-				tipovuelo = "<?php  echo $tVuelo[0]->tipo_vc ?>";
-				deHora = "<?php echo $deHora ?>";
-				aHora = "<?php echo $aHora ?>";
-				fecha = "<?php echo $fecha  ?>";
-				reserva = "<?php  echo $_POST['reserva'] ?>";
-				if(47==tipovuelo){
-					//Compartido
-					var1 = "concatenar (nombre_globo,'(',peso_globo,' kg)') as text, id_globo as value,peso_globo";
-					var2 = "globos_volar";
-					var3 = "status<>0  and peso_globo>=" + valor + " AND id_globo not  in";
-					var4 = "selecciona globo_ga from temp_volar tv unir vueloscat_volar vv on tipo_temp = id_vc unir globosasignados_volar ga ON ga.reserva_ga = tv.id_temp WHERE tipo_vc = 46 and vv.status<>0 and tv.status=8 AND  fechavuelo_temp = '"+fecha+"' and ga.status<>0 AND hora_temp entre '"+ deHora +"' AND  '"+ aHora +"'";
-					getGlobosCompartido(var1,var2,var3,var4,valor);
-				}else{
-					/*Privados*/
-					var1 = "concatenar (nombre_globo,'(',peso_globo,' kg)') as text, id_globo as value";
-					var2 = "globos_volar";
-					var3 = "status<>0 and peso_globo>="+valor+ "  order by peso_globo asc";
-					getGlobosPrivado(var1,var2,var3);
-				}
-			}
-		}
-		function getGlobosCompartido(var1,var2,var3,var4,valor){
-			parametros = {var1:var1,var2:var2,var3:var3,var4:var4};
+
+	/*Info globos privados*/
+
+		function getGlobosPrivado(var1,var2,var3){
+			parametros = {var1:var1,var2:var2,var3:var3};
 			$("#globo").empty().append("<option value=''>Selecciona un Globo </option>");
+			var sel ="";
 			$.ajax({
 		      data: parametros,
 		      dataType:"json",
+					asyn:false,
 		      url:'controladores/query_json2.php',
 		      type:"POST",
 		      success: function(data){
 		        $.each( data, function( key, value ) {
-						  text 	= value.text;
-						  val 	= value.value;
-							peso 	= value.peso_globo; // peso aguanta
-							pesoOcupado = validaStatCompartidos(val); // peso ocupado
-							pesoDisponible = peso- pesoOcupado - parseFloat(valor); //
-							if(pesoDisponible<=0){
-								sel = "disabled";
-								textoDisponible = "Sin espacio ";
-							}else{
-								textoDisponible = "Disponible "+ (pesoDisponible + parseFloat(valor));
-								sel ="";
-							}
-
-						  $("#globo").append("<option value='"+val+"' "+sel+">"+text+"("+ textoDisponible +")</option>");
+						  text=value.text;
+						  val=value.value;
+							var sel = validaStatPrivados(val);
+						  $("#globo").append("<option value='"+val+"' "+ sel +">"+text+"</option>");
 						});
 		      },
 		      error:function(){
-		      	alert("Error al cargar Globos Compartidos");
+		      	alert("Error al cargar globos privados ");
 		      }
 		    });
 		}
-
-
-		function validaStatCompartidos(globo){
+		function validaStatPrivados(globo){
 			tipovuelo = "<?php  echo $tVuelo[0]->tipo_vc ?>";
 			deHora = "<?php echo $deHora ?>";
 			aHora = "<?php echo $aHora ?>";
 			fecha = "<?php echo $fecha  ?>";
 			reserva = "<?php  echo $_POST['reserva'] ?>";
 			sel = "";
-			var1 = "esvacio(sumar(peso_ga),0) as peso";
-			var2 = "temp_volar tv unir globosasignados_volar ga ON ga.reserva_ga = tv.id_temp ";
-			var3 = "tv.status=8 YYY ga.status<>0 YYY globo_ga = " +globo+" YYY fechavuelo_temp ='"+fecha+"' YYY hora_temp entre '"+deHora+"' YYY '"+ aHora +"'";
+			var1 = "contar(id_temp) as total";
+			var2 = "temp_volar tv unir globosasignados_volar ga ON ga.reserva_ga = tv.id_temp";
+			var3 = "  fechavuelo_temp = '"+ fecha +"' YYY ga.status<>0 AND hora_temp entre '"+deHora+"' YYY  '"+ aHora + "'  and globo_ga="+globo;
 			parametros = {var1:var1,var2:var2,var3:var3};
 			$.ajax({
 		      data: parametros,
@@ -397,91 +451,31 @@
 		      type:"POST",
 		      success: function(data){
 		        $.each( data, function( key, value ) {
-						  total=value.peso;
+						  total=value.total;
 							return total;
 						});
 		      },
 		      error:function(){
-		      	alert("Error al validar Globos");
+		      	alert("Error al validar stat Globos");
 		      }
 		    });
-				return total;
+				if(total>0)
+					return "disabled";
+				else
+					return "";
 		}
 
 
-		/*Info globos privados*/
+	tables2();
 
-			function getGlobosPrivado(var1,var2,var3){
-				parametros = {var1:var1,var2:var2,var3:var3};
-				$("#globo").empty().append("<option value=''>Selecciona un Globo </option>");
-				var sel ="";
-				$.ajax({
-			      data: parametros,
-			      dataType:"json",
-						asyn:false,
-			      url:'controladores/query_json2.php',
-			      type:"POST",
-			      success: function(data){
-			        $.each( data, function( key, value ) {
-							  text=value.text;
-							  val=value.value;
-								var sel = validaStatPrivados(val);
-							  $("#globo").append("<option value='"+val+"' "+ sel +">"+text+"</option>");
-							});
-			      },
-			      error:function(){
-			      	alert("Error al cargar globos privados ");
-			      }
-			    });
-			}
-			function validaStatPrivados(globo){
-				tipovuelo = "<?php  echo $tVuelo[0]->tipo_vc ?>";
-				deHora = "<?php echo $deHora ?>";
-				aHora = "<?php echo $aHora ?>";
-				fecha = "<?php echo $fecha  ?>";
-				reserva = "<?php  echo $_POST['reserva'] ?>";
-				sel = "";
-				var1 = "contar(id_temp) as total";
-				var2 = "temp_volar tv unir globosasignados_volar ga ON ga.reserva_ga = tv.id_temp";
-				var3 = "  fechavuelo_temp = '"+ fecha +"' YYY ga.status<>0 AND hora_temp entre '"+deHora+"' YYY  '"+ aHora + "'  and globo_ga="+globo;
-				parametros = {var1:var1,var2:var2,var3:var3};
-				$.ajax({
-			      data: parametros,
-			      dataType:"json",
-						async:false,
-			      url:'controladores/query_json2.php',
-			      type:"POST",
-			      success: function(data){
-			        $.each( data, function( key, value ) {
-							  total=value.total;
-								return total;
-							});
-			      },
-			      error:function(){
-			      	alert("Error al validar stat Globos");
-			      }
-			    });
-					if(total>0)
-						return "disabled";
-					else
-						return "";
-			}
-
-
-	</script>
-<?php } ?>
-<script type="text/javascript">
-
-		function tables2(){
-			$(".DataTable").DataTable().destroy();
-				$(".DataTable").dataTable( {
-					"pageLength": 50,
-					"autoWidth": true,
-					"scrollX": true,
-							"order": [[ '2','asc' ]]
-				} );
-		}
-
-				tables2();
+	function tables2(){
+		$(".DataTable").DataTable().destroy();
+			$(".DataTable").dataTable( {
+				"pageLength": 50,
+				"autoWidth": true,
+				"scrollX": true,
+		        "order": [[ '2','asc' ]]
+			} );
+	}
 
 </script>
