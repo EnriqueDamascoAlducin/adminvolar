@@ -66,7 +66,7 @@
 		<?php
 			foreach ($pilotos as $piloto) {
 				$campos = "nombre_globo as globo, CONCAT(IFNULL(nombre_temp,''),' ', IFNULL(apellidos_temp,'')) as pasajero	,";
-				$campos .= " id_temp as reserva, fechavuelo_temp as fechavuelo, hora_temp as hora, pax_ga as pax";
+				$campos .= " id_temp as reserva, fechavuelo_temp as fechavuelo, hora_temp as hora, pax_ga as pax,version_ga as version";
 				$tabla = "temp_volar tv INNER JOIN globosasignados_volar ga ON id_temp = reserva_ga INNER JOIN globos_volar gv ON globo_ga = id_globo ";
 
 				$filtro = " gv.status <> 0 AND tv.status= 8 AND ga.status<>0 ";
@@ -99,7 +99,7 @@
 					<tr>
 						<td id="td_piloto"><?php echo $piloto->piloto; ?></td>
 						<td id="td_correo"><?php echo $piloto->correo_usu; ?></td>
-						<td id="td_reserva"><?php echo $infoAsignado->reserva; ?></td>
+						<td id="td_reserva"><?php echo $infoAsignado->reserva.'-'. $infoAsignado->version; ?></td>
 						<td id="td_pasajero"><?php echo $infoAsignado->pasajero; ?></td>
 						<td id="td_fecha"><?php echo $infoAsignado->fechavuelo ; ?></td>
 						<td id="td_hora"><?php echo $infoAsignado->hora ?></td>
@@ -108,7 +108,7 @@
 						<td>
 							<!--========       EDITAR     ========= -->
 							<?php if( in_array("CORREO",$permisos)) { ?>
-								<i class="fa fa-envelope-o fa-lg" style="color:#33b5e5" title="Enviar Correo "  onclick="enviarCorreo(<?php echo $piloto->id ?>, )"></i>&nbsp;
+								<i class="fa fa-envelope-o fa-lg" style="color:#33b5e5" title="Enviar Correo "  onclick="enviarCorreo(<?php echo $piloto->id ?>,<?php echo $infoAsignado->reserva ?>,<?php echo $infoAsignado->version ?> )"></i>&nbsp;
 							<?php } ?>
 						</td>
 					</tr>
@@ -122,9 +122,4 @@
 </table>
 <script type="text/javascript">
 	tables();
-	function ocultarFila (nombre){
-		$("th[id='th_"+nombre+"']").hide();
-		$("td[id='td_"+nombre+"']").hide();
-	}
-
 </script>

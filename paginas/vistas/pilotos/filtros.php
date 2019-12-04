@@ -53,7 +53,7 @@
 		<?php
 			if(in_array("CORREO", $permisos)){
 		?>
-				<button type="button" class="btn btn-primary" onclick="asignarGlobos()"><i class="fa fa-envelope-o fa-lg "></i></button>
+				<button type="button" class="btn btn-primary" onclick="enviarCorreo(0,0,0)"><i class="fa fa-envelope-o fa-lg "></i></button>
 		<?php
 			}
 		?>
