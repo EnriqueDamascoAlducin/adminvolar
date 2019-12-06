@@ -137,5 +137,30 @@
 
 	  gtag('config', 'UA-149104441-1');
 	</script>
+	<script type="text/javascript">
+
+	function validarCampos(){
+		$(".is-invalid, is-valid").removeClass("is-invalid").removeClass("is-valid");
+		$("small").remove();
+		requeridos = $('input,textarea,select').filter('[required]:visible');
+		errores = true;
+		$.each(requeridos,function (index,campo) {
+			if($(campo).val().trim()==""){
+				$(campo).addClass("is-invalid").after("<small class='text-danger' >Es un campo requerido</small>");
+				errores = false;
+			}else if($(campo).attr("type")=="email" && (!$(campo).val().includes("@")  )){
+					$(campo).addClass("is-invalid").after("<small class='text-danger' >Debe Ingresar un Correo</small>");
+					errores = false;
+			}else{
+				$(campo).addClass("is-valid").after("<small class='text-success'><i class='fa fa-check'></i></small>");
+			}
+		});
+		if(!errores){
+			abrir_gritter("Error","Debe llenar los campos requeridos","warning");
+			return false;
+		}
+		return true;
+	}
+	</script>
 </body>
 </html>
