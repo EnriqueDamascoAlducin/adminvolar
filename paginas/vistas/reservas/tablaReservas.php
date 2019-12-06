@@ -46,7 +46,7 @@
 		$filtro .= " and fechavuelo_temp >= CURRENT_TIMESTAMP ";
 	}
 	//echo "SELECT $campos FROM $tabla WHERE $filtro";
-	$filtro .= " ORDER BY id_temp DESC limit 300";
+	$filtro .= " ORDER BY id_temp DESC limit 500";
 	$reservas=$con->consulta($campos,$tabla,$filtro);
 	$cancelarSinCot= $con->query("UPDATE temp_volar set status= 0 where  register <=  CURRENT_TIMESTAMP - INTERVAL 1 DAY and status=2");
 	$cancelar30Dias= $con->query("UPDATE temp_volar set status= 0 where register <=  CURRENT_TIMESTAMP - INTERVAL 30 DAY and status =3;");

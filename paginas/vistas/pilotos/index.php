@@ -21,7 +21,9 @@
 	foreach ($subPermisos as $subPermiso) {
 		$permisos[] = $subPermiso->nombre_sp;
 	}
-
+	if(!in_array("GENERAL",$permisos) && !in_array("INDIVIDUAL",$permisos)){
+		die();
+	}
 ?>
 <?php
 	require_once "filtros.php";

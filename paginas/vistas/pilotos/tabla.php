@@ -3,7 +3,6 @@
 	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/controladores/conexion.php';
 	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/controladores/fin_session.php';
 
-
 	$modulo= $_POST['modulo'];
 	$usuario= unserialize((base64_decode($_SESSION['usuario'])));
 	$idUsu=$usuario->getIdUsu();
@@ -12,6 +11,7 @@
 	foreach ($subPermisos as $subPermiso) {
 		$permisos[] = $subPermiso->nombre_sp;
 	}
+		
 	$campos= " CONCAT (IFNULL(nombre_usu,''),' ', IFNULL(apellidop_usu,''),' ', IFNULL(apellidom_usu,'')) as piloto,id_usu as id, correo_usu";
 	$tabla = " volar_usuarios ";
 	$filtro = " status <> 0 and puesto_usu = 4 and id_usu in( ";
@@ -28,10 +28,13 @@
 	}
 	$_SESSION['filtros']['fechaF'] = $_POST['fechaF'];
 	//////////
-	if(isset($_POST['empleado']) && $_POST['empleado']!='0' ){
-		$filtro.= " and piloto_ga = ".$_POST['empleado'];
+
+	if(in_array("GENERAL",$permisos)){
+		if(isset($_POST['empleado']) && $_POST['empleado']!='0' ){
+			$filtro.= " and piloto_ga = ".$_POST['empleado'];
+		}
+		$_SESSION['filtros']['empleado'] = $_POST['empleado'];
 	}
-	$_SESSION['filtros']['empleado'] = $_POST['empleado'];
 	/////////
 	if(isset($_POST['reserva']) && $_POST['reserva']!='' ){
 		$filtro.= " and id_temp = ".$_POST['reserva'];
@@ -43,6 +46,9 @@
 	}
 	/*--------------Termina Filtros -----------*/
 		$filtro .= ') ';
+		if(in_array("INDIVIDUAL",$permisos)){
+			$filtro.= " AND id_usu = " . $idUsu;
+		}
 	$filtro .= " ORDER BY nombre_usu ASC, apellidop_usu asc";
 // echo "SELECT $campos FROM $tabla WHERE $filtro";
 // die();
@@ -78,8 +84,11 @@
 						$filtro.= " and fechavuelo_temp <='".$_POST['fechaF']."'";
 					}
 					//////////
-					if(isset($_POST['empleado']) && $_POST['empleado']!='0' ){
-						$filtro.= " and piloto_ga = ".$_POST['empleado'];
+
+					if(in_array("GENERAL",$permisos)){
+						if(isset($_POST['empleado']) && $_POST['empleado']!='0' ){
+							$filtro.= " and piloto_ga = ".$_POST['empleado'];
+						}
 					}
 					/////////
 					if(isset($_POST['reserva']) && $_POST['reserva']!='' ){
@@ -107,7 +116,7 @@
 						<td id="td_globo"><?php echo $infoAsignado->globo ; ?></td>
 						<td>
 							<!--========       EDITAR     ========= -->
-							<?php if( in_array("CORREO",$permisos)) { ?>
+							<?php if( in_array("CORREO",$permisos) && in_array("GENERAL",$permisos)) { ?>
 								<i class="fa fa-envelope-o fa-lg" style="color:#33b5e5" title="Enviar Correo "  onclick="enviarCorreo(<?php echo $piloto->id ?>,<?php echo $infoAsignado->reserva ?>,<?php echo $infoAsignado->version ?> )"></i>&nbsp;
 							<?php } ?>
 						</td>

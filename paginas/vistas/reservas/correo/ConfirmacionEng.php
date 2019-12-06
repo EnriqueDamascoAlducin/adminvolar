@@ -65,11 +65,10 @@ $cuerpo='<!DOCTYPE html>
             }
             td,th{
               max-height: 5px!important;
-              font-size: 10px;
             }
             @media (max-width: 576px){
               td{
-                font-size:60%;
+                font-size:75%;
                 width:30%
                 max-width:30%;
                   table-layout: fixed;

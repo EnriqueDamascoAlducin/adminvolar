@@ -11,7 +11,7 @@
 	    $_SESSION['url']="vistas/reservas/";
 	  }
 
-	if($_SESSION['modulo']!=$modulo && isset($_SESSION['filtros'])){
+	if(  isset($_SESSION['filtros']) && $_SESSION['modulo']!=$modulo){
 		unset($_SESSION['filtros']);
 	}
 	$_SESSION['modulo'] = $modulo;

@@ -4,12 +4,10 @@
 	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/controladores/fin_session.php';
 	$permisos=[];
 	$modulo=$_POST['id'];
-	if($_SESSION['modulo']!=$modulo ){
-		unset($_SESSION['filtros']);
-	}
   if(!isset($_SESSION['modulo']) || $_SESSION['modulo']!=$modulo){
     $_SESSION['modulo']=$modulo;
     $_SESSION['url']="vistas/pagos/";
+		unset($_SESSION['filtros']);
   }
 	$usuario= unserialize((base64_decode($_SESSION['usuario'])));
 	$idUsu=$usuario->getIdUsu();
@@ -23,7 +21,7 @@
 	  <strong><i class="fa fa-plus fa-md"></i></strong> Agregar.
 	</div>
 <?php } ?>
-
+<?php include_once 'filtros.php'; ?>
 
 <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" id="tablaUsuarios">
 </div>

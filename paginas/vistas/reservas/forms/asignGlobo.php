@@ -10,16 +10,17 @@
 		$fecha = $datoReserva[0]->fecha;
 		/* Consulta de tipo de vuelo */
 		$tVuelo = $con->consulta("nombre_extra,tipo_vc","vueloscat_volar INNER JOIN extras_volar on tipo_vc = id_extra"," id_vc =" . $datoReserva[0]->vuelo);
+		$totalPax = ($datoReserva[0]->pasajerosa + $datoReserva[0]->pasajerosn);
 		/* Consulta de peso ocupado */
-		$pesoOcupado_Version = $con->consulta("IFNULL(sum(peso_ga),0) as ocupado,IFNULL(max(version_ga),0) as version","globosasignados_volar","status<>0 and reserva_ga =".$_POST['reserva']);
+		$pesoOcupado_Version = $con->consulta("IFNULL(sum(peso_ga),0) as ocupado,IFNULL(max(version_ga),0) as version,IFNULL(sum(pax_ga),0) as pax","globosasignados_volar","status<>0 and reserva_ga =".$_POST['reserva']);
 		echo "<h2>". $datoReserva[0]->nombre ."</h2>";
 		echo "<h4>(".$_POST['reserva'].'-' .utf8_decode($tVuelo[0]->nombre_extra).")</h4>";
-		echo "<h3> PAX: ". ($datoReserva[0]->pasajerosa + $datoReserva[0]->pasajerosn) ."</h3>";
+		echo "<h3> PAX: ". $totalPax ."</h3>";
 		/* Establecer rango de horario en que se usa el filtro */
 		$horaVuelo = $datoReserva[0]->hora;
-	  	$deHora = strtotime($horaVuelo.' - 60 minute');
+	  $deHora = strtotime($horaVuelo.' - 55 minute');
 		$deHora= date('H:i:s', $deHora);
-	  	$aHora = strtotime($horaVuelo.' + 60 minute');
+	  $aHora = strtotime($horaVuelo.' + 55 minute');
 		$aHora= date('H:i:s', $aHora);
 
 		 if($datoReserva[0]->tipopeso=='1'){
@@ -27,6 +28,7 @@
 		 }else{
 			 $pesoTotal=($datoReserva[0]->kg * 0.453592);
 		 }
+		 $paxLib = $totalPax - $pesoOcupado[0]->pax;
 		 $pesoLibre = $pesoTotal - $pesoOcupado_Version[0]->ocupado;
 		 /*Consulta de Globos Dependiendo del tipo de vuelo */
 		 if($tVuelo[0]->tipo_vc==47){
@@ -85,13 +87,19 @@
 </div>
 
 <div class="row">
-	<div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4"  style="<?php echo $display; ?>">
+	<div class="col-12 col-sm-6 col-md-3 col-lg-3 col-xl-3"  style="<?php echo $display; ?>">
 		<div class="form-group">
 			<label class="form-label" for="peso">Peso</label>
 			<input class="form-control" type="number" name="peso" id="peso" value="<?php echo $pesoLibre; ?>" onkeypress="return isNumber(event)" onchange="validaPeso(this.value);">
 		</div>
 	</div>
-	<div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4"  style="<?php echo $display; ?>">
+		<div class="col-12 col-sm-6 col-md-3 col-lg-3 col-xl-3"  style="<?php echo $display; ?>">
+			<div class="form-group">
+				<label class="form-label" for="pax">PaX</label>
+				<input class="form-control" type="number" name="pax" id="pax" value="<?php echo $paxLib; ?>" onkeypress="return isNumber(event)" >
+			</div>
+		</div>
+	<div class="col-12 col-sm-6 col-md-3 col-lg-3 col-xl-3"  style="<?php echo $display; ?>">
 		<div class="form-group">
 			<label for="globo">Globo</label>
 			<select class="selectpicker form-control" id="globo" onchange="validaGlobo(value);" name="globo" data-live-search="true">
@@ -132,7 +140,7 @@
 			</select>
 		</div>
 	</div>
-	<div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4"  style="<?php echo $display; ?>">
+	<div class="col-12 col-sm-6 col-md-3 col-lg-3 col-xl-3"  style="<?php echo $display; ?>">
 		<div class="form-group">
 			<label class="form-label" for="piloto">Piloto</label>
 			<select class="form-control" name="piloto" id="piloto">
@@ -268,7 +276,7 @@
 	function getTodosPilotos(reserva,deHora,aHora,fecha,globo){
 			var1 = "id_usu as value,concatenar(nombre_usu, ' ', esvacio(apellidop_usu,''),' ',esvacio(apellidom_usu,'')) as text";
 			var2 = "volar_usuarios";
-			var3 = "status<>0 YYY puesto_usu = 4 YYY  id_usu not in ( selecciona piloto_ga from globosasignados_volar ga unir temp_volar tv  unir vueloscat_volar vv on tipo_temp = id_vc WHERE tipo_vc = 46 YYY vv.status<>0 YYY tv.status=8 YYY  fechavuelo_temp ='"+fecha+"' YYY hora_temp entre '"+deHora+"' YYY '" + aHora+"'  YYY piloto_ga is not null YYY piloto_ga <> 0 YYY ga.status<>0)  YYY id_usu not in (selecciona piloto_ga detabla  temp_volar tv unir vueloscat_volar vv on tipo_temp = id_vc INNER JOIN globosasignados_volar ga ON id_temp=reserva_ga WHERE tipo_vc = 47 YYY vv.status<>0 YYY tv.status=8 YYY  ga.status<>0 YYY fechavuelo_temp ='"+fecha+"' YYY hora_temp entre '"+deHora+"' YYY '" + aHora+"'  YYY piloto_temp is not null and piloto_temp <> 0  and globo_ga<>"+globo+")";
+			var3 = "status<>0 YYY puesto_usu = 4 YYY  id_usu not in ( selecciona piloto_ga from globosasignados_volar ga unir temp_volar tv ON ga.reserva_ga=tv.id_temp  WHERE  tv.status=8 YYY  ga.status<>0 AND fechavuelo_temp ='"+fecha+"' YYY hora_temp entre '"+deHora+"' YYY '" + aHora+"' )";
 			parametros = {var1:var1,var2:var2,var3:var3};
 			$("#piloto").empty().append("<option value='0'>Selecciona un piloto</option>");
 			$.ajax({

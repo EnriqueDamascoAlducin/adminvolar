@@ -55,7 +55,7 @@ function imprimirReporte(){
 	reserva = $("#reserva").val();
 	modulo = $("#modulo").val();
 
-	url= "vistas/reservas/reporteexcel.php" ;
+	url= "vistas/reservas/excel/reporteexcel.php" ;
 	parametros="?fechaI="+fechaI+"&fechaF="+fechaF+"&cliente="+cliente+"&status="+status+"&empleado="+empleado+"&reserva="+reserva;
 
 	direcion = url+parametros;
@@ -813,12 +813,14 @@ function guardaGlobo() {
 	globo = $("#globo").val();
 	version = $("#version").val();
 	peso = $("#peso").val().trim();
+	pax = $("#pax").val().trim();
 	datos	=	{
 			piloto:piloto,
 			globo:globo,
 			reserva:reserva,
 			version:version,
 			peso:peso,
+			pax:pax,
 			accion:'globos'
 	};
 	if(globo=="0"){

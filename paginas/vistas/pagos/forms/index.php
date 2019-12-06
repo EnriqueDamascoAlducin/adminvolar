@@ -1,9 +1,9 @@
-<?php 
-	
+<?php
+
 	require  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/modelos/login.php';
 	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/controladores/conexion.php';
-	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/controladores/fin_session.php';	
-	if($_POST['id']!=''){
+	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/controladores/fin_session.php';
+	if($_POST['id']!='' && $_POST['id']!='0' ){
 		$gasto= $con->consulta("fecha_gasto,tipo_gasto,cantidad_gasto,metodo_gasto,referencia_gasto,comentario_gasto","gastos_volar"," id_gasto=". $_POST['id']);
 	}
 	$usuario= unserialize((base64_decode($_SESSION['usuario'])));
@@ -23,7 +23,7 @@
 	}
 
 ?>
-<div class="row"> 
+<div class="row">
 	<div class="col-sm-6 col-lg-6 col-md-6 col-6 col-xl-6 ">
 		<div class="form-group">
 			<label for="fecha">Fecha de Gasto</label>
@@ -44,7 +44,7 @@
 						echo "<option value='".$tipo->value."' ".$opcTipo.">".$tipo->text."</option>";
 					}
 				?>
-				
+
 			</select>
 		</div>
 	</div>

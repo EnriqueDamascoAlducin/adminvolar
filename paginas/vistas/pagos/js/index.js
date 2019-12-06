@@ -10,11 +10,11 @@ function cargarTabla(){
 	fechaI = $("#fechaI").val();
 	fechaF = $("#fechaF").val();
 	empleado = $("#empleado").val();
-	nombre = $("#nombre").val();
 	modulo = $("#modulo").val();
+	tipo = $("#tipog").val();
 
 	url="vistas/pagos/tabla.php";
-	parametros={fechaI:fechaI,fechaF:fechaF,empleado:empleado,nombre:nombre,modulo:modulo};
+	parametros={fechaI:fechaI,fechaF:fechaF,empleado:empleado,modulo:modulo,tipo:tipo};
   	$.ajax({
 		url:url,
 		method: "POST",
@@ -83,11 +83,11 @@ function confirmarAgregar(id,accion){
 		method: "POST",
   		data: parametros,
   		success:function(response){
-  			if(response=='Agregado' || response=='Actualizado' ){
-  				abrir_gritter("Eliminado",  " Departamento "  ,"success");
+  			if(response=='ok' ){
+  				abrir_gritter("Agregado",  " Gasto Registrado "  ,"success");
 				cargarTabla();
   			}else{
-  				abrir_gritter("Error","Error al eliminar el Departamento"  ,"danger");
+  				abrir_gritter("Error", response ,"danger");
   			}
   		},
   		error:function(){
@@ -151,4 +151,19 @@ function tables(filas,forma){
         "order": [[ filas, forma ]]
 
 	});
+}
+
+function imprimirReporte(){
+	fechaI = $("#fechaI").val();
+	fechaF = $("#fechaF").val();
+	empleado = $("#empleado").val();
+	nombre = $("#nombre").val();
+	tipo = $("#tipog").val();
+
+	url= "vistas/pagos/reporteexcel.php" ;
+	parametros="?fechaI="+fechaI+"&fechaF="+fechaF+"&empleado="+empleado+"&tipo="+tipo;
+
+	direcion = url+parametros;
+	$("#imprimirReporte").attr("href",direcion);
+	$("#imprimirReporte").click();
 }
