@@ -5,7 +5,7 @@
 	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/controladores/fin_session.php';
 	/*Datos Generales de la reserva*/
 	if(isset($_POST['reserva'])){
-		$datoReserva = $con->consulta("CONCAT(IFNULL(nombre_temp,''),' ',IFNULL(apellidos_temp,'')) as nombre, IFNULL(hora_temp,'') as hora,IFNULL(globo_temp,'') as globo,IFNULL(piloto_temp,'') as piloto ,status, IFNULL(kg_temp,'0.0') as kg,IFNULL(tipopeso_temp,'1') as tipopeso,  tipo_temp as vuelo, fechavuelo_temp as fecha, IFNULL(pasajerosa_temp,0) as pasajerosa ,IFNULL(pasajerosn_temp,0) as pasajerosn ","temp_volar tv", "id_temp=".$_POST['reserva']);
+		$datoReserva = $con->consulta("CONCAT(IFNULL(nombre_temp,''),' ',IFNULL(apellidos_temp,'')) as nombre, IFNULL(hora_temp,'') as hora,IFNULL(globo_temp,'') as globo,IFNULL(piloto_temp,'') as piloto ,status, IFNULL(kg_temp,'0.0') as kg,IFNULL(tipopeso_temp,'1') as tipopeso,  tipo_temp as vuelo, fechavuelo_temp as fecha, IFNULL(pasajerosa_temp,0) as pasajerosa ,IFNULL(pasajerosn_temp,0) as pasajerosn,turno_temp as turno","temp_volar tv", "id_temp=".$_POST['reserva']);
 
 		$fecha = $datoReserva[0]->fecha;
 		/* Consulta de tipo de vuelo */
@@ -61,9 +61,15 @@
 			<input type="time" class="form-control"  onchange="confirmarAsignarGlobo(<?php echo $_POST['reserva']; ?>)" id="hora" placeholder="Hora de Vuelo" value = "<?php echo $datoReserva[0]->hora; ?>" >
 		</div>
 	</div>
+		<div class="col-sm-12 col-lg-4 col-md-4 col-12 col-xl-3 ">
+			<div class="form-group">
+				<label for="hora">Turno</label>
+				<input type="time" class="form-control"  onchange="confirmarAsignarGlobo(<?php echo $_POST['reserva']; ?>)" id="hora" placeholder="Hora de Vuelo" value = "<?php echo $datoReserva[0]->hora; ?>" >
+			</div>
+		</div>
 	<?php
 		$display="";
-		if($datoReserva[0]->hora=='' || $pesoLibre==0){
+		if($datoReserva[0]->turno=='' || $pesoLibre==0){
 			$display = "display:none";
 		}
 	?>

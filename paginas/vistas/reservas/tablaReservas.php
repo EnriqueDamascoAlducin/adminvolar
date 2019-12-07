@@ -1,3 +1,8 @@
+<style media="screen">
+	th label{
+		color:red;
+	}
+</style>
 <?php
 	require  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/modelos/login.php';
 	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/controladores/conexion.php';
@@ -54,18 +59,18 @@
 <table class="DataTable table table-striped table-bordered table-hover">
 	<thead>
 		<tr>
-			<th style="text-align: center;vertical-align: middle;max-width: 1%;width: 1%;"># Reserva</th>
-			<th style="text-align: center;vertical-align: middle;max-width: 1%;width: 1%;">Nombre</th>
+			<th style="text-align: center;vertical-align: middle;max-width: 1%;width: 1%;" id="th_reserva"><label onclick="ocultarFila('reserva')"> # Reserva </label></th>
+			<th style="text-align: center;vertical-align: middle;max-width: 1%;width: 1%;" id="th_nombre"><label onclick="ocultarFila('nombre')"> Nombre </label></th>
 
 			<?php if(in_array("GENERAL",$permisos)){ ?>
-				<th style="text-align: center;vertical-align: middle;max-width: 1%;width: 1%;">Empleado</th>
+				<th style="text-align: center;vertical-align: middle;max-width: 1%;width: 1%;" id="th_empleado"><label onclick="ocultarFila('empleado')"> Empleado </label></th>
 			<?php } ?>
-			<th style="text-align: center;vertical-align: middle;max-width: 1%;width: 1%;">Correo</th>
-			<th style="text-align: center;vertical-align: middle;max-width: 1%;width: 1%;">Fecha de Vuelo</th>
-			<th style="text-align: center;vertical-align: middle;max-width: 1%;width: 1%;">Tipo de Vuelo</th>
-			<th style="text-align: center;vertical-align: middle;max-width: 1%;width: 1%;">PAX</th>
-			<th style="text-align: center;vertical-align: middle;max-width: 1%;width: 1%;">Total</th>
-			<th style="text-align: center;vertical-align: middle;max-width: 1%;width: 1%;">Status</th>
+			<th style="text-align: center;vertical-align: middle;max-width: 1%;width: 1%;" id="th_correo"><label onclick="ocultarFila('correo')"> Correo </label></th>
+			<th style="text-align: center;vertical-align: middle;max-width: 1%;width: 1%;" id="th_fecha"><label onclick="ocultarFila('fecha')"> Fecha de Vuelo </label></th>
+			<th style="text-align: center;vertical-align: middle;max-width: 1%;width: 1%;" id="th_tipo"><label onclick="ocultarFila('tipo')"> Tipo de Vuelo </label></th>
+			<th style="text-align: center;vertical-align: middle;max-width: 1%;width: 1%;" id="th_pax"><label onclick="ocultarFila('pax')"> PAX </label></th>
+			<th style="text-align: center;vertical-align: middle;max-width: 1%;width: 1%;" id="th_total"><label onclick="ocultarFila('total')"> Total </label></th>
+			<th style="text-align: center;vertical-align: middle;max-width: 1%;width: 1%;" id="th_status"><label onclick="ocultarFila('status')"> Status </label></th>
 			<th style="text-align: center;vertical-align: middle;max-width: 4%;width: 4% !important;">Acciones</th>
 		</tr>
 	</thead>
@@ -74,18 +79,23 @@
 			foreach ($reservas as $reserva) {
 		?>
 			<tr>
-				<td><?php echo $reserva->id_temp; ?></td>
-				<td><?php echo $reserva->nombre; ?></td>
+				<td id="td_reserva"><?php echo $reserva->id_temp; ?></td>
+				<td id="td_nombre"><?php echo $reserva->nombre; ?></td>
 				<?php if(in_array("GENERAL",$permisos)){ ?>
 						<?php $nombre = explode(' ',$reserva->empleado)[0]; ?>
-					<td><?php echo $nombre .' '. substr(explode(' ',$reserva->empleado)[1],0,1) ; ?></td>
+					<td id="td_empleado"><?php echo $nombre .' '. substr(explode(' ',$reserva->empleado)[1],0,1) ; ?></td>
 				<?php } ?>
-				<td><?php echo $reserva->mail_temp; ?></td>
-				<td><?php echo $reserva->fechavuelo_temp; ?></td>
+				<td id="td_correo">
+					<?php
+						$correo=explode("@",$reserva->mail_temp);
+					 	echo $correo[0]."<br>@".$correo[1];
+					?>
+				</td>
+				<td id="td_fecha"><?php echo $reserva->fechavuelo_temp; ?></td>
 				<?php $tipoVuelo = $con->consulta("nombre_extra","extras_volar INNER JOIN vueloscat_volar on id_extra=tipo_vc","id_vc = ".$reserva->tipo); ?>
-				<td><?php echo $tipoVuelo[0]->nombre_extra; ?></td>
-				<td><?php echo ($reserva->pasajerosa + $reserva->pasajerosn); ?></td>
-				<td><?php echo '$ '.number_format(  $reserva->total_temp, 2, '.', ','); ?></td>
+				<td id="td_tipo"><?php echo $tipoVuelo[0]->nombre_extra; ?></td>
+				<td id="td_pax"><?php echo ($reserva->pasajerosa + $reserva->pasajerosn); ?></td>
+				<td id="td_total"><?php echo '$ '.number_format(  $reserva->total_temp, 2, '.', ','); ?></td>
 				<?php
 					$color="";
 					if( $reserva->status ==4){
@@ -123,7 +133,7 @@
 						$class="danger";
 					}
 				?>
-				<td>
+				<td id="td_status">
 					<?php
 						echo '<div class="progress">
 						<div class="progress-bar bg-'.$class.'" role="progressbar" style="width: 100%;'.$color.'" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">'. $text .'</div>
@@ -202,4 +212,7 @@
 </table>
 <script type="text/javascript">
 	tables();
+	function ocultarFila(fila) {
+		$("[id='td_"+fila+"'],[id='th_"+fila+"']").hide();
+	}
 </script>
