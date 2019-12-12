@@ -68,6 +68,10 @@
 	function enviarCorreo($piloto,$reserva,$version){
 		/*  ----- Información de Piloto -----  */
 		global $con;
+		$usuario= unserialize((base64_decode($_SESSION['usuario'])));
+		$correoUsu=$usuario->getCorreoUsu();
+		$nombreUsu=$usuario->getNombreUsu();
+		$vendedor = array($nombreUsu , $correoUsu);
 		$campos = "CONCAT (IFNULL(nombre_usu,''),' ', IFNULL(apellidop_usu,''),' ', IFNULL(apellidom_usu,'')) as piloto,id_usu as id, correo_usu";
 		$tabla = "volar_usuarios";
 		$filtro = "id_usu = ".$piloto;
@@ -76,12 +80,12 @@
 		$nombreusu = $infoPiloto[0]->piloto;
 		$arreglo[0] =$correousu;
 		$arreglo[1] = $nombreusu;
-		$correos =  array($arreglo );
+		$correos =  array($arreglo,$vendedor );
 		/*Termina información de Piloto */
 
 		/*Información de reserva*/
 		$campos = "nombre_globo as globo, CONCAT(IFNULL(nombre_temp,''),' ', IFNULL(apellidos_temp,'')) as pasajero	,";
-		$campos.= " id_temp as reserva, fechavuelo_temp as fechavuelo, hora_temp as hora, pax_ga as pax,version_ga as version";
+		$campos.= " id_temp as reserva, fechavuelo_temp as fechavuelo, hora_temp as hora, pax_ga as pax,version_ga as version, turno_temp as turno";
 		$tabla = "temp_volar tv INNER JOIN globosasignados_volar ga ON id_temp = reserva_ga INNER JOIN globos_volar gv ON globo_ga = id_globo ";
 		$filtro = "ga.status <> 0 AND piloto_ga = ".$piloto." AND reserva_ga=".$reserva." AND version_ga=".$version;
 		$reservaInfo = $con->consulta($campos,$tabla,$filtro);
@@ -98,10 +102,16 @@
 		$cuerpo .=	"<th>Reserva</th><td>".$reservaInfo[0]->reserva."</td>";
 		$cuerpo .= "</tr>";
 		$cuerpo .= "<tr>";
+		$cuerpo .=	"<th>Globo</th><td>".$reservaInfo[0]->globo."</td>";
+		$cuerpo .= "</tr>";
+		$cuerpo .= "<tr>";
 			$cuerpo .=	"<th>Pasajero</th><td>".$reservaInfo[0]->pasajero."</td>";
 		$cuerpo .= "</tr>";
 		$cuerpo .= "<tr>";
 			$cuerpo .=	"<th>Fecha de Vuelo</th><td>".$reservaInfo[0]->fechavuelo."</td>";
+		$cuerpo .= "</tr>";
+		$cuerpo .= "<tr>";
+			$cuerpo .=	"<th>Turno</th><td>".$reservaInfo[0]->turno."</td>";
 		$cuerpo .= "</tr>";
 		$cuerpo .= "<tr>";
 			$cuerpo .=	"<th>Hora</th><td>".$reservaInfo[0]->hora."</td>";

@@ -4,10 +4,15 @@
 	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/controladores/conexion.php';
 	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/controladores/fin_session.php';
 	/*Datos Generales de la reserva*/
+	$turno = "";
+	$opc1="";
+	$opc2="";
+	$opc3="";
 	if(isset($_POST['reserva'])){
-		$datoReserva = $con->consulta("CONCAT(IFNULL(nombre_temp,''),' ',IFNULL(apellidos_temp,'')) as nombre, IFNULL(hora_temp,'') as hora,IFNULL(globo_temp,'') as globo,IFNULL(piloto_temp,'') as piloto ,status, IFNULL(kg_temp,'0.0') as kg,IFNULL(tipopeso_temp,'1') as tipopeso,  tipo_temp as vuelo, fechavuelo_temp as fecha, IFNULL(pasajerosa_temp,0) as pasajerosa ,IFNULL(pasajerosn_temp,0) as pasajerosn,turno_temp as turno","temp_volar tv", "id_temp=".$_POST['reserva']);
+		$datoReserva = $con->consulta("CONCAT(IFNULL(nombre_temp,''),' ',IFNULL(apellidos_temp,'')) as nombre, IFNULL(hora_temp,'') as hora,IFNULL(globo_temp,'') as globo,IFNULL(piloto_temp,'') as piloto ,status, IFNULL(kg_temp,'0.0') as kg,IFNULL(tipopeso_temp,'1') as tipopeso,  tipo_temp as vuelo, fechavuelo_temp as fecha, IFNULL(pasajerosa_temp,0) as pasajerosa ,IFNULL(pasajerosn_temp,0) as pasajerosn,IFNULL(turno_temp,0) as turno","temp_volar tv", "id_temp=".$_POST['reserva']);
 
 		$fecha = $datoReserva[0]->fecha;
+		$turno = $datoReserva[0]->turno;
 		/* Consulta de tipo de vuelo */
 		$tVuelo = $con->consulta("nombre_extra,tipo_vc","vueloscat_volar INNER JOIN extras_volar on tipo_vc = id_extra"," id_vc =" . $datoReserva[0]->vuelo);
 		$totalPax = ($datoReserva[0]->pasajerosa + $datoReserva[0]->pasajerosn);
@@ -28,17 +33,17 @@
 		 }else{
 			 $pesoTotal=($datoReserva[0]->kg * 0.453592);
 		 }
-		 $paxLib = $totalPax - $pesoOcupado[0]->pax;
+		 $paxLib = $totalPax - $pesoOcupado_Version[0]->pax;
 		 $pesoLibre = $pesoTotal - $pesoOcupado_Version[0]->ocupado;
 		 /*Consulta de Globos Dependiendo del tipo de vuelo */
 		 if($tVuelo[0]->tipo_vc==47){
 			 /*Compartido*/
 			 $campos = "CONCAT (nombre_globo,'(',peso_globo,' kg)') as text, id_globo as value,peso_globo";
 			 $tabla  = "globos_volar ";
-			 $filtro = "status<>0  and  id_globo not  in(SELECT globo_ga from temp_volar tv INNER JOIN vueloscat_volar vv on tipo_temp = id_vc INNER JOIN globosasignados_volar ga ON ga.reserva_ga = tv.id_temp WHERE tipo_vc = 46 and ga.status<>0 and vv.status<>0 and tv.status=8 AND  fechavuelo_temp = '". $fecha ."' AND hora_temp BETWEEN '". $deHora ."' AND  '". $aHora ."') and peso_globo>=".$pesoLibre ;
+			 $filtro = "status<>0  and  id_globo not  in(SELECT globo_ga from temp_volar tv INNER JOIN vueloscat_volar vv on tipo_temp = id_vc INNER JOIN globosasignados_volar ga ON ga.reserva_ga = tv.id_temp WHERE tipo_vc = 46 and ga.status<>0 and vv.status<>0 and tv.status=8 AND  fechavuelo_temp = '". $fecha ."' AND turno_temp = ".$turno." ) and peso_globo>=".$pesoLibre ;
 			 $globos = $con->consulta($campos,$tabla,$filtro);
-			 //echo  "SELECT $campos from $tabla WHERE $filtro";
-
+// 			 echo  "SELECT $campos from $tabla WHERE $filtro";
+// die();
 		 }else{
 			 /*46 privado*/
 			 	$globos = $con->consulta("CONCAT (nombre_globo,'(',peso_globo,' kg)') as text, id_globo as value","globos_volar","status<>0 and peso_globo>=".$pesoLibre. "  order by peso_globo asc");
@@ -47,6 +52,14 @@
 		 	$fecha = $_POST['fechaI'];
 	 }else{
 		 	$fecha=date("Y-m-d");
+	 }
+
+	 if($turno==1){
+	 	$opc1="selected";
+	 }elseif($turno==2){
+	 	$opc2="selected";
+	 }elseif($turno==3){
+		$opc3="selected";
 	 }
 
 	 $globosAsignados = $con->consulta("tipo_temp as tipo,fechavuelo_temp as fecha, hora_temp as hora,nombre_extra, id_temp, CONCAT(IFNULL(nombre_temp,''),' ',IFNULL(apellidos_temp,'')) as nombre","temp_volar tv INNER JOIN vueloscat_volar vv on tipo_temp = id_vc INNER JOIN extras_volar ev ON tipo_vc = id_extra","tv.status= 8 and  fechavuelo_temp = '". $fecha ."'");
@@ -58,18 +71,23 @@
 	<div class="col-sm-12 col-lg-4 col-md-4 col-12 col-xl-3 ">
 		<div class="form-group">
 			<label for="hora">Hora de Vuelo</label>
-			<input type="time" class="form-control"  onchange="confirmarAsignarGlobo(<?php echo $_POST['reserva']; ?>)" id="hora" placeholder="Hora de Vuelo" value = "<?php echo $datoReserva[0]->hora; ?>" >
+			<input type="time" class="form-control"   id="hora" placeholder="Hora de Vuelo" value = "<?php echo $datoReserva[0]->hora; ?>" onchange="confirmarAsignarGlobo(<?php echo $_POST['reserva']; ?>)" >
 		</div>
 	</div>
 		<div class="col-sm-12 col-lg-4 col-md-4 col-12 col-xl-3 ">
 			<div class="form-group">
 				<label for="hora">Turno</label>
-				<input type="time" class="form-control"  onchange="confirmarAsignarGlobo(<?php echo $_POST['reserva']; ?>)" id="hora" placeholder="Hora de Vuelo" value = "<?php echo $datoReserva[0]->hora; ?>" >
+				<select class="form-control" name="turno" id="turno" onchange="confirmarAsignarGlobo(<?php echo $_POST['reserva']; ?>)" >
+					<option value="">Selecciona un Turno</option>
+					<option value="1" <?php echo $opc1; ?> >Primero</option>
+					<option value="2" <?php echo $opc2; ?> >Segundo</option>
+					<option value="3" <?php echo $opc3; ?> >Tercero</option>
+				</select>
 			</div>
 		</div>
 	<?php
 		$display="";
-		if($datoReserva[0]->turno=='' || $pesoLibre==0){
+		if($datoReserva[0]->turno=='0' || $datoReserva[0]->hora=='' || $pesoLibre==0){
 			$display = "display:none";
 		}
 	?>
@@ -114,7 +132,7 @@
 					foreach ($globos as $globo) {
 						$sel ="";
 						if($tVuelo[0]->tipo_vc==46){
-							$tot = $con->consulta("count(id_temp) as total","temp_volar tv INNER JOIN globosasignados_volar ga ON ga.reserva_ga = tv.id_temp"," fechavuelo_temp = '". $fecha ."' and ga.status<>0 AND hora_temp BETWEEN '". $deHora ."' AND  '". $aHora ."'  and globo_ga=".$globo->value );
+							$tot = $con->consulta("count(id_temp) as total","temp_volar tv INNER JOIN globosasignados_volar ga ON ga.reserva_ga = tv.id_temp"," fechavuelo_temp = '". $fecha ."' and ga.status<>0 AND turno_temp = ".$turno."  and globo_ga=".$globo->value );
 							if($tot[0]->total>0){
 								$sel="disabled";
 							}
@@ -122,7 +140,7 @@
 							$pesoAguanta = $globo->peso_globo;
 
 							/*Peso en Libras*/
-							$pesoActual= $con->consulta("sum(peso_ga) as peso","temp_volar tv INNER JOIN globosasignados_volar ga ON ga.reserva_ga = tv.id_temp ","tv.status=8 and ga.status<>0 and globo_ga = ".$globo->value . " and fechavuelo_temp ='".$fecha."' and ga.status<>0 AND hora_temp BETWEEN '".$deHora."' AND '".$aHora."'");
+							$pesoActual= $con->consulta("sum(peso_ga) as peso","temp_volar tv INNER JOIN globosasignados_volar ga ON ga.reserva_ga = tv.id_temp ","tv.status=8 and ga.status<>0 and globo_ga = ".$globo->value . " and fechavuelo_temp ='".$fecha."' and ga.status<>0 AND turno_temp = ".$turno);
 							//$pesoActualLib=($pesoActualLib[0]->peso* 0.453592);
 
 							/*Peso en Kg*/
@@ -221,12 +239,13 @@
 		deHora = "<?php echo $deHora ?>";
 		aHora = "<?php echo $aHora ?>";
 		fecha = "<?php echo $fecha  ?>";
+		turno = "<?php echo $turno  ?>";
 		reserva = "<?php  echo $_POST['reserva'] ?>";
 		if(tipovuelo==47){
 			//47 compartido
 			var1 = "contar(id_ga) as total";
 			var2 = "globosasignados_volar ga unir temp_volar tv on id_temp = reserva_ga";
-			var3 = "ga.status<>0 and tv.status<>0 YYY globo_ga="+globo+" YYY hora_temp entre '" + deHora + "' YYY '"+aHora+"' YYY fechavuelo_temp='"+fecha+"'";
+			var3 = "ga.status<>0 and tv.status<>0 YYY globo_ga="+globo+" YYY turno_temp = "+turno+" YYY fechavuelo_temp='"+fecha+"'";
 			parametros = {var1:var1,var2:var2,var3:var3};
 			$.ajax({
 				data: parametros,
@@ -257,7 +276,7 @@
 		var1 ="id_usu as value,concatenar(nombre_usu, ' ', esvacio(apellidop_usu,''),' ',esvacio(apellidom_usu,'')) as text";
 		var2 ="volar_usuarios";
 		var3 ="status<>0 YYY puesto_usu = 4 YYY id_usu not in ";
-		var4 = "selecciona piloto_ga detabla temp_volar tv unir globosasignados_volar ga on id_temp=reserva_ga WHERE hora_temp entre '"+deHora+"' YYY '"+ aHora +"' YYY tv.status=8 YYY fechavuelo_temp ='"+fecha+"'  YYY piloto_ga is not null YYY piloto_ga<>0 YYY ga.status<>0";
+		var4 = "selecciona piloto_ga detabla temp_volar tv unir globosasignados_volar ga on id_temp=reserva_ga WHERE turno_temp= "+turno+" YYY tv.status=8 YYY fechavuelo_temp ='"+fecha+"'  YYY piloto_ga is not null YYY piloto_ga<>0 YYY ga.status<>0";
 			parametros={var1:var1,var2:var2,var3:var3,var4:var4};
 		//	$("#piloto").load("vistas/reservas/forms/pilotos.php",parametros);
 
@@ -282,7 +301,7 @@
 	function getTodosPilotos(reserva,deHora,aHora,fecha,globo){
 			var1 = "id_usu as value,concatenar(nombre_usu, ' ', esvacio(apellidop_usu,''),' ',esvacio(apellidom_usu,'')) as text";
 			var2 = "volar_usuarios";
-			var3 = "status<>0 YYY puesto_usu = 4 YYY  id_usu not in ( selecciona piloto_ga from globosasignados_volar ga unir temp_volar tv ON ga.reserva_ga=tv.id_temp  WHERE  tv.status=8 YYY  ga.status<>0 AND fechavuelo_temp ='"+fecha+"' YYY hora_temp entre '"+deHora+"' YYY '" + aHora+"' )";
+			var3 = "status<>0 YYY puesto_usu = 4 YYY  id_usu not in ( selecciona piloto_ga from globosasignados_volar ga unir temp_volar tv ON ga.reserva_ga=tv.id_temp  WHERE  tv.status=8 YYY  ga.status<>0 AND fechavuelo_temp ='"+fecha+"' YYY turno_temp = "+turno+" )";
 			parametros = {var1:var1,var2:var2,var3:var3};
 			$("#piloto").empty().append("<option value='0'>Selecciona un piloto</option>");
 			$.ajax({
@@ -306,7 +325,7 @@
 	function getUnicoPiloto(reserva,deHora,aHora,fecha,globo){
 		var1 = "id_usu as value,concatenar(nombre_usu, ' ', esvacio(apellidop_usu,''),' ',esvacio(apellidom_usu,'')) as text";
 		var2 = "volar_usuarios";
-		var3 = "status<>0  YYY puesto_usu = 4 YYY id_usu in(selecciona piloto_ga from globosasignados_volar ga unir  temp_volar tv on id_temp=reserva_ga Where globo_ga =" + globo + " YYY hora_temp entre '" + deHora + "' AND '"+aHora+"' and fechavuelo_temp='"+fecha+"' and ga.status<>0)";
+		var3 = "status<>0  YYY puesto_usu = 4 YYY id_usu in(selecciona piloto_ga from globosasignados_volar ga unir  temp_volar tv on id_temp=reserva_ga Where globo_ga =" + globo + " YYY turno_temp = "+turno+" and fechavuelo_temp='"+fecha+"' and ga.status<>0)";
 		parametros = {var1:var1,var2:var2,var3:var3};
 		$("#piloto").empty().append("<option value='0'>Selecciona un piloto</option>");
 		$.ajax({
@@ -348,7 +367,7 @@
 					var1 = "concatenar (nombre_globo,'(',peso_globo,' kg)') as text, id_globo as value,peso_globo";
 					var2 = "globos_volar";
 					var3 = "status<>0  and peso_globo>=" + valor + " AND id_globo not  in";
-					var4 = "selecciona globo_ga from temp_volar tv unir vueloscat_volar vv on tipo_temp = id_vc unir globosasignados_volar ga ON ga.reserva_ga = tv.id_temp WHERE tipo_vc = 46 and vv.status<>0 and tv.status=8 AND  fechavuelo_temp = '"+fecha+"' and ga.status<>0 AND hora_temp entre '"+ deHora +"' AND  '"+ aHora +"'";
+					var4 = "selecciona globo_ga from temp_volar tv unir vueloscat_volar vv on tipo_temp = id_vc unir globosasignados_volar ga ON ga.reserva_ga = tv.id_temp WHERE tipo_vc = 46 and vv.status<>0 and tv.status=8 AND  fechavuelo_temp = '"+fecha+"' and ga.status<>0 AND turno_temp="+turno;
 					getGlobosCompartido(var1,var2,var3,var4,valor);
 				}else{
 					/*Privados*/
@@ -401,7 +420,7 @@
 			sel = "";
 			var1 = "esvacio(sumar(peso_ga),0) as peso";
 			var2 = "temp_volar tv unir globosasignados_volar ga ON ga.reserva_ga = tv.id_temp ";
-			var3 = "tv.status=8 YYY ga.status<>0 YYY globo_ga = " +globo+" YYY fechavuelo_temp ='"+fecha+"' YYY hora_temp entre '"+deHora+"' YYY '"+ aHora +"'";
+			var3 = "tv.status=8 YYY ga.status<>0 YYY globo_ga = " +globo+" YYY fechavuelo_temp ='"+fecha+"' YYY turno_temp = "+turno;
 			parametros = {var1:var1,var2:var2,var3:var3};
 			$.ajax({
 		      data: parametros,
@@ -457,7 +476,7 @@
 				sel = "";
 				var1 = "contar(id_temp) as total";
 				var2 = "temp_volar tv unir globosasignados_volar ga ON ga.reserva_ga = tv.id_temp";
-				var3 = "  fechavuelo_temp = '"+ fecha +"' YYY ga.status<>0 AND hora_temp entre '"+deHora+"' YYY  '"+ aHora + "'  and globo_ga="+globo;
+				var3 = "  fechavuelo_temp = '"+ fecha +"' YYY ga.status<>0 AND turno_temp="+turno+"  and globo_ga="+globo;
 				parametros = {var1:var1,var2:var2,var3:var3};
 				$.ajax({
 			      data: parametros,

@@ -21,16 +21,20 @@
 		echo $confirmarAsistencia;
 	}elseif(isset($_POST['accion']) && $_POST['accion']=='horario'){
 		$hora=$_POST['hora'];
+		$turno=$_POST['turno'];
 		$reserva=$_POST['reserva'];
 		if($reserva==""){
 			$reserva="null";
+		}
+		if($turno==""){
+			$turno="null";
 		}
 		if($hora==""){
 			$hora="null";
 		}else{
 			$hora="'".$hora."'";
 		}
-		$upd="hora_temp=".$hora ;
+		$upd="hora_temp=".$hora .", turno_temp=".$turno;
 		$asignarVuelo = $con->actualizar("temp_volar",	$upd ," id_temp=".$reserva);
 		echo $asignarVuelo;
 	}elseif(isset($_POST['accion']) && $_POST['accion']=='globos'){

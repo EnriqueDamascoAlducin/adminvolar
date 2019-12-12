@@ -503,8 +503,10 @@ function asignarGlobo(reserva){
 }
 function confirmarAsignarGlobo(reserva){
 	hora = $("#hora").val();
+  turno = $("#turno").val();
 	datos	=	{
 			hora:hora,
+			turno:turno,
 			reserva:reserva,
 			accion:'horario'
 	};

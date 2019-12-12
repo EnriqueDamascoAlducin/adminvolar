@@ -26,8 +26,8 @@ $objphp->getActiveSheet()->getColumnDimension('A')->setWidth(25);
 
 
 $objphp->getActiveSheet()->setCellValue('B'.$titulo, 'Reporte de Asignaciones de Volar en Globo');
-$objphp->getActiveSheet()->mergeCells('B'.$titulo.':G'.$titulo);
-$objphp->getActiveSheet()->getStyle('A'.$enc.':G'.$enc)->applyFromArray($estiloTituloColumnas);
+$objphp->getActiveSheet()->mergeCells('B'.$titulo.':H'.$titulo);
+$objphp->getActiveSheet()->getStyle('A'.$enc.':H'.$enc)->applyFromArray($estiloTituloColumnas);
 
 
 $objphp->getActiveSheet()->setCellValue('A'.$enc, 'Reserva');
@@ -44,6 +44,8 @@ $objphp->getActiveSheet()->setCellValue('F'.$enc, 'PaX');
 $objphp->getActiveSheet()->getColumnDimension('F')->setWidth(20);
 $objphp->getActiveSheet()->setCellValue('G'.$enc, 'Globo');
 $objphp->getActiveSheet()->getColumnDimension('G')->setWidth(20);
+$objphp->getActiveSheet()->setCellValue('H'.$enc, 'Turno');
+$objphp->getActiveSheet()->getColumnDimension('H')->setWidth(20);
 
 foreach ($reservas as $reserva) {
 
@@ -64,6 +66,7 @@ foreach ($reservas as $reserva) {
     $objphp->getActiveSheet()->getColumnDimension('F')->setWidth(20);
     $objphp->getActiveSheet()->setCellValue('G'.$fila,  $resultado->globo);
     $objphp->getActiveSheet()->getColumnDimension('G')->setWidth(20);
+    $objphp->getActiveSheet()->setCellValue('H'.$fila, $reserva->turno);
     $fila++;
   }
 }
