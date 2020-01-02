@@ -1,35 +1,35 @@
 	$("input[id^='pasajeros']").attr("step",1);
-	var date = new Date();
-	var primerDia = new Date(date.getFullYear(), date.getMonth(), 1);
-	var ultimoDia = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+	// var date = new Date();
+	// var primerDia = new Date(date.getFullYear(), date.getMonth(), 1);
+	// var ultimoDia = new Date(date.getFullYear(), date.getMonth() + 1, 0);
 
-	var currentDate = new Date();
-	var wrong="";
-	var dia = currentDate.getDate();
-	var mes = currentDate.getMonth(); //Be careful! January is 0 not 1
-	var year = currentDate.getFullYear();
-	dia++;
-	if(dia>ultimoDia.getDate()){
-		dia=2;
-		mes++;
-	}
+	// var currentDate = new Date();
+	// var wrong="";
+	// var dia = currentDate.getDate();
+	// var mes = currentDate.getMonth(); //Be careful! January is 0 not 1
+	// var year = currentDate.getFullYear();
+	// dia++;
+	// if(dia>ultimoDia.getDate()){
+	// 	dia=2;
+	// 	mes++;
+	// }
 
-	dia2=dia;
-	if(dia2<10){
-		dia2="0"+dia2;
-	}
-	mes++;
-	if(dia < 10){
-		dia = "0"+dia;
-	}
+	// dia2=dia;
+	// if(dia2<10){
+	// 	dia2="0"+dia2;
+	// }
+	// mes++;
+	// if(dia < 10){
+	// 	dia = "0"+dia;
+	// }
 
-	if(mes < 10){
-		mes = "0"+mes;
-	}
-	var fecha = year + "-" + (mes) + "-" + (dia);
-	var fecha2 = year + "-" + (mes) + "-" + (dia2);
-	$("#fechavuelo").attr("min",fecha2);
-	$("input[id^='check']").attr("min",fecha);
+	// if(mes < 10){
+	// 	mes = "0"+mes;
+	// }
+	// var fecha = year + "-" + (mes) + "-" + (dia);
+	// var fecha2 = year + "-" + (mes) + "-" + (dia2);
+	// $("#fechavuelo").attr("min",fecha2);
+	// $("input[id^='check']").attr("min",fecha);
 
 	$("input[name='tdescuento']").on("click",function(){
 		if($(this).val()=="1"){

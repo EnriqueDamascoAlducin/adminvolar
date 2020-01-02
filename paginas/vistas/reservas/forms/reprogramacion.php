@@ -57,21 +57,21 @@
 </div>
 
 <script type="text/javascript">
-		date = new Date();
-		var primerDia = new Date(date.getFullYear(), date.getMonth(), 1);
-		var ultimoDia = new Date(date.getFullYear(), date.getMonth() + 1, 0);
-		var currentDate = new Date();
-		var wrong="";
-		var dia = currentDate.getDate();
-		var mes = currentDate.getMonth()+1; //Be careful! January is 0 not 1
-		var year = currentDate.getFullYear();
+		// date = new Date();
+		// var primerDia = new Date(date.getFullYear(), date.getMonth(), 1);
+		// var ultimoDia = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+		// var currentDate = new Date();
+		// var wrong="";
+		// var dia = currentDate.getDate();
+		// var mes = currentDate.getMonth()+1; //Be careful! January is 0 not 1
+		// var year = currentDate.getFullYear();
 
-		if(dia < 10){
-			dia = "0"+dia;
-		}
-		if(mes < 10){
-			mes = "0"+mes;
-		}
-		var fecha = year + "-" + (mes) + "-" + (dia+1);
-		$("#fechavuelo").attr("min",fecha)
+		// if(dia < 10){
+		// 	dia = "0"+dia;
+		// }
+		// if(mes < 10){
+		// 	mes = "0"+mes;
+		// }
+		// var fecha = year + "-" + (mes) + "-" + (dia+1);
+		// $("#fechavuelo").attr("min",fecha)
 </script>

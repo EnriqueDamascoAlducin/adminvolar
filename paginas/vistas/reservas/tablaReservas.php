@@ -50,11 +50,11 @@
 	if($_POST['fechaI']=='' &&  $_POST['fechaF']=='' && $_POST['reserva']=='' ){
 		$filtro .= " and fechavuelo_temp >= CURRENT_TIMESTAMP ";
 	}
-	//echo "SELECT $campos FROM $tabla WHERE $filtro";
-	$filtro .= " ORDER BY id_temp DESC limit 500";
+	// //echo "SELECT $campos FROM $tabla WHERE $filtro";
+	// $filtro .= " ORDER BY id_temp DESC limit 500";
 	$reservas=$con->consulta($campos,$tabla,$filtro);
 	$cancelarSinCot= $con->query("UPDATE temp_volar set status= 0 where  register <=  CURRENT_TIMESTAMP - INTERVAL 1 DAY and status=2");
-	$cancelar30Dias= $con->query("UPDATE temp_volar set status= 0 where register <=  CURRENT_TIMESTAMP - INTERVAL 30 DAY and status =3;");
+	// $cancelar30Dias= $con->query("UPDATE temp_volar set status= 0 where register <=  CURRENT_TIMESTAMP - INTERVAL 30 DAY and status =3;");
 ?>
 <table class="DataTable table table-striped table-bordered table-hover">
 	<thead>
@@ -213,6 +213,10 @@
 <script type="text/javascript">
 	tables();
 	function ocultarFila(fila) {
-		$("[id='td_"+fila+"'],[id='th_"+fila+"']").hide();
+		tds = $("[id*='_"+fila+"']");
+		$.each(tds,function(index,campo){
+			$(campo).remove();
+		});
+		$("[id*='_"+fila+"']").remove();
 	}
 </script>
