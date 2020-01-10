@@ -29,7 +29,7 @@
 		echo $validar;
 		require  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/vistas/reservas/correo/correoConfirmacion.php';
 		$cotizado = $con->consulta("total_temp","temp_volar","id_temp=".$reserva);
-		$pagado = $con->consulta("SUM(cantidad_bp) as pagado","bitpagos_volar","idres_bp=".$reserva);
+		$pagado = $con->consulta("SUM(cantidad_bp) as pagado","bitpagos_volar","status<>0 and idres_bp=".$reserva);
 		if($cotizado[0]->total_temp==$pagado[0]->pagado){
 			$accion = $con->actualizar("temp_volar","status=8","id_temp=".$reserva);
 		}elseif($cotizado[0]->total_temp>$pagado[0]->pagado){
