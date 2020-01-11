@@ -50,7 +50,7 @@
 			$filtro.= " AND id_usu = " . $idUsu;
 		}
 	$filtro .= " ORDER BY nombre_usu ASC, apellidop_usu asc";
-// echo "SELECT $campos FROM $tabla WHERE $filtro";
+//echo "SELECT $campos FROM $tabla WHERE $filtro";
 // die();
 	$pilotos=$con->consulta($campos,$tabla,$filtro);
 ?>

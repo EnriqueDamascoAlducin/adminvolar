@@ -65,6 +65,122 @@
 					<body>';
 					return $head;
 	}
+	function enviarAlerta($body){
+		$usuario= unserialize((base64_decode($_SESSION['usuario'])));
+		$correoUsu=$usuario->getCorreoUsu();
+		$nombreUsu=$usuario->getNombreUsu();
+		$asignador = array($nombreUsu , $correoUsu);
+
+
+		$asunto = "Globo Asignado";
+		$cuerpo = getHTMLHead();
+		$cuerpo .= $body;
+		$correos =[$asignador];
+		$ruta=$_SERVER['DOCUMENT_ROOT'].'/admin1/sources/PHPMailer/mail.php';
+		require_once  $ruta;
+	}
+	function enviarCorreoPiloto	($datos,$piloto,$correoPiloto ){
+		/*  ----- Información de Piloto -----  */
+		global $con;
+		$usuario= unserialize((base64_decode($_SESSION['usuario'])));
+		$correoUsu=$usuario->getCorreoUsu();
+		$nombreUsu=$usuario->getNombreUsu();
+		//$vendedor = array($nombreUsu , $correoUsu); //Quien mando los vuelos
+
+		$correousu = $correoPiloto;
+		$nombreusu = $piloto;
+		$arreglo[0] =$correousu;
+		$arreglo[1] = $nombreusu;
+		$correos =  array($arreglo );
+
+
+		$reservas = $datos[0];
+		$pasajero = $datos[1];
+		$fechavuelo = $datos[2];
+		$hora = $datos[3];
+		$pax = $datos[4];
+		$globo = $datos[5];
+		$turno = $datos[6];
+		$motivo = $datos[7];
+
+		///Formar cuerpo de html
+		$asunto = "Globo Asignado";
+		$cuerpo = getHTMLHead();
+		$tabla ="<h3>".$piloto."</h3>";
+		$tabla .= "<p>Se te ha asignado una reserva con la siguiente informaci&oacute;n: </p>";
+		$tabla .= "<table class='table' border ='1'>";
+		$tabla .=	"<tr>";
+		$tabla .=		"<th>Reserva</th>";
+			for ($i=0; $i < sizeof($reservas) ; $i++) { 
+				$tabla .="<td>".$reservas[$i]."</td>";
+			}
+		$tabla .=	"</tr>";
+
+
+		$tabla .=	"<tr>";
+		$tabla .=		"<th>Globo</th>";
+			for ($i=0; $i < sizeof($globo) ; $i++) { 
+				$tabla .="<td>".$globo[$i]."</td>";
+			}
+		$tabla .=	"</tr>";
+
+		$tabla .=	"</tr>";
+		$tabla .=	"<tr>";
+		$tabla .=		"<th>Pasajero</th>";
+			for ($i=0; $i < sizeof($pasajero) ; $i++) { 
+				$tabla .="<td>".$pasajero[$i]."</td>";
+			}
+		$tabla .=	"</tr>";
+
+
+		$tabla .=	"</tr>";
+		$tabla .=	"<tr>";
+		$tabla .=		"<th>Fecha de vuelo</th>";
+			for ($i=0; $i < sizeof($fechavuelo) ; $i++) { 
+				$tabla .="<td>".$fechavuelo[$i]."</td>";
+			}
+		$tabla .=	"</tr>";
+
+
+		$tabla .=	"</tr>";
+		$tabla .=	"<tr>";
+		$tabla .=		"<th>Turno</th>";
+			for ($i=0; $i < sizeof($turno) ; $i++) { 
+				$tabla .="<td>".$turno[$i]."</td>";
+			}
+		$tabla .=	"</tr>";
+
+		$tabla .=	"</tr>";
+		$tabla .=	"<tr>";
+		$tabla .=		"<th>Hora</th>";
+			for ($i=0; $i < sizeof($hora) ; $i++) { 
+				$tabla .="<td>".$hora[$i]."</td>";
+			}
+		$tabla .=	"</tr>";
+
+		$tabla .=	"</tr>";
+
+		$tabla .=	"<tr>";
+		$tabla .=		"<th>Pasajeros</th>";
+			for ($i=0; $i < sizeof($pax) ; $i++) { 
+				$tabla .="<td>".$pax[$i]."</td>";
+			}
+		$tabla .=	"</tr>";
+
+		$tabla .=	"<tr>";
+		$tabla .=		"<th>Motivo</th>";
+			for ($i=0; $i < sizeof($motivo) ; $i++) { 
+				$tabla .="<td>".$motivo[$i]."</td>";
+			}
+		$tabla .=	"</tr>";
+		$tabla .= "</table>";
+		$cuerpo .= $tabla;
+		$cuerpo .= "</body>";
+
+		$ruta=$_SERVER['DOCUMENT_ROOT'].'/admin1/sources/PHPMailer/mail.php';
+		require_once  $ruta;
+		return $tabla;
+	}
 	function enviarCorreo($piloto,$reserva,$version){
 		/*  ----- Información de Piloto -----  */
 		global $con;
@@ -129,9 +245,8 @@
 	if(isset($_POST['piloto']) && isset($_POST['version'])){
 		//Cuando es por piloto
 		enviarCorreo($_POST['piloto'],$_POST['reserva'],$_POST['version']);
-
 	}else{
-		$campos= " CONCAT (IFNULL(nombre_usu,''),' ', IFNULL(apellidop_usu,''),' ', IFNULL(apellidom_usu,'')) as piloto,id_usu as id, correo_usu";
+		$campos= "DISTINCT(id_usu) as id, CONCAT (IFNULL(nombre_usu,''),' ', IFNULL(apellidop_usu,''),' ', IFNULL(apellidom_usu,'')) as piloto, correo_usu as correo";
 		$tabla = " volar_usuarios ";
 		$filtro = " status <> 0 and puesto_usu = 4 and id_usu in( ";
 		$filtro .= " Select piloto_ga FROM  globosasignados_volar ga INNER JOIN temp_volar tv ON id_temp = reserva_ga ";
@@ -161,11 +276,12 @@
 		$filtro .= " ORDER BY nombre_usu ASC, apellidop_usu asc";
 	// echo "SELECT $campos FROM $tabla WHERE $filtro";
 	// die();
+		$tablaBody ="";
 		$pilotos=$con->consulta($campos,$tabla,$filtro);
 		foreach ($pilotos as $piloto) {
 			$campos = " CONCAT(IFNULL(nombre_temp,''),' ', IFNULL(apellidos_temp,'')) as pasajero	,";
-			$campos .= " id_temp as reserva, fechavuelo_temp as fechavuelo, hora_temp as hora, pax_ga as pax,version_ga as version";
-			$tabla = "temp_volar tv INNER JOIN globosasignados_volar ga ON id_temp = reserva_ga  ";
+			$campos .= " id_temp as reserva, fechavuelo_temp as fechavuelo, hora_temp as hora, pax_ga as pax,version_ga as version, nombre_globo as globo,turno_temp as turno, IFNULL((select nombre_extra From extras_volar where id_extra = motivo_temp ),'NA') as motivo ";
+			$tabla = "temp_volar tv INNER JOIN globosasignados_volar ga ON id_temp = reserva_ga INNER JOIN globos_volar ON id_globo = globo_ga  ";
 			$filtro = "  tv.status= 8 AND ga.status<>0 ";
 				if(isset($_POST['fechaI']) && $_POST['fechaI']!='' ){
 					$filtro.= " and fechavuelo_temp >='".$_POST['fechaI']."'";
@@ -183,14 +299,32 @@
 					$filtro .= " and fechavuelo_temp >= CURRENT_TIMESTAMP ";
 				}
 			$filtro .=" AND piloto_ga= ".$piloto->id;
-			/*echo "SELECT $campos FROM $tabla WHERE $filtro";
-			die();*/
+			// echo "SELECT $campos FROM $tabla WHERE $filtro";
+			// die();
 			$infoAsignados = $con->consulta($campos,$tabla,$filtro);
-			foreach ($infoAsignados as $infoAsignado) {
-				enviarCorreo($piloto->id,$infoAsignado->reserva,$infoAsignado->version);
+			$reservas 	= [];
+			$pasajero 	= [];
+			$fechavuelo = [];
+			$hora 		= [];
+			$pax   		= [];
+			$globo   	= [];
+			$turno   	= [];
+			$motivo   	= [];
+			foreach ($infoAsignados as $globoAsignado) {
+				$reservas[]=	($globoAsignado->reserva)."."; 
+				$pasajero[]=	($globoAsignado->pasajero)."."; 
+				$fechavuelo[]=	($globoAsignado->fechavuelo)."."; 
+				$hora[]=	($globoAsignado->hora)."."; 
+				$pax[]=	($globoAsignado->pax)."."; 
+				$globo[]=	($globoAsignado->globo)."."; 
+				$turno[]=	($globoAsignado->turno)."."; 
+				$motivo[]=	($globoAsignado->motivo)."."; 
 			}
-		}
-	}
 
+			$datos = [$reservas,$pasajero,$fechavuelo,$hora,$pax,$globo,$turno,$motivo];
+			$tablaBody .= enviarCorreoPiloto($datos,$piloto->piloto,$piloto->correo);
+		}
+		enviarAlerta($tablaBody);
+	}
 
 ?>

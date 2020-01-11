@@ -7,11 +7,16 @@
 		public $con;
 
 		function Conexion(){
-			$this->servidor="localhost";
-			$this->bd = "afraqujt_volar";
+			@session_start();
+			if(!$_SESSION['produccion']){
+				$this->bd = "afraqujt_volarTesting";
+			}else{
+				$this->bd = "afraqujt_volar";				
+			}
+
 			$this->usr="afraqujt_Siswebs";
 			$this->pass="VolarenGlobo1.";
-
+			$this->servidor="localhost";
 		}
 
 		function conectar(){
