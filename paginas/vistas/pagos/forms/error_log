@@ -1,0 +1,96 @@
+[05-Dec-2019 17:09:18 America/New_York] PHP Notice:  Undefined variable: gasto in /home/afraqujt/public_html/admin1/paginas/vistas/pagos/forms/index.php on line 41
+[05-Dec-2019 17:09:18 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/pagos/forms/index.php on line 41
+[05-Dec-2019 17:09:18 America/New_York] PHP Notice:  Undefined variable: gasto in /home/afraqujt/public_html/admin1/paginas/vistas/pagos/forms/index.php on line 41
+[05-Dec-2019 17:09:18 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/pagos/forms/index.php on line 41
+[05-Dec-2019 17:09:18 America/New_York] PHP Notice:  Undefined variable: gasto in /home/afraqujt/public_html/admin1/paginas/vistas/pagos/forms/index.php on line 41
+[05-Dec-2019 17:09:18 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/pagos/forms/index.php on line 41
+[05-Dec-2019 17:09:18 America/New_York] PHP Notice:  Undefined variable: gasto in /home/afraqujt/public_html/admin1/paginas/vistas/pagos/forms/index.php on line 41
+[05-Dec-2019 17:09:18 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/pagos/forms/index.php on line 41
+[05-Dec-2019 17:09:32 America/New_York] PHP Notice:  Undefined variable: gasto in /home/afraqujt/public_html/admin1/paginas/vistas/pagos/forms/index.php on line 41
+[05-Dec-2019 17:09:32 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/pagos/forms/index.php on line 41
+[05-Dec-2019 17:09:32 America/New_York] PHP Notice:  Undefined variable: gasto in /home/afraqujt/public_html/admin1/paginas/vistas/pagos/forms/index.php on line 41
+[05-Dec-2019 17:09:32 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/pagos/forms/index.php on line 41
+[05-Dec-2019 17:09:32 America/New_York] PHP Notice:  Undefined variable: gasto in /home/afraqujt/public_html/admin1/paginas/vistas/pagos/forms/index.php on line 41
+[05-Dec-2019 17:09:32 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/pagos/forms/index.php on line 41
+[05-Dec-2019 17:09:32 America/New_York] PHP Notice:  Undefined variable: gasto in /home/afraqujt/public_html/admin1/paginas/vistas/pagos/forms/index.php on line 41
+[05-Dec-2019 17:09:32 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/pagos/forms/index.php on line 41
+[02-Jan-2020 12:46:10 America/New_York] PHP Notice:  Undefined variable: gasto in /home/afraqujt/public_html/admin1/paginas/vistas/pagos/forms/index.php on line 41
+[02-Jan-2020 12:46:10 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/pagos/forms/index.php on line 41
+[02-Jan-2020 12:46:10 America/New_York] PHP Notice:  Undefined variable: gasto in /home/afraqujt/public_html/admin1/paginas/vistas/pagos/forms/index.php on line 41
+[02-Jan-2020 12:46:10 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/pagos/forms/index.php on line 41
+[02-Jan-2020 12:46:10 America/New_York] PHP Notice:  Undefined variable: gasto in /home/afraqujt/public_html/admin1/paginas/vistas/pagos/forms/index.php on line 41
+[02-Jan-2020 12:46:10 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/pagos/forms/index.php on line 41
+[02-Jan-2020 12:46:10 America/New_York] PHP Notice:  Undefined variable: gasto in /home/afraqujt/public_html/admin1/paginas/vistas/pagos/forms/index.php on line 41
+[02-Jan-2020 12:46:10 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/pagos/forms/index.php on line 41
+[09-Jan-2020 18:36:49 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; usuarioLoggeado has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/beans/usuarioLoggeado.php on line 2
+[09-Jan-2020 18:36:49 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; Conexion has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/controladores/conexion.php on line 2
+[09-Jan-2020 18:36:49 America/New_York] PHP Notice:  Undefined variable: gasto in /home/afraqujt/public_html/admin1/paginas/vistas/pagos/forms/index.php on line 41
+[09-Jan-2020 18:36:49 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/pagos/forms/index.php on line 41
+[09-Jan-2020 18:36:49 America/New_York] PHP Notice:  Undefined variable: gasto in /home/afraqujt/public_html/admin1/paginas/vistas/pagos/forms/index.php on line 41
+[09-Jan-2020 18:36:49 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/pagos/forms/index.php on line 41
+[09-Jan-2020 18:36:49 America/New_York] PHP Notice:  Undefined variable: gasto in /home/afraqujt/public_html/admin1/paginas/vistas/pagos/forms/index.php on line 41
+[09-Jan-2020 18:36:49 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/pagos/forms/index.php on line 41
+[09-Jan-2020 18:36:49 America/New_York] PHP Notice:  Undefined variable: gasto in /home/afraqujt/public_html/admin1/paginas/vistas/pagos/forms/index.php on line 41
+[09-Jan-2020 18:36:49 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/pagos/forms/index.php on line 41
+[11-Jan-2020 16:12:05 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; usuarioLoggeado has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/beans/usuarioLoggeado.php on line 2
+[11-Jan-2020 16:12:05 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; Conexion has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/controladores/conexion.php on line 2
+[11-Jan-2020 16:12:05 America/New_York] PHP Notice:  Undefined variable: gasto in /home/afraqujt/public_html/admin1/paginas/vistas/pagos/forms/index.php on line 41
+[11-Jan-2020 16:12:05 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/pagos/forms/index.php on line 41
+[11-Jan-2020 16:12:05 America/New_York] PHP Notice:  Undefined variable: gasto in /home/afraqujt/public_html/admin1/paginas/vistas/pagos/forms/index.php on line 41
+[11-Jan-2020 16:12:05 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/pagos/forms/index.php on line 41
+[11-Jan-2020 16:12:05 America/New_York] PHP Notice:  Undefined variable: gasto in /home/afraqujt/public_html/admin1/paginas/vistas/pagos/forms/index.php on line 41
+[11-Jan-2020 16:12:05 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/pagos/forms/index.php on line 41
+[11-Jan-2020 16:12:05 America/New_York] PHP Notice:  Undefined variable: gasto in /home/afraqujt/public_html/admin1/paginas/vistas/pagos/forms/index.php on line 41
+[11-Jan-2020 16:12:05 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/pagos/forms/index.php on line 41
+[11-Jan-2020 16:14:27 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; usuarioLoggeado has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/beans/usuarioLoggeado.php on line 2
+[11-Jan-2020 16:14:27 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; Conexion has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/controladores/conexion.php on line 2
+[11-Jan-2020 16:14:27 America/New_York] PHP Notice:  Undefined variable: gasto in /home/afraqujt/public_html/admin1/paginas/vistas/pagos/forms/index.php on line 41
+[11-Jan-2020 16:14:27 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/pagos/forms/index.php on line 41
+[11-Jan-2020 16:14:27 America/New_York] PHP Notice:  Undefined variable: gasto in /home/afraqujt/public_html/admin1/paginas/vistas/pagos/forms/index.php on line 41
+[11-Jan-2020 16:14:27 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/pagos/forms/index.php on line 41
+[11-Jan-2020 16:14:27 America/New_York] PHP Notice:  Undefined variable: gasto in /home/afraqujt/public_html/admin1/paginas/vistas/pagos/forms/index.php on line 41
+[11-Jan-2020 16:14:27 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/pagos/forms/index.php on line 41
+[11-Jan-2020 16:14:27 America/New_York] PHP Notice:  Undefined variable: gasto in /home/afraqujt/public_html/admin1/paginas/vistas/pagos/forms/index.php on line 41
+[11-Jan-2020 16:14:27 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/pagos/forms/index.php on line 41
+[11-Jan-2020 16:14:41 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; usuarioLoggeado has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/beans/usuarioLoggeado.php on line 2
+[11-Jan-2020 16:14:41 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; Conexion has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/controladores/conexion.php on line 2
+[11-Jan-2020 16:14:41 America/New_York] PHP Notice:  Undefined variable: gasto in /home/afraqujt/public_html/admin1/paginas/vistas/pagos/forms/index.php on line 41
+[11-Jan-2020 16:14:41 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/pagos/forms/index.php on line 41
+[11-Jan-2020 16:14:41 America/New_York] PHP Notice:  Undefined variable: gasto in /home/afraqujt/public_html/admin1/paginas/vistas/pagos/forms/index.php on line 41
+[11-Jan-2020 16:14:41 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/pagos/forms/index.php on line 41
+[11-Jan-2020 16:14:41 America/New_York] PHP Notice:  Undefined variable: gasto in /home/afraqujt/public_html/admin1/paginas/vistas/pagos/forms/index.php on line 41
+[11-Jan-2020 16:14:41 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/pagos/forms/index.php on line 41
+[11-Jan-2020 16:14:41 America/New_York] PHP Notice:  Undefined variable: gasto in /home/afraqujt/public_html/admin1/paginas/vistas/pagos/forms/index.php on line 41
+[11-Jan-2020 16:14:41 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/pagos/forms/index.php on line 41
+[11-Jan-2020 16:24:19 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; usuarioLoggeado has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/beans/usuarioLoggeado.php on line 2
+[11-Jan-2020 16:24:19 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; Conexion has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/controladores/conexion.php on line 2
+[11-Jan-2020 16:24:19 America/New_York] PHP Notice:  Undefined variable: gasto in /home/afraqujt/public_html/admin1/paginas/vistas/pagos/forms/index.php on line 41
+[11-Jan-2020 16:24:19 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/pagos/forms/index.php on line 41
+[11-Jan-2020 16:24:19 America/New_York] PHP Notice:  Undefined variable: gasto in /home/afraqujt/public_html/admin1/paginas/vistas/pagos/forms/index.php on line 41
+[11-Jan-2020 16:24:19 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/pagos/forms/index.php on line 41
+[11-Jan-2020 16:24:19 America/New_York] PHP Notice:  Undefined variable: gasto in /home/afraqujt/public_html/admin1/paginas/vistas/pagos/forms/index.php on line 41
+[11-Jan-2020 16:24:19 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/pagos/forms/index.php on line 41
+[11-Jan-2020 16:24:19 America/New_York] PHP Notice:  Undefined variable: gasto in /home/afraqujt/public_html/admin1/paginas/vistas/pagos/forms/index.php on line 41
+[11-Jan-2020 16:24:19 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/pagos/forms/index.php on line 41
+[15-Jan-2020 07:05:30 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; usuarioLoggeado has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/beans/usuarioLoggeado.php on line 2
+[15-Jan-2020 07:05:30 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; Conexion has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/controladores/conexion.php on line 2
+[15-Jan-2020 07:05:30 America/New_York] PHP Notice:  Undefined variable: gasto in /home/afraqujt/public_html/admin1/paginas/vistas/pagos/forms/index.php on line 41
+[15-Jan-2020 07:05:30 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/pagos/forms/index.php on line 41
+[15-Jan-2020 07:05:30 America/New_York] PHP Notice:  Undefined variable: gasto in /home/afraqujt/public_html/admin1/paginas/vistas/pagos/forms/index.php on line 41
+[15-Jan-2020 07:05:30 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/pagos/forms/index.php on line 41
+[15-Jan-2020 07:05:30 America/New_York] PHP Notice:  Undefined variable: gasto in /home/afraqujt/public_html/admin1/paginas/vistas/pagos/forms/index.php on line 41
+[15-Jan-2020 07:05:30 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/pagos/forms/index.php on line 41
+[15-Jan-2020 07:05:30 America/New_York] PHP Notice:  Undefined variable: gasto in /home/afraqujt/public_html/admin1/paginas/vistas/pagos/forms/index.php on line 41
+[15-Jan-2020 07:05:30 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/pagos/forms/index.php on line 41
+[15-Jan-2020 07:06:11 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; usuarioLoggeado has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/beans/usuarioLoggeado.php on line 2
+[15-Jan-2020 07:06:11 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; Conexion has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/controladores/conexion.php on line 2
+[15-Jan-2020 07:06:11 America/New_York] PHP Notice:  Undefined variable: gasto in /home/afraqujt/public_html/admin1/paginas/vistas/pagos/forms/index.php on line 41
+[15-Jan-2020 07:06:11 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/pagos/forms/index.php on line 41
+[15-Jan-2020 07:06:11 America/New_York] PHP Notice:  Undefined variable: gasto in /home/afraqujt/public_html/admin1/paginas/vistas/pagos/forms/index.php on line 41
+[15-Jan-2020 07:06:11 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/pagos/forms/index.php on line 41
+[15-Jan-2020 07:06:11 America/New_York] PHP Notice:  Undefined variable: gasto in /home/afraqujt/public_html/admin1/paginas/vistas/pagos/forms/index.php on line 41
+[15-Jan-2020 07:06:11 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/pagos/forms/index.php on line 41
+[15-Jan-2020 07:06:11 America/New_York] PHP Notice:  Undefined variable: gasto in /home/afraqujt/public_html/admin1/paginas/vistas/pagos/forms/index.php on line 41
+[15-Jan-2020 07:06:11 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/pagos/forms/index.php on line 41
+[15-Jan-2020 07:06:17 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; usuarioLoggeado has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/beans/usuarioLoggeado.php on line 2
+[15-Jan-2020 07:06:17 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; Conexion has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/controladores/conexion.php on line 2

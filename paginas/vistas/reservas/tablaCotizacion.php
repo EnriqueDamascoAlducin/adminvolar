@@ -42,7 +42,7 @@
 	$totalPasajeros = $con->consulta("FORMAT(ifnull(pasajerosa_temp,0) + ifnull(pasajerosn_temp,0),2)  Total"," temp_volar "," id_temp = $reserva");
 	$datosReserva = $con->query("CALL getResumenREserva(".$reserva.");")->fetchALL (PDO::FETCH_OBJ);
 	$serviciosReserva = $con->consulta("tipo_sv as tipo , nombre_servicio as servicio ,cantmax_servicio as cantmax, precio_servicio as precio "," servicios_vuelo_temp svt INNER JOIN servicios_volar sv ON svt.idservi_sv=sv.id_servicio ","  svt.status<>0 and svt.cantidad_sv>0 and idtemp_sv =".$reserva);
-	$movimientosExtras = $con->consulta("motivo_ce,cantidad_ce","cargosextras_volar","status<>0 and reserva_ce= " . $reserva);
+	$movimientosExtras = $con->consulta("motivo_ce,cantidad_ce,tipo_ce","cargosextras_volar","status<>0 and reserva_ce= " . $reserva);
 	
 /* 1 = cargos ..... 2 = descuentos*/
 	$hotel=$datosReserva[0]->hotel;
@@ -302,6 +302,22 @@
 							$totalReserva-=$totalDescuento;
 						}
 					?>
+
+					<?php if(sizeof($movimientosExtras)>0){ ?>
+						<?php foreach ($movimientosExtras as $movimientoExtra) { ?>
+							<tr style="display: none">
+								<td class="tdtitulo"><?php echo $movimientoExtra->motivo_ce; ?></td>
+								<td></td>
+								<?php if($movimientoExtra->tipo_ce==1){ ?>
+									<td><?php echo '$ '.$movimientoExtra->cantidad_ce; ?></td>
+									<?php $totalReserva+=$movimientoExtra->cantidad_ce; ?>
+								<?php }else{ ?>
+									<td><?php echo '-$ '.$movimientoExtra->cantidad_ce; ?></td>
+									<?php $totalReserva-=$movimientoExtra->cantidad_ce; ?>
+								<?php } ?>
+							</tr>
+						<?php } ?>
+					<?php } ?>
 					<tr>
 						<td class="tdtotal">TOTAL</td>
 						<td></td>

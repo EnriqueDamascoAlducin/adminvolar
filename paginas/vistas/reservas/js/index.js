@@ -261,7 +261,7 @@ function confirmaragregarPagoSitio(reserva,cliente){
 		abrir_gritter("Advertencia","Debe Capturar una cantidad","warning");
 		return false;
 	}
-	cantidad = parseFloat(cantidad * monedaPrecio).toFixed(2);
+	cantidad = parseFloat(cantidad * monedaPrecio);
 	datos={
 			reserva:reserva,
 			metodo:metodo,

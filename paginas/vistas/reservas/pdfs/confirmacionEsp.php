@@ -18,6 +18,7 @@
 	$habitacion=explode("|", $habitacion);
 
 	$getVendedorInfo = $con->consulta("CONCAT(IFNULL(nombre_usu,''),' ',IFNULL(apellidop_usu,''),' ', IFNULL(apellidom_usu,'')) as nombre, correo_usu as correo,telefono_usu as telefono", " volar_usuarios vu INNER JOIN temp_volar tv ON tv.idusu_temp=vu.id_usu ","id_temp=".$reserva);
+	$movimientosExtras = $con->consulta("motivo_ce,cantidad_ce,tipo_ce","cargosextras_volar","status<>0 and reserva_ce= " . $reserva);
 	$tPasajeros = $datosReserva[0]->pasajerosN+ $datosReserva[0]->pasajerosA;
 	$tipoVuelo = $datosReserva[0]->tipo_temp;
 	$totalPasajeros = $totalPasajeros[0]->Total;
@@ -301,6 +302,21 @@
 		$pdf->Cell(58,6,"$ ".number_format($totalDescuento, 2, '.', ','),1,1,'C',0);
 	}
 
+	if(sizeof($movimientosExtras)>0){ 
+		foreach ($movimientosExtras as $movimientoExtra) { 
+			// $pdf->SetFillColor(139,105,247);
+			// $pdf->SetFont('Arial','',10);
+			// $pdf->Cell(70,6,$movimientoExtra->motivo_ce,1,0,'C',1);
+			// $pdf->Cell(58,6,'',1,0,'C',0);
+			if($movimientoExtra->tipo_ce==1){
+				//$pdf->Cell(58,6,'$ '.$movimientoExtra->cantidad_ce,1,1,'C',0);
+				$totalReserva+=$movimientoExtra->cantidad_ce;
+			}else{
+				//$pdf->Cell(58,6,'-$ '.$movimientoExtra->cantidad_ce,1,1,'C',0);
+				$totalReserva-=$movimientoExtra->cantidad_ce; 
+			}
+		} 
+	}
 	$pdf->SetFillColor(139,105,247);
 	$pdf->SetFont('Arial','',10);
 	$pdf->Cell(70,6,'ANTICIPO ',1,0,'C',1);

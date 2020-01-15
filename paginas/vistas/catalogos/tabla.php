@@ -17,29 +17,34 @@
 	Filtrar solo con permisos
 	*/
 	$extraFilter='';
+	$noFilt = ['AGREGAR','EDITAR','ELIMINAR'];
 	foreach ($permisos as $permiso) {
 		$clasif='';
-		if($permiso=='MONEDAS'){
+		if( !in_array($permiso, $noFilt) ){
+			if($permiso=='MONEDAS'){
 			$clasif='monedas';
-		}elseif($permiso=='MOTIVOS'){
-			$clasif='motivos';
-		}elseif($permiso=='TPOS VUELO'){
-			$clasif='tiposv';
-		}elseif($permiso=='METODOS PAGO'){
-			$clasif='metodopago';
-		}elseif($permiso=='CUENTAS BANCOS'){
-			$clasif='cuentasvolar';
-		}elseif($permiso=='TIPOS GASTOS'){
-			$clasif='tipogastos';
-		}elseif($permiso=='ESTADOS'){
-			$clasif='estados';
-		}else if($permiso!='EDITAR' && $permiso!='ELIMINAR'){
-			$clasif = $permiso;
+			}elseif($permiso=='MOTIVOS'){
+				$clasif='motivos';
+			}elseif($permiso=='TIPOS VUELO'){
+				$clasif='tiposv';
+			}elseif($permiso=='METODOS PAGO'){
+				$clasif='metodopago';
+			}elseif($permiso=='CUENTAS BANCOS'){
+				$clasif='cuentasvolar';
+			}elseif($permiso=='TIPOS GASTOS'){
+				$clasif='tipogastos';
+			}elseif($permiso=='ESTADOS'){
+				$clasif='estados';
+			}else if($permiso!='EDITAR' && $permiso!='ELIMINAR'){
+				$clasif = $permiso;
+			}
+			$permisosC[] = $clasif;
+			$extraFilter .='"'. $clasif.'",';
 		}
-		$permisosC[] = $clasif;
-		$extraFilter .='"'. $clasif.'",';
+		
 	}
 	$filtro .= ' AND clasificacion_extra in('.$extraFilter.'"")';
+	//echo "SELECT  $campos FROM $tabla FROM $filtro";
 	$extras=$con->consulta($campos,$tabla,$filtro);
 ?>
 <table class="DataTable table table-striped table-bordered table-hover">

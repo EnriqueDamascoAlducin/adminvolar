@@ -77,222 +77,237 @@ $cuerpo='<!DOCTYPE html>
           </style>
           <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
         </head>';
-$cuerpo.=		'<body>';
-$cuerpo.=			'<img src="https://www.volarenglobo.com.mx/admin1/sources/images/correos/confirmationHeader.jpeg" style="width:100%; max-width=100%;" alt="Confirmacion">';
-$cuerpo.=			'<p>Hello!!! <b>'.$datosReserva[0]->nombre.'</b>. This is your flight confirmation. It’s not necessary to be printed! </p>';
-$cuerpo.=				'<p><b>Registration and Payment:</b> Your flight date, you must get to our reception where our hostess will welcome you, make your registration and get the remaining payment. Remember to be on time at the appointment place. Our advice is to bring comfortable clothes, just as if you were on a picnic: cap, scarf, gloves, jacket, sunscreen, and camera.</p>';
+$cuerpo.=   '<body>';
+$cuerpo.=     '<img src="https://www.volarenglobo.com.mx/admin1/sources/images/correos/confirmationHeader.jpeg" style="width:100%; max-width=100%;" alt="Confirmacion">';
+$cuerpo.=     '<p>Hello!!! <b>'.$datosReserva[0]->nombre.'</b>. This is your flight confirmation. It’s not necessary to be printed! </p>';
+$cuerpo.=       '<p><b>Registration and Payment:</b> Your flight date, you must get to our reception where our hostess will welcome you, make your registration and get the remaining payment. Remember to be on time at the appointment place. Our advice is to bring comfortable clothes, just as if you were on a picnic: cap, scarf, gloves, jacket, sunscreen, and camera.</p>';
 
 
-$cuerpo.=			'<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">';
-$cuerpo.=				'<table border="1">';
-$cuerpo.=					'<thead>';
-$cuerpo.=						'<tr>';
-$cuerpo.=							'<th class="tdtitulo" colspan="4">';
-$cuerpo.=								'FLIGHT INFORMATION';
-$cuerpo.=							'</th>';
-$cuerpo.=						'</tr>';
-$cuerpo.=					'</thead>';
-$cuerpo.=					'<tbody>';
+$cuerpo.=     '<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">';
+$cuerpo.=       '<table border="1">';
+$cuerpo.=         '<thead>';
+$cuerpo.=           '<tr>';
+$cuerpo.=             '<th class="tdtitulo" colspan="4">';
+$cuerpo.=               'FLIGHT INFORMATION';
+$cuerpo.=             '</th>';
+$cuerpo.=           '</tr>';
+$cuerpo.=         '</thead>';
+$cuerpo.=         '<tbody>';
 
 
-$cuerpo.=						'<tr>';
-$cuerpo.=							'<td class="tdtitulo">REFERENCE:</td>';
-$cuerpo.=							'<td >'.$reserva.'</td>';
-$cuerpo.=							'<td colspan="2" ></td>';
-$cuerpo.=						'</tr>';
+$cuerpo.=           '<tr>';
+$cuerpo.=             '<td class="tdtitulo">REFERENCE:</td>';
+$cuerpo.=             '<td >'.$reserva.'</td>';
+$cuerpo.=             '<td colspan="2" ></td>';
+$cuerpo.=           '</tr>';
 
-$cuerpo.=						'<tr>';
-$cuerpo.=							'<td class="tdtitulo">NAME: </td>';
-$cuerpo.=							'<td >'.$datosReserva[0]->nombre.'</td>';
-$cuerpo.=							'<td colspan="2"></td>';
-$cuerpo.=						'</tr>';
-$cuerpo.=						'<tr>';
-$cuerpo.=							'<td class="tdtitulo">TELEPHONE</td>';
-$cuerpo.=							'<td >'.$datosReserva[0]->telefonos.'</td>';
-$cuerpo.=							'<td colspan="2"></td>';
-$cuerpo.=						'</tr>';
-$cuerpo.=						'<tr>';
-$cuerpo.=							'<td class="tdtitulo">FLIGHT DATE</td>';
-$cuerpo.=							'<td >'.convertirFecha($datosReserva[0]->fechavuelo).'</td>';
-$cuerpo.=							'<td colspan="2" ></td>';
-$cuerpo.=						'</tr>';
-$cuerpo.=						'<tr>';
-$cuerpo.=							'<td class="tdtitulo">FLIGHT</td>';
-$cuerpo.=							'<td >'.utf8_encode($datosReserva[0]->tipoVuelo).'</td>';
-$cuerpo.=							'<td colspan="2"></td>';
-$cuerpo.=						'</tr>';
+$cuerpo.=           '<tr>';
+$cuerpo.=             '<td class="tdtitulo">NAME: </td>';
+$cuerpo.=             '<td >'.$datosReserva[0]->nombre.'</td>';
+$cuerpo.=             '<td colspan="2"></td>';
+$cuerpo.=           '</tr>';
+$cuerpo.=           '<tr>';
+$cuerpo.=             '<td class="tdtitulo">TELEPHONE</td>';
+$cuerpo.=             '<td >'.$datosReserva[0]->telefonos.'</td>';
+$cuerpo.=             '<td colspan="2"></td>';
+$cuerpo.=           '</tr>';
+$cuerpo.=           '<tr>';
+$cuerpo.=             '<td class="tdtitulo">FLIGHT DATE</td>';
+$cuerpo.=             '<td >'.convertirFecha($datosReserva[0]->fechavuelo).'</td>';
+$cuerpo.=             '<td colspan="2" ></td>';
+$cuerpo.=           '</tr>';
+$cuerpo.=           '<tr>';
+$cuerpo.=             '<td class="tdtitulo">FLIGHT</td>';
+$cuerpo.=             '<td >'.utf8_encode($datosReserva[0]->tipoVuelo).'</td>';
+$cuerpo.=             '<td colspan="2"></td>';
+$cuerpo.=           '</tr>';
 
-$cuerpo.=						'<tr>';
-$cuerpo.=							'<td class="tdtitulo">ADULTS: </td>';
-$cuerpo.=							'<td >'.$datosReserva[0]->pasajerosA.'</td>';
-$cuerpo.=							'<td colspan="2"colspan="2">$ ';
-$cuerpo.=									number_format(($datosReserva[0]->pasajerosA*$datosReserva[0]->precioA ), 2, '.', ',') ;
-$cuerpo.=							'</td>';
-$cuerpo.=						'</tr>';
-$cuerpo.=						'<tr>';
-$cuerpo.=							'<td class="tdtitulo">KIDS: </td>';
-$cuerpo.=							'<td >'.$datosReserva[0]->pasajerosN.'</td>';
-$cuerpo.=							'<td colspan="2"colspan="2">$ ';
-$cuerpo.=									number_format(($datosReserva[0]->pasajerosN*$datosReserva[0]->precioN ), 2, '.', ',') ;
-$cuerpo.=							'</td>';
-$cuerpo.=						'</tr>';
+$cuerpo.=           '<tr>';
+$cuerpo.=             '<td class="tdtitulo">ADULTS: </td>';
+$cuerpo.=             '<td >'.$datosReserva[0]->pasajerosA.'</td>';
+$cuerpo.=             '<td colspan="2"colspan="2">$ ';
+$cuerpo.=                 number_format(($datosReserva[0]->pasajerosA*$datosReserva[0]->precioA ), 2, '.', ',') ;
+$cuerpo.=             '</td>';
+$cuerpo.=           '</tr>';
+$cuerpo.=           '<tr>';
+$cuerpo.=             '<td class="tdtitulo">KIDS: </td>';
+$cuerpo.=             '<td >'.$datosReserva[0]->pasajerosN.'</td>';
+$cuerpo.=             '<td colspan="2"colspan="2">$ ';
+$cuerpo.=                 number_format(($datosReserva[0]->pasajerosN*$datosReserva[0]->precioN ), 2, '.', ',') ;
+$cuerpo.=             '</td>';
+$cuerpo.=           '</tr>';
 
 /*
-$cuerpo.=						'<tr>';
-$cuerpo.=							'<td class="tdtitulo">PASAJEROS</td>';
-$cuerpo.=							'<td >Adultos:'.$datosReserva[0]->pasajerosA.'<br>Ni&ntilde;os:'.$datosReserva[0]->pasajerosN .'</td>';
-$cuerpo.=							'<td colspan="2"colspan="2">$ ';
-$cuerpo.=									number_format(($datosReserva[0]->pasajerosA*$datosReserva[0]->precioA ) + ($datosReserva[0]->pasajerosN*$datosReserva[0]->precioN ), 2, '.', ',') ;
-$cuerpo.=							'</td>';
-$cuerpo.=						'</tr>';
+$cuerpo.=           '<tr>';
+$cuerpo.=             '<td class="tdtitulo">PASAJEROS</td>';
+$cuerpo.=             '<td >Adultos:'.$datosReserva[0]->pasajerosA.'<br>Ni&ntilde;os:'.$datosReserva[0]->pasajerosN .'</td>';
+$cuerpo.=             '<td colspan="2"colspan="2">$ ';
+$cuerpo.=                 number_format(($datosReserva[0]->pasajerosA*$datosReserva[0]->precioA ) + ($datosReserva[0]->pasajerosN*$datosReserva[0]->precioN ), 2, '.', ',') ;
+$cuerpo.=             '</td>';
+$cuerpo.=           '</tr>';
 */
 
 
 if($datosReserva[0]->motivo!=''){
-  $cuerpo.=						'<tr>';
-  $cuerpo.=							'<td class="tdtitulo">OCASSION: </td>';
-  $cuerpo.=							'<td>'. $datosReserva[0]->motivo.'</td>';
-  $cuerpo.=							'<td colspan="2"></td>';
-  $cuerpo.=						'</tr>';
+  $cuerpo.=           '<tr>';
+  $cuerpo.=             '<td class="tdtitulo">OCASSION: </td>';
+  $cuerpo.=             '<td>'. $datosReserva[0]->motivo.'</td>';
+  $cuerpo.=             '<td colspan="2"></td>';
+  $cuerpo.=           '</tr>';
 }
 if($datosReserva[0]->comentario!=''){
-  $cuerpo.=						'<tr>';
-  $cuerpo.=							'<td class="tdtitulo">COMMENTS</td>';
-  $cuerpo.=							'<td>'. $datosReserva[0]->comentario.'</td>';
-  $cuerpo.=							'<td colspan="2"></td>';
-  $cuerpo.=						'</tr>';
+  $cuerpo.=           '<tr>';
+  $cuerpo.=             '<td class="tdtitulo">COMMENTS</td>';
+  $cuerpo.=             '<td>'. $datosReserva[0]->comentario.'</td>';
+  $cuerpo.=             '<td colspan="2"></td>';
+  $cuerpo.=           '</tr>';
 }
 
 
 
 if($datosReserva[0]->hotel!=''){
-  $cuerpo.=						'<tr>';
-  $cuerpo.=							'<td class="tdseparador" colspan="4">HOTEL</td>';
-  $cuerpo.=						'</tr>';
-  $cuerpo.=						'<tr>';
-  $cuerpo.=							'<td class="tdtitulo" colspan="4">'.$hotel.'<br>$ '. number_format(  $precioHabitacion, 2, '.', ',') .'</td>';
-  $cuerpo.=						'</tr>';
-  $cuerpo.=						'<tr>';
-  $cuerpo.=							'<td class="tdtitulo" >ROOM</td>';
-  $cuerpo.=							'<td >'.$nombreHabitacion.'</td>';
-  $cuerpo.=							'<td ></td>';
-  $cuerpo.=						'</tr>';
-  $cuerpo.=						'<tr>';
-  $cuerpo.=							'<td class="tdtitulo" >PRICE/NIGHT</td>';
-  $cuerpo.=							'<td >'.$descripcionHospedaje.'</td>';
-  $cuerpo.=							'<td >$ '.number_format(  $totalHabitacion, 2, '.', ',').'</td>';
-  $cuerpo.=						'</tr>';
+  $cuerpo.=           '<tr>';
+  $cuerpo.=             '<td class="tdseparador" colspan="4">HOTEL</td>';
+  $cuerpo.=           '</tr>';
+  $cuerpo.=           '<tr>';
+  $cuerpo.=             '<td class="tdtitulo" colspan="4">'.$hotel.'<br>$ '. number_format(  $precioHabitacion, 2, '.', ',') .'</td>';
+  $cuerpo.=           '</tr>';
+  $cuerpo.=           '<tr>';
+  $cuerpo.=             '<td class="tdtitulo" >ROOM</td>';
+  $cuerpo.=             '<td >'.$nombreHabitacion.'</td>';
+  $cuerpo.=             '<td ></td>';
+  $cuerpo.=           '</tr>';
+  $cuerpo.=           '<tr>';
+  $cuerpo.=             '<td class="tdtitulo" >PRICE/NIGHT</td>';
+  $cuerpo.=             '<td >'.$descripcionHospedaje.'</td>';
+  $cuerpo.=             '<td >$ '.number_format(  $totalHabitacion, 2, '.', ',').'</td>';
+  $cuerpo.=           '</tr>';
 
 }
 /*
-$cuerpo.=						'<tr>';
-$cuerpo.=							'<td class="tdtitulo">VENDEDOR</td>';
-$cuerpo.=							'<td >'.$vendedor[0].'</td>';
-$cuerpo.=							'<td colspan="2"></td>';
-$cuerpo.=						'</tr>';
+$cuerpo.=           '<tr>';
+$cuerpo.=             '<td class="tdtitulo">VENDEDOR</td>';
+$cuerpo.=             '<td >'.$vendedor[0].'</td>';
+$cuerpo.=             '<td colspan="2"></td>';
+$cuerpo.=           '</tr>';
 */
 if($datosReserva[0]->otroscar1!=''){
-  $cuerpo.=					'<tr>';
-  $cuerpo.=						'<td class="tdtitulo">'. $datosReserva[0]->otroscar1. '</td>';
-  $cuerpo.=						'<td >$ '. number_format( $datosReserva[0]->precio1 , 2, '.', ','). '</td>';
-$cuerpo.=							'<td colspan="2"></td>';
-  $cuerpo.=					'</tr>';
+  $cuerpo.=         '<tr>';
+  $cuerpo.=           '<td class="tdtitulo">'. $datosReserva[0]->otroscar1. '</td>';
+  $cuerpo.=           '<td >$ '. number_format( $datosReserva[0]->precio1 , 2, '.', ','). '</td>';
+$cuerpo.=             '<td colspan="2"></td>';
+  $cuerpo.=         '</tr>';
 }
 if($datosReserva[0]->otroscar2!=''){
-  $cuerpo.=					'<tr>';
-  $cuerpo.=						'<td class="tdtitulo">'. $datosReserva[0]->otroscar2. '</td>';
-  $cuerpo.=						'<td >$ '. number_format( $datosReserva[0]->precio2 , 2, '.', ','). '</td>';
-$cuerpo.=							'<td colspan="2"></td>';
-  $cuerpo.=					'</tr>';
+  $cuerpo.=         '<tr>';
+  $cuerpo.=           '<td class="tdtitulo">'. $datosReserva[0]->otroscar2. '</td>';
+  $cuerpo.=           '<td >$ '. number_format( $datosReserva[0]->precio2 , 2, '.', ','). '</td>';
+$cuerpo.=             '<td colspan="2"></td>';
+  $cuerpo.=         '</tr>';
 }
 if(sizeof($serviciosReserva)>0){
-  $cuerpo.=					'<tr>';
-  $cuerpo.=						'<td class="tdseparador" colspan="3">SERVICES</td>';
-  $cuerpo.=					'</tr>';
+  $cuerpo.=         '<tr>';
+  $cuerpo.=           '<td class="tdseparador" colspan="3">SERVICES</td>';
+  $cuerpo.=         '</tr>';
   foreach ($serviciosReserva as $servicioReserva) {
-    $cuerpo.=				'<tr>';
-    $cuerpo.=					'<td class="tdtitulo">'. $servicioReserva->servicio .'</td>';
+    $cuerpo.=       '<tr>';
+    $cuerpo.=         '<td class="tdtitulo">'. $servicioReserva->servicio .'</td>';
     if($servicioReserva->tipo==1){
       if ($servicioReserva->cantmax == 1){
         $totalReserva +=($totalPasajeros * $servicioReserva->precio );
-        $cuerpo.=				'<td>'.$tPasajeros.'</td>';
-        $cuerpo.=				'<td colspan="2">$ '.number_format(($totalPasajeros * $servicioReserva->precio ), 2, '.', ',').'</td>';
+        $cuerpo.=       '<td>'.$tPasajeros.'</td>';
+        $cuerpo.=       '<td colspan="2">$ '.number_format(($totalPasajeros * $servicioReserva->precio ), 2, '.', ',').'</td>';
       }else{
         $totalReserva += $servicioReserva->precio ;
-        $cuerpo.=				'<td></td>';
-        $cuerpo.=				'<td colspan="2">$ '.number_format($servicioReserva->precio, 2, '.', ',').'</td>';
+        $cuerpo.=       '<td></td>';
+        $cuerpo.=       '<td colspan="2">$ '.number_format($servicioReserva->precio, 2, '.', ',').'</td>';
       }
     }else{
-      $cuerpo.=				'<td>';
-      $cuerpo.=					'INCLUDED';
-      $cuerpo.=				'</td>';
-      $cuerpo.=				'<td colspan="2"></td>';
+      $cuerpo.=       '<td>';
+      $cuerpo.=         'INCLUDED';
+      $cuerpo.=       '</td>';
+      $cuerpo.=       '<td colspan="2"></td>';
     }
-    $cuerpo.=				'</tr>';
+    $cuerpo.=       '</tr>';
   }
 }
-$cuerpo.=						'<tr>';
-$cuerpo.=							'<td class="tdtotal">SUBTOTAL</td>';
-$cuerpo.=							'<td ></td>';
-$cuerpo.=							'<td colspan="2">$ '.number_format($totalReserva, 2, '.', ',') .'</td>';
-$cuerpo.=						'</tr>';
+$cuerpo.=           '<tr>';
+$cuerpo.=             '<td class="tdtotal">SUBTOTAL</td>';
+$cuerpo.=             '<td ></td>';
+$cuerpo.=             '<td colspan="2">$ '.number_format($totalReserva, 2, '.', ',') .'</td>';
+$cuerpo.=           '</tr>';
 if($datosReserva[0]->tdescuento!='' && $datosReserva[0]->cantdescuento>0) {
   if($datosReserva[0]->tdescuento==1){
     $totalDescuento = ($totalReserva * $datosReserva[0]->cantdescuento )/100;
   }else{
     $totalDescuento = $datosReserva[0]->cantdescuento;
   }
-  $cuerpo.=					'<tr>';
-  $cuerpo.=						'<td class="tddesc">DISCOUNT</td>';
-  $cuerpo.=						'<td ></td>';
-  $cuerpo.=						'<td colspan="2">';
+  $cuerpo.=         '<tr>';
+  $cuerpo.=           '<td class="tddesc">DISCOUNT</td>';
+  $cuerpo.=           '<td ></td>';
+  $cuerpo.=           '<td colspan="2">';
   if($datosReserva[0]->tdescuento==1) {
-    $cuerpo.=						 $datosReserva[0]->cantdescuento."% ($" .number_format($totalDescuento, 2, '.', ',').")";
+    $cuerpo.=            $datosReserva[0]->cantdescuento."% ($" .number_format($totalDescuento, 2, '.', ',').")";
   }else{
-    $cuerpo.=						'$ '.$totalDescuento;
+    $cuerpo.=           '$ '.$totalDescuento;
   }
-  $cuerpo.=						'</td>';
-  $cuerpo.=					'</tr>';
+  $cuerpo.=           '</td>';
+  $cuerpo.=         '</tr>';
   $totalReserva-=$totalDescuento;
 }
+  if(sizeof($movimientosExtras)>0){ 
+    foreach ($movimientosExtras as $movimientoExtra) { 
+      $cuerpo.='<tr style="display: none">';
+      $cuerpo.= '<td class="tdtitulo">'.$movimientoExtra->motivo_ce .'</td>';
+      $cuerpo.= '<td></td>';
+      if($movimientoExtra->tipo_ce==1){
+        $cuerpo.= '<td>$ '.$movimientoExtra->cantidad_ce.'</td>';
+        $totalReserva+=$movimientoExtra->cantidad_ce;
+      }else{
+        $cuerpo.= '<td>-$ '.$movimientoExtra->cantidad_ce.'</td>';
+        $totalReserva-=$movimientoExtra->cantidad_ce; 
+      }
+      $cuerpo.='</tr>';
+    } 
+  }
 /*
-$cuerpo.=						'<tr>';
-$cuerpo.=							'<td class="tdtitulo">CURRENT PAY</td>';
-$cuerpo.=							'<td ></td>';
-$cuerpo.=							'<td colspan="2">$ '.number_format($pagoInfo[0]->cantidad, 2, '.', ',').'</td>';
-$cuerpo.=						'</tr>';*/
-$cuerpo.=						'<tr>';
-$cuerpo.=							'<td class="tdtitulo">ADVANCE PAYMENT</td>';
-$cuerpo.=							'<td ></td>';
-$cuerpo.=							'<td colspan="2">$ '.number_format($totalPagos[0]->totalPagos, 2, '.', ',').'</td>';
-$cuerpo.=						'</tr>';
+$cuerpo.=           '<tr>';
+$cuerpo.=             '<td class="tdtitulo">CURRENT PAY</td>';
+$cuerpo.=             '<td ></td>';
+$cuerpo.=             '<td colspan="2">$ '.number_format($pagoInfo[0]->cantidad, 2, '.', ',').'</td>';
+$cuerpo.=           '</tr>';*/
+$cuerpo.=           '<tr>';
+$cuerpo.=             '<td class="tdtitulo">ADVANCE PAYMENT</td>';
+$cuerpo.=             '<td ></td>';
+$cuerpo.=             '<td colspan="2">$ '.number_format($totalPagos[0]->totalPagos, 2, '.', ',').'</td>';
+$cuerpo.=           '</tr>';
                 $totalReserva-=$totalPagos[0]->totalPagos;
-$cuerpo.=						'<tr>';
-$cuerpo.=							'<td class="tdtotal">REMAINDER</td>';
-$cuerpo.=							'<td ></td>';
-$cuerpo.=							'<td colspan="2">$ '.number_format($totalReserva, 2, '.', ',') .'</td>';
-$cuerpo.=						'</tr>';
+$cuerpo.=           '<tr>';
+$cuerpo.=             '<td class="tdtotal">REMAINDER</td>';
+$cuerpo.=             '<td ></td>';
+$cuerpo.=             '<td colspan="2">$ '.number_format($totalReserva, 2, '.', ',') .'</td>';
+$cuerpo.=           '</tr>';
 
-$cuerpo.=						'<tr>';
-$cuerpo.=							'<td class="" colspan="4">From 6:00 a.m. we wait you at our reception, however this time will be <b>CONFIRMED ONE DAY BEFORE</b> your flight day according to the logistic of the day or weather conditions, please be aware as you will receive a call or message to confirm the schedule.</td>';
-$cuerpo.=						'</tr>';
+$cuerpo.=           '<tr>';
+$cuerpo.=             '<td class="" colspan="4">From 6:00 a.m. we wait you at our reception, however this time will be <b>CONFIRMED ONE DAY BEFORE</b> your flight day according to the logistic of the day or weather conditions, please be aware as you will receive a call or message to confirm the schedule.</td>';
+$cuerpo.=           '</tr>';
 
-$cuerpo.=						'<tr>';
-$cuerpo.=							'<td class="" colspan="4">*All Our Prices are Expressed in Mexican Pesos.</td>';
-$cuerpo.=						'</tr>';
+$cuerpo.=           '<tr>';
+$cuerpo.=             '<td class="" colspan="4">*All Our Prices are Expressed in Mexican Pesos.</td>';
+$cuerpo.=           '</tr>';
 
-$cuerpo.=						'<tr>';
-$cuerpo.=							'<td class="tdseparador" colspan="4">Meeting Point:	</td>';
-$cuerpo.=						'</tr>';
-$cuerpo.=						'<tr>';
-$cuerpo.=							'<td  colspan="4"><h5><a href="https://www.google.com.mx/maps/place/VOLAR+EN+GLOBO/@19.6956647,-98.8269825,17z/data=!3m1!4b1!4m5!3m4!1s0x85d1f5725d683f25:0xff4f4587c24e2324!8m2!3d19.6956597!4d-98.8247938">Volar en Globo Reception.</a></h5></td>';
-$cuerpo.=						'</tr>';
-$cuerpo.=						'<tr>';
-$cuerpo.=							'<td  colspan="4"><b>Waze</b>: Globodromo Volar en Globo</td>';
-$cuerpo.=						'</tr>';
-$cuerpo.=						'<tr>';
-$cuerpo.=							'<td colspan="4">';
-$cuerpo.=								'<ol type="1">
+$cuerpo.=           '<tr>';
+$cuerpo.=             '<td class="tdseparador" colspan="4">Meeting Point: </td>';
+$cuerpo.=           '</tr>';
+$cuerpo.=           '<tr>';
+$cuerpo.=             '<td  colspan="4"><h5><a href="https://www.google.com.mx/maps/place/VOLAR+EN+GLOBO/@19.6956647,-98.8269825,17z/data=!3m1!4b1!4m5!3m4!1s0x85d1f5725d683f25:0xff4f4587c24e2324!8m2!3d19.6956597!4d-98.8247938">Volar en Globo Reception.</a></h5></td>';
+$cuerpo.=           '</tr>';
+$cuerpo.=           '<tr>';
+$cuerpo.=             '<td  colspan="4"><b>Waze</b>: Globodromo Volar en Globo</td>';
+$cuerpo.=           '</tr>';
+$cuerpo.=           '<tr>';
+$cuerpo.=             '<td colspan="4">';
+$cuerpo.=               '<ol type="1">
                           <li>Restrictions:</li>
                           <ul>
                             <li>Children under 4 years old.</li>
@@ -327,24 +342,24 @@ $cuerpo.=								'<ol type="1">
                             </li>
                           </ul>
                         </ol>';
-$cuerpo.=							'</td>';
-$cuerpo.=						'</tr>';
-$cuerpo.=						'<tr>';
-  $cuerpo.=						'<td colspan="4">';
+$cuerpo.=             '</td>';
+$cuerpo.=           '</tr>';
+$cuerpo.=           '<tr>';
+  $cuerpo.=           '<td colspan="4">';
     $cuerpo.=           ' <a href="https://www.google.com/maps/place/VOLAR+EN+GLOBO/@19.6956647,-98.8269878,17z/data=!3m1!4b1!4m5!3m4!1s0x85d1f5725d683f25:0xff4f4587c24e2324!8m2!3d19.6956597!4d-98.8247938">
                           <button type="button" class="btn btn-info btn-lg" id="direccionvga" style="background:#aa66cc; width:100%; height:35px; color:white;">Address</button>
                         </a>
                         <hr>';
   $cuerpo.='</td>';
 $cuerpo.='</tr>';
-$cuerpo.=					'</tbody>';
-$cuerpo.=				'</table>';
-$cuerpo.=			'</div>';
-$cuerpo.=			'<p style="font-size:14px">If you need any more information, please call your seller.</p>';
-$cuerpo.=			'<b>'.$getVendedorInfo[0]->nombre.'</b><br>';
-$cuerpo.=			'<i>'.$vendedor[1].'<br>'.$vendedor[2].'</i>';
-$cuerpo.=		'</body>';
-$cuerpo.=	'</html>';
+$cuerpo.=         '</tbody>';
+$cuerpo.=       '</table>';
+$cuerpo.=     '</div>';
+$cuerpo.=     '<p style="font-size:14px">If you need any more information, please call your seller.</p>';
+$cuerpo.=     '<b>'.$getVendedorInfo[0]->nombre.'</b><br>';
+$cuerpo.=     '<i>'.$vendedor[1].'<br>'.$vendedor[2].'</i>';
+$cuerpo.=   '</body>';
+$cuerpo.= '</html>';
 //echo $cuerpo;
 $ruta=$_SERVER['DOCUMENT_ROOT'].'/admin1/sources/PHPMailer/mail.php';
 require_once  $ruta;

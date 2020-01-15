@@ -220,6 +220,21 @@
 		$cuerpo.=					'</tr>';
 		$totalReserva-=$totalDescuento;
 	}
+	if(sizeof($movimientosExtras)>0){ 
+		foreach ($movimientosExtras as $movimientoExtra) { 
+			$cuerpo.='<tr style="display: none">';
+			$cuerpo.=	'<td class="tdtitulo">'.$movimientoExtra->motivo_ce .'</td>';
+			$cuerpo.=	'<td></td>';
+			if($movimientoExtra->tipo_ce==1){
+				$cuerpo.=	'<td>$ '.$movimientoExtra->cantidad_ce.'</td>';
+				$totalReserva+=$movimientoExtra->cantidad_ce;
+			}else{
+				$cuerpo.=	'<td>-$ '.$movimientoExtra->cantidad_ce.'</td>';
+				$totalReserva-=$movimientoExtra->cantidad_ce; 
+			}
+			$cuerpo.='</tr>';
+		} 
+	}
 	$cuerpo.=						'<tr>';
 	$cuerpo.=							'<td class="tdtotal">TOTAL</td>';
 	$cuerpo.=							'<td ></td>';

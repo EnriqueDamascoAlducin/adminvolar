@@ -102,6 +102,12 @@
 						<input type="number" class="form-control" id="cantidad" placeholder="Cantidad" value="0">
 					</div>
 				</div>
+				<div class="col-sm-3 col-lg-3 col-md-3 col-6 col-xl-3 " >
+					<div class="form-group">
+						<label for="cantidad2">Cantidad</label>
+						<input type="number" class="form-control" id="cantidad2" placeholder="Cantidad"2 value="0">
+					</div>
+				</div>
 				<div class="col-sm-3 col-lg-3 col-md-3 col-6 col-xl-3 ">
 					<div class="form-group">
 						<label for="fecha">Fecha de Pago</label>
@@ -260,6 +266,7 @@
 		var nombre = moneda[0];
 		var valor = parseFloat(moneda[1]).toFixed(2);
 		var cantidad =parseFloat(this.value).toFixed(2);
+		var cantidad2 =parseFloat(this.value);
 		var nuevoValor = 0;
 		nuevoValor = ( cantidad*  valor);
 		$("#conversion").html(cantidad + " "+ nombre.replace("(","") + " equivale a " +parseFloat(nuevoValor).toFixed(2)  +" Pesos Mexicanos ");

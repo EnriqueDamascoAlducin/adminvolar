@@ -5,13 +5,13 @@
         $usuario= unserialize((base64_decode($_SESSION['usuario'])));
     }
 
-			$totalReserva=0.0;
-			$totalReserva+=$totalVuelo;
-			$totalReserva +=$datosReserva[0]->precio1;
-		 $totalReserva +=$datosReserva[0]->precio2;
-		 if(isset($datosReserva[0]->habitacion) && $datosReserva[0]->habitacion!=''){
-			$totalReserva+=$totalHabitacion;
-		 }
+	$totalReserva=0.0;
+	$totalReserva+=$totalVuelo;
+	$totalReserva +=$datosReserva[0]->precio1;
+	 $totalReserva +=$datosReserva[0]->precio2;
+	 if(isset($datosReserva[0]->habitacion) && $datosReserva[0]->habitacion!=''){
+		$totalReserva+=$totalHabitacion;
+	 }
 ?>
 <?php
 	/// Datos de Correo
@@ -218,6 +218,21 @@
 		$cuerpo.=						'</td>';
 		$cuerpo.=					'</tr>';
 		$totalReserva-=$totalDescuento;
+	}
+	if(sizeof($movimientosExtras)>0){ 
+		foreach ($movimientosExtras as $movimientoExtra) { 
+			$cuerpo.='<tr style="display: none">';
+			$cuerpo.=	'<td class="tdtitulo">'.$movimientoExtra->motivo_ce .'</td>';
+			$cuerpo.=	'<td></td>';
+			if($movimientoExtra->tipo_ce==1){
+				$cuerpo.=	'<td>$ '.$movimientoExtra->cantidad_ce.'</td>';
+				$totalReserva+=$movimientoExtra->cantidad_ce;
+			}else{
+				$cuerpo.=	'<td>-$ '.$movimientoExtra->cantidad_ce.'</td>';
+				$totalReserva-=$movimientoExtra->cantidad_ce; 
+			}
+			$cuerpo.='</tr>';
+		} 
 	}
 	$cuerpo.=						'<tr>';
 	$cuerpo.=							'<td class="tdtotal">TOTAL</td>';
