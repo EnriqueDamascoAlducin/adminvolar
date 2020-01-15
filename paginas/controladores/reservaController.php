@@ -47,7 +47,12 @@
 		$version=$_POST['version'];
 		$peso=$_POST['peso'];
 		$pax=$_POST['pax'];
-		$asignarVuelo = $con->insertar("globosasignados_volar",	"reserva_ga,version_ga,globo_ga,peso_ga,piloto_ga,pax_ga" ,$reserva.",".$version.",".$globo.",".$peso.",".$piloto.",".$pax);
+		if(isset($_POST['comentario']) && !empty($_POST['comentario'])){
+			$comentario = "'".$_POST['comentario']."'";
+		}else{
+			$comentario ="null";
+		}
+		$asignarVuelo = $con->insertar("globosasignados_volar",	"reserva_ga,version_ga,globo_ga,peso_ga,piloto_ga,pax_ga,comentario_ga" ,$reserva.",".$version.",".$globo.",".$peso.",".$piloto.",".$pax.",".$comentario);
 		echo $asignarVuelo;
 	}elseif(isset($_POST['accion']) && $_POST['accion']=='eliminarGlobos'){
 	$version=$_POST['version'];

@@ -816,6 +816,7 @@ function guardaGlobo() {
 	version = $("#version").val();
 	peso = $("#peso").val().trim();
 	pax = $("#pax").val().trim();
+	comentario = $("#comentario").val().trim();
 	datos	=	{
 			piloto:piloto,
 			globo:globo,
@@ -823,6 +824,7 @@ function guardaGlobo() {
 			version:version,
 			peso:peso,
 			pax:pax,
+			comentario:comentario,
 			accion:'globos'
 	};
 	if(globo=="0"){

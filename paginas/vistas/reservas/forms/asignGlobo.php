@@ -64,119 +64,124 @@
 
 	 $globosAsignados = $con->consulta("tipo_temp as tipo,fechavuelo_temp as fecha, hora_temp as hora,nombre_extra, id_temp, CONCAT(IFNULL(nombre_temp,''),' ',IFNULL(apellidos_temp,'')) as nombre","temp_volar tv INNER JOIN vueloscat_volar vv on tipo_temp = id_vc INNER JOIN extras_volar ev ON tipo_vc = id_extra","tv.status= 8 and  fechavuelo_temp = '". $fecha ."'");
 
-
 ?>
 <?php if(isset($_POST['reserva'])){ ?>
-<div class="row">
-	<div class="col-sm-12 col-lg-4 col-md-4 col-12 col-xl-3 ">
-		<div class="form-group">
-			<label for="hora">Hora de Vuelo</label>
-			<input type="time" class="form-control"   id="hora" placeholder="Hora de Vuelo" value = "<?php echo $datoReserva[0]->hora; ?>" onchange="confirmarAsignarGlobo(<?php echo $_POST['reserva']; ?>)" >
-		</div>
-	</div>
+	<div class="row">
 		<div class="col-sm-12 col-lg-4 col-md-4 col-12 col-xl-3 ">
 			<div class="form-group">
-				<label for="hora">Turno</label>
-				<select class="form-control" name="turno" id="turno" onchange="confirmarAsignarGlobo(<?php echo $_POST['reserva']; ?>)" >
-					<option value="">Selecciona un Turno</option>
-					<option value="1" <?php echo $opc1; ?> >Primero</option>
-					<option value="2" <?php echo $opc2; ?> >Segundo</option>
-					<option value="3" <?php echo $opc3; ?> >Tercero</option>
+				<label for="hora">Hora de Vuelo</label>
+				<input type="time" class="form-control"   id="hora" placeholder="Hora de Vuelo" value = "<?php echo $datoReserva[0]->hora; ?>" onchange="confirmarAsignarGlobo(<?php echo $_POST['reserva']; ?>)" >
+			</div>
+		</div>
+			<div class="col-sm-12 col-lg-4 col-md-4 col-12 col-xl-3 ">
+				<div class="form-group">
+					<label for="hora">Turno</label>
+					<select class="form-control" name="turno" id="turno" onchange="confirmarAsignarGlobo(<?php echo $_POST['reserva']; ?>)" >
+						<option value="">Selecciona un Turno</option>
+						<option value="1" <?php echo $opc1; ?> >Primero</option>
+						<option value="2" <?php echo $opc2; ?> >Segundo</option>
+						<option value="3" <?php echo $opc3; ?> >Tercero</option>
+					</select>
+				</div>
+			</div>
+		<?php
+			$display="";
+			if($datoReserva[0]->turno=='0' || $datoReserva[0]->hora=='' || $pesoLibre==0){
+				$display = "display:none";
+			}
+		?>
+		<div class="col-sm-12 col-lg-4 col-md-4 col-12 col-xl-3 " style="margin-top:25px" >
+			<div class="form-group">
+				<?php if($datoReserva[0]->tipopeso=='1'){ ?>
+					<label >Peso: <?php echo $datoReserva[0]->kg; ?> Kg </label>
+				<?php }else{ ?>
+					<label>Peso: <?php echo ($datoReserva[0]->kg * 0.453592); ?> Kg</label>
+				<?php } ?>
+			</div>
+		</div>
+		<div class="col-sm-12 col-lg-4 col-md-4 col-12 col-xl-3 " style="margin-top:25px" >
+			<div class="form-group">
+					<label >Peso Ocupado: <?php echo $pesoOcupado_Version[0]->ocupado; ?> Kg </label>
+			</div>
+		</div>
+			<input type="hidden" id="reservaG" value="<?php echo $_POST['reserva']; ?>">
+			<input type="hidden" id="version" value="<?php echo $pesoOcupado_Version[0]->version + 1; ?>">
+			<input type="hidden" id="tipovuelo" value="<?php echo $tVuelo[0]->tipo_vc; ?>">
+	</div>
+
+	<div class="row">
+		<div class="col-12 col-sm-6 col-md-3 col-lg-3 col-xl-3"  style="<?php echo $display; ?>">
+			<div class="form-group">
+				<label class="form-label" for="peso">Peso</label>
+				<input class="form-control" type="number" name="peso" id="peso" value="<?php echo $pesoLibre; ?>" onkeypress="return isNumber(event)" onchange="validaPeso(this.value);">
+			</div>
+		</div>
+			<div class="col-12 col-sm-6 col-md-3 col-lg-3 col-xl-3"  style="<?php echo $display; ?>">
+				<div class="form-group">
+					<label class="form-label" for="pax">PaX</label>
+					<input class="form-control" type="number" name="pax" id="pax" value="<?php echo $paxLib; ?>" onkeypress="return isNumber(event)" >
+				</div>
+			</div>
+		<div class="col-12 col-sm-6 col-md-3 col-lg-3 col-xl-3"  style="<?php echo $display; ?>">
+			<div class="form-group">
+				<label for="globo">Globo</label>
+				<select class="selectpicker form-control" id="globo" onchange="validaGlobo(value);" name="globo" data-live-search="true">
+					<option value='0'>Ninguno...</option>
+					<?php
+						foreach ($globos as $globo) {
+							$sel ="";
+							if($tVuelo[0]->tipo_vc==46){
+								$tot = $con->consulta("count(id_temp) as total","temp_volar tv INNER JOIN globosasignados_volar ga ON ga.reserva_ga = tv.id_temp"," fechavuelo_temp = '". $fecha ."' and ga.status<>0 AND turno_temp = ".$turno."  and globo_ga=".$globo->value );
+								if($tot[0]->total>0){
+									$sel="disabled";
+								}
+							}else{
+								$pesoAguanta = $globo->peso_globo;
+
+								/*Peso en Libras*/
+								$pesoActual= $con->consulta("sum(peso_ga) as peso","temp_volar tv INNER JOIN globosasignados_volar ga ON ga.reserva_ga = tv.id_temp ","tv.status=8 and ga.status<>0 and globo_ga = ".$globo->value . " and fechavuelo_temp ='".$fecha."' and ga.status<>0 AND turno_temp = ".$turno);
+								//$pesoActualLib=($pesoActualLib[0]->peso* 0.453592);
+
+								/*Peso en Kg*/
+							/*	$pesoActualKg = $con->consulta("sum(kg_temp) as peso","temp_volar","status=8 and tipopeso_temp=1 and globo_temp = ".$globo->value . " and fechavuelo_temp ='".$fecha."' AND hora_temp BETWEEN '".$deHora."' AND '".$aHora."'");*/
+								$pesoActual=$pesoActual[0]->peso;
+								$sumaPeso = $pesoActual + $pesoOcupado[0]->ocupado +$pesoLibre ;
+								if($sumaPeso>$pesoAguanta){
+									$sel = "disabled";
+									$globo->text.="(Sobre pasa el Peso)";
+								}else{
+									$aunSoporta =($pesoAguanta-$sumaPeso+$pesoLibre);
+									$globo->text.="->(Aun soporta ". $aunSoporta ." kg)";
+
+								}
+
+							}
+							echo "<option ". $sel ." value='".$globo->value."'>".$globo->text."</option>";
+						}
+					?>
+
 				</select>
 			</div>
 		</div>
-	<?php
-		$display="";
-		if($datoReserva[0]->turno=='0' || $datoReserva[0]->hora=='' || $pesoLibre==0){
-			$display = "display:none";
-		}
-	?>
-	<div class="col-sm-12 col-lg-4 col-md-4 col-12 col-xl-3 " style="margin-top:25px" >
-		<div class="form-group">
-			<?php if($datoReserva[0]->tipopeso=='1'){ ?>
-				<label >Peso: <?php echo $datoReserva[0]->kg; ?> Kg </label>
-			<?php }else{ ?>
-				<label>Peso: <?php echo ($datoReserva[0]->kg * 0.453592); ?> Kg</label>
-			<?php } ?>
-		</div>
-	</div>
-	<div class="col-sm-12 col-lg-4 col-md-4 col-12 col-xl-3 " style="margin-top:25px" >
-		<div class="form-group">
-				<label >Peso Ocupado: <?php echo $pesoOcupado_Version[0]->ocupado; ?> Kg </label>
-		</div>
-	</div>
-		<input type="hidden" id="reservaG" value="<?php echo $_POST['reserva']; ?>">
-		<input type="hidden" id="version" value="<?php echo $pesoOcupado_Version[0]->version + 1; ?>">
-		<input type="hidden" id="tipovuelo" value="<?php echo $tVuelo[0]->tipo_vc; ?>">
-</div>
-
-<div class="row">
-	<div class="col-12 col-sm-6 col-md-3 col-lg-3 col-xl-3"  style="<?php echo $display; ?>">
-		<div class="form-group">
-			<label class="form-label" for="peso">Peso</label>
-			<input class="form-control" type="number" name="peso" id="peso" value="<?php echo $pesoLibre; ?>" onkeypress="return isNumber(event)" onchange="validaPeso(this.value);">
-		</div>
-	</div>
 		<div class="col-12 col-sm-6 col-md-3 col-lg-3 col-xl-3"  style="<?php echo $display; ?>">
 			<div class="form-group">
-				<label class="form-label" for="pax">PaX</label>
-				<input class="form-control" type="number" name="pax" id="pax" value="<?php echo $paxLib; ?>" onkeypress="return isNumber(event)" >
+				<label class="form-label" for="piloto">Piloto</label>
+				<select class="form-control" name="piloto" id="piloto">
+				</select>
 			</div>
 		</div>
-	<div class="col-12 col-sm-6 col-md-3 col-lg-3 col-xl-3"  style="<?php echo $display; ?>">
-		<div class="form-group">
-			<label for="globo">Globo</label>
-			<select class="selectpicker form-control" id="globo" onchange="validaGlobo(value);" name="globo" data-live-search="true">
-				<option value='0'>Ninguno...</option>
-				<?php
-					foreach ($globos as $globo) {
-						$sel ="";
-						if($tVuelo[0]->tipo_vc==46){
-							$tot = $con->consulta("count(id_temp) as total","temp_volar tv INNER JOIN globosasignados_volar ga ON ga.reserva_ga = tv.id_temp"," fechavuelo_temp = '". $fecha ."' and ga.status<>0 AND turno_temp = ".$turno."  and globo_ga=".$globo->value );
-							if($tot[0]->total>0){
-								$sel="disabled";
-							}
-						}else{
-							$pesoAguanta = $globo->peso_globo;
-
-							/*Peso en Libras*/
-							$pesoActual= $con->consulta("sum(peso_ga) as peso","temp_volar tv INNER JOIN globosasignados_volar ga ON ga.reserva_ga = tv.id_temp ","tv.status=8 and ga.status<>0 and globo_ga = ".$globo->value . " and fechavuelo_temp ='".$fecha."' and ga.status<>0 AND turno_temp = ".$turno);
-							//$pesoActualLib=($pesoActualLib[0]->peso* 0.453592);
-
-							/*Peso en Kg*/
-						/*	$pesoActualKg = $con->consulta("sum(kg_temp) as peso","temp_volar","status=8 and tipopeso_temp=1 and globo_temp = ".$globo->value . " and fechavuelo_temp ='".$fecha."' AND hora_temp BETWEEN '".$deHora."' AND '".$aHora."'");*/
-							$pesoActual=$pesoActual[0]->peso;
-							$sumaPeso = $pesoActual + $pesoOcupado[0]->ocupado +$pesoLibre ;
-							if($sumaPeso>$pesoAguanta){
-								$sel = "disabled";
-								$globo->text.="(Sobre pasa el Peso)";
-							}else{
-								$aunSoporta =($pesoAguanta-$sumaPeso+$pesoLibre);
-								$globo->text.="->(Aun soporta ". $aunSoporta ." kg)";
-
-							}
-
-						}
-						echo "<option ". $sel ." value='".$globo->value."'>".$globo->text."</option>";
-					}
-				?>
-
-			</select>
+		<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12"  style="<?php echo $display; ?>">
+			<div class="form-group">
+				<label class="form-label" for="comentario">Comentario</label>
+				<textarea id="comentario" name="comentario" class="form-control"></textarea>
+			</div>
+		</div>
+		<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12"  style="<?php echo $display; ?>">
+			<div class="form-group">
+				<button class="btn btn-success" type="button" name="guardarGlobo" id="guardarGlobo" onclick="guardaGlobo();"> Guardar Globo</button>
+			</div>
 		</div>
 	</div>
-	<div class="col-12 col-sm-6 col-md-3 col-lg-3 col-xl-3"  style="<?php echo $display; ?>">
-		<div class="form-group">
-			<label class="form-label" for="piloto">Piloto</label>
-			<select class="form-control" name="piloto" id="piloto">
-			</select>
-		</div>
-	</div>
-	<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12"  style="<?php echo $display; ?>">
-		<div class="form-group">
-			<button class="btn btn-success" type="button" name="guardarGlobo" id="guardarGlobo" onclick="guardaGlobo();"> Guardar Globo</button>
-		</div>
-	</div>
-</div>
 <?php } ?>
 <table class="table DataTable">
 	<thead>
@@ -185,6 +190,7 @@
 			<th>Cliente</th>
 			<th>Globo</th>
 			<th>Peso</th>
+			<th>Pax</th>
 			<th>Piloto</th>
 			<th>Fecha</th>
 			<th>Hora</th>
@@ -194,7 +200,7 @@
 	</thead>
 	<tbody>
 		<?php foreach ($globosAsignados as $globosAsignado) { ?>
-			<?php $infoGlobos = $con->consulta("reserva_ga,peso_ga, nombre_globo, CONCAT(IFNULL(nombre_usu,''), ' ', IFNULL(apellidop_usu,'')) as piloto,version_ga","globosasignados_volar ga INNER JOIN volar_usuarios on piloto_ga=id_usu INNER JOIN globos_volar on globo_ga = id_globo","ga.status<>0 and reserva_ga=".$globosAsignado->id_temp); ?>
+			<?php $infoGlobos = $con->consulta("reserva_ga,peso_ga, nombre_globo, CONCAT(IFNULL(nombre_usu,''), ' ', IFNULL(apellidop_usu,'')) as piloto,version_ga,pax_ga","globosasignados_volar ga INNER JOIN volar_usuarios on piloto_ga=id_usu INNER JOIN globos_volar on globo_ga = id_globo","ga.status<>0 and reserva_ga=".$globosAsignado->id_temp); ?>
 			<?php if(sizeof($infoGlobos)){ ?>
 				<?php foreach ($infoGlobos as $infoGlobo) { ?>
 					<tr>
@@ -202,6 +208,7 @@
 						<td><?php echo $globosAsignado->nombre ; 	?></td>
 						<td><?php echo $infoGlobo->nombre_globo ; 	?></td>
 						<td><?php echo $infoGlobo->peso_ga ; 	?></td>
+						<td><?php echo $infoGlobo->pax_ga ; 	?></td>
 						<td><?php echo $infoGlobo->piloto ; 	?></td>
 						<td><?php echo $globosAsignado->fecha ; 	?></td>
 						<td><?php echo $globosAsignado->hora ; 	?></td>
@@ -216,6 +223,7 @@
 				<tr>
 					<td ><?php echo $globosAsignado->id_temp ?></td>
 					<td><?php echo $globosAsignado->nombre ; 	?></td>
+					<td data-order="ZZZZZZZZZZ">NA</td>
 					<td data-order="ZZZZZZZZZZ">NA</td>
 					<td data-order="ZZZZZZZZZZ">NA</td>
 					<td>Na</td>
