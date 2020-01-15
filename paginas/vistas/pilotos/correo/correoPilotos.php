@@ -66,17 +66,26 @@
 					return $head;
 	}
 	function enviarAlerta($body){
+		global $con;
 		$usuario= unserialize((base64_decode($_SESSION['usuario'])));
 		$correoUsu=$usuario->getCorreoUsu();
 		$nombreUsu=$usuario->getNombreUsu();
-		$asignador = array($nombreUsu , $correoUsu);
+		$asignador = array($correoUsu , $nombreUsu);
 
 
 		$asunto = "Globo Asignado";
 		$cuerpo = getHTMLHead();
 		$cuerpo .= $body;
+		$cuerpo .="</body>";
 		$correos =[$asignador];
-		$ruta=$_SERVER['DOCUMENT_ROOT'].'/admin1/sources/PHPMailer/mail.php';
+
+		$respuesta=  array('body' => $cuerpo ,'correos' => $correos ,'asunto' => $asunto );
+		return $respuesta;
+	}
+
+	function sendAllMail($mailsToSend){
+		$mailsToSend = $mailsToSend;
+		$ruta=$_SERVER['DOCUMENT_ROOT'].'/admin1/sources/PHPMailer/mail2.php';
 		require_once  $ruta;
 	}
 	function enviarCorreoPiloto	($datos,$piloto,$correoPiloto ){
@@ -85,15 +94,13 @@
 		$usuario= unserialize((base64_decode($_SESSION['usuario'])));
 		$correoUsu=$usuario->getCorreoUsu();
 		$nombreUsu=$usuario->getNombreUsu();
-		//$vendedor = array($nombreUsu , $correoUsu); //Quien mando los vuelos
+		//$vendedor = array($correoUsu , $nombreUsu); //Quien mando los vuelos
 
 		$correousu = $correoPiloto;
 		$nombreusu = $piloto;
 		$arreglo[0] =$correousu;
 		$arreglo[1] = $nombreusu;
 		$correos =  array($arreglo );
-
-
 		$reservas = $datos[0];
 		$pasajero = $datos[1];
 		$fechavuelo = $datos[2];
@@ -102,11 +109,10 @@
 		$globo = $datos[5];
 		$turno = $datos[6];
 		$motivo = $datos[7];
-
 		///Formar cuerpo de html
 		$asunto = "Globo Asignado";
 		$cuerpo = getHTMLHead();
-		$tabla ="<h3>".$piloto."</h3>";
+		$tabla 	="<h3>".$piloto."</h3>";
 		$tabla .= "<p>Se te ha asignado una reserva con la siguiente informaci&oacute;n: </p>";
 		$tabla .= "<table class='table' border ='1'>";
 		$tabla .=	"<tr>";
@@ -176,10 +182,14 @@
 		$tabla .= "</table>";
 		$cuerpo .= $tabla;
 		$cuerpo .= "</body>";
+		$cuerpo .= "</html>";
 
-		$ruta=$_SERVER['DOCUMENT_ROOT'].'/admin1/sources/PHPMailer/mail.php';
-		require_once  $ruta;
-		return $tabla;
+
+		$respuesta = [];
+		// $ruta=$_SERVER['DOCUMENT_ROOT'].'/adminTest/sources/PHPMailer/mail.php';
+		// require_once  $ruta;
+		$respuesta=  array('admin' => $tabla , 'body' => $cuerpo ,'correos' => $correos ,'asunto' => $asunto );
+		return $respuesta;
 	}
 	function enviarCorreo($piloto,$reserva,$version){
 		/*  ----- Información de Piloto -----  */
@@ -277,6 +287,8 @@
 	// echo "SELECT $campos FROM $tabla WHERE $filtro";
 	// die();
 		$tablaBody ="";
+		$mailsToSend = [];
+		$cont = 0;
 		$pilotos=$con->consulta($campos,$tabla,$filtro);
 		foreach ($pilotos as $piloto) {
 			$campos = " CONCAT(IFNULL(nombre_temp,''),' ', IFNULL(apellidos_temp,'')) as pasajero	,";
@@ -320,11 +332,14 @@
 				$turno[]=	($globoAsignado->turno)."."; 
 				$motivo[]=	($globoAsignado->motivo)."."; 
 			}
-
 			$datos = [$reservas,$pasajero,$fechavuelo,$hora,$pax,$globo,$turno,$motivo];
-			$tablaBody .= enviarCorreoPiloto($datos,$piloto->piloto,$piloto->correo);
+			$mailsToSend[]= enviarCorreoPiloto($datos,$piloto->piloto,$piloto->correo);
+			$tablaBody.= $mailsToSend[$cont]['admin'];
+			$cont++;
 		}
-		enviarAlerta($tablaBody);
+
+		$mailsToSend[] =enviarAlerta($tablaBody);
+		sendAllMail($mailsToSend);		//print_r($mailsToSend);
 	}
 
 ?>

@@ -53,6 +53,9 @@
 							}else if($reserva->status==9){
 								$text="CxC";
 								$class="#fb8c00 ";
+							}else if($reserva->status==10){
+								$text="No Show";
+								$class="#f5a142";
 							}else{
 								$text="Otro";
 								$class="#ff4444";

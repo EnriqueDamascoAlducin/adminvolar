@@ -24,9 +24,13 @@ try {
     //Recipients
     if(isset($_SESSION['usuario'])){
         $usuario= unserialize((base64_decode($_SESSION['usuario'])));
+        $correoActual = $usuario->getCorreoUsu();
+        $usuarioActual = $usuario->getNombreUsu(). " " .$usuario->getApellidopUsu(). " ". $usuario->getApellidomUsu();
+    }else{
+
+        $correoActual = 'enriquealducin@volarenglobo.com.mx';  
+        $usuarioActual = 'Volar en Globo';  
     }
-    $correoActual = $usuario->getCorreoUsu();
-    $usuarioActual = $usuario->getNombreUsu(). " " .$usuario->getApellidopUsu(). " ". $usuario->getApellidomUsu();
     if(isset($textoActual)){
         $mail->setFrom(trim($correoActual), $textoActual);
     }else{

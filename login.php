@@ -1,17 +1,10 @@
 <!DOCTYPE html>
 <?php
   @session_start();
-  if(isset($_SESSION['servidor'])){
-    $servidor = $_SESSION['servidor'];
-    $produccion = $_SESSION['produccion'];
-  }
-
   if(isset($_SESSION['usuario'])){
     session_destroy();
     session_unset();
   }
-  $_SESSION['servidor'] = $servidor;
-  $_SESSION['produccion'] = $produccion;
  ?>
 
 <html lang="en">
@@ -53,7 +46,6 @@
     <div class="wrap-login100 p-l-55 p-r-55 p-t-80 p-b-30" style="opacity: .8;">
       <form class="login100-form validate-form"  onsubmit ="validarSesion(event)" id="loginForm">
         <span class="login100-form-title p-b-37">
-          <?php if(!$produccion) { echo "Pruebas de ";} ?>
           Sistema de Administración de Volar en Globo
         </span>
 
