@@ -1,13 +1,12 @@
 <?php
 	require  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/modelos/login.php';
 	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/controladores/conexion.php';
-	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/controladores/fin_session.php';
+	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/controladores/fin_session.php';	
 	$permisos=[];
 	$modulo=$_POST['id'];
   if(!isset($_SESSION['modulo']) || $_SESSION['modulo']!=$modulo){
     $_SESSION['modulo']=$modulo;
     $_SESSION['url']="vistas/servicios/";
-			unset($_SESSION['filtros']);
   }
 	$usuario= unserialize((base64_decode($_SESSION['usuario'])));
 	$idUsu=$usuario->getIdUsu();
@@ -15,7 +14,7 @@
 	foreach ($subPermisos as $subPermiso) {
 		$permisos[] = $subPermiso->nombre_sp;
 	}
-?>
+?>	
 <?php if(in_array("AGREGAR", $permisos)){ ?>
 	<div class="alert alert-info" onclick="accionDeptos('agregar', <?php echo $usuario->getIdUsu(); ?>)">
 	  <strong><i class="fa fa-plus fa-md"></i></strong> Agregar.
@@ -37,12 +36,12 @@
         </button>
       </div>
       <div class="modal-body" id="cuerpoModal">
-
+      	
       </div>
       <div class="modal-footer">
       	<div id="DivBtnModal">
 	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-
+	        
         </div>
       </div>
     </div>
@@ -59,12 +58,12 @@
         </button>
       </div>
       <div class="modal-body" id="cuerpoModal">
-
+        
       </div>
       <div class="modal-footer">
         <div id="DivBtnModal">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-
+          
         </div>
       </div>
     </div>

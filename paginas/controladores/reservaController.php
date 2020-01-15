@@ -19,6 +19,9 @@
 	}elseif (isset($_POST['accion']) && $_POST['accion']=='cpc'  ) {
 		$confirmarAsistencia = $con->actualizar("temp_volar","status=9","id_temp=".$_POST['reserva']);
 		echo $confirmarAsistencia;
+	}elseif (isset($_POST['accion']) && $_POST['accion']=='no-show'  ) {
+		$confirmarAsistencia = $con->actualizar("temp_volar","status=10","id_temp=".$_POST['reserva']);
+		echo $confirmarAsistencia;
 	}elseif(isset($_POST['accion']) && $_POST['accion']=='horario'){
 		$hora=$_POST['hora'];
 		$turno=$_POST['turno'];

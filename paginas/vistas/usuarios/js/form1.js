@@ -18,21 +18,22 @@ function cargarPuestos(){
       dataType:"json",
       url:'controladores/query_json.php',
       type:"POST",
-      success: function(data){
+      success: function(data){	
         $.each( data, function( key, value ) {
-				  text=value.text;
-				  val=value.value;
-				  attr="";
-				  if(val==puesto){
-				  	attr="selected";
-				  }
-				  $("#puesto").append("<option value='"+val+"' "+attr+">"+text+"</option>");
-				});
+		  text=value.text;
+		  val=value.value;
+		  attr="";
+		  if(val==puesto){
+		  	attr="selected";
+		  }
+		  $("#puesto").append("<option value='"+val+"' "+attr+">"+text+"</option>");
+		});
       },
       error:function(){
       	alert("Error al cargar habitación");
       }
-    });
+
+    }); 
 }
 function guardarUsuario(id){
 	accion="actualizar";
@@ -85,7 +86,7 @@ function guardarUsuario(id){
 		return false;
 	}
 	//contrasenaOld = $("#contrasenaOld").val();
-
+	
 	$.ajax({
 		url:'controladores/usuariosController.php',
 		method: "POST",
@@ -100,15 +101,15 @@ function guardarUsuario(id){
   			}else{
 		         abrir_gritter("Exito","Usuario "+ response ,"info");
   			}
-
+  			
   		},
   		error:function(){
-
+  		
           abrir_gritter("Error","Error desconocido" ,"danger");
   		},
   		statusCode: {
 		    404: function() {
-
+		     
           abrir_gritter("Error","URL NO encontrada" ,"danger");
 		    }
 		  }

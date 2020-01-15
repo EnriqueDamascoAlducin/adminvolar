@@ -106,7 +106,10 @@
 		<label id="conversion">Peso Mexicano</label>
 	</div>
 </div>
+
+	<input type="number" class="form-control" id="cantidad2"  placeholder="Cantidad" value="<?php echo 	$total[0]->cotizado -  $total[0]->pagado  ;?>" style="display: none">
 <script type="text/javascript">
+	
 	var precioRestante  =  <?php echo ($total[0]->cotizado -  $total[0]->pagado ) ?>;
 	var precioRestanteOriginal  =  <?php echo ($total[0]->cotizado -  $total[0]->pagado ) ?>;
 	$("#moneda").change(function(){
@@ -114,10 +117,72 @@
 			var nombre = valor[0];
 			var valor = valor[1];
 			$("#conversion").html(" " + parseFloat(valor)+ " Pesos Mexicanos equivale a 1 " + nombre.replace('(',"") );
-			precioRestante =parseFloat(precioRestanteOriginal / parseFloat(valor).toFixed(3)).toFixed(3) ;
-			$("#cantidad").val(precioRestante).removeAttr("disabled");
+			precioRestante =parseFloat(precioRestanteOriginal / parseFloat(valor)) ;
+			precioRestante2 = parseFloat(precioRestanteOriginal / parseFloat(valor).toFixed(2)).toFixed(2) ;
+			$("#cantidad").val(precioRestante2).removeAttr("disabled");
+			$("#cantidad2").val(precioRestante).removeAttr("disabled");
 			$("#cupon").val('');
 	});
+
+	function confirmaragregarPagoSitio(reserva,cliente){
+		metodo=$("#metodo").val();
+		banco=$("#banco").val();
+		referencia=$("#referencia").val().trim();
+		cantidad=$("#cantidad2").val().trim();
+		fecha=$("#fecha").val().trim();
+		comision=$("#comision").val().trim();
+		cupon=$("#cupon").val();
+		moneda=$("#moneda").val();
+		var monedaInfo = $("#moneda	option:selected").text().split("$");
+		monedaPrecio =  parseFloat(monedaInfo[1]).toFixed(2);
+		if(cantidad=="" ){
+			abrir_gritter("Advertencia","Debe Capturar una cantidad","warning");
+			return false;
+		}
+		cantidad = parseFloat(cantidad * monedaPrecio);
+		datos={
+				reserva:reserva,
+				metodo:metodo,
+				banco:banco,
+				referencia:referencia,
+				cantidad:cantidad,
+				comision:comision,
+				fecha:fecha,
+				cupon:cupon,
+				moneda:moneda,
+				monedaPrecio:monedaPrecio,
+				accion:'registrarPagoSitio'
+		};
+		$.ajax({
+			url:'controladores/pagosController.php',
+			method: "POST",
+			data: datos,
+			success:function(response){
+
+				if(response.includes("ERROR"))
+					abrir_gritter(response, "No puedes agregar mas pagos" ,"warning");
+				else
+					abrir_gritter("Correcto", response ,"info");
+				cargarTablaReservas();
+				agregarPagoSitio(reserva,cliente);
+
+			},
+			error:function(){
+					abrir_gritter("Error","Error desconocido" ,"danger");
+			},
+			statusCode: {
+				404: function() {
+					abrir_gritter("Error","URL NO encontrada" ,"danger");
+				}
+			}
+		});
+
+			cambiarTamanoModal("modalSize","lg",'resetear');
+	}
+</script>
+<script type="text/javascript">
+	var precioRestante  =  <?php echo ($total[0]->cotizado -  $total[0]->pagado ) ?>;
+	var precioRestanteOriginal  =  <?php echo ($total[0]->cotizado -  $total[0]->pagado ) ?>;
 	$("#cantidad").change(function(){
 		var moneda = $("#moneda	option:selected").text().split("$");
 		var nombre = moneda[0];
@@ -154,7 +219,7 @@
 		metodo = $("#metodo").val();
 		cupon = 	$("#cupon").val();
 		cantidad = 	$("#cantidad").val();
-
+		$("#cantidad2").val(cantidad);
 			$("#spanCant").html(" $ "+new Intl.NumberFormat().format(cantidad ));
 			if(metodo==98){
 				var comision = $("#comision").val();
@@ -170,12 +235,15 @@
 			}else if(metodo==60){
 				if(cupon==""){
 					$("#cantidad").prop("disabled",false);
+					$("#cantidad2").prop("disabled",false);
 				}else if(cupon==1){
 						regreso = (precioRestante*.05);
 						$("#cantidad").val(precioRestante-regreso).prop("disabled","disabled");
+						$("#cantidad2").val(precioRestante-regreso).prop("disabled","disabled");
 						$("#spanCant").html("$ "+new Intl.NumberFormat().format(precioRestante  )+".<br>Regresar $ "+new Intl.NumberFormat().format(parseInt(regreso) ) +"<br> Cobrar:  $ "+new Intl.NumberFormat().format(precioRestante-regreso  ));
 				}else if(cupon==2){
 						$("#cantidad").val(precioRestante).prop("disabled","disabled");
+						$("#cantidad2").val(precioRestante).prop("disabled","disabled");
 						regreso = (precioRestante*.1);
 						$("#spanCant").html("$ "+new Intl.NumberFormat().format(precioRestante )+".<br>Vale por  $ "+new Intl.NumberFormat().format(regreso ));
 				}

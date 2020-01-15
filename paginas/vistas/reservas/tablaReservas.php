@@ -54,7 +54,7 @@
 	// $filtro .= " ORDER BY id_temp DESC limit 500";
 	$reservas=$con->consulta($campos,$tabla,$filtro);
 	$cancelarSinCot= $con->query("UPDATE temp_volar set status= 0 where  register <=  CURRENT_TIMESTAMP - INTERVAL 1 DAY and status=2");
-	// $cancelar30Dias= $con->query("UPDATE temp_volar set status= 0 where register <=  CURRENT_TIMESTAMP - INTERVAL 30 DAY and status =3;");
+	//$cancelar30Dias= $con->query("UPDATE temp_volar set status= 0 where register <=  CURRENT_TIMESTAMP - INTERVAL 30 DAY and status =3;");
 ?>
 <table class="DataTable table table-striped table-bordered table-hover">
 	<thead>
@@ -128,6 +128,10 @@
 						$text="CxC";
 						$class="";
 						$color="background-color:#fb8c00 ;";
+					}else if($reserva->status==10){
+						$text="No Show";
+						$class="";
+						$color="background-color:#f5a142 ;";
 					}else{
 						$text="Error";
 						$class="danger";

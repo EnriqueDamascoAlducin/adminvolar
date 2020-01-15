@@ -29,13 +29,13 @@
 		echo $validar;
 		require  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/vistas/reservas/correo/correoConfirmacion.php';
 		$cotizado = $con->consulta("total_temp","temp_volar","id_temp=".$reserva);
-		$pagado = $con->consulta("SUM(cantidad_bp) as pagado","bitpagos_volar","status<>0 and idres_bp=".$reserva);
+		$pagado = $con->consulta("SUM(cantidad_bp) as pagado","bitpagos_volar","status<> 0 and idres_bp=".$reserva);
 		if($cotizado[0]->total_temp==$pagado[0]->pagado){
 			$accion = $con->actualizar("temp_volar","status=8","id_temp=".$reserva);
 		}elseif($cotizado[0]->total_temp>$pagado[0]->pagado){
 			$accion = $con->actualizar("temp_volar","status=8","id_temp=".$reserva);
 		}elseif($cotizado[0]->total_temp<$pagado[0]->pagado){
-			echo "Sobre pasaste los pagos";
+			echo "Sobrepasaste los pagos";
 		}
 	}elseif (isset($_POST['accion']) && $_POST['accion']=='regalo'  ) {
 		$validar = $con->actualizar("bitpagos_volar","status=1","id_bp=".$_POST['pago']);
@@ -98,7 +98,9 @@
 			$cupon=0;
 		}
 		//Registra Pagos
+		$pagado = $con->consulta("sum(cantidad_bp) as pagado","bitpagos_volar","status<>0 AND idres_bp=".$reserva);
 		$totalReserva = $con->consulta("total_temp","temp_volar","id_temp=".$reserva);
+		$porAplicarDesc = $totalReserva[0]->total_temp -$pagado[0]->pagado;
 		$parametros = '0,'. $reserva.','.$idUsu.','.$metodo.','.$banco.',"'.$referencia.'",'.$cantidad.',"'.$fecha.'",0,'.$comision.','.$cupon.','.$moneda.',"'. $monedaPrecio .'"';
 		$sql="CALL registrarPago(". $parametros .",@respuesta)";
 		//echo $sql;
@@ -114,7 +116,7 @@
 			echo $respuesta[0];
 		}
 		if($cupon==1){
-			$desc = $totalReserva[0]->total_temp * .05;
+			$desc = $porAplicarDesc * .05;
 			$nuevoTotal = $totalReserva[0]->total_temp - $desc;
 			$valores = $reserva.",".$idUsu.",'Aplica Cupón de 5%',".$desc.",'Se aplicó cupón por pago en efectivo',2";
 			$registrarCargo = $con->insertar("cargosextras_volar", "reserva_ce,usuario_ce,motivo_ce,cantidad_ce,comentario_ce,tipo_ce", $valores);
