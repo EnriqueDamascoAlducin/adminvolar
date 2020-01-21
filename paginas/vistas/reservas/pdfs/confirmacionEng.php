@@ -159,11 +159,11 @@
 	$pdf->Cell(70,6,utf8_decode('TELEPHONE'),1,0,'C',1);
 	$telefonos= explode("<br>", $datosReserva[0]->telefonos);
 	if(trim($telefonos[0])!=""){
-		$contacto1 = "CONTACTO 1:". $telefonos[1];
-		$contacto2 = "CONTACTO 2: ".$telefonos[0];
+		$contacto1 = "CONTACT 1:". $telefonos[1];
+		$contacto2 = "CONTACT 2: ".$telefonos[0];
 		$contactos = $telefonos[1]."/".$telefonos[0];
 	}else{
-		$contacto1 = "CONTACTO 1: ". $telefonos[1];
+		$contacto1 = "CONTACT 1: ". $telefonos[1];
 		$contacto2 = "";
 
 		$contactos = $telefonos[1];
@@ -331,15 +331,15 @@
 	}
 	if(sizeof($movimientosExtras)>0){ 
 		foreach ($movimientosExtras as $movimientoExtra) { 
-			// $pdf->SetFillColor(139,105,247);
-			// $pdf->SetFont('Arial','',10);
-			// $pdf->Cell(70,6,$movimientoExtra->motivo_ce,1,0,'C',1);
-			// $pdf->Cell(58,6,'',1,0,'C',0);
+			 $pdf->SetFillColor(139,105,247);
+			 $pdf->SetFont('Arial','',10);
+			 $pdf->Cell(70,6,$movimientoExtra->motivo_ce,1,0,'C',1);
+			 $pdf->Cell(58,6,'',1,0,'C',0);
 			if($movimientoExtra->tipo_ce==1){
-				//$pdf->Cell(58,6,'$ '.$movimientoExtra->cantidad_ce,1,1,'C',0);
+				$pdf->Cell(58,6,'$ '.$movimientoExtra->cantidad_ce,1,1,'C',0);
 				$totalReserva+=$movimientoExtra->cantidad_ce;
 			}else{
-				//$pdf->Cell(58,6,'-$ '.$movimientoExtra->cantidad_ce,1,1,'C',0);
+				$pdf->Cell(58,6,'-$ '.$movimientoExtra->cantidad_ce,1,1,'C',0);
 				$totalReserva-=$movimientoExtra->cantidad_ce; 
 			}
 		} 

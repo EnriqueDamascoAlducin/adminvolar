@@ -229,7 +229,7 @@ if($datosReserva[0]->tdescuento!='' && $datosReserva[0]->cantdescuento>0) {
 
 if(sizeof($movimientosExtras)>0){ 
   foreach ($movimientosExtras as $movimientoExtra) { 
-    $cuerpo.='<tr style="display: none">';
+    $cuerpo.='<tr >';
     $cuerpo.= '<td class="tdtitulo">'.$movimientoExtra->motivo_ce .'</td>';
     $cuerpo.= '<td></td>';
     if($movimientoExtra->tipo_ce==1){
