@@ -82,7 +82,10 @@
 			$registrarCargo = $con->insertar("cargosextras_volar", "reserva_ce,usuario_ce,motivo_ce,cantidad_ce,comentario_ce,tipo_ce", $valores);
 			$nuevoTotal = $con->actualizar("temp_volar","total_temp=".$nuevoTotal,"id_temp=".$reserva);
 		}
-
+		$ultimoPago = $con->consulta("(id_bp) as ultimoPago ","bitpagos_volar","status in(1,2) and idres_bp=".$reserva);
+		if(sizeof($ultimoPago)>0){
+			$actulizarUltimoPago = $con->actualizar("bitpagos_volar","status= 3","id_bp=".$ultimoPago[0]->ultimoPago);
+		}
 		echo $reprogramar[0]->rep;
 	}elseif(isset($_POST['accion']) && $_POST['accion']=='comentar'){
 		require  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/modelos/login.php';
