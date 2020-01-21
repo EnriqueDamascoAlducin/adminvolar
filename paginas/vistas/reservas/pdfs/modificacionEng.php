@@ -16,9 +16,6 @@
  			$this->Cell(0,10, 'Pagina '.$this->PageNo().'/{nb}',0,0,'C' );
   	}*/
   }
-	$pago = $_POST['pago'];
-	$pagoInfo= $con->consulta("cantidad_bp as cantidad, idres_bp as reserva","bitpagos_volar","id_bp=".$pago);
-	$reserva=$pagoInfo[0]->reserva;
 
 	$totalPagos  = $con->consulta("SUM(cantidad_bp) as totalPagos ","bitpagos_volar"," status<>0 and idres_bp=".$reserva);
 	$totalReserva=0.0;
@@ -31,7 +28,7 @@
 	$habitacion=explode("|", $habitacion);
 
 	$getVendedorInfo = $con->consulta("CONCAT(IFNULL(nombre_usu,''),' ',IFNULL(apellidop_usu,''),' ', IFNULL(apellidom_usu,'')) as nombre, correo_usu as correo,telefono_usu as telefono", " volar_usuarios vu INNER JOIN temp_volar tv ON tv.idusu_temp=vu.id_usu ","id_temp=".$reserva);
-	$movimientosExtras = $con->consulta("motivo_ce,cantidad_ce,tipo_ce","cargosextras_volar","status=1 and reserva_ce= " . $reserva);
+	$movimientosExtras = $con->consulta("motivo_ce,cantidad_ce,tipo_ce","cargosextras_volar","status= 1 and reserva_ce= " . $reserva);
 	$tPasajeros = $datosReserva[0]->pasajerosN+ $datosReserva[0]->pasajerosA;
 	$tipoVuelo = $datosReserva[0]->tipo_temp;
 	$totalPasajeros = $totalPasajeros[0]->Total;
@@ -331,26 +328,19 @@
 	}
 	if(sizeof($movimientosExtras)>0){ 
 		foreach ($movimientosExtras as $movimientoExtra) { 
-			// $pdf->SetFillColor(139,105,247);
-			// $pdf->SetFont('Arial','',10);
-			// $pdf->Cell(70,6,$movimientoExtra->motivo_ce,1,0,'C',1);
-			// $pdf->Cell(58,6,'',1,0,'C',0);
+			$pdf->SetFillColor(139,105,247);
+			$pdf->SetFont('Arial','',10);
+			$pdf->Cell(70,6,$movimientoExtra->motivo_ce,1,0,'C',1);
+			$pdf->Cell(58,6,'',1,0,'C',0);
 			if($movimientoExtra->tipo_ce==1){
-				//$pdf->Cell(58,6,'$ '.$movimientoExtra->cantidad_ce,1,1,'C',0);
+				$pdf->Cell(58,6,'$ '.$movimientoExtra->cantidad_ce,1,1,'C',0);
 				$totalReserva+=$movimientoExtra->cantidad_ce;
 			}else{
-				//$pdf->Cell(58,6,'-$ '.$movimientoExtra->cantidad_ce,1,1,'C',0);
+				$pdf->Cell(58,6,'-$ '.$movimientoExtra->cantidad_ce,1,1,'C',0);
 				$totalReserva-=$movimientoExtra->cantidad_ce; 
 			}
 		} 
 	}
-/*
-	$pdf->SetFillColor(139,105,247);
-	$pdf->SetFont('Arial','',10);
-	$pdf->Cell(70,6,'ADVANCE PAYMENT ',1,0,'C',1);
-	$pdf->Cell(58,6,'',1,0,'C',0);
-	$pdf->Cell(58,6,"$ ".number_format($pagoInfo[0]->cantidad, 2, '.', ','),1,1,'C',0);
-*/
 	$pdf->SetFillColor(139,105,247);
 	$pdf->SetFont('Arial','',10);
 	$pdf->Cell(70,6,'ADVANCE PAYMENT',1,0,'C',1);
@@ -475,7 +465,7 @@ $pdf->MultiCell(186,5,utf8_decode($vendedor[2]),0,'J',0);
 
 
 
-$archivo=$_SERVER['DOCUMENT_ROOT'].'/admin1/sources/pdfs/confirmacion1-'.$reserva.'.pdf';
+$archivo=$_SERVER['DOCUMENT_ROOT'].'/admin1/sources/pdfs/modificacion1-'.$reserva.'.pdf';
 $pdf->Output($archivo,'F');
 	//$pdf->Output();
 ?>

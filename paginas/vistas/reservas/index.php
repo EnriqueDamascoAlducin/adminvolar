@@ -21,6 +21,7 @@
 	foreach ($subPermisos as $subPermiso) {
 		$permisos[] = $subPermiso->nombre_sp;
 	}
+	$_SESSION['permisos'] = $permisos;
 ?>
 <?php if(in_array("AGREGAR", $permisos)){ ?>
 	<div class="alert alert-info" onclick="accionReserva('agregar', <?php echo $idUsu; ?>)">

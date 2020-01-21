@@ -5,8 +5,9 @@
   $accion = $_POST['acciones'];
   $reserva = $_POST['reserva'];
 
-    $cargos = $con->consulta("motivo_ce,cantidad_ce,comentario_ce","cargosextras_volar","status<>0 and reserva_ce=".$reserva." and tipo_ce=1");
-    $descuentos = $con->consulta("motivo_ce,cantidad_ce,comentario_ce","cargosextras_volar","status<>0 and reserva_ce=".$reserva." and tipo_ce=2");
+  $cargos = $con->consulta("motivo_ce,cantidad_ce,comentario_ce,status,id_ce as id","cargosextras_volar","status<>0 and reserva_ce=".$reserva." and tipo_ce=1");
+  $descuentos = $con->consulta("motivo_ce,cantidad_ce,comentario_ce,status,id_ce as id","cargosextras_volar","status<>0 and reserva_ce=".$reserva." and tipo_ce=2");
+  $permisos = $_SESSION['permisos'];
 ?>
 <input type="hidden" id="reservaCar" name="reserva" value="<?php echo $_POST['reserva']; ?>">
 <input type="hidden" id="nombre" name="nombre" value="<?php echo $_POST['nombre']; ?>">
@@ -59,12 +60,13 @@
        <table class="table">
          <thead>
            <tr>
-             <th colspan="3" style="text-align:center">Cargos Extras</th>
+             <th colspan="4" style="text-align:center">Cargos Extras</th>
            </tr>
            <tr>
              <th style="text-align:center">Motivo</th>
              <th style="text-align:center">Cantidad</th>
              <th style="text-align:center">Comentario</th>
+             <th style="text-align:center">Acciones</th>
            </tr>
          </thead>
          <tbody>
@@ -72,8 +74,17 @@
               foreach ($cargos as $cargo) {
                 echo "<tr>";
                   echo "<td>".$cargo->motivo_ce."</td>";
-                  echo "<td>".$cargo->cantidad_ce."</td>";
+                  echo "<td>$ ".number_format($cargo->cantidad_ce, 2, '.', ',')."</td>";
                   echo "<td>".$cargo->comentario_ce."</td>";
+                  if($cargo->status==2 && in_array("CONCILIAR MOVIMIENTO",$permisos)){
+                    echo "<td>
+                      <i class='fa fa-check-square fa-lg' style='color:green' data-dismiss='modal' onclick='conciliarMovimiento(".$cargo->id.",\"cargo\",1)'></i>
+                      <i class='fa fa-trash fa-lg' style='color:red' data-dismiss='modal' onclick='conciliarMovimiento(".$cargo->id.",\"cargo\",0)'></i> </td>";
+                  }elseif($cargo->status==1){
+                    echo "<td><i class='fa fa-envelope-o fa-lg' data-dismiss='modal' onclick='enviarCorreoMovimiento(".$cargo->id.",".$reserva.")' ></i></td>";
+                  }else{
+                    echo "<td><i class='fa fa-check-square fa-lg' ></i></td>";
+                  }
                 echo "</tr>";
               }
             ?>
@@ -115,12 +126,13 @@
         <table class="table">
           <thead>
             <tr>
-              <th colspan="3" style="text-align:center">Descuentos</th>
+              <th colspan="4" style="text-align:center">Descuentos</th>
             </tr>
             <tr>
               <th style="text-align:center">Motivo</th>
               <th style="text-align:center">Cantidad</th>
               <th style="text-align:center">Comentario</th>
+              <th style="text-align:center">Acciones</th>
             </tr>
           </thead>
           <tbody>
@@ -128,8 +140,17 @@
                foreach ($descuentos as $descuento) {
                  echo "<tr>";
                    echo "<td>".$descuento->motivo_ce."</td>";
-                   echo "<td>".$descuento->cantidad_ce."</td>";
+                   echo "<td>$ ".number_format($descuento->cantidad_ce, 2, '.', ',')."</td>";
                    echo "<td>".$descuento->comentario_ce."</td>";
+                   if($descuento->status==2 && in_array("CONCILIAR MOVIMIENTO",$permisos)){
+                     echo "<td>
+                       <i class='fa fa-check-square fa-lg' style='color:green' data-dismiss='modal' onclick='conciliarMovimiento(".$descuento->id.",\"desc\",1)'></i>
+                       <i class='fa fa-trash fa-lg' style='color:red' data-dismiss='modal' onclick='conciliarMovimiento(".$descuento->id.",\"desc\",0)'></i> </td>";
+                   }elseif($descuento->status==1){
+                     echo "<td><i class='fa fa-envelope-o fa-lg' data-dismiss='modal' onclick='enviarCorreoMovimiento(".$cargo->id.",".$reserva.")' ></i></td>";
+                   }else{
+                     echo "<td><i class='fa fa-check-square fa-lg' ></i></td>";
+                   }
                  echo "</tr>";
                }
              ?>

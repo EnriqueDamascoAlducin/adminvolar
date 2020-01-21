@@ -55,11 +55,11 @@
 		$asignarVuelo = $con->insertar("globosasignados_volar",	"reserva_ga,version_ga,globo_ga,peso_ga,piloto_ga,pax_ga,comentario_ga" ,$reserva.",".$version.",".$globo.",".$peso.",".$piloto.",".$pax.",".$comentario);
 		echo $asignarVuelo;
 	}elseif(isset($_POST['accion']) && $_POST['accion']=='eliminarGlobos'){
-	$version=$_POST['version'];
-	$reserva=$_POST['reserva'];
+		$version=$_POST['version'];
+		$reserva=$_POST['reserva'];
 
-	$asignarVuelo = $con->actualizar("globosasignados_volar",	"status=0" ,"reserva_ga = ".$reserva . " and version_ga =".$version);
-	echo $asignarVuelo;
+		$asignarVuelo = $con->actualizar("globosasignados_volar",	"status=0" ,"reserva_ga = ".$reserva . " and version_ga =".$version);
+		echo $asignarVuelo;
 	}elseif(isset($_POST['accion']) && $_POST['accion']=='reprogramar'){
 		require  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/modelos/login.php';
 		$usuario= unserialize((base64_decode($_SESSION['usuario'])));
@@ -79,13 +79,24 @@
 			$extra        = (($totalReserva * $cargo)/100);
 			$nuevoTotal   = $totalReserva + $extra;
 			$valores = $reserva.",".$idUsu.",'Cargo por Reprogramación',".$extra.",'".$comentario."',1";
-			$registrarCargo = $con->insertar("cargosextras_volar", "reserva_ce,usuario_ce,motivo_ce,cantidad_ce,comentario_ce,tipo_ce", $valores);
-			$nuevoTotal = $con->actualizar("temp_volar","total_temp=".$nuevoTotal,"id_temp=".$reserva);
+			$registrarCargo = $con->insertar("cargosextras_volar", "reserva_ce,usuario_ce,motivo_ce,cantidad_ce,comentario_ce,tipo_ce,status", $valores.",1");
+			
+			//Actualizar el total de la reserva
+			//$nuevoTotal = $con->actualizar("temp_volar","total_temp=".$nuevoTotal,"id_temp=".$reserva);
+
+			//Solicitar Conciliación de Pago
+			$tipoCorreo = "Cargos";
+			$tipo = "CARGO";
+			$motivo = "Cargo por Reprogramación";
+			$cantidad = $extra;
+			include_once 'correoController.php';
 		}
-		$ultimoPago = $con->consulta("(id_bp) as ultimoPago ","bitpagos_volar","status in(1,2) and idres_bp=".$reserva);
-		if(sizeof($ultimoPago)>0){
-			$actulizarUltimoPago = $con->actualizar("bitpagos_volar","status= 3","id_bp=".$ultimoPago[0]->ultimoPago);
-		}
+		/*
+			$ultimoPago = $con->consulta("(id_bp) as ultimoPago ","bitpagos_volar","status in(1,2) and idres_bp=".$reserva);
+			if(sizeof($ultimoPago)>0){
+				$actulizarUltimoPago = $con->actualizar("bitpagos_volar","status= 3","id_bp=".$ultimoPago[0]->ultimoPago);
+			}
+		*/
 		echo $reprogramar[0]->rep;
 	}elseif(isset($_POST['accion']) && $_POST['accion']=='comentar'){
 		require  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/modelos/login.php';
@@ -97,6 +108,36 @@
 		$comentario = $con->query($sql);
 		$comentario = $con->query("Select @respuesta as rep ")->fetchALL (PDO::FETCH_OBJ);
 		echo $comentario[0]->rep;
+	}elseif(isset($_POST['accion']) && $_POST['accion']=='conciliarMovimiento'){
+		require  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/modelos/login.php';
+		$movimiento = $_POST['movimiento'];
+		$status = $_POST['status'];
+		$tipo = strtoupper($_POST['tipo']);
+		$infoCargo = $con->consulta("motivo_ce as motivo,cantidad_ce as cantidad,reserva_ce as reserva,CONCAT(IFNULL(nombre_usu,''),' ',IFNULL(apellidop_usu,'')) as usuario, correo_usu as correo","cargosextras_volar INNER JOIN volar_usuarios ON usuario_ce = id_usu ","id_ce=".$movimiento);
+		$correos[] = array($infoCargo[0]->correo, $infoCargo[0]->usuario);
+		$updateStatusMovimiento = $con->actualizar("cargosextras_volar","status=".$status,"id_ce=".$movimiento);
+
+		
+		//Para responder correo
+		$tipoCorreo = 'CargoConciliado';
+		$encabezado = $infoCargo[0]->motivo;
+		if($status == 1){
+			$totalReserva = $con->consulta("total_temp as total","temp_volar","id_temp=".$infoCargo[0]->reserva);
+			if($tipo=="CARGO"){
+				$nuevoTotal = $totalReserva[0]->total + $infoCargo[0]->cantidad;
+			}else{
+				$nuevoTotal = $totalReserva[0]->total - $infoCargo[0]->cantidad;
+			}
+			$updatePrecio = $con->actualizar("temp_volar","total_temp='".$nuevoTotal."'","id_temp=".$infoCargo[0]->reserva);
+			$asunto = $tipo." Conciliado";
+			$texto = "No olvides enviar el movimiento al cliente";
+			$texto_a = "Entra aqui para enviar la confirmación ";
+		}else{
+			$texto = "El movimiento fue rechazado";
+			$texto_a = "";
+			$asunto = $tipo." Rechazado";
+		}
+		include_once 'correoController.php';
 	}else{
 		$reserva = $_POST['id'];
 		if(!isset($_POST['tipo'])){

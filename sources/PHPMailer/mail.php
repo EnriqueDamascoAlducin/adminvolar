@@ -28,7 +28,7 @@ try {
         $usuarioActual = $usuario->getNombreUsu(). " " .$usuario->getApellidopUsu(). " ". $usuario->getApellidomUsu();
     }else{
 
-        $correoActual = 'enriquealducin@volarenglobo.com.mx';  
+        $correoActual = 'ventas@volarenglobo.com.mx';  
         $usuarioActual = 'Volar en Globo';  
     }
     if(isset($textoActual)){

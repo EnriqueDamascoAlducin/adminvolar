@@ -80,7 +80,7 @@
 				echo $actualizarPeso;
 			}
 		}
-	}elseif (isset($_POST['accion']) && $_POST['accion']=='registrarPagoSitio'  ) {
+	}elseif (isset($_POST['accion']) && $_POST['accion']=='registrarPagoSitio'  ) { 
 		require  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/modelos/login.php';
 		$usuario= unserialize((base64_decode($_SESSION['usuario'])));
 		$idUsu=$usuario->getIdUsu();
@@ -106,7 +106,7 @@
 		//echo $sql;
 		$registrarPago = $con->query($sql);
 		$registrarPago = $con->query("Select @respuesta as respuesta")->fetchALL (PDO::FETCH_OBJ);
-	//	print_r($registrarPago);
+		//	print_r($registrarPago);
 		if($registrarPago[0]->respuesta=="ERROR EN PAGO"){
 			echo $registrarPago[0]->respuesta;
 		}else{
@@ -119,38 +119,53 @@
 			$desc = $porAplicarDesc * .05;
 			$nuevoTotal = $totalReserva[0]->total_temp - $desc;
 			$valores = $reserva.",".$idUsu.",'Aplica Cupón de 5%',".$desc.",'Se aplicó cupón por pago en efectivo',2";
-			$registrarCargo = $con->insertar("cargosextras_volar", "reserva_ce,usuario_ce,motivo_ce,cantidad_ce,comentario_ce,tipo_ce", $valores);
+			$registrarCargo = $con->insertar("cargosextras_volar", "reserva_ce,usuario_ce,motivo_ce,cantidad_ce,comentario_ce,tipo_ce,status", $valores.",1");
 			$nuevoTotal = $con->actualizar("temp_volar","total_temp=".$nuevoTotal,"id_temp=".$reserva);
 		}
 	}elseif (isset($_POST['accion']) && $_POST['accion']=='cargosExtras'  ) {
-			require  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/modelos/login.php';
-			$usuario= unserialize((base64_decode($_SESSION['usuario'])));
-			$idUsu=$usuario->getIdUsu();
-			$motivoCar = $_POST['motivoCar'];
-			$cantidadCar = $_POST['cantidadCar'];
-			$comentarioCar = $_POST['comentarioCar'];
-			$reserva = $_POST['reserva'];
-			$valores = $reserva.','.$idUsu.',"'.$motivoCar.'","'.$cantidadCar.'","'.$comentarioCar.'",1';
-			$registrarCargo = $con->insertar("cargosextras_volar", "reserva_ce,usuario_ce,motivo_ce,cantidad_ce,comentario_ce,tipo_ce", $valores);
-			echo $registrarCargo;
-
-			$totalReserva = $con->consulta("total_temp","temp_volar","id_temp=".$reserva);
-			$nuevoTotal = $totalReserva[0]->total_temp + $cantidadCar;
-			$nuevoTotal = $con->actualizar("temp_volar","total_temp=".$nuevoTotal,"id_temp=".$reserva);
+			
+		require  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/modelos/login.php';
+		$usuario= unserialize((base64_decode($_SESSION['usuario'])));
+		$idUsu=$usuario->getIdUsu();
+		$motivoCar = $_POST['motivoCar'];
+		$cantidadCar = $_POST['cantidadCar'];
+		$comentarioCar = $_POST['comentarioCar'];
+		$reserva = $_POST['reserva'];
+		$valores = $reserva.','.$idUsu.',"'.$motivoCar.'","'.$cantidadCar.'","'.$comentarioCar.'",1';
+		$registrarCargo = $con->insertar("cargosextras_volar", "reserva_ce,usuario_ce,motivo_ce,cantidad_ce,comentario_ce,tipo_ce", $valores);
+		echo $registrarCargo ."<br>Espere conciliación de cargo<br>";
+		
+		$tipoCorreo = "Cargos";
+		$tipo = "CARGO";
+		$motivo =$motivoCar;
+		$cantidad = $cantidadCar;
+		$comentario =$comentarioCar;
+		include_once 'correoController.php';
+		/*$totalReserva = $con->consulta("total_temp","temp_volar","id_temp=".$reserva);
+		$nuevoTotal = $totalReserva[0]->total_temp + $cantidadCar;
+		$nuevoTotal = $con->actualizar("temp_volar","total_temp=".$nuevoTotal,"id_temp=".$reserva);*/
 	}elseif (isset($_POST['accion']) && $_POST['accion']=='descuentos'  ) {
-			require  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/modelos/login.php';
-			$usuario= unserialize((base64_decode($_SESSION['usuario'])));
-			$idUsu=$usuario->getIdUsu();
-			$motivoCar = $_POST['motivoCar'];
-			$cantidadCar = $_POST['cantidadCar'];
-			$comentarioCar = $_POST['comentarioCar'];
-			$reserva = $_POST['reserva'];
-			$valores = $reserva.','.$idUsu.',"'.$motivoCar.'","'.$cantidadCar.'","'.$comentarioCar.'",2';
-			$registrarCargo = $con->insertar("cargosextras_volar", "reserva_ce,usuario_ce,motivo_ce,cantidad_ce,comentario_ce,tipo_ce", $valores);
-			echo $registrarCargo;
-
-			$totalReserva = $con->consulta("total_temp","temp_volar","id_temp=".$reserva);
-			$nuevoTotal = $totalReserva[0]->total_temp - $cantidadCar;
-			$nuevoTotal = $con->actualizar("temp_volar","total_temp=".$nuevoTotal,"id_temp=".$reserva);
+		require  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/modelos/login.php';
+		$usuario= unserialize((base64_decode($_SESSION['usuario'])));
+		$idUsu=$usuario->getIdUsu();
+		$motivoCar = $_POST['motivoCar'];
+		$cantidadCar = $_POST['cantidadCar'];
+		$comentarioCar = $_POST['comentarioCar'];
+		$reserva = $_POST['reserva'];
+		$valores = $reserva.','.$idUsu.',"'.$motivoCar.'","'.$cantidadCar.'","'.$comentarioCar.'",2';
+		$registrarCargo = $con->insertar("cargosextras_volar", "reserva_ce,usuario_ce,motivo_ce,cantidad_ce,comentario_ce,tipo_ce", $valores);
+		echo $registrarCargo;
+		
+		$tipoCorreo = "Cargos";
+		$tipo = "DESCUENTO";
+		$motivo =$motivoCar;
+		$cantidad = $cantidadCar;
+		$comentario =$comentarioCar;
+		include_once 'correoController.php';
+		/*
+		$totalReserva = $con->consulta("total_temp","temp_volar","id_temp=".$reserva);
+		$nuevoTotal = $totalReserva[0]->total_temp - $cantidadCar;
+		$nuevoTotal = $con->actualizar("temp_volar","total_temp=".$nuevoTotal,"id_temp=".$reserva);
+		*/
 	}
 ?>

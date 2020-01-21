@@ -915,9 +915,63 @@ function asignarGlobos(){
 				}
 			}
 		});
-	}
+}
 
 
+function conciliarMovimiento(movimiento, tipo,status){
+	url = 'controladores/reservaController.php';
+	datos={
+		movimiento:movimiento,
+		tipo:tipo,
+		status:status,
+		accion:'conciliarMovimiento'
+	};
+	$.ajax({
+			url:url,
+			method: "POST",
+			data: datos,
+			success:function(response){
+				abrir_gritter("Ok!",response ,"info");
+				cargarTablaReservas();
+			},
+			error:function(){
+
+					abrir_gritter("Error","Error desconocido" ,"danger");
+			},
+			statusCode: {
+				404: function() {
+
+					abrir_gritter("Error","URL NO encontrada" ,"danger");
+				}
+			}
+	});
+}
+function enviarCorreoMovimiento(movimiento,reserva){
+	url = 'vistas/reservas/correo/correoMovimiento.php';
+	datos={
+		movimiento:movimiento,
+		reserva:reserva
+	};
+	$.ajax({
+			url:url,
+			method: "POST",
+			data: datos,
+			success:function(response){
+				abrir_gritter("Ok!",response ,"info");
+				cargarTablaReservas();
+			},
+			error:function(){
+
+					abrir_gritter("Error","Error desconocido" ,"danger");
+			},
+			statusCode: {
+				404: function() {
+
+					abrir_gritter("Error","URL NO encontrada" ,"danger");
+				}
+			}
+	});
+}
 function tables(){
 	$(".DataTable").DataTable().destroy();
 		$(".DataTable").dataTable( {

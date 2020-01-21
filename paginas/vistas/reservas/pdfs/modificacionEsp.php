@@ -1,24 +1,8 @@
 <?php
-	$imagen="quoteHeader.jpeg";
-	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin1/sources/FPDF/fpdf.php';
-
-
-  Class PDF extends FPDF{
-
-  	function Header(){
-  		//Imagen, SETX,SETY, tamaño
-  		$this->Image( $_SERVER['DOCUMENT_ROOT'].'/admin1/sources/images/correos/confirmationHeader.jpeg',35,10,135,25);
-  		$this->Ln(30);
-  	}
-  	/*function Footer(){
- 			$this->SetY(-15);
- 			$this->SetFont('Arial','I', 8);
- 			$this->Cell(0,10, 'Pagina '.$this->PageNo().'/{nb}',0,0,'C' );
-  	}*/
-  }
-	$pago = $_POST['pago'];
-	$pagoInfo= $con->consulta("cantidad_bp as cantidad, idres_bp as reserva","bitpagos_volar","id_bp=".$pago);
-	$reserva=$pagoInfo[0]->reserva;
+	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin1/sources/FPDF/plantillaConfirmacion.php';
+//	$datosVuelo = $con->consulta("IFNULL(fechavuelo_temp,' No asignada' as fechavuelo, ")
+		//2 es de cortesia ;1 es de paga
+	//cantmax 0 = automatico
 
 	$totalPagos  = $con->consulta("SUM(cantidad_bp) as totalPagos ","bitpagos_volar"," status<>0 and idres_bp=".$reserva);
 	$totalReserva=0.0;
@@ -75,53 +59,52 @@
 
 	    $totalHabitacion= $days * $precioHabitacion;
 
-	    $descripcionHospedaje = " From ".$checkin. " to ". $checkout. "(".$days." days)";
+	    $descripcionHospedaje = " De ".$checkin. " a ". $checkout. "(".$days." dias)";
 	    $totalReserva+=$totalHabitacion;
 	  }
 	  $totalReserva +=$datosReserva[0]->precio1;
 	  //echo "otros->".$datosReserva[0]->precio1."<br>";
 	  $totalReserva +=$datosReserva[0]->precio2;
 
-
-	  	function convertirFecha($fecha){
-	  		$fecha=explode("-",$fecha);
-	  		if($fecha[1]=='01'){
-	  			$Nvafecha="JAN-$fecha[2]-$fecha[0]";
-	  		}else if($fecha[1]=='02'){
-	  			$Nvafecha="FEB-$fecha[2]-$fecha[0]";
-	  		}else if($fecha[1]=='03'){
-	  			$Nvafecha="MAR-$fecha[2]-$fecha[0]";
-	  		}else if($fecha[1]=='04'){
-	  			$Nvafecha="APR-$fecha[2]-$fecha[0]";
-	  		}else if($fecha[1]=='05'){
-	  			$Nvafecha="MAY-$fecha[2]-$fecha[0]";
-	  		}else if($fecha[1]=='06'){
-	  			$Nvafecha="JUN-$fecha[2]-$fecha[0]";
-	  		}else if($fecha[1]=='07'){
-	  			$Nvafecha="JUL-$fecha[2]-$fecha[0]";
-	  		}else if($fecha[1]=='08'){
-	  			$Nvafecha="AUG-$fecha[2]-$fecha[0]";
-	  		}else if($fecha[1]=='09'){
-	  			$Nvafecha="SEP-$fecha[2]-$fecha[0]";
-	  		}else if($fecha[1]=='10'){
-	  			$Nvafecha="OCT-$fecha[2]-$fecha[0]";
-	  		}else if($fecha[1]=='11'){
-	  			$Nvafecha="NOV-$fecha[2]-$fecha[0]";
-	  		}else if($fecha[1]=='12'){
-	  			$Nvafecha="DEC-$fecha[2]-$fecha[0]";
-	  		}else{
-	  			$Nvafecha="Error";
-	  		}
-	  		return $Nvafecha;
-	  	}
+	  function convertirFecha($fecha){
+	    $fecha=explode("-",$fecha);
+	    if($fecha[1]=='01'){
+	      $Nvafecha="$fecha[2]-ENE-$fecha[0]";
+	    }else if($fecha[1]=='02'){
+	      $Nvafecha="$fecha[2]-FEB-$fecha[0]";
+	    }else if($fecha[1]=='03'){
+	      $Nvafecha="$fecha[2]-MAR-$fecha[0]";
+	    }else if($fecha[1]=='04'){
+	      $Nvafecha="$fecha[2]-ABR-$fecha[0]";
+	    }else if($fecha[1]=='05'){
+	      $Nvafecha="$fecha[2]-MAYO-$fecha[0]";
+	    }else if($fecha[1]=='06'){
+	      $Nvafecha="$fecha[2]-JUN-$fecha[0]";
+	    }else if($fecha[1]=='07'){
+	      $Nvafecha="$fecha[2]-JUL-$fecha[0]";
+	    }else if($fecha[1]=='08'){
+	      $Nvafecha="$fecha[2]-AGO-$fecha[0]";
+	    }else if($fecha[1]=='09'){
+	      $Nvafecha="$fecha[2]-SEP-$fecha[0]";
+	    }else if($fecha[1]=='10'){
+	      $Nvafecha="$fecha[2]-OCT-$fecha[0]";
+	    }else if($fecha[1]=='11'){
+	      $Nvafecha="$fecha[2]-NOV-$fecha[0]";
+	    }else if($fecha[1]=='12'){
+	      $Nvafecha="$fecha[2]-DIC-$fecha[0]";
+	    }else{
+	      $Nvafecha="Error ";
+	    }
+	    return $Nvafecha;
+	  }
 
 	}
 
 	$vendedor =[$getVendedorInfo[0]->nombre,$getVendedorInfo[0]->correo, $getVendedorInfo[0]->telefono];
 	$fechavuelo = convertirFecha($datosReserva[0]->fechavuelo);
-	$encabezado = "Hello!!! ". $datosReserva[0]->nombre .". This is your flight confirmation. It's not necessary to be printed!. ";
-	$registroPago = "Registration and Payment: Your flight date, you must get to our reception where our hostess will welcome you, make your registration and get the remaining payment. Remember to be on time at the appointment place. Our advice is to bring comfortable clothes, just as if you were on a picnic: cap, scarf, gloves, jacket, sunscreen, and camera.";
-	$tiempo ='From 6:00 a.m. we wait you at our reception, however this time will be CONFIRMED ONE DAY BEFORE your flight day according to the logistic of the day or weather conditions, please be aware as you will receive a call or message to confirm the schedule.';
+	$encabezado = "Hola!!! ". $datosReserva[0]->nombre .". Envío confirmación de vuelo, no olvides llevarla contigo el día de tu vuelo (No es necesario imprimirla). ";
+	$registroPago = "Registro y Pago: El día de tu vuelo deberás presentarte con nuestro anfitrión en la recepción para que registre tu asistencia y te reciba el pago del restante. Recuerda estar a tiempo en el lugar de la cita para no retrasar tu vuelo ni el de los demás. Te aconsejamos traer ropa cómoda, tal como si fueras a un día de campo: gorra, bufanda, guantes, bloqueador solar, cámara fotográfica o de video.";
+	$tiempo ='A partir de 6:00 AM los esperamos en nuestra recepción, sin embargo esta hora sera CONFIRMADA UN DIA ANTES de acuerdo a la logística de operación del día o a las condiciones meteorológicas, te pido estés al tanto ya que recibirás una llamada para confirmar horario';
 
 	$reunion='Recepción Volar en Globo, Aventura y Publicidad SA de CV. Esquina Francisco Villa con Carretera Libre Mexico- Tulancingo (132) C.P. 55850 .';
 	$pdf = new PDF();
@@ -138,25 +121,27 @@
 
 	$pdf->SetFillColor(51,255,147);
 	$pdf->SetFont('Arial','B',10);
-	$pdf->Cell(186,6,'FLIGHT INFORMATION',1,1,'C',1);
+	$pdf->Cell(186,6,'RESERVA No. '.$reserva,1,1,'C',1);
 
 
 	$pdf->SetFillColor(105,165,247);
 	$pdf->SetFont('Arial','',10);
-	$pdf->Cell(70,6,'REFERENCE:',1,0,'C',1);
-	$pdf->Cell(58,6,$reserva,1,0,'C',0);
+	$pdf->Cell(70,6,'FECHA DE VUELO',1,0,'C',1);
+	$pdf->Cell(58,6,convertirFecha($datosReserva[0]->fechavuelo),1,0,'C',0);
 	$pdf->Cell(58,6,'',1,1,'C',0);
 
+
+
 	$pdf->SetFillColor(105,165,247);
 	$pdf->SetFont('Arial','',10);
-	$pdf->Cell(70,6,'NAME: ',1,0,'C',1);
+	$pdf->Cell(70,6,'NOMBRE',1,0,'C',1);
 	$pdf->Cell(58,6,utf8_decode($datosReserva[0]->nombre),1,0,'C',0);
 	$pdf->Cell(58,6,'',1,1,'C',0);
 
 
 	$pdf->SetFillColor(105,165,247);
 	$pdf->SetFont('Arial','',10);
-	$pdf->Cell(70,6,utf8_decode('TELEPHONE'),1,0,'C',1);
+	$pdf->Cell(70,6,utf8_decode('TELÉFONOS'),1,0,'C',1);
 	$telefonos= explode("<br>", $datosReserva[0]->telefonos);
 	if(trim($telefonos[0])!=""){
 		$contacto1 = "CONTACTO 1:". $telefonos[1];
@@ -174,51 +159,33 @@
 
 	$pdf->SetFillColor(105,165,247);
 	$pdf->SetFont('Arial','',10);
-	$pdf->Cell(70,6,'FLIGHT DATE',1,0,'C',1);
-	$pdf->Cell(58,6,convertirFecha($datosReserva[0]->fechavuelo),1,0,'C',0);
-	$pdf->Cell(58,6,'',1,1,'C',0);
-
-	$pdf->SetFillColor(105,165,247);
-	$pdf->SetFont('Arial','',10);
-	$pdf->Cell(70,6,'FLIGHT',1,0,'C',1);
+	$pdf->Cell(70,6,'TIPO DE VUELO',1,0,'C',1);
 	$pdf->Cell(58,6,utf8_encode($datosReserva[0]->tipoVuelo),1,0,'C',0);
 	$pdf->Cell(58,6,'',1,1,'C',0);
 
-	$pdf->SetFillColor(105,165,247);
-	$pdf->SetFont('Arial','',10);
-	$pdf->Cell(70,6,'ADULTS:',1,0,'C',1);
-	$pdf->Cell(58,6,$datosReserva[0]->pasajerosA,1,0,'C',0);
-	$pdf->Cell(58,6,'$ '.	number_format(($datosReserva[0]->pasajerosA*$datosReserva[0]->precioA ), 2, '.', ',') ,1,1,'C',0);
 
-	$pdf->SetFillColor(105,165,247);
-	$pdf->SetFont('Arial','',10);
-	$pdf->Cell(70,6,'KIDS:',1,0,'C',1);
-	$pdf->Cell(58,6,$datosReserva[0]->pasajerosN,1,0,'C',0);
-	$pdf->Cell(58,6,'$ '.	number_format(($datosReserva[0]->pasajerosN*$datosReserva[0]->precioN ), 2, '.', ',') ,1,1,'C',0);
-
-
-/*
 	$pdf->SetFillColor(105,165,247);
 	$pdf->SetFont('Arial','',10);
 	$pdf->Cell(70,6,'PASAJEROS',1,0,'C',1);
 	$pdf->Cell(58,6,utf8_decode('Niños '.$datosReserva[0]->pasajerosN.' /  Adultos '.$datosReserva[0]->pasajerosA),1,0,'C',0);
 	$pdf->Cell(58,6,'$ '.number_format(($datosReserva[0]->pasajerosA*$datosReserva[0]->precioA ) + ($datosReserva[0]->pasajerosN*$datosReserva[0]->precioN ), 2, '.', ','),1,1,'C',0);
 
-*/
 
+
+	if($datosReserva[0]->comentario!=''){
+		$pdf->SetFillColor(105,165,247);
+		$pdf->SetFont('Arial','',10);
+		$pdf->Cell(70,6,'COMENTARIO',1,0,'C',1);
+		$pdf->MultiCell(58,4, utf8_decode(str_replace("â€¢","°",$datosReserva[0]->comentario)),1,'L',0);
+  	
+	}
 
 	if($datosReserva[0]->motivo!=''){
 		$pdf->SetFillColor(105,165,247);
 		$pdf->SetFont('Arial','',10);
-		$pdf->Cell(70,6,'OCASSION',1,0,'C',1);
+		$pdf->Cell(70,6,'MOTIVO',1,0,'C',1);
 		$pdf->Cell(58,6,utf8_decode($datosReserva[0]->motivo),1,0,'C',0);
 		$pdf->Cell(58,6,'',1,1,'C',0);
-	}
-	if($datosReserva[0]->comentario!=''){
-		$pdf->SetFillColor(105,165,247);
-		$pdf->SetFont('Arial','',10);
-		$pdf->Cell(70,6,'COMMENTS',1,0,'C',1);
-		$pdf->MultiCell(58,4, utf8_decode(str_replace("â€¢","°",$datosReserva[0]->comentario)),1,'L',0);
 	}
 
 
@@ -234,14 +201,14 @@
 
 		$pdf->SetFillColor(105,165,247);
 		$pdf->SetFont('Arial','',10);
-		$pdf->Cell(70,6,utf8_decode('ROOM'),1,0,'C',1);
+		$pdf->Cell(70,6,utf8_decode('HABITACIÓN'),1,0,'C',1);
 		$pdf->Cell(58,6,utf8_decode($nombreHabitacion .'($ '. number_format(  $precioHabitacion, 2, '.', ',') .')') ,1,0,'C',0);
 		$pdf->Cell(58,6,'',1,1,'C',0);
 
 
 		$pdf->SetFillColor(105,165,247);
 		$pdf->SetFont('Arial','',10);
-		$pdf->Cell(70,6,utf8_decode('PRICE'),1,0,'C',1);
+		$pdf->Cell(70,6,utf8_decode('TOTAL HABITACIÓN'),1,0,'C',1);
 		$pdf->SetFont('Arial','',7);
 		$pdf->Cell(58,6,utf8_decode($descripcionHospedaje),1,0,'C',0);
 		$pdf->SetFont('Arial','',10);
@@ -251,9 +218,9 @@
 	}
 	$pdf->SetFillColor(105,165,247);
 	$pdf->SetFont('Arial','',10);
-	$pdf->Cell(70,6,'SELLER',1,0,'C',1);
+	$pdf->Cell(70,6,'VENDEDOR',1,0,'C',1);
 	$pdf->Cell(58,6,$vendedor[0],1,0,'C',0);
-	$pdf->Cell(58,6,'',1,1,'C',0);
+	$pdf->Cell(58,6,"",1,1,'C',0);
 
 
 
@@ -278,7 +245,9 @@
 	if(sizeof($serviciosReserva)>0){
 		$pdf->SetFillColor(51,255,147);
 		$pdf->SetFont('Arial','B',10);
-		$pdf->Cell(186,6,'SERVICES:',1,1,'C',1);
+		$pdf->Cell(186,6,'SERVICIOS SOLICITADOS ',1,1,'C',1);
+
+
 
 		foreach ($serviciosReserva as $servicioReserva) {
 			$pdf->SetFillColor(105,165,247);
@@ -298,7 +267,7 @@
 					$pdf->Cell(58,6,"$ ". number_format($servicioReserva->precio, 2, '.', ','),1,1,'C',0);
 				}
 			}else{
-					$pdf->Cell(58,6,'INCLUDED',1,0,'C',0);
+					$pdf->Cell(58,6,'CORTESIA',1,0,'C',0);
 					$pdf->Cell(58,6,"",1,1,'C',0);
 
 			}
@@ -317,7 +286,7 @@
 
 		$pdf->SetFillColor(139,105,247);
 		$pdf->SetFont('Arial','',10);
-		$pdf->Cell(70,6,'DISCOUNT ',1,0,'C',1);
+		$pdf->Cell(70,6,'DESCUENTO ',1,0,'C',1);
 		if($datosReserva[0]->tdescuento==1){
 			$totalDescuento = ($totalReserva * $datosReserva[0]->cantdescuento )/100;
 			$pdf->Cell(58,6,$datosReserva[0]->cantdescuento."%",1,0,'C',0);
@@ -329,6 +298,7 @@
 		$totalReserva-=$totalDescuento;
 		$pdf->Cell(58,6,"$ ".number_format($totalDescuento, 2, '.', ','),1,1,'C',0);
 	}
+
 	if(sizeof($movimientosExtras)>0){ 
 		foreach ($movimientosExtras as $movimientoExtra) { 
 			// $pdf->SetFillColor(139,105,247);
@@ -344,16 +314,10 @@
 			}
 		} 
 	}
-/*
+
 	$pdf->SetFillColor(139,105,247);
 	$pdf->SetFont('Arial','',10);
-	$pdf->Cell(70,6,'ADVANCE PAYMENT ',1,0,'C',1);
-	$pdf->Cell(58,6,'',1,0,'C',0);
-	$pdf->Cell(58,6,"$ ".number_format($pagoInfo[0]->cantidad, 2, '.', ','),1,1,'C',0);
-*/
-	$pdf->SetFillColor(139,105,247);
-	$pdf->SetFont('Arial','',10);
-	$pdf->Cell(70,6,'ADVANCE PAYMENT',1,0,'C',1);
+	$pdf->Cell(70,6,'ANTICIPO TOTAL',1,0,'C',1);
 	$pdf->Cell(58,6,'',1,0,'C',0);
 	$pdf->Cell(58,6,"$ ".number_format($totalPagos[0]->totalPagos, 2, '.', ','),1,1,'C',0);
 	$totalReserva-=$totalPagos[0]->totalPagos;
@@ -361,7 +325,7 @@
 
 	$pdf->SetFillColor(139,105,247);
 	$pdf->SetFont('Arial','',10);
-	$pdf->Cell(70,6,'REMAINDER ',1,0,'C',1);
+	$pdf->Cell(70,6,'TOTAL ',1,0,'C',1);
 	$pdf->Cell(58,6,'',1,0,'C',0);
 	$pdf->Cell(58,6,"$ ".number_format($totalReserva , 2, '.', ','),1,1,'C',0);
 
@@ -372,13 +336,13 @@
 	$pdf->SetFont('Arial','',9);
 	$pdf->MultiCell(186,5,utf8_decode($tiempo),0,'J',0);
 	$pdf->SetFont('Arial','',9);
-	$pdf->MultiCell(186,5,utf8_decode('*All Our Prices are Expressed in Mexican Pesos'),0,'J',0);
+	$pdf->MultiCell(186,5,utf8_decode('* Todos nuestros precios son expresados en Pesos Mexicanos.'),0,'J',0);
 	$pdf->SetFont('Arial','B',9);
-	$pdf->MultiCell(186,5,utf8_decode('Meeting Point:'),0,'C',0);
+	$pdf->MultiCell(186,5,utf8_decode('PUNTO DE REUNIÓN'),0,'C',0);
 	$pdf->SetFont('Arial','',9);
 	$pdf->MultiCell(186,5,utf8_decode($reunion),0,'J',0);
 ///Que incluye el vuelos
-/*
+
 
 	$pdf->SetFont('Arial','B',9);
 	$pdf->MultiCell(186,5,utf8_decode('Qué incluye tu vuelo:'),0,'J',0);
@@ -399,73 +363,66 @@
 
 	$pdf->SetFont('Arial','',9);
 	$pdf->MultiCell(186,5,utf8_decode(' °Brindis tradicional con vino blanco espumoso durante o después del vuelo dependiendo del tipo de vuelo contratado.'),0,'J',0);
-	*/
 /////REstricciones
 	$pdf->SetFont('Arial','B',9);
-	$pdf->MultiCell(186,5,utf8_decode('Restrictions:'),0,'J',0);
+	$pdf->MultiCell(186,5,utf8_decode('Restricciones:'),0,'J',0);
 
 	$pdf->SetFont('Arial','',9);
-	$pdf->MultiCell(186,5,utf8_decode(' ° Children under 4 years old.'),0,'J',0);
+	$pdf->MultiCell(186,5,utf8_decode(' °Niños menores a 4 años.'),0,'J',0);
 
 	$pdf->SetFont('Arial','',9);
-		$pdf->MultiCell(186,5,utf8_decode(' ° If you have suffered a heart disease.'),0,'J',0);
+	$pdf->MultiCell(186,5,utf8_decode(' °Si ha padecido del corazón.'),0,'J',0);
 
 	$pdf->SetFont('Arial','',9);
-	$pdf->MultiCell(186,5,utf8_decode(' ° If you have had a recent surgery.'),0,'J',0);
+	$pdf->MultiCell(186,5,utf8_decode(' °Si tiene una cirugia reciente.'),0,'J',0);
 
 	$pdf->SetFont('Arial','',9);
-	$pdf->MultiCell(186,5,utf8_decode(' ° Injured column.'),0,'J',0);
+	$pdf->MultiCell(186,5,utf8_decode(' °Problemas de la columna.'),0,'J',0);
 
 	$pdf->SetFont('Arial','',9);
-	$pdf->MultiCell(186,5,utf8_decode(' °	Pregnant women.'),0,'J',0);
+	$pdf->MultiCell(186,5,utf8_decode(' °Mujeres embarazadas.'),0,'J',0);
 
 	$pdf->SetFont('Arial','',9);
-	$pdf->MultiCell(186,5,utf8_decode(' ° If you are intoxicated. (Alcohol or drugs)'),0,'J',0);
+	$pdf->MultiCell(186,5,utf8_decode(' °No se puede abordar en estado inconveniente.'),0,'J',0);
 
 	$pdf->SetFont('Arial','',9);
-	$pdf->MultiCell(186,5,utf8_decode(' ° It is not allowed to board with: luggage, sharps or firearms.'),0,'J',0);
+	$pdf->MultiCell(186,5,utf8_decode(' °No se permiten abordar con: equipaje, armas punzocortantes o de fuego.'),0,'J',0);
 
 	$pdf->SetFont('Arial','',9);
-	$pdf->MultiCell(186,5,utf8_decode(' * People over 100 kg, must pay $25.00 per extra kilo.'),0,'J',0);
-
-
+	$pdf->MultiCell(186,5,utf8_decode('Personas con peso superior a los 100 kg deben pagar $25 por kilo extra.'),0,'J',0);
 
 ////Restricciones para vuelos
 
 	$pdf->SetFont('Arial','B',9);
-	$pdf->MultiCell(186,5,utf8_decode('Weather restrictions:'),0,'J',0);
+	$pdf->MultiCell(186,5,utf8_decode('Restricciones para los vuelos:'),0,'J',0);
 	$pdf->SetFont('Arial','',9);
-	$pdf->MultiCell(186,5,utf8_decode(' °Winds over 20 km/hr. '),0,'J',0);
+	$pdf->MultiCell(186,5,utf8_decode(' °Cuando las condiciones climatológicas no lo permita (Vientos mayor a 20 Km.).'),0,'J',0);
 	$pdf->SetFont('Arial','',9);
-	$pdf->MultiCell(186,5,utf8_decode(' °Rain or electric storm.'),0,'J',0);
+	$pdf->MultiCell(186,5,utf8_decode(' °Lluvia y/o tormenta eléctrica.'),0,'J',0);
 	$pdf->SetFont('Arial','',9);
-	$pdf->MultiCell(186,5,utf8_decode(' °Fog excess.'),0,'J',0);
+	$pdf->MultiCell(186,5,utf8_decode(' °Exceso de neblina.'),0,'J',0);
 	$pdf->SetFont('Arial','',9);
-	$pdf->MultiCell(186,5,utf8_decode(' *If your flight is cancelled because of weather conditions, the flight might be rescheduled on a period of one year or you might ask for the refund of the total paid.'),0,'J',0);
+	$pdf->MultiCell(186,5,utf8_decode(' °En caso de alguna de estas causas se reprogramara el vuelo en acuerdo mutuo.'),0,'J',0);
 
 /// Cambio de fecha de vuelo o cancelaciones
 
 $pdf->SetFont('Arial','B',9);
-$pdf->MultiCell(186,5,utf8_decode('Change of flight date or cancellation:'),0,'J',0);
+$pdf->MultiCell(186,5,utf8_decode('Cambio de fecha de vuelo o cancelaciones:'),0,'J',0);
 $pdf->SetFont('Arial','',9);
-$pdf->MultiCell(186,5,utf8_decode(' °  If you can’t attend the appointment due to adverse circumstances, you must cancel and confirm the cancellation by phone call or message at least 36 hours in advance, so that you can reschedule your flight without charge. If the cancellation is made within 36 to 12 hours prior to the flight, it can be rescheduled with an additional charge to the total price of 35% for administration and operation expenses. If there is no cancellation or the passenger doesn’t arrive the flight date, he will lose the right to any refund.'),0,'J',0);
+$pdf->MultiCell(186,5,utf8_decode(' °  En caso de no poder asistir a la cita por circunstancias adversas e imprevistas, deberá cancelar y confirmar la cancelación vía telefónica con al menos 36 horas de anticipación para que se te haga una reprogramación de tu vuelo sin cargo alguno, si la cancelación se hace dentro del periodo de las 36 a 12 horas previo a la realización del vuelo, se podrá reprogramar el vuelo con un cargo adicional al precio total del 35% por gastos de administración y operación. Si no existe cancelación y confirmación de cancelación o no se presentara el pasajero perderá el derecho a reembolso alguno.'),0,'J',0);
 $pdf->SetFont('Arial','',9);
-$pdf->MultiCell(186,5,utf8_decode(' °    If you need to postpone the flight, it is the passenger\'s responsibility to reschedule in a period not exceeding 12 months, otherwise the right to flight will be lost.'),0,'J',0);
+$pdf->MultiCell(186,5,utf8_decode(' °  En caso de que se requiera reprogramar un vuelo; es responsabilidad del pasajero reprogramar en un período no mayor a 12 meses de lo contrario se perderá el derecho al vuelo.'),0,'J',0);
 $pdf->SetFont('Arial','',9);
-$pdf->MultiCell(186,5,utf8_decode(' °  Remember to be on time at the appointment place so you don\'t miss your flight. Arriving late to the appointment schedule may cause an extra charge of 35% from the total.'),0,'J',0);
-$pdf->SetFont('Arial','',9);
-$pdf->MultiCell(186,5,utf8_decode(' °  The estimated flight time is up to one hour but if conditions do not allow it, the company leaves it to the pilot for consideration. There won’t be refund for flights lasting less than one hour.'),0,'J',0);
+$pdf->MultiCell(186,5,utf8_decode(' °  El tiempo estimado de vuelo es hasta de una hora pero si las condiciones no lo permiten, la empresa lo deja a consideración del piloto. Así que no habrá reembolso alguno por vuelos con duración menor a una hora.'),0,'J',0);
 
 ///DIRECCIÓN Y COMO LLEGAR
-/*
 $pdf->SetFont('Arial','B',9);
 $pdf->MultiCell(186,5,utf8_decode('Direccion y Como Llegar:'),0,'J',0);
 $pdf->MultiCell(186,6,'',0,'J',0);
 $pdf->SetFont('Arial','',9);
 $pdf->MultiCell(186,5,utf8_decode('Tomar Insurgentes Norte hacia México-Pachuca autopista 85D,  en cuanto llegues a las casetas de peaje  tomar las del lado derecho con dirección a Pirámides – Tulancingo autopista 132D, sigue los señalamientos hacia Pirámides Tulancingo, ahí pagaras una caseta, seguir sobre la autopista hasta pasar una gasolinera del lado derecho (aproximadamente 17 Km), tomar la desviación hacia Pirámides y continuar hasta la desviación a Tulancingo Libre, continuar sobre esta carretera, 5 Km adelante a tu mano izquierda vas a encontrar una Estación de Policía Federal, un poco más adelante encontraras una salida a mano izquierda antes del puente, debes girar a la izquierda nuevamente y allí 200 metros adelante encontraras Volar en Globo.'),0,'J',0);
 $pdf->SetFont('Arial','',9);
-*/
-$pdf->MultiCell(186,5,utf8_decode('If you need any more information, please call your seller.'),0,'J',0);
+$pdf->MultiCell(186,5,utf8_decode('Para más información por favor comunícate con tu vendedor'),0,'J',0);
 $pdf->SetFont('Arial','',9);
 $pdf->MultiCell(186,5,utf8_decode($getVendedorInfo[0]->nombre),0,'J',0);
 $pdf->SetFont('Arial','B',9);
@@ -475,7 +432,7 @@ $pdf->MultiCell(186,5,utf8_decode($vendedor[2]),0,'J',0);
 
 
 
-$archivo=$_SERVER['DOCUMENT_ROOT'].'/admin1/sources/pdfs/confirmacion1-'.$reserva.'.pdf';
+$archivo=$_SERVER['DOCUMENT_ROOT'].'/admin1/sources/pdfs/modificacion1-'.$reserva.'.pdf';
 $pdf->Output($archivo,'F');
 	//$pdf->Output();
 ?>
