@@ -54,9 +54,10 @@ function imprimirReporte(){
 	empleado = $("#empleado").val();
 	reserva = $("#reserva").val();
 	modulo = $("#modulo").val();
-
+	metodo = $("#metodo").val();
+	abrir_gritter("Espere","Generando Reporte...","info");
 	url= "vistas/reservas/excel/reporteexcel.php" ;
-	parametros="?fechaI="+fechaI+"&fechaF="+fechaF+"&cliente="+cliente+"&status="+status+"&empleado="+empleado+"&reserva="+reserva;
+	parametros="?fechaI="+fechaI+"&fechaF="+fechaF+"&cliente="+cliente+"&status="+status+"&empleado="+empleado+"&reserva="+reserva+"&metodo="+metodo;
 
 	direcion = url+parametros;
 	$("#imprimirReporte").attr("href",direcion);

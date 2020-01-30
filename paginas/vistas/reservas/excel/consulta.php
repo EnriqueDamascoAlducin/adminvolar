@@ -1,8 +1,4 @@
 <?php
-
-
-
-
 $campos = "	id_temp AS reserva,
 						CONCAT(ifnull(nombre_temp,''),' ',ifnull(apellidos_temp,'')) AS cliente,
  						CONCAT(IFNULL(nombre_usu,''),' ', IFNULL(apellidop_usu,''),' ',IFNULL(apellidom_usu,'')) AS vendedor,
@@ -40,6 +36,9 @@ if(isset($_GET['empleado']) && $_GET['empleado']!='0' ){
 }
 if(isset($_GET['reserva']) && $_GET['reserva']!='' ){
 	$filtro.= " and id_temp = ".$_GET['reserva'];
+}
+if($_GET['fechaI']=='' &&  $_GET['fechaF']=='' && $_GET['reserva']=='' ){
+	$filtro .= " and fechavuelo_temp >= CURRENT_TIMESTAMP ";
 }
 $con->query("SET NAMES UTF8");
 $reservas=$con->consulta($campos,$tabla,$filtro);

@@ -27,6 +27,9 @@ include_once 'globosAsignados.php';
 /* Empiezan servicios */
 include_once 'servicios.php';
 /* Termina hoja de servicios*/
+/* Empiezan pagos */
+include_once 'pagos.php';
+/* Termina hoja de pagos*/
 
 
 
