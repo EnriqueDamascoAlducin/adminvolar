@@ -1,0 +1,252 @@
+[09-Jan-2020 18:42:34 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; usuarioLoggeado has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/beans/usuarioLoggeado.php on line 2
+[09-Jan-2020 18:42:34 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; Conexion has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/controladores/conexion.php on line 2
+[09-Jan-2020 18:42:34 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:42:34 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:42:34 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:42:34 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:42:34 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:42:34 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:42:34 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:42:34 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:42:34 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:42:34 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:42:34 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:42:34 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:42:34 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:42:34 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:42:34 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:42:34 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:42:34 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:42:34 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:42:34 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:42:34 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:42:34 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:42:34 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:42:34 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:42:34 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:42:34 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:42:34 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:42:34 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:42:34 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:42:34 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:42:34 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:42:34 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:42:34 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:42:34 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:42:34 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:42:34 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:42:34 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:42:34 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:42:34 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:42:34 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:42:34 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:42:34 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:42:34 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:42:34 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:42:34 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:42:34 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:42:34 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:42:34 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:42:34 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:42:34 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:42:34 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:42:34 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:42:34 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:42:34 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:42:34 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:42:34 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:42:34 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:42:34 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:42:34 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:42:34 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:42:34 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:42:34 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:42:34 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:42:34 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:42:34 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:42:34 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:42:34 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:44:07 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; usuarioLoggeado has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/beans/usuarioLoggeado.php on line 2
+[09-Jan-2020 18:44:07 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; Conexion has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/controladores/conexion.php on line 2
+[09-Jan-2020 18:44:16 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; usuarioLoggeado has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/beans/usuarioLoggeado.php on line 2
+[09-Jan-2020 18:44:16 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; Conexion has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/controladores/conexion.php on line 2
+[09-Jan-2020 18:44:16 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:44:16 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:44:16 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:44:16 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:44:16 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:44:16 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:44:16 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:44:16 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:44:16 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:44:16 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:44:16 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:44:16 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:44:16 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:44:16 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:44:16 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:44:16 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:44:16 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:44:16 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:44:16 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:44:16 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:44:16 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:44:16 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:44:16 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:44:16 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:44:16 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:44:16 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:44:16 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:44:16 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:44:16 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:44:16 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:44:16 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:44:16 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:44:16 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:44:16 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:44:16 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:44:16 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:44:16 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:44:16 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:44:16 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:44:16 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:44:16 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:44:16 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:44:16 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:44:16 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:44:16 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:44:16 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:44:16 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:44:16 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:44:16 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:44:16 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:44:16 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:44:16 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:44:16 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:44:16 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:44:16 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:44:16 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:44:16 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:44:16 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:44:16 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:44:16 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:44:16 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:44:16 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:44:16 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:44:16 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:44:16 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:44:16 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 18:44:19 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; usuarioLoggeado has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/beans/usuarioLoggeado.php on line 2
+[09-Jan-2020 18:44:19 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; Conexion has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/controladores/conexion.php on line 2
+[09-Jan-2020 19:52:06 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; usuarioLoggeado has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/beans/usuarioLoggeado.php on line 2
+[09-Jan-2020 19:52:06 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; Conexion has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/controladores/conexion.php on line 2
+[09-Jan-2020 19:52:06 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 19:52:06 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 19:52:06 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 19:52:06 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 19:52:06 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 19:52:06 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 19:52:06 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 19:52:06 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 19:52:06 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 19:52:06 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 19:52:06 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 19:52:06 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 19:52:06 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 19:52:06 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 19:52:06 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 19:52:06 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 19:52:06 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 19:52:06 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 19:52:06 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 19:52:06 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 19:52:06 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 19:52:06 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 19:52:06 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 19:52:06 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 19:52:06 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 19:52:06 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 19:52:06 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 19:52:06 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 19:52:06 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 19:52:06 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 19:52:06 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 19:52:06 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 19:52:06 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 19:52:06 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 19:52:06 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 19:52:06 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 19:52:06 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 19:52:06 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 19:52:06 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 19:52:06 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 19:52:06 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 19:52:06 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 19:52:06 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 19:52:06 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 19:52:06 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 19:52:06 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 19:52:06 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 19:52:06 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 19:52:06 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 19:52:06 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 19:52:06 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 19:52:06 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 19:52:06 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 19:52:06 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 19:52:06 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 19:52:06 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 19:52:06 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 19:52:06 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 19:52:06 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 19:52:06 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 19:52:06 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 19:52:06 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 19:52:06 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 19:52:06 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 19:52:06 America/New_York] PHP Notice:  Undefined variable: hotel in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[09-Jan-2020 19:52:06 America/New_York] PHP Notice:  Trying to get property of non-object in /home/afraqujt/public_html/admin1/paginas/vistas/hoteles/forms/index.php on line 59
+[29-Jan-2020 17:45:09 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; usuarioLoggeado has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/beans/usuarioLoggeado.php on line 2
+[29-Jan-2020 17:45:09 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; Conexion has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/controladores/conexion.php on line 2
+[29-Jan-2020 17:45:16 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; usuarioLoggeado has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/beans/usuarioLoggeado.php on line 2
+[29-Jan-2020 17:45:16 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; Conexion has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/controladores/conexion.php on line 2
+[29-Jan-2020 17:45:24 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; usuarioLoggeado has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/beans/usuarioLoggeado.php on line 2
+[29-Jan-2020 17:45:24 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; Conexion has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/controladores/conexion.php on line 2
+[29-Jan-2020 17:45:54 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; usuarioLoggeado has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/beans/usuarioLoggeado.php on line 2
+[29-Jan-2020 17:45:54 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; Conexion has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/controladores/conexion.php on line 2
+[29-Jan-2020 17:46:17 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; usuarioLoggeado has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/beans/usuarioLoggeado.php on line 2
+[29-Jan-2020 17:46:17 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; Conexion has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/controladores/conexion.php on line 2
+[29-Jan-2020 17:46:41 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; usuarioLoggeado has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/beans/usuarioLoggeado.php on line 2
+[29-Jan-2020 17:46:41 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; Conexion has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/controladores/conexion.php on line 2
+[29-Jan-2020 17:47:10 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; usuarioLoggeado has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/beans/usuarioLoggeado.php on line 2
+[29-Jan-2020 17:47:10 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; Conexion has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/controladores/conexion.php on line 2
+[29-Jan-2020 17:47:25 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; usuarioLoggeado has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/beans/usuarioLoggeado.php on line 2
+[29-Jan-2020 17:47:25 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; Conexion has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/controladores/conexion.php on line 2
+[29-Jan-2020 17:47:32 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; usuarioLoggeado has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/beans/usuarioLoggeado.php on line 2
+[29-Jan-2020 17:47:32 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; Conexion has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/controladores/conexion.php on line 2
+[29-Jan-2020 17:48:02 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; usuarioLoggeado has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/beans/usuarioLoggeado.php on line 2
+[29-Jan-2020 17:48:02 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; Conexion has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/controladores/conexion.php on line 2
+[29-Jan-2020 17:48:45 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; usuarioLoggeado has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/beans/usuarioLoggeado.php on line 2
+[29-Jan-2020 17:48:45 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; Conexion has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/controladores/conexion.php on line 2
+[29-Jan-2020 17:49:19 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; usuarioLoggeado has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/beans/usuarioLoggeado.php on line 2
+[29-Jan-2020 17:49:19 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; Conexion has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/controladores/conexion.php on line 2
+[29-Jan-2020 17:49:34 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; usuarioLoggeado has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/beans/usuarioLoggeado.php on line 2
+[29-Jan-2020 17:49:34 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; Conexion has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/controladores/conexion.php on line 2
+[29-Jan-2020 17:50:21 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; usuarioLoggeado has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/beans/usuarioLoggeado.php on line 2
+[29-Jan-2020 17:50:21 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; Conexion has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/controladores/conexion.php on line 2
+[29-Jan-2020 17:50:24 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; usuarioLoggeado has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/beans/usuarioLoggeado.php on line 2
+[29-Jan-2020 17:50:24 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; Conexion has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/controladores/conexion.php on line 2
+[29-Jan-2020 17:50:57 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; usuarioLoggeado has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/beans/usuarioLoggeado.php on line 2
+[29-Jan-2020 17:50:57 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; Conexion has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/controladores/conexion.php on line 2
+[29-Jan-2020 17:51:09 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; usuarioLoggeado has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/beans/usuarioLoggeado.php on line 2
+[29-Jan-2020 17:51:09 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; Conexion has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/controladores/conexion.php on line 2
+[29-Jan-2020 17:55:01 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; usuarioLoggeado has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/beans/usuarioLoggeado.php on line 2
+[29-Jan-2020 17:55:01 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; Conexion has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/controladores/conexion.php on line 2
+[29-Jan-2020 18:01:05 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; usuarioLoggeado has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/beans/usuarioLoggeado.php on line 2
+[29-Jan-2020 18:01:05 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; Conexion has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/controladores/conexion.php on line 2
+[29-Jan-2020 18:01:10 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; usuarioLoggeado has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/beans/usuarioLoggeado.php on line 2
+[29-Jan-2020 18:01:10 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; Conexion has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/controladores/conexion.php on line 2
+[29-Jan-2020 18:09:37 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; usuarioLoggeado has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/beans/usuarioLoggeado.php on line 2
+[29-Jan-2020 18:09:37 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; Conexion has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/controladores/conexion.php on line 2
+[29-Jan-2020 18:09:52 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; usuarioLoggeado has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/beans/usuarioLoggeado.php on line 2
+[29-Jan-2020 18:09:52 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; Conexion has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/controladores/conexion.php on line 2

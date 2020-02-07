@@ -1,0 +1,400 @@
+[13-Jan-2020 14:38:04 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; Conexion has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/controladores/conexion.php on line 2
+[13-Jan-2020 14:38:04 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; usuarioLoggeado has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/beans/usuarioLoggeado.php on line 2
+[13-Jan-2020 14:39:21 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; Conexion has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/controladores/conexion.php on line 2
+[13-Jan-2020 14:39:21 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; usuarioLoggeado has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/beans/usuarioLoggeado.php on line 2
+[13-Jan-2020 23:02:50 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 2
+[13-Jan-2020 23:02:50 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; Conexion has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/controladores/conexion.php on line 2
+[13-Jan-2020 23:02:50 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; usuarioLoggeado has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/beans/usuarioLoggeado.php on line 2
+[13-Jan-2020 23:02:50 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 281
+[13-Jan-2020 23:02:50 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 281
+[13-Jan-2020 23:02:50 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 281
+[13-Jan-2020 23:02:50 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 310
+[13-Jan-2020 23:02:50 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 310
+[13-Jan-2020 23:02:50 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 310
+[13-Jan-2020 23:02:50 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 310
+[13-Jan-2020 23:02:50 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 310
+[13-Jan-2020 23:02:50 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 310
+[14-Jan-2020 22:58:39 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 2
+[14-Jan-2020 22:58:39 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; Conexion has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/controladores/conexion.php on line 2
+[14-Jan-2020 22:58:39 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; usuarioLoggeado has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/beans/usuarioLoggeado.php on line 2
+[14-Jan-2020 22:58:39 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 281
+[14-Jan-2020 22:58:39 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 281
+[14-Jan-2020 22:58:39 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 281
+[14-Jan-2020 22:58:39 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 310
+[14-Jan-2020 22:58:39 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 310
+[14-Jan-2020 22:58:39 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 310
+[14-Jan-2020 22:58:39 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 310
+[14-Jan-2020 22:58:39 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 310
+[14-Jan-2020 22:58:39 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 310
+[15-Jan-2020 18:33:46 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; Conexion has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/controladores/conexion.php on line 2
+[15-Jan-2020 18:33:46 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; usuarioLoggeado has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/beans/usuarioLoggeado.php on line 2
+[15-Jan-2020 23:00:43 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 2
+[15-Jan-2020 23:00:43 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; Conexion has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/controladores/conexion.php on line 2
+[15-Jan-2020 23:00:43 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; usuarioLoggeado has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/beans/usuarioLoggeado.php on line 2
+[15-Jan-2020 23:00:43 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 283
+[15-Jan-2020 23:00:43 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 283
+[15-Jan-2020 23:00:43 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 283
+[15-Jan-2020 23:00:43 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 312
+[15-Jan-2020 23:00:43 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 312
+[15-Jan-2020 23:00:43 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 312
+[15-Jan-2020 23:00:43 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 312
+[15-Jan-2020 23:00:43 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 312
+[15-Jan-2020 23:00:43 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 312
+[16-Jan-2020 23:04:19 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 2
+[16-Jan-2020 23:04:19 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; Conexion has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/controladores/conexion.php on line 2
+[16-Jan-2020 23:04:19 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; usuarioLoggeado has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/beans/usuarioLoggeado.php on line 2
+[16-Jan-2020 23:04:19 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 283
+[16-Jan-2020 23:04:19 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 283
+[16-Jan-2020 23:04:19 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 283
+[16-Jan-2020 23:04:19 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 312
+[16-Jan-2020 23:04:19 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 312
+[16-Jan-2020 23:04:19 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 312
+[16-Jan-2020 23:04:19 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 312
+[16-Jan-2020 23:04:19 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 312
+[16-Jan-2020 23:04:19 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 312
+[16-Jan-2020 23:04:19 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 312
+[16-Jan-2020 23:04:19 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 312
+[16-Jan-2020 23:04:19 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 312
+[17-Jan-2020 23:03:16 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 2
+[17-Jan-2020 23:03:16 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; Conexion has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/controladores/conexion.php on line 2
+[17-Jan-2020 23:03:16 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; usuarioLoggeado has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/beans/usuarioLoggeado.php on line 2
+[17-Jan-2020 23:03:16 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 283
+[17-Jan-2020 23:03:16 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 283
+[17-Jan-2020 23:03:16 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 283
+[17-Jan-2020 23:03:16 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 312
+[17-Jan-2020 23:03:16 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 312
+[17-Jan-2020 23:03:16 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 312
+[17-Jan-2020 23:03:16 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 312
+[17-Jan-2020 23:03:16 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 312
+[17-Jan-2020 23:03:16 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 312
+[17-Jan-2020 23:03:16 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 312
+[17-Jan-2020 23:03:16 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 312
+[17-Jan-2020 23:03:16 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 312
+[17-Jan-2020 23:03:16 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 312
+[17-Jan-2020 23:03:16 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 312
+[17-Jan-2020 23:03:16 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 312
+[17-Jan-2020 23:03:16 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 312
+[17-Jan-2020 23:03:16 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 312
+[17-Jan-2020 23:03:16 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 312
+[17-Jan-2020 23:03:16 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 312
+[17-Jan-2020 23:03:16 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 312
+[17-Jan-2020 23:03:16 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 312
+[17-Jan-2020 23:03:16 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 312
+[17-Jan-2020 23:03:16 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 312
+[17-Jan-2020 23:03:16 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 312
+[19-Jan-2020 22:53:27 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 2
+[19-Jan-2020 22:53:27 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; Conexion has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/controladores/conexion.php on line 2
+[19-Jan-2020 22:53:27 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; usuarioLoggeado has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/beans/usuarioLoggeado.php on line 2
+[19-Jan-2020 22:53:27 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 283
+[19-Jan-2020 22:53:27 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 283
+[19-Jan-2020 22:53:27 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 283
+[19-Jan-2020 22:53:27 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 312
+[19-Jan-2020 22:53:27 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 312
+[19-Jan-2020 22:53:27 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 312
+[19-Jan-2020 22:53:27 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 312
+[19-Jan-2020 22:53:27 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 312
+[19-Jan-2020 22:53:27 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 312
+[19-Jan-2020 22:53:27 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 312
+[19-Jan-2020 22:53:27 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 312
+[19-Jan-2020 22:53:27 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 312
+[20-Jan-2020 23:04:05 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 2
+[20-Jan-2020 23:04:05 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; Conexion has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/controladores/conexion.php on line 2
+[20-Jan-2020 23:04:05 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; usuarioLoggeado has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/beans/usuarioLoggeado.php on line 2
+[20-Jan-2020 23:04:05 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 293
+[20-Jan-2020 23:04:05 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 293
+[20-Jan-2020 23:04:05 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 293
+[20-Jan-2020 23:04:05 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 322
+[20-Jan-2020 23:04:05 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 322
+[20-Jan-2020 23:04:05 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 322
+[20-Jan-2020 23:04:05 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 322
+[20-Jan-2020 23:04:05 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 322
+[20-Jan-2020 23:04:05 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 322
+[20-Jan-2020 23:04:05 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 322
+[20-Jan-2020 23:04:05 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 322
+[20-Jan-2020 23:04:05 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 322
+[20-Jan-2020 23:04:05 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 322
+[20-Jan-2020 23:04:05 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 322
+[20-Jan-2020 23:04:05 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 322
+[21-Jan-2020 23:01:41 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 2
+[21-Jan-2020 23:01:41 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; Conexion has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/controladores/conexion.php on line 2
+[21-Jan-2020 23:01:41 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; usuarioLoggeado has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/beans/usuarioLoggeado.php on line 2
+[21-Jan-2020 23:01:41 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 293
+[21-Jan-2020 23:01:41 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 293
+[21-Jan-2020 23:01:41 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 293
+[21-Jan-2020 23:01:41 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 322
+[21-Jan-2020 23:01:41 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 322
+[21-Jan-2020 23:01:41 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 322
+[21-Jan-2020 23:01:41 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 322
+[21-Jan-2020 23:01:41 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 322
+[21-Jan-2020 23:01:41 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 322
+[21-Jan-2020 23:01:41 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 322
+[21-Jan-2020 23:01:41 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 322
+[21-Jan-2020 23:01:41 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 322
+[22-Jan-2020 23:18:53 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 2
+[22-Jan-2020 23:18:53 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; Conexion has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/controladores/conexion.php on line 2
+[22-Jan-2020 23:18:53 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; usuarioLoggeado has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/beans/usuarioLoggeado.php on line 2
+[22-Jan-2020 23:18:53 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 283
+[22-Jan-2020 23:18:53 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 283
+[22-Jan-2020 23:18:53 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 283
+[22-Jan-2020 23:18:53 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 312
+[22-Jan-2020 23:18:53 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 312
+[22-Jan-2020 23:18:53 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 312
+[22-Jan-2020 23:18:53 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 312
+[22-Jan-2020 23:18:53 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 312
+[22-Jan-2020 23:18:53 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 312
+[23-Jan-2020 22:55:35 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 2
+[23-Jan-2020 22:55:35 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; Conexion has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/controladores/conexion.php on line 2
+[23-Jan-2020 22:55:35 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; usuarioLoggeado has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/beans/usuarioLoggeado.php on line 2
+[23-Jan-2020 22:55:35 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 283
+[23-Jan-2020 22:55:35 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 283
+[23-Jan-2020 22:55:35 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 283
+[23-Jan-2020 22:55:35 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 312
+[23-Jan-2020 22:55:35 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 312
+[23-Jan-2020 22:55:35 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 312
+[23-Jan-2020 22:55:35 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 312
+[23-Jan-2020 22:55:35 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 312
+[23-Jan-2020 22:55:35 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 312
+[23-Jan-2020 22:55:35 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 312
+[23-Jan-2020 22:55:35 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 312
+[23-Jan-2020 22:55:35 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 312
+[24-Jan-2020 23:05:42 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 2
+[24-Jan-2020 23:05:42 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; Conexion has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/controladores/conexion.php on line 2
+[24-Jan-2020 23:05:42 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; usuarioLoggeado has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/beans/usuarioLoggeado.php on line 2
+[24-Jan-2020 23:05:42 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 283
+[24-Jan-2020 23:05:42 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 283
+[24-Jan-2020 23:05:42 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 283
+[24-Jan-2020 23:05:42 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 312
+[24-Jan-2020 23:05:42 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 312
+[24-Jan-2020 23:05:42 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 312
+[24-Jan-2020 23:05:42 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 312
+[24-Jan-2020 23:05:42 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 312
+[24-Jan-2020 23:05:42 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 312
+[24-Jan-2020 23:05:42 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 312
+[24-Jan-2020 23:05:42 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 312
+[24-Jan-2020 23:05:42 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 312
+[24-Jan-2020 23:05:42 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 312
+[24-Jan-2020 23:05:42 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 312
+[24-Jan-2020 23:05:42 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 312
+[24-Jan-2020 23:05:42 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 312
+[24-Jan-2020 23:05:42 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 312
+[24-Jan-2020 23:05:42 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 312
+[24-Jan-2020 23:05:42 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 312
+[24-Jan-2020 23:05:42 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 312
+[24-Jan-2020 23:05:42 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 312
+[24-Jan-2020 23:05:42 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 312
+[24-Jan-2020 23:05:42 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 312
+[24-Jan-2020 23:05:42 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 312
+[24-Jan-2020 23:05:42 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 312
+[24-Jan-2020 23:05:42 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 312
+[24-Jan-2020 23:05:42 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 312
+[24-Jan-2020 23:09:41 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; Conexion has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/controladores/conexion.php on line 2
+[24-Jan-2020 23:09:41 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; usuarioLoggeado has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/beans/usuarioLoggeado.php on line 2
+[24-Jan-2020 23:09:42 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; Conexion has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/controladores/conexion.php on line 2
+[24-Jan-2020 23:09:42 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; usuarioLoggeado has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/beans/usuarioLoggeado.php on line 2
+[24-Jan-2020 23:09:51 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; Conexion has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/controladores/conexion.php on line 2
+[24-Jan-2020 23:09:51 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; usuarioLoggeado has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/beans/usuarioLoggeado.php on line 2
+[24-Jan-2020 23:09:52 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; Conexion has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/controladores/conexion.php on line 2
+[24-Jan-2020 23:09:52 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; usuarioLoggeado has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/beans/usuarioLoggeado.php on line 2
+[24-Jan-2020 23:51:38 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; Conexion has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/controladores/conexion.php on line 2
+[24-Jan-2020 23:51:38 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; usuarioLoggeado has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/beans/usuarioLoggeado.php on line 2
+[24-Jan-2020 23:59:07 America/New_York] PHP Parse error:  syntax error, unexpected 'for' (T_FOR) in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 188
+[24-Jan-2020 23:59:59 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; Conexion has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/controladores/conexion.php on line 2
+[24-Jan-2020 23:59:59 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; usuarioLoggeado has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/beans/usuarioLoggeado.php on line 2
+[25-Jan-2020 23:05:40 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 2
+[25-Jan-2020 23:05:40 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; Conexion has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/controladores/conexion.php on line 2
+[25-Jan-2020 23:05:40 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; usuarioLoggeado has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/beans/usuarioLoggeado.php on line 2
+[25-Jan-2020 23:05:40 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 291
+[25-Jan-2020 23:05:40 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 291
+[25-Jan-2020 23:05:40 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 291
+[25-Jan-2020 23:05:40 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[25-Jan-2020 23:05:40 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[25-Jan-2020 23:05:40 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[25-Jan-2020 23:05:40 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[25-Jan-2020 23:05:40 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[25-Jan-2020 23:05:40 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[25-Jan-2020 23:05:40 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[25-Jan-2020 23:05:40 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[25-Jan-2020 23:05:40 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[25-Jan-2020 23:05:40 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[25-Jan-2020 23:05:40 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[25-Jan-2020 23:05:40 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[25-Jan-2020 23:05:40 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[25-Jan-2020 23:05:40 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[25-Jan-2020 23:05:40 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[25-Jan-2020 23:05:40 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[25-Jan-2020 23:05:40 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[25-Jan-2020 23:05:40 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[26-Jan-2020 23:00:00 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 2
+[26-Jan-2020 23:00:00 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; Conexion has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/controladores/conexion.php on line 2
+[26-Jan-2020 23:00:00 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; usuarioLoggeado has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/beans/usuarioLoggeado.php on line 2
+[26-Jan-2020 23:00:00 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 291
+[26-Jan-2020 23:00:00 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 291
+[26-Jan-2020 23:00:00 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 291
+[26-Jan-2020 23:00:00 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[26-Jan-2020 23:00:00 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[26-Jan-2020 23:00:00 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[26-Jan-2020 23:00:00 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[26-Jan-2020 23:00:00 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[26-Jan-2020 23:00:00 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[26-Jan-2020 23:00:00 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[26-Jan-2020 23:00:00 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[26-Jan-2020 23:00:00 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[27-Jan-2020 22:57:13 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 2
+[27-Jan-2020 22:57:13 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; Conexion has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/controladores/conexion.php on line 2
+[27-Jan-2020 22:57:13 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; usuarioLoggeado has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/beans/usuarioLoggeado.php on line 2
+[27-Jan-2020 22:57:13 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 291
+[27-Jan-2020 22:57:13 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 291
+[27-Jan-2020 22:57:13 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 291
+[27-Jan-2020 22:57:13 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[27-Jan-2020 22:57:13 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[27-Jan-2020 22:57:13 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[28-Jan-2020 23:13:28 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 2
+[28-Jan-2020 23:13:28 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; Conexion has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/controladores/conexion.php on line 2
+[28-Jan-2020 23:13:28 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; usuarioLoggeado has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/beans/usuarioLoggeado.php on line 2
+[28-Jan-2020 23:13:28 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 291
+[28-Jan-2020 23:13:28 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 291
+[28-Jan-2020 23:13:28 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 291
+[28-Jan-2020 23:13:28 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[28-Jan-2020 23:13:28 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[28-Jan-2020 23:13:28 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[28-Jan-2020 23:13:28 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[28-Jan-2020 23:13:28 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[28-Jan-2020 23:13:28 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[28-Jan-2020 23:13:28 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[28-Jan-2020 23:13:28 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[28-Jan-2020 23:13:28 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[29-Jan-2020 23:06:44 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 2
+[29-Jan-2020 23:06:44 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; Conexion has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/controladores/conexion.php on line 2
+[29-Jan-2020 23:06:44 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; usuarioLoggeado has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/beans/usuarioLoggeado.php on line 2
+[29-Jan-2020 23:06:44 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 291
+[29-Jan-2020 23:06:44 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 291
+[29-Jan-2020 23:06:44 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 291
+[29-Jan-2020 23:06:44 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[29-Jan-2020 23:06:44 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[29-Jan-2020 23:06:44 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[29-Jan-2020 23:06:44 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[29-Jan-2020 23:06:44 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[29-Jan-2020 23:06:44 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[30-Jan-2020 22:59:53 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 2
+[30-Jan-2020 22:59:53 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; Conexion has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/controladores/conexion.php on line 2
+[30-Jan-2020 22:59:53 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; usuarioLoggeado has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/beans/usuarioLoggeado.php on line 2
+[30-Jan-2020 22:59:53 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 291
+[30-Jan-2020 22:59:53 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 291
+[30-Jan-2020 22:59:53 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 291
+[30-Jan-2020 22:59:53 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[30-Jan-2020 22:59:53 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[30-Jan-2020 22:59:53 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[30-Jan-2020 22:59:53 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[30-Jan-2020 22:59:53 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[30-Jan-2020 22:59:53 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[30-Jan-2020 22:59:53 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[30-Jan-2020 22:59:53 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[30-Jan-2020 22:59:53 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[30-Jan-2020 22:59:53 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[30-Jan-2020 22:59:53 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[30-Jan-2020 22:59:53 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[30-Jan-2020 22:59:53 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[30-Jan-2020 22:59:53 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[30-Jan-2020 22:59:53 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[31-Jan-2020 23:20:36 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 2
+[31-Jan-2020 23:20:36 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; Conexion has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/controladores/conexion.php on line 2
+[31-Jan-2020 23:20:36 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; usuarioLoggeado has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/beans/usuarioLoggeado.php on line 2
+[31-Jan-2020 23:20:36 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 291
+[31-Jan-2020 23:20:36 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 291
+[31-Jan-2020 23:20:36 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 291
+[31-Jan-2020 23:20:36 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[31-Jan-2020 23:20:36 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[31-Jan-2020 23:20:36 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[31-Jan-2020 23:20:36 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[31-Jan-2020 23:20:36 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[31-Jan-2020 23:20:36 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[31-Jan-2020 23:20:36 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[31-Jan-2020 23:20:36 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[31-Jan-2020 23:20:36 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[31-Jan-2020 23:20:36 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[31-Jan-2020 23:20:36 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[31-Jan-2020 23:20:36 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[31-Jan-2020 23:20:36 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[31-Jan-2020 23:20:36 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[31-Jan-2020 23:20:36 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[31-Jan-2020 23:20:36 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[31-Jan-2020 23:20:36 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[31-Jan-2020 23:20:36 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[01-Feb-2020 22:53:32 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 2
+[01-Feb-2020 22:53:32 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; Conexion has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/controladores/conexion.php on line 2
+[01-Feb-2020 22:53:32 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; usuarioLoggeado has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/beans/usuarioLoggeado.php on line 2
+[01-Feb-2020 22:53:32 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 291
+[01-Feb-2020 22:53:32 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 291
+[01-Feb-2020 22:53:32 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 291
+[01-Feb-2020 22:53:32 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[01-Feb-2020 22:53:32 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[01-Feb-2020 22:53:32 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[01-Feb-2020 22:53:32 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[01-Feb-2020 22:53:32 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[01-Feb-2020 22:53:32 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[01-Feb-2020 22:53:32 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[01-Feb-2020 22:53:32 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[01-Feb-2020 22:53:32 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[01-Feb-2020 22:53:32 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[01-Feb-2020 22:53:32 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[01-Feb-2020 22:53:32 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[01-Feb-2020 22:53:32 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[01-Feb-2020 22:53:32 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[01-Feb-2020 22:53:32 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[01-Feb-2020 22:53:32 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[01-Feb-2020 22:53:32 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[01-Feb-2020 22:53:32 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[01-Feb-2020 22:53:32 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[01-Feb-2020 22:53:32 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[01-Feb-2020 22:53:32 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[01-Feb-2020 22:53:32 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[01-Feb-2020 22:53:32 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[01-Feb-2020 22:53:32 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[02-Feb-2020 23:01:56 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 2
+[02-Feb-2020 23:01:56 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; Conexion has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/controladores/conexion.php on line 2
+[02-Feb-2020 23:01:56 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; usuarioLoggeado has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/beans/usuarioLoggeado.php on line 2
+[02-Feb-2020 23:01:56 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 291
+[02-Feb-2020 23:01:56 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 291
+[02-Feb-2020 23:01:56 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 291
+[02-Feb-2020 23:01:56 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[02-Feb-2020 23:01:56 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[02-Feb-2020 23:01:56 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[02-Feb-2020 23:01:56 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[02-Feb-2020 23:01:56 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[02-Feb-2020 23:01:56 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[02-Feb-2020 23:01:56 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[02-Feb-2020 23:01:56 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[02-Feb-2020 23:01:56 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[02-Feb-2020 23:01:56 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[02-Feb-2020 23:01:56 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[02-Feb-2020 23:01:56 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[02-Feb-2020 23:01:56 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[02-Feb-2020 23:01:56 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[02-Feb-2020 23:01:56 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[02-Feb-2020 23:01:56 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[02-Feb-2020 23:01:56 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[02-Feb-2020 23:01:56 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[03-Feb-2020 22:51:16 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 2
+[03-Feb-2020 22:51:16 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; Conexion has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/controladores/conexion.php on line 2
+[03-Feb-2020 22:51:16 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; usuarioLoggeado has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/beans/usuarioLoggeado.php on line 2
+[03-Feb-2020 22:51:16 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 291
+[03-Feb-2020 22:51:16 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 291
+[03-Feb-2020 22:51:16 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 291
+[03-Feb-2020 22:51:16 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[03-Feb-2020 22:51:16 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[03-Feb-2020 22:51:16 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[03-Feb-2020 22:51:16 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[03-Feb-2020 22:51:16 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[03-Feb-2020 22:51:16 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[04-Feb-2020 23:25:01 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 2
+[04-Feb-2020 23:25:01 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; Conexion has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/controladores/conexion.php on line 2
+[04-Feb-2020 23:25:01 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; usuarioLoggeado has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/beans/usuarioLoggeado.php on line 2
+[04-Feb-2020 23:25:01 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 291
+[04-Feb-2020 23:25:01 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 291
+[04-Feb-2020 23:25:01 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 291
+[04-Feb-2020 23:25:01 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[04-Feb-2020 23:25:01 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[04-Feb-2020 23:25:01 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[04-Feb-2020 23:25:01 America/New_York] PHP Notice:  Undefined index: fechaI in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[04-Feb-2020 23:25:01 America/New_York] PHP Notice:  Undefined index: fechaF in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320
+[04-Feb-2020 23:25:01 America/New_York] PHP Notice:  Undefined index: reserva in /home/afraqujt/public_html/admin1/paginas/vistas/pilotos/correo/correoPilotos.php on line 320

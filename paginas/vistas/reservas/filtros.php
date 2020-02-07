@@ -86,8 +86,8 @@
 	<?php } ?>
 	<div class="col-sm-3 col-lg-3 col-md-3 col-6 col-xl-2 ">
 		<div class="form-group">
-			<label for="metodo">Metodos  </label>
-			<select class="selectpicker form-control" id="metodo" name="metodo" data-live-search="true">
+			<label for="filtrometodo">Metodos  </label>
+			<select class="selectpicker form-control" id="filtrometodo" name="filtrometodo" data-live-search="true">
 				<option value='0'>Todos...</option>
 				<?php
 					foreach ($metodos as $metodo) {

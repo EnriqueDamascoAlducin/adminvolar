@@ -3,7 +3,7 @@
     $from = "extras_volar";
     $where = " status<>0 AND clasificacion_extra='metodopago' ";
     if(isset($_GET['metodo']) && $_GET['metodo'] !='0'){
-        $where .= ' AND metodo_bp = '. $_GET['metodo'];
+        $where .= ' AND id_extra = '. $_GET['metodo'];
     }
     $metodos = $con->consulta($select,$from,$where);
     $columna = "A";
@@ -28,10 +28,20 @@
     $objDrawing->setHeight(100);
     $objDrawing->setCoordinates('A1');
     $objDrawing->setWorksheet($objphp->getActiveSheet());
-    $objphp->getActiveSheet()->getStyle('A1:'.$columna.'1')->applyFromArray($estiloTituloReporte);
+    if(sizeof($metodos)>5){
+        $objphp->getActiveSheet()->getStyle('A1:'.$columna.'1')->applyFromArray($estiloTituloReporte);
+    }else{
+        $objphp->getActiveSheet()->getStyle('A1:'.$columna.'1')->applyFromArray($estiloTituloReporteSmall);
+        
+    }
     $objphp->getActiveSheet()->getRowDimension(1)->setRowHeight(100);
     $objphp->getActiveSheet()->getColumnDimension('A')->setWidth(25);
-    $objphp->getActiveSheet()->setCellValue('B'.$titulo, 'Reporte de Servicios de Volar en Globo');
+    if(sizeof($metodos)>5){
+        $objphp->getActiveSheet()->setCellValue('B'.$titulo, 'Reporte de Formas de Pago Volar en Globo');
+    }else{
+        $objphp->getActiveSheet()->setCellValue('B'.$titulo, "Reporte de Formas de Pago Volar en Globo");
+        $objphp->getActiveSheet()->getStyle('B'.$titulo)->getAlignment()->setWrapText(true); 
+    }
     $objphp->getActiveSheet()->mergeCells('B'.$titulo.':'.$columna.$titulo);
     $objphp->getActiveSheet()->setCellValue("A".$enc, "Reserva");
     $objphp->getActiveSheet()->getColumnDimension("A")->setWidth(20);
@@ -44,7 +54,8 @@
     }
     $columna = chr(ord($columna) - 1);
     $objphp->getActiveSheet()->getStyle('A'.$enc.':'.$columna.$enc)->applyFromArray($estiloTituloColumnas);
-
+      
+    
     
     foreach ($reservas as $reserva) {
         $columna = "B";

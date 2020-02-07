@@ -102,10 +102,10 @@
 						<input type="number" class="form-control" id="cantidad" placeholder="Cantidad" value="0">
 					</div>
 				</div>
-				<div class="col-sm-3 col-lg-3 col-md-3 col-6 col-xl-3 " >
+				<div class="col-sm-3 col-lg-3 col-md-3 col-6 col-xl-3 " style="display: none;">
 					<div class="form-group">
 						<label for="cantidad2">Cantidad</label>
-						<input type="number" class="form-control" id="cantidad2" placeholder="Cantidad"2 value="0">
+						<input type="number" class="form-control" id="cantidad2" placeholder="Cantidad" value="0">
 					</div>
 				</div>
 				<div class="col-sm-3 col-lg-3 col-md-3 col-6 col-xl-3 ">

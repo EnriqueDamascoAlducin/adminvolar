@@ -54,7 +54,7 @@ function imprimirReporte(){
 	empleado = $("#empleado").val();
 	reserva = $("#reserva").val();
 	modulo = $("#modulo").val();
-	metodo = $("#metodo").val();
+	metodo = $("#filtrometodo").val();
 	abrir_gritter("Espere","Generando Reporte...","info");
 	url= "vistas/reservas/excel/reporteexcel.php" ;
 	parametros="?fechaI="+fechaI+"&fechaF="+fechaF+"&cliente="+cliente+"&status="+status+"&empleado="+empleado+"&reserva="+reserva+"&metodo="+metodo;
@@ -150,10 +150,10 @@ function confirmarAgregarPago(reserva,cliente){
 	}else{
 		abrir_gritter("Advertencia","Solo se modificará el peso.","info");
 		datos={
-				peso:peso,
+			peso:peso,
   			reserva:reserva,
-				tipopeso:tipopeso,
-				accion:'registrarPago'
+			tipopeso:tipopeso,
+			accion:'registrarPago'
 		};
 	}
 
@@ -730,8 +730,8 @@ function confirmarAgregarExtras(){
 			method: "POST",
 			data: datos,
 			success:function(response){
-				if(response=="ok"){
-						abrir_gritter("Ok!","Cargo registrado" ,"info");
+				if(response.includes("ok")){
+						abrir_gritter("Ok!","Cargo registrado <br>"+response ,"info");
 				}else{
 						abrir_gritter("Error",response ,"danger");
 				}

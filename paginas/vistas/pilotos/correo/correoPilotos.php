@@ -110,6 +110,7 @@
 		$turno = $datos[6];
 		$motivo = $datos[7];
 		$comentario = $datos[8];
+		$peso = $datos[9];
 		///Formar cuerpo de html
 		$asunto = "Globo Asignado";
 		$cuerpo = getHTMLHead();
@@ -168,6 +169,12 @@
 				$tabla .="<td>".$pax[$i]."</td>";
 			}
 		$tabla .=	"</tr>";
+		$tabla .=	"<tr>";
+		$tabla .=		"<th>Peso</th>";
+			for ($i=0; $i < sizeof($peso) ; $i++) { 
+				$tabla .="<td>". $peso[$i]." Kg</td>";
+			}
+		$tabla .=	"</tr>";
 
 		$tabla .=	"<tr>";
 		$tabla .=		"<th>Motivo</th>";
@@ -177,8 +184,9 @@
 		$tabla .=	"</tr>";
 
 		$tabla .=	"<tr>";
+				$tabla .="<td >Comentario</td>";
 			for ($i=0; $i < sizeof($comentario) ; $i++) { 
-				$tabla .="<td colspan='2'>".$comentario[$i]."</td>";
+				$tabla .="<td >".$comentario[$i]."</td>";
 			}
 		$tabla .=	"</tr>";
 		$tabla .= "</table>";
@@ -294,7 +302,7 @@
 		$pilotos=$con->consulta($campos,$tabla,$filtro);
 		foreach ($pilotos as $piloto) {
 			$campos = " CONCAT(IFNULL(nombre_temp,''),' ', IFNULL(apellidos_temp,'')) as pasajero	,";
-			$campos .= " id_temp as reserva, fechavuelo_temp as fechavuelo, hora_temp as hora, pax_ga as pax,version_ga as version, nombre_globo as globo,turno_temp as turno, IFNULL((select nombre_extra From extras_volar where id_extra = motivo_temp ),'NA') as motivo,comentario_ga  ";
+			$campos .= " id_temp as reserva, fechavuelo_temp as fechavuelo, hora_temp as hora, pax_ga as pax,version_ga as version, nombre_globo as globo,turno_temp as turno, IFNULL((select nombre_extra From extras_volar where id_extra = motivo_temp ),'NA') as motivo,comentario_ga,peso_ga  ";
 			$tabla = "temp_volar tv INNER JOIN globosasignados_volar ga ON id_temp = reserva_ga INNER JOIN globos_volar ON id_globo = globo_ga  ";
 			$filtro = "  tv.status= 8 AND ga.status<>0 ";
 				if(isset($_POST['fechaI']) && $_POST['fechaI']!='' ){
@@ -325,6 +333,7 @@
 			$turno   	= [];
 			$motivo   	= [];
 			$comentario	= [];
+			$peso	= [];
 			foreach ($infoAsignados as $globoAsignado) {
 				$reservas[]=	($globoAsignado->reserva)."."; 
 				$pasajero[]=	($globoAsignado->pasajero)."."; 
@@ -335,8 +344,9 @@
 				$turno[]=	($globoAsignado->turno)."."; 
 				$motivo[]=	($globoAsignado->motivo)."."; 
 				$comentario[]=	($globoAsignado->comentario_ga)."."; 
+				$peso[]=	($globoAsignado->peso_ga); 
 			}
-			$datos = [$reservas,$pasajero,$fechavuelo,$hora,$pax,$globo,$turno,$motivo,$comentario];
+			$datos = [$reservas,$pasajero,$fechavuelo,$hora,$pax,$globo,$turno,$motivo,$comentario,$peso];
 			$mailsToSend[]= enviarCorreoPiloto($datos,$piloto->piloto,$piloto->correo);
 			$tablaBody.= $mailsToSend[$cont]['admin'];
 			$cont++;

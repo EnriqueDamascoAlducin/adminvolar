@@ -1,0 +1,43 @@
+[22-Jan-2020 10:15:15 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; Conexion has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/controladores/conexion.php on line 2
+[22-Jan-2020 10:18:33 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; Conexion has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/controladores/conexion.php on line 2
+[22-Jan-2020 10:19:21 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; Conexion has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/controladores/conexion.php on line 2
+[22-Jan-2020 10:20:56 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; Conexion has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/controladores/conexion.php on line 2
+[22-Jan-2020 10:20:56 America/New_York] PHP Notice:  Undefined variable: estiloTituloReporteSmall in /home/afraqujt/public_html/admin1/paginas/vistas/reservas/excel/pagos.php on line 34
+[22-Jan-2020 10:20:56 America/New_York] PHP Fatal error:  Uncaught PHPExcel_Exception: Invalid style array passed. in /home/afraqujt/public_html/admin1/sources/PHPExcel/Classes/PHPExcel/Style.php:467
+Stack trace:
+#0 /home/afraqujt/public_html/admin1/paginas/vistas/reservas/excel/pagos.php(34): PHPExcel_Style->applyFromArray(NULL)
+#1 /home/afraqujt/public_html/admin1/paginas/vistas/reservas/excel/reporteexcel.php(31): include_once('/home/afraqujt/...')
+#2 {main}
+  thrown in /home/afraqujt/public_html/admin1/sources/PHPExcel/Classes/PHPExcel/Style.php on line 467
+[22-Jan-2020 10:21:14 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; Conexion has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/controladores/conexion.php on line 2
+[22-Jan-2020 10:21:15 America/New_York] PHP Notice:  Undefined variable: estiloTituloReporteSmall in /home/afraqujt/public_html/admin1/paginas/vistas/reservas/excel/pagos.php on line 34
+[22-Jan-2020 10:21:15 America/New_York] PHP Fatal error:  Uncaught PHPExcel_Exception: Invalid style array passed. in /home/afraqujt/public_html/admin1/sources/PHPExcel/Classes/PHPExcel/Style.php:467
+Stack trace:
+#0 /home/afraqujt/public_html/admin1/paginas/vistas/reservas/excel/pagos.php(34): PHPExcel_Style->applyFromArray(NULL)
+#1 /home/afraqujt/public_html/admin1/paginas/vistas/reservas/excel/reporteexcel.php(31): include_once('/home/afraqujt/...')
+#2 {main}
+  thrown in /home/afraqujt/public_html/admin1/sources/PHPExcel/Classes/PHPExcel/Style.php on line 467
+[22-Jan-2020 10:22:13 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; Conexion has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/controladores/conexion.php on line 2
+[22-Jan-2020 10:23:37 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; Conexion has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/controladores/conexion.php on line 2
+[22-Jan-2020 10:26:16 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; Conexion has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/controladores/conexion.php on line 2
+[22-Jan-2020 10:26:16 America/New_York] PHP Parse error:  syntax error, unexpected ')' in /home/afraqujt/public_html/admin1/paginas/vistas/reservas/excel/pagos.php on line 42
+[22-Jan-2020 10:28:23 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; Conexion has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/controladores/conexion.php on line 2
+[22-Jan-2020 10:28:24 America/New_York] PHP Notice:  Undefined variable: objPHPExcel in /home/afraqujt/public_html/admin1/paginas/vistas/reservas/excel/pagos.php on line 43
+[22-Jan-2020 10:28:24 America/New_York] PHP Fatal error:  Uncaught Error: Call to a member function getActiveSheet() on null in /home/afraqujt/public_html/admin1/paginas/vistas/reservas/excel/pagos.php:43
+Stack trace:
+#0 /home/afraqujt/public_html/admin1/paginas/vistas/reservas/excel/reporteexcel.php(31): include_once()
+#1 {main}
+  thrown in /home/afraqujt/public_html/admin1/paginas/vistas/reservas/excel/pagos.php on line 43
+[22-Jan-2020 10:29:03 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; Conexion has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/controladores/conexion.php on line 2
+[22-Jan-2020 11:22:14 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; Conexion has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/controladores/conexion.php on line 2
+[23-Jan-2020 11:57:26 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; Conexion has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/controladores/conexion.php on line 2
+[23-Jan-2020 12:02:16 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; Conexion has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/controladores/conexion.php on line 2
+[23-Jan-2020 12:04:00 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; Conexion has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/controladores/conexion.php on line 2
+[27-Jan-2020 19:03:13 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; Conexion has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/controladores/conexion.php on line 2
+[04-Feb-2020 17:32:33 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; Conexion has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/controladores/conexion.php on line 2
+[05-Feb-2020 12:49:32 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; Conexion has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/controladores/conexion.php on line 2
+[05-Feb-2020 18:03:55 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; Conexion has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/controladores/conexion.php on line 2
+[05-Feb-2020 18:04:51 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; Conexion has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/controladores/conexion.php on line 2
+[05-Feb-2020 18:06:22 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; Conexion has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/controladores/conexion.php on line 2
+[06-Feb-2020 10:35:30 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; Conexion has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/controladores/conexion.php on line 2
+[06-Feb-2020 13:51:22 America/New_York] PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; Conexion has a deprecated constructor in /home/afraqujt/public_html/admin1/paginas/controladores/conexion.php on line 2
