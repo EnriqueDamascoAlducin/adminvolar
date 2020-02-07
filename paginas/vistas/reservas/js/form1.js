@@ -92,7 +92,7 @@
 	$("textarea").on("change",function(){
 		save_Data($(this).attr("name"),$(this).val());
 	});
-	function validar_servicio(check, defa){
+	function validar_servicio(check, defa,precioActual){
 		campo=check.id;
 		id=campo.split("_");
 		servicio=id[1];
@@ -120,7 +120,7 @@
 			value=0;
 		}
 		//2 es de cortesia ;1 es de paga
-		guardarServicio(id[1],tipo,value);
+		guardarServicio(id[1],tipo,value,precioActual);
 
 	}
 	$("#tdescuento").on("change",function(){
@@ -176,12 +176,12 @@
 			  }
 		});
 	}
-	function guardarServicio(servicio,tipo,defa){
+	function guardarServicio(servicio,tipo,defa,precioActual){
 		url="controladores/reservaController.php";
-		parametros={servicio:servicio,tipo:tipo,valor:defa,id:idAct};
+		parametros={servicio:servicio,tipo:tipo,valor:defa,id:idAct,precioActual:precioActual};
 	  	$.ajax({
 			url:url,
-			method: "POST",
+			type: "POST",
 	  		data: parametros,
 	  		success:function(response){
 				if(response=="Actualizado" || response == "Agregado"){
@@ -253,6 +253,11 @@
 			//abrir_gritter("Advertencia","Debe Seleccionar una fecha de Vuelo","warning");
 			errores++;
 			wrong += "Error en la Fecha de Vuelo. ";
+		}
+		if($("#motivo").val()==""){
+			//abrir_gritter("Advertencia","Debe Seleccionar una fecha de Vuelo","warning");
+			errores++;
+			wrong += "Error en el Motivo. ";
 		}
 		if($("#hotel").val()!=""){
 

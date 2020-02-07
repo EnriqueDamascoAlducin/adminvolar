@@ -41,9 +41,35 @@
 	$totalReserva=0.0;
 	$totalPasajeros = $con->consulta("FORMAT(ifnull(pasajerosa_temp,0) + ifnull(pasajerosn_temp,0),2)  Total"," temp_volar "," id_temp = $reserva");
 	$datosReserva = $con->query("CALL getResumenREserva(".$reserva.");")->fetchALL (PDO::FETCH_OBJ);
-	$serviciosReserva = $con->consulta("tipo_sv as tipo , nombre_servicio as servicio ,cantmax_servicio as cantmax, precio_servicio as precio "," servicios_vuelo_temp svt INNER JOIN servicios_volar sv ON svt.idservi_sv=sv.id_servicio ","  svt.status<>0 and svt.cantidad_sv>0 and idtemp_sv =".$reserva);
+	$serviciosReserva = $con->consulta("tipo_sv as tipo , nombre_servicio as servicio ,cantmax_servicio as cantmax, IFNULL(svt.precio_sv,sv.precio_servicio) as precio "," servicios_vuelo_temp svt INNER JOIN servicios_volar sv ON svt.idservi_sv=sv.id_servicio ","  svt.status<>0 and svt.cantidad_sv>0 and idtemp_sv =".$reserva);
 	$movimientosExtras = $con->consulta("motivo_ce,cantidad_ce,tipo_ce","cargosextras_volar","status<>0 and reserva_ce= " . $reserva);
-	
+	/*Actualizacion de los precios*/
+		$serviciosReserva2 = $con->consulta("id_servicio,nombre_servicio,precio_servicio","servicios_volar","status<>0");
+		foreach ($serviciosReserva2 as $k) {
+			$actser = $con->actualizar("servicios_vuelo_temp","precio_sv=".$k->precio_servicio,"`register` >= '2020-01-10 00:00:00' AND idservi_sv=".$k->id_servicio);
+			//cho("$k->nombre_servicio Actualizado."); echo "<hr>";
+		}
+		$serviciosReserva2 = $con->consulta("id_servicio,nombre_servicio,precio_servicio","servicios_volar2","status<>0");
+		foreach ($serviciosReserva2 as $k) {
+			$actser = $con->actualizar("servicios_vuelo_temp","precio_sv=".$k->precio_servicio,"`register` <= '2020-01-10 00:00:00' AND idservi_sv=".$k->id_servicio);
+			//cho("$k->nombre_servicio Actualizado."); echo "<hr>";
+		}
+		$actvuelos = $con->consulta("id_vc as id, nombre_vc as nombre, precioa_vc as precioa, precion_vc as precion","vueloscat_volar2","status<>0");
+
+		foreach ($actvuelos as $k) {
+			$actser = $con->actualizar("temp_volar","preciovueloa_temp=".$k->precioa.",preciovuelon_temp=".$k->precion,"`register` <= '2020-01-10 00:00:00' AND tipo_temp=".$k->id);
+			//cho("$k->nombre_servicio Actualizado."); echo "<hr>";
+		}
+		$actvuelos = $con->consulta("id_vc as id, nombre_vc as nombre, precioa_vc as precioa, precion_vc as precion","vueloscat_volar","status<>0");
+
+		foreach ($actvuelos as $k) {
+			$actser = $con->actualizar("temp_volar","preciovueloa_temp=".$k->precioa.",preciovuelon_temp=".$k->precion,"`register` >= '2020-01-10 00:00:00' AND tipo_temp=".$k->id);
+			//cho("$k->nombre_servicio Actualizado."); echo "<hr>";
+		}
+	/*Actualizacion de los precios*/
+
+
+
 /* 1 = cargos ..... 2 = descuentos*/
 	$hotel=$datosReserva[0]->hotel;
 	$habitacion=$datosReserva[0]->habitacion;

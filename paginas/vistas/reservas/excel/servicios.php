@@ -31,7 +31,7 @@ $titulo=1;
 $enc=2;
 
 $objphp->createSheet();
-$objphp->setActiveSheetIndex(2);
+$objphp->setActiveSheetIndex($pagina);
 $objphp->getActiveSheet()->setTitle('Servicios por Reserva');
 
 $objDrawing = new PHPExcel_Worksheet_MemoryDrawing();

@@ -300,29 +300,29 @@
 			<div class="col-7 col-md-6 col-lg-6 col-sm-6 col-xl-6" style="border-style: groove;margin-left: -5px">
 
 
-				<input type="checkbox" name="precio_<?php echo $servicio->id_servicio; ?>" onchange ="validar_servicio(this,<?php  echo $servicio->cantmax_servicio; ?>)" id="precio_<?php echo $servicio->id_servicio; ?>" <?php echo $precio ?>>
-				<label for="precio_<?php echo $servicio->id_servicio; ?>" style="margin-left: -25px;position: absolute;float: left">
+				<input type="checkbox" name="precio_<?php echo $servicio->id_servicio; ?>" onchange ="validar_servicio(this,<?php  echo $servicio->cantmax_servicio; ?>,'<?php echo $servicio->precio_servicio; ?>')" id="precio_<?php echo $servicio->id_servicio; ?>" <?php echo $precio ?>>
+				<label for="precio_<?php echo $servicio->id_servicio; ?>" title="<?php $servicio->nombre_servicio; ?>" style="margin-left: -25px;position: absolute;float: left;font-size:14px">
 					<figure class="figure">
 					  	<img src="../sources/images/servicios/<?php echo $servicio->img_servicio; ?>" class="figure-img img-fluid rounded" alt="<?php echo $servicio->nombre_servicio; ?>" style="max-height: 50px;height: 50px;width: 50%; max-width: 50%;">
 					  	<img src="../sources/images/icons/check2.png" class="figure-img img-fluid rounded" alt="<?php echo $servicio->nombre_servicio; ?>" id="imgChecked" style="max-height: 70px;height: 70px;width: 66%; max-width: 65%;position: absolute;margin-top: -15px">
-					  	<figcaption class="figure-caption" style="margin-top: -2px;width: 50%; max-width: 50%;text-align: center;">
-					  		<label>
-					  			<small class="label"  style="color:black;z-index: -1;text-align: center;">
-					  			<?php
-					  				$servis = explode(" ", $servicio->nombre_servicio);
-					  				foreach ($servis as $servi) {
-					  					if(strlen($servi)>2){
-						  					echo substr($servi, 0, 11).'<br>';
-						  				}else{
-						  					echo $servi;
-						  				}
-					  				}
-						  			echo '('.number_format($servicio->precio_servicio, 2, '.', ',').')';
-					  			?>
+					  		<hr style="margin:-1px;padding:-1px;">
+							<small class="label"  style="color:black;z-index: -1;text-align: center;margin-top: -2px;width: 50%; max-width: 50%;text-align: center;">
+							<?php
+								$servis = explode(" ", $servicio->nombre_servicio);
+								$aux = 0;
+								foreach ($servis as $servi) {
+									if(strlen($servi)>2){
+										echo substr($servi, 0, 10).'<br>';
+									}else{
+										$aux ++ ;
+										echo $servi;
+									}
+								}
+								if($aux>1) echo "<br>";
+								echo '('.number_format($servicio->precio_servicio, 2, '.', ',').')';
+							?>
 
-					  		</small>
-					  	</label>
-					  	</figcaption>
+						</small>
 					</figure>
 				</label>
 			</div>

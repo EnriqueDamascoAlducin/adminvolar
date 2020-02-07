@@ -4,7 +4,7 @@
 $fila=3;
 $titulo=1;
 $enc=2;
-$objphp->setActiveSheetIndex(0);
+$objphp->setActiveSheetIndex($pagina);
 $objphp->getActiveSheet()->setTitle('Reporte General');
 ////////// Para dibujar el logo
 

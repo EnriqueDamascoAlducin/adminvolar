@@ -15,21 +15,28 @@ $objphp->getProperties()
         ->setDescription("Reporte de Vuelos de Volar en Globo")
         ->setKeywords("vuelos reservas")
         ->setCategory("Vuelos");
-
 include_once 'estilosExcel.php';
 /*Informacion General*/
+$pagina = 0;
 include_once 'datosGenerales.php';
 /*Termina Información General de las reserva*/
 
 /* Empiezan Globos asignados */
+$pagina ++;
 include_once 'globosAsignados.php';
 /* Termina hoja de Globos asignados*/
 /* Empiezan servicios */
+$pagina ++;
 include_once 'servicios.php';
 /* Termina hoja de servicios*/
 /* Empiezan pagos */
+$pagina ++;
 include_once 'pagos.php';
 /* Termina hoja de pagos*/
+/* Empiezan pagosxstatus */
+$pagina ++;
+include_once 'pagosxstatus.php';
+/* Termina hoja de pagosxstatus*/
 
 
 

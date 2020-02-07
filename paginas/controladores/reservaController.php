@@ -148,6 +148,11 @@
 				$valor = "null";
 			}else{
 				$valor="'".$valor."'";
+				if($campo=="tipo"){
+					
+					$getPrecios = $con->consulta("precioa_vc as precioa, precion_vc as precion","vueloscat_volar","id_vc = ".$valor);
+					$registrarDato=$con->actualizar("temp_volar","preciovueloa_temp='".$getPrecios[0]->precioa."', preciovuelon_temp='".$getPrecios[0]->precion ."'", "id_temp=$id");
+				}
 			}
 			if($campo=="tdescuento"){
 				$registrarDato=$con->actualizar("temp_volar","cantdescuento_temp=0" , "id_temp=$id");
@@ -161,7 +166,8 @@
 			$valor = $_POST['valor'];
 			$tipo = $_POST['tipo'];
 			$servicio = $_POST['servicio'];
-			$servicio =  $con->query("CALL agregarServiciosReservas($reserva,$servicio,$tipo,$valor,@accion)");
+			$precioActual = $_POST['precioActual'];
+			$servicio =  $con->query("CALL agregarServiciosReservas($reserva,$servicio,$tipo,$valor,$precioActual,@accion)");
 			$servicio = $con->query("Select @accion as respuesta")->fetchALL (PDO::FETCH_OBJ);
 			echo $servicio[0]->respuesta;
 		}
