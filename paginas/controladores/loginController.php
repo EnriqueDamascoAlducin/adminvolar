@@ -16,7 +16,6 @@
 		$_SESSION[ 'ULTIMA_ACTIVIDAD' ] = time();
 
 	}else{
-		$con->bitacora(0,'LOGIN',"El usuario $usr intento entrar con $pass");
 		echo "falla";
 	}
 ?>
