@@ -1,0 +1,15 @@
+.gritter{
+  border-radius: 10px;
+}
+.gritter-success{
+  background-color: #00C851;
+}
+.gritter-info{
+  background-color: #33b5e5;
+}
+.gritter-warning{
+  background-color: #ffbb33;
+}
+.gritter-danger{
+  background-color: #ff4444;
+}

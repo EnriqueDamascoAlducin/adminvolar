@@ -1,0 +1,41 @@
+[29-Apr-2020 12:11:47 America/New_York] PHP Parse error:  syntax error, unexpected end of file in /home/afraqujt/public_html/admin1/paginas/vistas/reservas/tablaReservas.php on line 204
+[14-May-2020 12:36:54 America/New_York] PHP Fatal error:  Uncaught Error: Call to a member function fetchALL() on bool in /home/afraqujt/public_html/admin1/paginas/vistas/reservas/tablaReservas.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/afraqujt/public_html/admin1/paginas/vistas/reservas/tablaReservas.php on line 10
+[12-Jul-2020 10:49:53 America/New_York] PHP Fatal error:  Uncaught Error: Call to a member function fetchALL() on bool in /home/afraqujt/public_html/admin1/paginas/vistas/reservas/tablaReservas.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/afraqujt/public_html/admin1/paginas/vistas/reservas/tablaReservas.php on line 10
+[21-Jul-2020 21:28:49 America/New_York] PHP Fatal error:  Uncaught Error: Call to a member function fetchALL() on bool in /home/afraqujt/public_html/admin1/paginas/vistas/reservas/tablaReservas.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/afraqujt/public_html/admin1/paginas/vistas/reservas/tablaReservas.php on line 10
+[24-Jul-2020 20:29:11 America/New_York] PHP Fatal error:  Uncaught Error: Call to a member function fetchALL() on bool in /home/afraqujt/public_html/admin1/paginas/vistas/reservas/tablaReservas.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/afraqujt/public_html/admin1/paginas/vistas/reservas/tablaReservas.php on line 10
+[25-Jul-2020 10:32:04 America/New_York] PHP Fatal error:  Uncaught Error: Call to a member function fetchALL() on bool in /home/afraqujt/public_html/admin1/paginas/vistas/reservas/tablaReservas.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/afraqujt/public_html/admin1/paginas/vistas/reservas/tablaReservas.php on line 10
+[04-Aug-2020 07:37:34 America/New_York] PHP Fatal error:  Uncaught Error: Call to a member function fetchALL() on bool in /home/afraqujt/public_html/admin1/paginas/vistas/reservas/tablaReservas.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/afraqujt/public_html/admin1/paginas/vistas/reservas/tablaReservas.php on line 10
+[04-Aug-2020 07:37:34 America/New_York] PHP Fatal error:  Uncaught Error: Call to a member function fetchALL() on bool in /home/afraqujt/public_html/admin1/paginas/vistas/reservas/tablaReservas.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/afraqujt/public_html/admin1/paginas/vistas/reservas/tablaReservas.php on line 10
+[09-Aug-2020 09:59:16 America/New_York] PHP Fatal error:  Uncaught Error: Call to a member function fetchALL() on bool in /home/afraqujt/public_html/admin1/paginas/vistas/reservas/tablaReservas.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/afraqujt/public_html/admin1/paginas/vistas/reservas/tablaReservas.php on line 10
+[10-Aug-2020 07:39:07 America/New_York] PHP Fatal error:  Uncaught Error: Call to a member function fetchALL() on bool in /home/afraqujt/public_html/admin1/paginas/vistas/reservas/tablaReservas.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/afraqujt/public_html/admin1/paginas/vistas/reservas/tablaReservas.php on line 10
+[10-Aug-2020 12:38:09 America/New_York] PHP Fatal error:  Uncaught Error: Call to a member function fetchALL() on bool in /home/afraqujt/public_html/admin1/paginas/vistas/reservas/tablaReservas.php:10
+Stack trace:
+#0 {main}
+  thrown in /home/afraqujt/public_html/admin1/paginas/vistas/reservas/tablaReservas.php on line 10

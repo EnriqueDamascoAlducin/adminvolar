@@ -1,0 +1,44 @@
+[06-Aug-2020 12:31:56 America/New_York] PHP Fatal error:  Uncaught Error: Function name must be a string in /home/afraqujt/public_html/admin1/paginas/controladores/ventasController.php:66
+Stack trace:
+#0 {main}
+  thrown in /home/afraqujt/public_html/admin1/paginas/controladores/ventasController.php on line 66
+[06-Aug-2020 12:32:19 America/New_York] PHP Fatal error:  Uncaught Error: Function name must be a string in /home/afraqujt/public_html/admin1/paginas/controladores/ventasController.php:66
+Stack trace:
+#0 {main}
+  thrown in /home/afraqujt/public_html/admin1/paginas/controladores/ventasController.php on line 66
+[08-Aug-2020 17:36:54 America/New_York] PHP Fatal error:  Uncaught Error: Call to undefined method Conexion::bitacora() in /home/afraqujt/public_html/admin1/paginas/controladores/loginController.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/afraqujt/public_html/admin1/paginas/controladores/loginController.php on line 19
+[08-Aug-2020 22:09:16 America/New_York] PHP Fatal error:  Uncaught Error: Call to undefined method Conexion::bitacora() in /home/afraqujt/public_html/admin1/paginas/controladores/loginController.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/afraqujt/public_html/admin1/paginas/controladores/loginController.php on line 19
+[08-Aug-2020 22:09:18 America/New_York] PHP Fatal error:  Uncaught Error: Call to undefined method Conexion::bitacora() in /home/afraqujt/public_html/admin1/paginas/controladores/loginController.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/afraqujt/public_html/admin1/paginas/controladores/loginController.php on line 19
+[09-Aug-2020 09:38:27 America/New_York] PHP Fatal error:  Uncaught Error: Call to undefined method Conexion::bitacora() in /home/afraqujt/public_html/admin1/paginas/controladores/loginController.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/afraqujt/public_html/admin1/paginas/controladores/loginController.php on line 19
+[09-Aug-2020 09:38:36 America/New_York] PHP Fatal error:  Uncaught Error: Call to undefined method Conexion::bitacora() in /home/afraqujt/public_html/admin1/paginas/controladores/loginController.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/afraqujt/public_html/admin1/paginas/controladores/loginController.php on line 19
+[09-Aug-2020 09:39:21 America/New_York] PHP Fatal error:  Uncaught Error: Call to undefined method Conexion::bitacora() in /home/afraqujt/public_html/admin1/paginas/controladores/loginController.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/afraqujt/public_html/admin1/paginas/controladores/loginController.php on line 19
+[10-Aug-2020 11:44:56 America/New_York] PHP Fatal error:  Uncaught Error: Call to undefined method Conexion::bitacora() in /home/afraqujt/public_html/admin1/paginas/controladores/loginController.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/afraqujt/public_html/admin1/paginas/controladores/loginController.php on line 19
+[10-Aug-2020 11:45:01 America/New_York] PHP Fatal error:  Uncaught Error: Call to undefined method Conexion::bitacora() in /home/afraqujt/public_html/admin1/paginas/controladores/loginController.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/afraqujt/public_html/admin1/paginas/controladores/loginController.php on line 19
+[11-Aug-2020 10:04:08 America/New_York] PHP Fatal error:  Uncaught Error: Call to undefined method Conexion::bitacora() in /home/afraqujt/public_html/admin1/paginas/controladores/loginController.php:19
+Stack trace:
+#0 {main}
+  thrown in /home/afraqujt/public_html/admin1/paginas/controladores/loginController.php on line 19

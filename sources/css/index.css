@@ -1,0 +1,123 @@
+*{
+	padding: 0;
+	margin: 0;
+}
+input{
+	background-color: transparent!important ;
+}
+select{
+	background-color: transparent!important ;
+}
+textarea{
+	background-color: transparent!important ;
+}
+input:focus{
+	border-color: #00C851!important;
+	border-width: 2px!important;
+}
+select:focus{
+	border-color: #00C851!important;
+	border-width: 2px!important;
+}
+textarea:focus{
+	border-color: #00C851!important;
+	border-width: 2px!important;
+}
+body{
+	background-image: url("../images/fondos/fondo.png");
+	background-repeat: all;
+	background-size: 30%;
+}
+#divContenedor{
+	box-sizing:  border-box;
+	position: absolute;
+	height: 100%;
+	max-height: 100%;
+	width: 100%;
+	max-width: 100%;
+}
+#tabFooter{
+	box-sizing:  border-box;
+	width: 100%;
+	max-width: 100%;
+	position: relative;
+	height: 4%;
+	max-height: 4%;
+}
+#tabHeader{
+	box-sizing:  border-box;
+	width: 100%;
+	max-width: 100%;
+	position: relative;
+	height: 4%;
+	max-height: 4%;
+}
+
+.tdPrimero{
+	background-color: #3674B2;
+	color: white;
+	text-align: right;
+	width: 30%;
+	max-width: 30%;
+	height: 2%;
+	max-height: 2%;
+	position: relative;
+}
+.tdcentral{
+	color: black;
+	text-align: center;
+	width: 10%;
+	max-width: 10%;
+	height: 2%;
+	max-height: 2%;
+	position: relative;
+}
+#menuIzq{
+	box-sizing:  border-box;
+	width: 15%;
+	max-width: 15%;
+	height: 92%;
+	max-height: 92%;
+	left: 0;
+	position: relative;
+	border-style:  dashed;
+	border-color: rgba(0,0,254,0.5);
+	text-align: center;
+	overflow-y: auto;
+
+}
+
+#menuDer{
+	box-sizing:  border-box;
+
+	width: 85%;
+	max-width: 85%;
+	height: 92%;
+	max-height: 92%;
+	bottom: 4%;
+	left: 15%;
+	position: absolute;
+	border-style:  dashed;
+	border-color: rgba(0,0,254,0.5);
+	text-align: center;
+	overflow-y: auto;
+
+}
+
+
+
+#brLabel{
+	display: none;
+}
+
+@media (max-width: 768px){
+	.text-center{
+		display: none;
+	}
+	.labelMenu{
+		font-size: 12px;
+	}
+	#brLabel{
+		display: block;
+	}
+}
