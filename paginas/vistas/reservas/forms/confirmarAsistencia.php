@@ -8,11 +8,11 @@
 	$datoReserva = $con->consulta("CONCAT(IFNULL(nombre_temp,''),' ',IFNULL(apellidos_temp,'')) as nombre, total_temp","temp_volar","id_temp=".$_POST['reserva']);
 ?>
 
-<button data-dismiss="modal"  type="button" id="btnConfirmarAsistencia<?php  echo $_POST['reserva']; ?>" class="btn btn-warning mr-2 mb-2" onclick="ConfirmarAsistencia(<?php  echo $_POST['reserva']; ?>,'<?php echo $datoReserva[0]->nombre; ?>','no-show' );" >No Show</button>
+<button data-dismiss="modal"  type="button" id="btnConfirmarAsistencia<?php  echo $_POST['reserva']; ?>" class="btn btn-warning  text-white mb-2 w-25" onclick="ConfirmarAsistencia(<?php  echo $_POST['reserva']; ?>,'<?php echo $datoReserva[0]->nombre; ?>','no-show' );" >No Show</button>
 <?php if($datoReserva[0]->total_temp==$suma[0]->suma){ ?>
-	<button data-dismiss="modal"  type="button" id="btnConfirmarAsistencia<?php  echo $_POST['reserva']; ?>" class="btn btn-success mb-2" onclick="ConfirmarAsistencia(<?php  echo $_POST['reserva']; ?>,'<?php echo $datoReserva[0]->nombre; ?>','asistencia' );" >Confirmar</button>
+	<button data-dismiss="modal"  type="button" id="btnConfirmarAsistencia<?php  echo $_POST['reserva']; ?>" class="btn btn-success mb-2 w-25" onclick="ConfirmarAsistencia(<?php  echo $_POST['reserva']; ?>,'<?php echo $datoReserva[0]->nombre; ?>','asistencia' );" >Confirmar</button>
 <?php }else{ ?>
-	<button data-dismiss="modal"  type="button" id="btnConfirmarAsistencia<?php  echo $_POST['reserva']; ?>" class="btn btn-primary" onclick="ConfirmarAsistencia(<?php  echo $_POST['reserva']; ?>,'<?php echo $datoReserva[0]->nombre; ?>','cpc' );" >Enviar a CPC</button>
+	<button data-dismiss="modal"  type="button" id="btnConfirmarAsistencia<?php  echo $_POST['reserva']; ?>" class="btn btn-primary mb-2 w-25" onclick="ConfirmarAsistencia(<?php  echo $_POST['reserva']; ?>,'<?php echo $datoReserva[0]->nombre; ?>','cpc' );" >Enviar a CPC</button>
 
 <?php } ?>
 
@@ -201,94 +201,62 @@
 					</tr>
 					<tr>
 						<td class="tdtitulo">NOMBRE</td>
-						<td class="largeTd"><?php echo $datosReserva[0]->nombre ?></td>
-						<td></td>
+						<td class="largeTd" colspan="2"><?php echo $datosReserva[0]->nombre ?></td>
 					</tr>
 					<tr>
 						<td class="tdtitulo">Piloto</td>
-						<td class="largeTd" colspan="1">
+						<td class="largeTd"  colspan="2">
 						<?php foreach($pilotos as $piloto){?>
 						<?= $piloto->nombre ?>
 						<?php }?>
 						</td>
 
-						<td></td>
 					</tr>
 					<tr>
 						<td class="tdtitulo">Globo </td>
-						<td >
+						<td  colspan="2">
 						<?php foreach($globos as $globo){?>
 						<?= $globo->nombre ?>
 						<?php }?>
 						</td>
-						<td></td>
 					</tr>
 					<tr>
 						<td class="tdtitulo">TIPO DE VUELO</td>
-						<td  colspan="" class="largeTd"><?php echo utf8_encode($datosReserva[0]->tipoVuelo); ?></td>
-						<td></td>
+						<td  colspan="2" class="largeTd"><?php echo utf8_encode($datosReserva[0]->tipoVuelo); ?></td>
 					</tr>
 
 					<tr>
 						<td class="tdtitulo">PASAJEROS</td>
-						<td><?php echo "Adultos: ".$datosReserva[0]->pasajerosA . "<br> Ni&ntilde;os: ".$datosReserva[0]->pasajerosN  ?></td>
-						<td><?php  echo "$ ". number_format(($datosReserva[0]->pasajerosA*$datosReserva[0]->precioA ) + ($datosReserva[0]->pasajerosN*$datosReserva[0]->precioN ), 2, '.', ',') ?></td>
+						<td  colspan="2"><?php echo "Adultos: ".$datosReserva[0]->pasajerosA . "<br> Ni&ntilde;os: ".$datosReserva[0]->pasajerosN  ?></td>
 					</tr>
 					<?php if($datosReserva[0]->comentario!=''){ ?>
 					<tr>
 						<td class="tdtitulo">COMENTARIO</td>
-						<td class="largeTd"><?php echo $datosReserva[0]->comentario; ?></td>
-						<td></td>
+						<td class="largeTd"  colspan="2"><?php echo $datosReserva[0]->comentario; ?></td>
 					</tr>
 					<?php } ?>
 					<?php if($datosReserva[0]->motivo!=''){ ?>
 					<tr>
 						<td class="tdtitulo">MOTIVO</td>
-						<td class="largeTd"><?php echo $datosReserva[0]->motivo; ?></td>
-						<td></td>
+						<td class="largeTd"  colspan="2"><?php echo $datosReserva[0]->motivo; ?></td>
 					</tr>
-					<?php } ?>
-					<?php if($datosReserva[0]->hotel!=''){ ?>
-						<tr>
-							<td class="tdseparador" colspan="3">HOTEL</td>
-						</tr>
-						<tr>
-							<td class="tdtitulo" colspan="3"><?php echo $hotel.'<br>$ '.number_format(  $precioHabitacion, 2, '.', ','); ?></td>
-						</tr>
-						<tr>
-							<td class="tdtitulo" >HABITACIÓN</td>
-							<td   ><?php echo $nombreHabitacion; ?></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td class="tdtitulo" >PRECIO/NOCHE</td>
-							<td><?php echo $descripcionHospedaje; ?></td>
-							<td  ><?php echo "$ ".number_format(  $totalHabitacion, 2, '.', ','); ?></td>
-						</tr>
-						<tr>
-							<td class="tdtitulo" >DESCRIPCIÓN</td>
-							<td  class="largeTd"><?php echo $descripHabitacion; ?></td>
-							<td></td>
-						</tr>
 					<?php } ?>
 					<?php if($datosReserva[0]->otroscar1!=''){ ?>
 						<tr>
 							<td class="tdtitulo"><?php echo $datosReserva[0]->otroscar1 ?></td>
-							<td></td>
-							<td><?php echo "$ ".number_format(  $datosReserva[0]->precio1 , 2, '.', ','); ?></td>
+							<td  colspan="2"><?php echo "$ ".number_format(  $datosReserva[0]->precio1 , 2, '.', ','); ?></td>
 						</tr>
 					<?php } ?>
 					<?php if($datosReserva[0]->otroscar2!=''){ ?>
 						<tr>
 							<td class="tdtitulo"><?php echo $datosReserva[0]->otroscar2 ?></td>
-							<td></td>
-							<td><?php echo "$ ".number_format(  $datosReserva[0]->precio2 , 2, '.', ',');  ?></td>
+							<td  colspan="2"><?php echo "$ ".number_format(  $datosReserva[0]->precio2 , 2, '.', ',');  ?></td>
 
 						</tr>
 					<?php } ?>
 					<?php if(sizeof($serviciosReserva)>0){ ?>
 						<tr>
-							<td class="tdseparador" colspan="3">SERVICIOS SOLICITADOS	</td>
+							<td class="tdseparador" colspan="3">SERVICIOS SOLICITADOS</td>
 						</tr>
 						<?php foreach ($serviciosReserva as $servicioReserva) { ?>
 							<tr>
@@ -305,16 +273,16 @@
 											}
 										?>
 									</td>
-									<td><?php
-
+									<td>
+										<?php
 											if ($servicioReserva->cantmax == 1){
 												echo "$ ".number_format(($totalPasajeros * $servicioReserva->precio) , 2, '.', ',') ;
 											}else{
 												echo "$ ". number_format($servicioReserva->precio, 2, '.', ',') ;
 											}
-									?>
+										?>
 									</td>
-									<?php }else {?>
+								<?php }else {?>
 									<td>
 										CORTESIA
 									</td>
@@ -323,64 +291,6 @@
 						<?php } ?>
 					<?php } ?>
 
-					<tr>
-						<td class="tdtotal">SUB TOTAL</td>
-						<td></td>
-						<td><?php echo  "$ ". number_format($totalReserva, 2, '.', ','); ?></td>
-					</tr>
-
-					<?php
-						if($datosReserva[0]->tdescuento!='' && $datosReserva[0]->cantdescuento>0) {
-							$desc="";
-							if($datosReserva[0]->tdescuento==1){
-
-								$totalDescuento = ($totalReserva * $datosReserva[0]->cantdescuento )/100;
-							}else{
-								$totalDescuento = $datosReserva[0]->cantdescuento;
-							}
-					?>
-						<tr>
-							<td class="tdtitulo">DESCUENTO</td>
-							<td><?php
-								if($datosReserva[0]->tdescuento==1) {
-									echo $datosReserva[0]->cantdescuento."%";
-								}
-							?></td>
-							<td>
-								<?php
-									if($datosReserva[0]->tdescuento==1) {
-										echo "$ " .number_format($totalDescuento, 2, '.', ',');
-									}else{
-										echo "$ ".$totalDescuento;
-									}
-								?>
-							</td>
-						</tr>
-					<?php
-							$totalReserva-=$totalDescuento;
-						}
-					?>
-
-					<?php if(sizeof($movimientosExtras)>0){ ?>
-						<?php foreach ($movimientosExtras as $movimientoExtra) { ?>
-							<tr style="display: none">
-								<td class="tdtitulo"><?php echo $movimientoExtra->motivo_ce; ?></td>
-								<td></td>
-								<?php if($movimientoExtra->tipo_ce==1){ ?>
-									<td><?php echo '$ '.$movimientoExtra->cantidad_ce; ?></td>
-									<?php $totalReserva+=$movimientoExtra->cantidad_ce; ?>
-								<?php }else{ ?>
-									<td><?php echo '-$ '.$movimientoExtra->cantidad_ce; ?></td>
-									<?php $totalReserva-=$movimientoExtra->cantidad_ce; ?>
-								<?php } ?>
-							</tr>
-						<?php } ?>
-					<?php } ?>
-					<tr>
-						<td class="tdtotal">TOTAL</td>
-						<td></td>
-						<td> <?php echo "$ ". number_format($totalReserva, 2, '.', ','); ?></td>
-					</tr>
 				</tbody>
 		</tbody>
 
