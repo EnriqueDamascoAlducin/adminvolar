@@ -206,18 +206,28 @@
 					<tr>
 						<td class="tdtitulo">Piloto</td>
 						<td class="largeTd"  colspan="2">
-						<?php foreach($pilotos as $piloto){?>
-						<?= $piloto->nombre ?>
+						<?php if(sizeof($pilotos)==0){
+							echo "No asignado";
+						} else {
+							foreach($pilotos as $piloto){
+							echo $piloto->nombre ?>
+
 						<?php }?>
+							<?php }?>
 						</td>
 
 					</tr>
 					<tr>
 						<td class="tdtitulo">Globo </td>
 						<td  colspan="2">
-						<?php foreach($globos as $globo){?>
-						<?= $globo->nombre ?>
+						<?php if(sizeof($globos)==0){
+							echo "No asignado";
+						} else {
+							foreach($globos as $globo){
+							echo $globo->nombre ?>
+
 						<?php }?>
+							<?php }?>
 						</td>
 					</tr>
 					<tr>
