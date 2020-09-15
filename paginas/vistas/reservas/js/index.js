@@ -832,6 +832,10 @@ function guardaGlobo() {
 		abrir_gritter("Advertencia","Debe elegir un globo","warning");
 		return false;
 	}
+	if(piloto=="0" || piloto == ""){
+		abrir_gritter("Advertencia","Debe elegir un piloto","warning");
+		return false;
+	}
 	if(peso==""){
 		abrir_gritter("Advertencia","Debe elegir un peso","warning");
 		return false;

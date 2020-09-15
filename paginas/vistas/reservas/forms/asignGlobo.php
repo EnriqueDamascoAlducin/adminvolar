@@ -23,46 +23,46 @@
 		echo "<h3> PAX: ". $totalPax ."</h3>";
 		/* Establecer rango de horario en que se usa el filtro */
 		$horaVuelo = $datoReserva[0]->hora;
-	  $deHora = strtotime($horaVuelo.' - 55 minute');
+		$deHora = strtotime($horaVuelo.' - 55 minute');
 		$deHora= date('H:i:s', $deHora);
-	  $aHora = strtotime($horaVuelo.' + 55 minute');
+		$aHora = strtotime($horaVuelo.' + 55 minute');
 		$aHora= date('H:i:s', $aHora);
 
-		 if($datoReserva[0]->tipopeso=='1'){
-			 $pesoTotal =$datoReserva[0]->kg;
-		 }else{
-			 $pesoTotal=($datoReserva[0]->kg * 0.453592);
-		 }
-		 $paxLib = $totalPax - $pesoOcupado_Version[0]->pax;
-		 $pesoLibre = $pesoTotal - $pesoOcupado_Version[0]->ocupado;
+		if($datoReserva[0]->tipopeso=='1'){
+			$pesoTotal =$datoReserva[0]->kg;
+		}else{
+			$pesoTotal=($datoReserva[0]->kg * 0.453592);
+		}
+		$paxLib = $totalPax - $pesoOcupado_Version[0]->pax;
+		$pesoLibre = $pesoTotal - $pesoOcupado_Version[0]->ocupado;
 		 /*Consulta de Globos Dependiendo del tipo de vuelo */
-		 if($tVuelo[0]->tipo_vc==47){
-			 /*Compartido*/
-			 $campos = "CONCAT (nombre_globo,'(',peso_globo,' kg)') as text, id_globo as value,peso_globo";
-			 $tabla  = "globos_volar ";
-			 $filtro = "status<>0  and  id_globo not  in(SELECT globo_ga from temp_volar tv INNER JOIN vueloscat_volar vv on tipo_temp = id_vc INNER JOIN globosasignados_volar ga ON ga.reserva_ga = tv.id_temp WHERE tipo_vc = 46 and ga.status<>0 and vv.status<>0 and tv.status=8 AND  fechavuelo_temp = '". $fecha ."' AND turno_temp = ".$turno." ) and peso_globo>=".$pesoLibre ;
-			 $globos = $con->consulta($campos,$tabla,$filtro);
+		if($tVuelo[0]->tipo_vc==47){
+			/*Compartido*/
+			$campos = "CONCAT (nombre_globo,'(',peso_globo,' kg)') as text, id_globo as value,peso_globo";
+			$tabla  = "globos_volar ";
+			$filtro = "status<>0  and  id_globo not  in(SELECT globo_ga from temp_volar tv INNER JOIN vueloscat_volar vv on tipo_temp = id_vc INNER JOIN globosasignados_volar ga ON ga.reserva_ga = tv.id_temp WHERE tipo_vc = 46 and ga.status<>0 and vv.status<>0 and tv.status=8 AND  fechavuelo_temp = '". $fecha ."' AND turno_temp = ".$turno." ) and peso_globo>=".$pesoLibre ;
+			$globos = $con->consulta($campos,$tabla,$filtro);
 // 			 echo  "SELECT $campos from $tabla WHERE $filtro";
 // die();
-		 }else{
-			 /*46 privado*/
-			 	$globos = $con->consulta("CONCAT (nombre_globo,'(',peso_globo,' kg)') as text, id_globo as value","globos_volar","status<>0 and peso_globo>=".$pesoLibre. "  order by peso_globo asc");
-		 }
-	 }elseif(isset($_POST['fechaI']) && $_POST['fechaI']!=''){
-		 	$fecha = $_POST['fechaI'];
-	 }else{
-		 	$fecha=date("Y-m-d");
-	 }
+		}else{
+			/*46 privado*/
+			$globos = $con->consulta("CONCAT (nombre_globo,'(',peso_globo,' kg)') as text, id_globo as value","globos_volar","status<>0 and peso_globo>=".$pesoLibre. "  order by peso_globo asc");
+		}
+		}elseif(isset($_POST['fechaI']) && $_POST['fechaI']!=''){
+				$fecha = $_POST['fechaI'];
+		}else{
+				$fecha=date("Y-m-d");
+		}
 
-	 if($turno==1){
-	 	$opc1="selected";
-	 }elseif($turno==2){
-	 	$opc2="selected";
-	 }elseif($turno==3){
-		$opc3="selected";
-	 }
+		if($turno==1){
+			$opc1="selected";
+		}elseif($turno==2){
+			$opc2="selected";
+		}elseif($turno==3){
+			$opc3="selected";
+		}
 
-	 $globosAsignados = $con->consulta("tipo_temp as tipo,fechavuelo_temp as fecha, hora_temp as hora,nombre_extra, id_temp, CONCAT(IFNULL(nombre_temp,''),' ',IFNULL(apellidos_temp,'')) as nombre","temp_volar tv INNER JOIN vueloscat_volar vv on tipo_temp = id_vc INNER JOIN extras_volar ev ON tipo_vc = id_extra","tv.status= 8 and  fechavuelo_temp = '". $fecha ."'");
+		$globosAsignados = $con->consulta("tipo_temp as tipo,fechavuelo_temp as fecha, hora_temp as hora,nombre_extra, id_temp, CONCAT(IFNULL(nombre_temp,''),' ',IFNULL(apellidos_temp,'')) as nombre","temp_volar tv INNER JOIN vueloscat_volar vv on tipo_temp = id_vc INNER JOIN extras_volar ev ON tipo_vc = id_extra","tv.status= 8 and  fechavuelo_temp = '". $fecha ."'");
 
 ?>
 <?php if(isset($_POST['reserva'])){ ?>
@@ -145,7 +145,7 @@
 								/*Peso en Kg*/
 							/*	$pesoActualKg = $con->consulta("sum(kg_temp) as peso","temp_volar","status=8 and tipopeso_temp=1 and globo_temp = ".$globo->value . " and fechavuelo_temp ='".$fecha."' AND hora_temp BETWEEN '".$deHora."' AND '".$aHora."'");*/
 								$pesoActual=$pesoActual[0]->peso;
-								$sumaPeso = $pesoActual + $pesoOcupado[0]->ocupado +$pesoLibre ;
+								$sumaPeso = $pesoActual + $pesoOcupado_Version[0]->ocupado +$pesoLibre ;
 								if($sumaPeso>$pesoAguanta){
 									$sel = "disabled";
 									$globo->text.="(Sobre pasa el Peso)";
@@ -243,6 +243,11 @@
 <?php if(isset($_POST['reserva'])){ ?>
 	<script type="text/javascript">
 	function validaGlobo(globo){
+		if(globo == 0){
+			$("#piloto").html("<option> Selecciona un globo</option>");
+			return false;
+		}
+			
 		tipovuelo = "<?php  echo $tVuelo[0]->tipo_vc ?>";
 		deHora = "<?php echo $deHora ?>";
 		aHora = "<?php echo $aHora ?>";

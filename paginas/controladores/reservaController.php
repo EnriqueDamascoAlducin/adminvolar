@@ -9,6 +9,23 @@
 		}else{
 			$eliminarReserva = $con->actualizar("temp_volar","status=0","id_temp=".$_POST['reserva']);
 			$eliminarReserva = $con->actualizar("servicios_vuelo_temp","status=0","idtemp_sv=".$_POST['reserva']);
+			if(isset($_SESSION['usuario'])){
+					function getUserIpAddr(){
+						if(!empty($_SERVER['HTTP_CLIENT_IP'])){
+							//ip from share internet
+							$ip = $_SERVER['HTTP_CLIENT_IP'];
+						}elseif(!empty($_SERVER['HTTP_X_FORWARDED_FOR'])){
+							//ip pass from proxy
+							$ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+						}else{
+							$ip = $_SERVER['REMOTE_ADDR'];
+						}
+						return $ip;
+					}
+					require  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/modelos/login.php';
+					$usuario= unserialize((base64_decode($_SESSION['usuario'])));
+					$con->insertar("movimientos_volar","tipo_mov,movimiento_mov,usuario_mov,ip_mov","'CANCELAR','SE CANCELO RESERVA ". $_POST['reserva'] ." POR ". $usuario->getNombreUsu() ."',". $usuario->getIdUsu() .",'".getUserIpAddr()."'");
+			}
 			echo $eliminarReserva;
 		}
 

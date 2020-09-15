@@ -327,7 +327,7 @@
 				</label>
 			</div>
 			<div class="col-5 col-md-6 col-lg-6 col-sm-6 col-xl-6" style="border-style: groove; vertical-align: middle;z-index: 2">
-				<input type="checkbox" onchange ="validar_servicio(this,<?php  echo $servicio->cantmax_servicio; ?>)"  name="cortesia_<?php echo $servicio->id_servicio; ?>" id="cortesia_<?php echo $servicio->id_servicio; ?>" <?php echo $cortesia; ?>>
+				<input type="checkbox" onchange ="validar_servicio(this,<?php  echo $servicio->cantmax_servicio; ?>,'<?php echo $servicio->precio_servicio; ?>')"  name="cortesia_<?php echo $servicio->id_servicio; ?>" id="cortesia_<?php echo $servicio->id_servicio; ?>" <?php echo $cortesia; ?>>
 				<label for="cortesia_<?php echo $servicio->id_servicio; ?>" class="badge" style="color:black;margin-left: -25px;position: absolute;float: left"><b>Cortesia</b>
 					<img src="../sources/images/icons/check2.png" class="figure-img img-fluid rounded" alt="<?php echo $servicio->nombre_servicio; ?>" id="imgChecked" style="max-height: 50px;height: 50px;width: 50%; max-width: 50%;position: absolute;">
 				</label>

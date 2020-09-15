@@ -17,7 +17,7 @@
     $titulo=1;
     $enc=2;
     $objphp->createSheet();
-    $objphp->setActiveSheetIndex($pagina);
+    $objphp->setActiveSheetIndex(3);
     $objphp->getActiveSheet()->setTitle('Formas de Pago');
     $objDrawing = new PHPExcel_Worksheet_MemoryDrawing();
     $objDrawing->setName('Logotipo');

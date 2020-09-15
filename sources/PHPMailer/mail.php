@@ -25,6 +25,9 @@ try {
     if(isset($_SESSION['usuario'])){
         $usuario= unserialize((base64_decode($_SESSION['usuario'])));
         $correoActual = $usuario->getCorreoUsu();
+        if(strpos($correoActual, 'hotmail') !== false){
+            $correoActual = 'ventas@volarenglobo.com.mx';
+        }
         $usuarioActual = $usuario->getNombreUsu(). " " .$usuario->getApellidopUsu(). " ". $usuario->getApellidomUsu();
     }else{
 

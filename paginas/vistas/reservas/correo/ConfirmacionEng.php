@@ -349,6 +349,10 @@ $cuerpo.=           '<tr>';
     $cuerpo.=           ' <a href="https://www.google.com/maps/place/VOLAR+EN+GLOBO/@19.6956647,-98.8269878,17z/data=!3m1!4b1!4m5!3m4!1s0x85d1f5725d683f25:0xff4f4587c24e2324!8m2!3d19.6956597!4d-98.8247938">
                           <button type="button" class="btn btn-info btn-lg" id="direccionvga" style="background:#aa66cc; width:100%; height:35px; color:white;">Address</button>
                         </a>
+                        <hr>
+                        <a href="https://volarenglobo.com.mx/Politicas_de_Pago_devoluciones.pdf">
+                          Payment and return policies
+                        </a>
                         <hr>';
   $cuerpo.='</td>';
 $cuerpo.='</tr>';

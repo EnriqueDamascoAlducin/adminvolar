@@ -60,13 +60,14 @@
 		$cupon=0;
 	}
 	$total = $total / $monedaPrecio;
+	$subtotal = $total;
 	$total=number_format($total, 2, '.', ',');
 	$totalPagado = $pagotarjeta+$pagoefectivo + $cupon;
-	if($totalPagado>$total){
-		echo 'No puedes agregar un pago mayor';
-	}else if($totalPagado<$total){
+	if($totalPagado>$subtotal){
+		echo "No puedes agregar un pago mayor ";
+	}else if($totalPagado<$subtotal){
 		echo "Falta por pagar";
-	}else if($totalPagado==$total){
+	}else if($totalPagado==$subtotal){
 		$comentario = "'".$_POST['comentario']."'";
 		$otroscar1 = $_POST['otroscar1'];
 		$precio1 = $_POST['precio1'];
@@ -104,9 +105,10 @@
 		if($pagotarjeta=='' || $pagotarjeta==0){
 			$pagotarjeta="null";
 		}
-		$valores = $idAct.','.$comentario.','.$otroscar1.','.$precio1.','.$otroscar2.','.$precio2.','.$tipodesc.','.$cantdesc.','.$pagoefectivo.','.$pagotarjeta.','.$total.',"'.$cupon.'",'.$moneda.',"'. $monedaPrecio .'"';
+		$valores = $idAct.','.$comentario.','.$otroscar1.','.$precio1.','.$otroscar2.','.$precio2.','.$tipodesc.','.$cantdesc.','.$pagoefectivo.','.$pagotarjeta.','.$subtotal.',"'.$cupon.'",'.$moneda.',"'. $monedaPrecio .'"';
 		$registroPago = $con->query("CALL registroVenta(".$valores.",@LID)");
-		$respuesta = $con->query("SELECT @LID as lid")->fetchALL (PDO::FETCH_OBJ);
+		$query = 'select @LID as lid';
+		$respuesta = $con->query($query)->fetchALL(PDO::FETCH_OBJ);
 		$venta = $respuesta[0]->lid;
 
 		if(isset($_POST['serviciosId'])){

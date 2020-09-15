@@ -1,11 +1,6 @@
-<style media="screen">
-	th label{
-		color:red;
-	}
-</style>
 <?php
-	require  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/modelos/login.php';
 	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/controladores/conexion.php';
+	require  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/modelos/login.php';
 	require_once  $_SERVER['DOCUMENT_ROOT'].'/admin1/paginas/controladores/fin_session.php';
 
 
@@ -55,6 +50,7 @@
 	$reservas=$con->consulta($campos,$tabla,$filtro);
 	$cancelarSinCot= $con->query("UPDATE temp_volar set status= 0 where  register <=  CURRENT_TIMESTAMP - INTERVAL 1 DAY and status=2");
 	//$cancelar30Dias= $con->query("UPDATE temp_volar set status= 0 where register <=  CURRENT_TIMESTAMP - INTERVAL 30 DAY and status =3;");
+	
 ?>
 <table class="DataTable table table-striped table-bordered table-hover">
 	<thead>
@@ -121,7 +117,7 @@
 						$text="Pagado Total";
 						$class="success";
 					}else if($reserva->status==8){
-						$text="Confirmado";
+						$text="Confirmada";
 						$class="";
 						$color="background-color:#4285F4 ;";
 					}else if($reserva->status==9){

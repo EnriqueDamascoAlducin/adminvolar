@@ -25,7 +25,7 @@
 		private $cuentaUsu;
 		private $register;
 		private $status;
-		function usuarioLoggeado(){
+		function __construct(){
 			//constructor
 		}
 

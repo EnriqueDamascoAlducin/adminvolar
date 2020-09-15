@@ -331,6 +331,10 @@ $cuerpo.=           '<tr>';
                           <button type="button" class="btn btn-info btn-lg" id="direccionvga" style="background:#aa66cc; width:100%; height:35px; color:white;">Ver Dirección</button>
                         </a>
                         <hr>
+                        <a href="https://volarenglobo.com.mx/Politicas_de_Pago_devoluciones.pdf">
+                          Politicas de Pago y Devoluciones
+                        </a>
+                        <hr>
                         Sin más por el momento quedo a sus órdenes para cualquier duda o aclaración respecto al servicio contratado.';
   $cuerpo.='</td>';
 $cuerpo.='</tr>';

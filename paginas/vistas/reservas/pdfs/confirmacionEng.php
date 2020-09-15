@@ -17,14 +17,14 @@
   	}*/
   }
 	$pago = $_POST['pago'];
-	$pagoInfo= $con->consulta("cantidad_bp as cantidad, idres_bp as reserva","bitpagos_volar","id_bp=".$pago);
+	$pagoInfo= $con->consulta("cantidad_bp as cantidad, idres_bp as reserva","bitpagos_volar","status in(1,2,3) AND id_bp=".$pago);
 	$reserva=$pagoInfo[0]->reserva;
 
 	$totalPagos  = $con->consulta("SUM(cantidad_bp) as totalPagos ","bitpagos_volar"," status<>0 and idres_bp=".$reserva);
 	$totalReserva=0.0;
 	$totalPasajeros = $con->consulta("FORMAT(ifnull(pasajerosa_temp,0) + ifnull(pasajerosn_temp,0),2)  Total"," temp_volar "," id_temp = $reserva");
 	$datosReserva = $con->query("CALL getResumenREserva(".$reserva.");")->fetchALL (PDO::FETCH_OBJ);
-	$serviciosReserva = $con->consulta("tipo_sv as tipo , nombre_servicio as servicio ,cantmax_servicio as cantmax, precio_servicio as precio "," servicios_vuelo_temp svt INNER JOIN servicios_volar sv ON svt.idservi_sv=sv.id_servicio ","  svt.status<>0 and cantidad_sv>0 and idtemp_sv =".$reserva);
+	$serviciosReserva = $con->consulta("tipo_sv as tipo , nombre_servicio as servicio ,cantmax_servicio as cantmax, IFNULL(svt.precio_sv,sv.precio_servicio) as precio "," servicios_vuelo_temp svt INNER JOIN servicios_volar sv ON svt.idservi_sv=sv.id_servicio ","  svt.status<>0 and cantidad_sv>0 and idtemp_sv =".$reserva);
 
 	$hotel=$datosReserva[0]->hotel;
 	$habitacion=$datosReserva[0]->habitacion;

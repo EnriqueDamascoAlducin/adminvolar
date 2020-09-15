@@ -7,7 +7,7 @@ $titulo=1;
 $enc=2;
 
 $objphp->createSheet();
-$objphp->setActiveSheetIndex($pagina);
+$objphp->setActiveSheetIndex(1);
 $objphp->getActiveSheet()->setTitle('Globos Asignados por Reserva ');
 
 $objDrawing = new PHPExcel_Worksheet_MemoryDrawing();

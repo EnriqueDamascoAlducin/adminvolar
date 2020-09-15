@@ -4,7 +4,7 @@
 $fila=3;
 $titulo=1;
 $enc=2;
-$objphp->setActiveSheetIndex($pagina);
+$objphp->setActiveSheetIndex(0);
 $objphp->getActiveSheet()->setTitle('Reporte General');
 ////////// Para dibujar el logo
 
@@ -19,15 +19,15 @@ $objphp->getActiveSheet()->setTitle('Reporte General');
 	$objDrawing->setCoordinates('B1');
 	$objDrawing->setWorksheet($objphp->getActiveSheet());
 ////////////Dibujar el log
-$objphp->getActiveSheet()->getStyle('A1:Q1')->applyFromArray($estiloTituloReporte);
+$objphp->getActiveSheet()->getStyle('A1:T1')->applyFromArray($estiloTituloReporte);
 $objphp->getActiveSheet()->getRowDimension(1)->setRowHeight(100);
 $objphp->getActiveSheet()->getColumnDimension('A')->setWidth(25);
 //$objphp->getActiveSheet()->setCellValue('B'.$titulo,'Reporte de Vuelos de Volar en Globo');
 
 
 $objphp->getActiveSheet()->setCellValue('B'.$titulo, 'Reporte de Reservas de Volar en Globo');
-$objphp->getActiveSheet()->mergeCells('B'.$titulo.':R'.$titulo);
-$objphp->getActiveSheet()->getStyle('A'.$enc.':R'.$enc)->applyFromArray($estiloTituloColumnas);
+$objphp->getActiveSheet()->mergeCells('B'.$titulo.':T'.$titulo);
+$objphp->getActiveSheet()->getStyle('A'.$enc.':T'.$enc)->applyFromArray($estiloTituloColumnas);
 /*Encabezado*/
 $objphp->getActiveSheet()->setCellValue('A'.$enc, 'Reserva');
 $objphp->getActiveSheet()->getColumnDimension('A')->setWidth(20);
@@ -53,18 +53,22 @@ $objphp->getActiveSheet()->setCellValue('K'.$enc, 'Tipo');
 $objphp->getActiveSheet()->getColumnDimension('K')->setWidth(25);
 $objphp->getActiveSheet()->setCellValue('L'.$enc, 'Peso (kg)');
 $objphp->getActiveSheet()->getColumnDimension('L')->setWidth(25);
-$objphp->getActiveSheet()->setCellValue('M'.$enc, 'Descuento');
+$objphp->getActiveSheet()->setCellValue('M'.$enc, 'Hotel');
 $objphp->getActiveSheet()->getColumnDimension('M')->setWidth(25);
-$objphp->getActiveSheet()->setCellValue('N'.$enc, 'Total');
+$objphp->getActiveSheet()->setCellValue('N'.$enc, 'Habitación');
 $objphp->getActiveSheet()->getColumnDimension('N')->setWidth(25);
-$objphp->getActiveSheet()->setCellValue('O'.$enc, 'Pagado');
+$objphp->getActiveSheet()->setCellValue('O'.$enc, 'Descuento');
 $objphp->getActiveSheet()->getColumnDimension('O')->setWidth(25);
-$objphp->getActiveSheet()->setCellValue('P'.$enc, 'Restante');
+$objphp->getActiveSheet()->setCellValue('P'.$enc, 'Total');
 $objphp->getActiveSheet()->getColumnDimension('P')->setWidth(25);
-$objphp->getActiveSheet()->setCellValue('Q'.$enc, 'Status');
+$objphp->getActiveSheet()->setCellValue('Q'.$enc, 'Pagado');
 $objphp->getActiveSheet()->getColumnDimension('Q')->setWidth(25);
-$objphp->getActiveSheet()->setCellValue('R'.$enc, 'Comentarios Interno');
-$objphp->getActiveSheet()->getColumnDimension('R')->setWidth(80);
+$objphp->getActiveSheet()->setCellValue('R'.$enc, 'Restante');
+$objphp->getActiveSheet()->getColumnDimension('R')->setWidth(25);
+$objphp->getActiveSheet()->setCellValue('S'.$enc, 'Status');
+$objphp->getActiveSheet()->getColumnDimension('S')->setWidth(25);
+$objphp->getActiveSheet()->setCellValue('T'.$enc, 'Comentarios Interno');
+$objphp->getActiveSheet()->getColumnDimension('T')->setWidth(80);
 foreach ($reservas as $reserva) {
 
 	$objphp->getActiveSheet()->setCellValue('A'.$fila, $reserva->reserva );
@@ -86,16 +90,18 @@ foreach ($reservas as $reserva) {
 		$objphp->getActiveSheet()->setCellValue('L'.$fila, "N/A" );
 	}
 
+	$objphp->getActiveSheet()->setCellValue('M'.$fila,$reserva->hotel );
+	$objphp->getActiveSheet()->setCellValue('N'.$fila,$reserva->habitacion );
 	if($reserva->tdescuento=='2'){ //Pesos
-		$objphp->getActiveSheet()->setCellValue('M'.$fila, ("$ ".$reserva->descuento)  );
+		$objphp->getActiveSheet()->setCellValue('O'.$fila, ("$ ".$reserva->descuento)  );
 	}elseif($reserva->tdescuento=='1'){
-		$objphp->getActiveSheet()->setCellValue('M'.$fila, ($reserva->descuento) . "%" );
+		$objphp->getActiveSheet()->setCellValue('O'.$fila, ($reserva->descuento) . "%" );
 	}else{
-		$objphp->getActiveSheet()->setCellValue('M'.$fila, "N/A" );
+		$objphp->getActiveSheet()->setCellValue('O'.$fila, "N/A" );
 	}
-	$objphp->getActiveSheet()->setCellValue('N'.$fila, $reserva->cotizado );
-	$objphp->getActiveSheet()->setCellValue('O'.$fila, ($reserva->pagado) );
-	$objphp->getActiveSheet()->setCellValue('P'.$fila, ($reserva->cotizado-$reserva->pagado) );
+	$objphp->getActiveSheet()->setCellValue('P'.$fila, $reserva->cotizado );
+	$objphp->getActiveSheet()->setCellValue('Q'.$fila, ($reserva->pagado) );
+	$objphp->getActiveSheet()->setCellValue('R'.$fila, ($reserva->cotizado-$reserva->pagado) );
 
 	if( $reserva->status ==4){
 		$text="Conciliada";
@@ -120,7 +126,7 @@ foreach ($reservas as $reserva) {
 	}else{
 		$text="Otro";
 	}
-	$objphp->getActiveSheet()->setCellValue('Q'.$fila,( $text) );
+	$objphp->getActiveSheet()->setCellValue('S'.$fila,( $text) );
 	$comentarioint ="";
 	if(strlen($reserva->comentariosint)>30){
 		$compare = true;
@@ -140,14 +146,14 @@ foreach ($reservas as $reserva) {
 	}else{
 		$comentarioint = $reserva->comentariosint;
 	}
-	$objphp->getActiveSheet()->setCellValue('R'.$fila,utf8_encode( $comentarioint) );
-	$objphp->getActiveSheet()->getStyle('R'.$fila)->getAlignment()->setWrapText(true);
+	$objphp->getActiveSheet()->setCellValue('T'.$fila,utf8_encode( $comentarioint) );
+	$objphp->getActiveSheet()->getStyle('T'.$fila)->getAlignment()->setWrapText(true);
 		/*   Set altura de la fila */
 		$objphp->getActiveSheet()->getRowDimension($fila)->setRowHeight(-1);
 	$fila++;
 }
 $fila--;
-$objphp->getActiveSheet()->setSharedStyle($estiloInformacion, "A3:R".$fila);
+$objphp->getActiveSheet()->setSharedStyle($estiloInformacion, "A3:T".$fila);
 
 
 ?>

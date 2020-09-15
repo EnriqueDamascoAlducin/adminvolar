@@ -6,7 +6,7 @@
 		private $pass;
 		public $con;
 
-		function Conexion(){
+		function __construct(){
 			$this->servidor="localhost";
 			$this->bd = "afraqujt_volar";
 			$this->usr="afraqujt_Siswebs";
@@ -49,6 +49,7 @@
 			$sql="UPDATE $tabla SET $set $where";
 
 			$data= $this->con->query($sql);
+			
 			if($data){
 				return "ok";
 			}else{
@@ -57,12 +58,12 @@
 		}
 		function query($sql){
 			$data= $this->con->query($sql);
+		
 			return $data;
 		}
 		function getConexion(){
 			return $this->con;
 		}
-
 	}
 	$con=new Conexion();
 	$con->conectar();
